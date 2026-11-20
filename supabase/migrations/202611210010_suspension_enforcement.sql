@@ -9,6 +9,9 @@ create policy profiles_update on public.profiles for update
 using((id=auth.uid() and public.is_active_member()) or public.is_admin())
 with check((id=auth.uid() and public.is_active_member()) or public.is_admin());
 
+drop policy if exists businesses_public_read on public.businesses;
+create policy businesses_public_read on public.businesses for select
+using((is_published and exists(select 1 from public.profiles p where p.id=businesses.owner_id and p.is_suspended=false)) or owner_id=auth.uid() or public.is_admin());
 drop policy if exists businesses_owner_write on public.businesses;
 create policy businesses_owner_write on public.businesses for all
 using((owner_id=auth.uid() and public.is_active_member()) or public.is_admin())
@@ -127,6 +130,20 @@ drop policy if exists preferences_owner on public.user_preferences;
 create policy preferences_owner on public.user_preferences for all
 using(user_id=auth.uid() and public.is_active_member())
 with check(user_id=auth.uid() and public.is_active_member());
+
+drop policy if exists business_private_assets_owner_read on public.business_private_assets;
+create policy business_private_assets_owner_read on public.business_private_assets for select
+using((owner_id=auth.uid() and public.is_active_member()) or public.is_admin());
+drop policy if exists business_private_assets_owner_insert on public.business_private_assets;
+create policy business_private_assets_owner_insert on public.business_private_assets for insert
+with check((owner_id=auth.uid() and public.is_active_member()) or public.is_admin());
+drop policy if exists business_private_assets_owner_update on public.business_private_assets;
+create policy business_private_assets_owner_update on public.business_private_assets for update
+using((owner_id=auth.uid() and public.is_active_member()) or public.is_admin())
+with check((owner_id=auth.uid() and public.is_active_member()) or public.is_admin());
+drop policy if exists business_private_assets_owner_delete on public.business_private_assets;
+create policy business_private_assets_owner_delete on public.business_private_assets for delete
+using((owner_id=auth.uid() and public.is_active_member()) or public.is_admin());
 
 drop policy if exists ventora_private_documents_read on storage.objects;
 create policy ventora_private_documents_read on storage.objects for select to authenticated
