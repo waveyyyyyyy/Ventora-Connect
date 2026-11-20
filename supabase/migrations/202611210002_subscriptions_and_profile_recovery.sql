@@ -29,11 +29,17 @@ create index if not exists subscription_requests_status_created_idx on public.su
 alter table public.subscription_plans enable row level security;
 alter table public.subscriptions enable row level security;
 alter table public.subscription_requests enable row level security;
+drop policy if exists subscription_plans_read on public.subscription_plans;
 create policy subscription_plans_read on public.subscription_plans for select to anon,authenticated using(is_active or public.is_admin());
+drop policy if exists subscriptions_read on public.subscriptions;
 create policy subscriptions_read on public.subscriptions for select to authenticated using(user_id=auth.uid() or public.is_admin());
+drop policy if exists subscriptions_admin_manage on public.subscriptions;
 create policy subscriptions_admin_manage on public.subscriptions for all to authenticated using(public.is_admin()) with check(public.is_admin());
+drop policy if exists subscription_requests_read on public.subscription_requests;
 create policy subscription_requests_read on public.subscription_requests for select to authenticated using(user_id=auth.uid() or public.is_admin());
+drop policy if exists subscription_requests_create on public.subscription_requests;
 create policy subscription_requests_create on public.subscription_requests for insert to authenticated with check(user_id=auth.uid() and status='pending');
+drop policy if exists subscription_requests_admin_manage on public.subscription_requests;
 create policy subscription_requests_admin_manage on public.subscription_requests for update to authenticated using(public.is_admin()) with check(public.is_admin());
 
 insert into public.subscription_plans(id,account_type,name,price_inr,description,features,display_order) values
@@ -74,6 +80,7 @@ begin
  return new;
 end; $$;
 
+drop policy if exists profiles_insert_self on public.profiles;
 create policy profiles_insert_self on public.profiles for insert to authenticated with check(id=auth.uid());
 create or replace function public.prevent_profile_role_change() returns trigger
 language plpgsql security invoker set search_path=public as $$
@@ -81,6 +88,7 @@ begin
  if new.account_type is distinct from old.account_type and not public.is_admin() then raise exception 'Account type cannot be changed after registration'; end if;
  return new;
 end; $$;
+drop trigger if exists profiles_role_immutable on public.profiles;
 create trigger profiles_role_immutable before update of account_type on public.profiles for each row execute function public.prevent_profile_role_change();
 create unique index if not exists subscription_requests_one_pending_idx on public.subscription_requests(user_id,plan_id) where status='pending';
 
