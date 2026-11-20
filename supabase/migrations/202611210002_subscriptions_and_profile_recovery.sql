@@ -107,3 +107,44 @@ create policy messages_member_send on public.messages for insert to authenticate
 drop policy if exists interests_investor_insert on public.investment_interests;
 create policy interests_investor_insert on public.investment_interests for insert to authenticated with check(
  investor_id=auth.uid() and public.is_active_member() and public.plan_feature_enabled('express_interest'));
+
+-- Enforce restrictive free-tier limits server-side.
+update public.subscription_plans set features=features||'{"saved_profiles":3}'::jsonb where id in ('business_launch','investor_explorer');
+update public.subscription_plans set features=features||'{"saved_profiles":50}'::jsonb where id='business_growth';
+update public.subscription_plans set features=features||'{"saved_profiles":-1,"monthly_connections":-1}'::jsonb where id in ('business_scale','investor_access');
+
+drop policy if exists saved_businesses_owner on public.saved_businesses;
+drop policy if exists saved_businesses_read on public.saved_businesses;
+drop policy if exists saved_businesses_insert on public.saved_businesses;
+drop policy if exists saved_businesses_update on public.saved_businesses;
+drop policy if exists saved_businesses_delete on public.saved_businesses;
+create policy saved_businesses_read on public.saved_businesses for select to authenticated using(user_id=auth.uid() and public.is_active_member());
+create policy saved_businesses_insert on public.saved_businesses for insert to authenticated with check(user_id=auth.uid() and public.is_active_member() and (coalesce((public.current_plan_features()->>'saved_profiles')::int,0)=-1 or (select count(*) from public.saved_businesses x where x.user_id=auth.uid())+(select count(*) from public.saved_investors x where x.user_id=auth.uid())<coalesce((public.current_plan_features()->>'saved_profiles')::int,0)));
+create policy saved_businesses_update on public.saved_businesses for update to authenticated using(user_id=auth.uid() and public.is_active_member()) with check(user_id=auth.uid() and public.is_active_member());
+create policy saved_businesses_delete on public.saved_businesses for delete to authenticated using(user_id=auth.uid() and public.is_active_member());
+
+drop policy if exists saved_investors_owner on public.saved_investors;
+drop policy if exists saved_investors_read on public.saved_investors;
+drop policy if exists saved_investors_insert on public.saved_investors;
+drop policy if exists saved_investors_update on public.saved_investors;
+drop policy if exists saved_investors_delete on public.saved_investors;
+create policy saved_investors_read on public.saved_investors for select to authenticated using(user_id=auth.uid() and public.is_active_member());
+create policy saved_investors_insert on public.saved_investors for insert to authenticated with check(user_id=auth.uid() and public.is_active_member() and (coalesce((public.current_plan_features()->>'saved_profiles')::int,0)=-1 or (select count(*) from public.saved_businesses x where x.user_id=auth.uid())+(select count(*) from public.saved_investors x where x.user_id=auth.uid())<coalesce((public.current_plan_features()->>'saved_profiles')::int,0)));
+create policy saved_investors_update on public.saved_investors for update to authenticated using(user_id=auth.uid() and public.is_active_member()) with check(user_id=auth.uid() and public.is_active_member());
+create policy saved_investors_delete on public.saved_investors for delete to authenticated using(user_id=auth.uid() and public.is_active_member());
+
+drop policy if exists profile_views_insert on public.profile_views;
+create policy profile_views_insert on public.profile_views for insert to authenticated with check(viewer_id=auth.uid() and public.is_active_member() and (business_id is null or coalesce((select account_type from public.profiles where id=auth.uid()),'business'::public.account_role)<>'investor'::public.account_role or coalesce((public.current_plan_features()->>'monthly_business_views')::int,0)=-1 or (select count(*) from public.profile_views v where v.viewer_id=auth.uid() and v.business_id is not null and v.created_at>=date_trunc('month',now()))<coalesce((public.current_plan_features()->>'monthly_business_views')::int,0)));
+
+drop policy if exists business_private_assets_owner_insert on public.business_private_assets;
+create policy business_private_assets_owner_insert on public.business_private_assets for insert to authenticated with check((owner_id=auth.uid() and public.is_active_member() and public.plan_feature_enabled('pitch_deck')) or public.is_admin());
+drop policy if exists business_private_assets_owner_update on public.business_private_assets;
+create policy business_private_assets_owner_update on public.business_private_assets for update to authenticated using((owner_id=auth.uid() and public.is_active_member() and public.plan_feature_enabled('pitch_deck')) or public.is_admin()) with check((owner_id=auth.uid() and public.is_active_member() and public.plan_feature_enabled('pitch_deck')) or public.is_admin());
+
+drop policy if exists businesses_owner_write on public.businesses;
+drop policy if exists businesses_owner_insert on public.businesses;
+drop policy if exists businesses_owner_update on public.businesses;
+drop policy if exists businesses_owner_delete on public.businesses;
+create policy businesses_owner_insert on public.businesses for insert to authenticated with check(owner_id=auth.uid() and public.is_active_member() and (coalesce((public.current_plan_features()->>'max_business_profiles')::int,0)=-1 or (select count(*) from public.businesses b where b.owner_id=auth.uid())<coalesce((public.current_plan_features()->>'max_business_profiles')::int,0)));
+create policy businesses_owner_update on public.businesses for update to authenticated using((owner_id=auth.uid() and public.is_active_member()) or public.is_admin()) with check((owner_id=auth.uid() and public.is_active_member()) or public.is_admin());
+create policy businesses_owner_delete on public.businesses for delete to authenticated using((owner_id=auth.uid() and public.is_active_member()) or public.is_admin());
