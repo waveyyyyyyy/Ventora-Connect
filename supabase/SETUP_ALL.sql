@@ -576,6 +576,22 @@ using(user_id=auth.uid()
 
 
 -- ===== supabase/migrations/202611210010_suspension_enforcement.sql =====
+create or replace function public.guard_connection_pair() returns trigger
+language plpgsql security definer set search_path=public as $$
+begin
+  if exists(select 1 from public.user_blocks b where
+    (b.blocker_id=new.requester_id and b.blocked_id=new.recipient_id)
+    or (b.blocker_id=new.recipient_id and b.blocked_id=new.requester_id)) then
+    raise exception 'Connection is unavailable';
+  end if;
+  if tg_op='INSERT' and exists(select 1 from public.connections c
+    where c.requester_id=new.recipient_id and c.recipient_id=new.requester_id
+      and c.status in ('pending','accepted')) then
+    raise exception 'A connection request already exists between these members';
+  end if;
+  return new;
+end; $$;
+
 -- Enforce suspended-account restrictions at the database boundary.
 create or replace function public.is_active_member() returns boolean
 language sql stable security definer set search_path=public as $$
