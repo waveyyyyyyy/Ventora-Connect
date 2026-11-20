@@ -179,3 +179,27 @@ end; $$;
 drop trigger if exists subscriptions_plan_role_guard on public.subscriptions;
 create trigger subscriptions_plan_role_guard before insert or update of user_id,plan_id on public.subscriptions for each row execute function public.validate_subscription_plan_role();
 grant execute on function public.current_plan_features() to anon,authenticated;
+
+-- Restrict business account profile count and investor profile views.
+drop policy if exists businesses_owner_write on public.businesses;
+drop policy if exists businesses_owner_insert on public.businesses;
+drop policy if exists businesses_owner_update on public.businesses;
+drop policy if exists businesses_owner_delete on public.businesses;
+create policy businesses_owner_insert on public.businesses for insert to authenticated with check(owner_id=auth.uid() and public.is_active_member() and (coalesce((public.current_plan_features()->>'max_business_profiles')::int,0)=-1 or (select count(*) from public.businesses b where b.owner_id=auth.uid())<coalesce((public.current_plan_features()->>'max_business_profiles')::int,0)));
+create policy businesses_owner_update on public.businesses for update to authenticated using((owner_id=auth.uid() and public.is_active_member()) or public.is_admin()) with check((owner_id=auth.uid() and public.is_active_member()) or public.is_admin());
+create policy businesses_owner_delete on public.businesses for delete to authenticated using((owner_id=auth.uid() and public.is_active_member()) or public.is_admin());
+
+drop policy if exists subscription_plans_read on public.subscription_plans;
+drop policy if exists subscription_plans_admin_read on public.subscription_plans;
+create policy subscription_plans_read on public.subscription_plans for select to anon,authenticated using(is_active);
+create policy subscription_plans_admin_read on public.subscription_plans for select to authenticated using(public.is_admin());
+drop policy if exists subscription_requests_create on public.subscription_requests;
+create policy subscription_requests_create on public.subscription_requests for insert to authenticated with check(user_id=auth.uid() and status='pending' and exists(select 1 from public.subscription_plans p join public.profiles u on u.id=auth.uid() where p.id=plan_id and p.account_type=u.account_type and p.is_active));
+create or replace function public.validate_subscription_plan_role() returns trigger language plpgsql security invoker set search_path=public as $$
+begin
+ if not exists(select 1 from public.subscription_plans p join public.profiles u on u.id=new.user_id where p.id=new.plan_id and p.account_type=u.account_type) then raise exception 'Subscription plan does not match the account type'; end if;
+ return new;
+end; $$;
+drop trigger if exists subscriptions_plan_role_guard on public.subscriptions;
+create trigger subscriptions_plan_role_guard before insert or update of user_id,plan_id on public.subscriptions for each row execute function public.validate_subscription_plan_role();
+grant execute on function public.current_plan_features() to anon,authenticated;
