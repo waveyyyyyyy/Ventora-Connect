@@ -1,7 +1,7 @@
 import {useEffect,useMemo,useState} from 'react';
 import {Link,useNavigate} from 'react-router-dom';
 import {supabase} from './lib/supabase';
-import {ArrowUpRight,Building2,ChartNoAxesCombined,Compass,LayoutDashboard,UserRound,Users,Bell,Settings,LogOut,Save,LoaderCircle,ShieldCheck,Eye,CheckCircle2,Clock3,Sparkles,MessageCircle,Target,FileCheck,Upload,LifeBuoy,Sparkles} from 'lucide-react';
+import {ArrowUpRight,Building2,ChartNoAxesCombined,Compass,LayoutDashboard,UserRound,Users,Bell,Settings,LogOut,Save,LoaderCircle,ShieldCheck,Eye,CheckCircle2,Clock3,Sparkles,MessageCircle,Target,FileCheck,Upload,LifeBuoy} from 'lucide-react';
 
 type Profile={id:string;full_name:string;account_type:'business'|'investor';bio:string|null;country:string|null;city:string|null;website:string|null;linkedin_url:string|null;avatar_url:string|null};
 type Business={id?:string;company_name:string;industry:string;description:string;website:string;country:string;city:string;founded_year:string;business_stage:string;business_model:string;funding_requirement:string;min_investment:string;max_investment:string;equity_offered:string;is_published:boolean;pitch_deck_path?:string|null};
