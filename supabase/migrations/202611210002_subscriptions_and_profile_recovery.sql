@@ -148,3 +148,17 @@ drop policy if exists businesses_owner_delete on public.businesses;
 create policy businesses_owner_insert on public.businesses for insert to authenticated with check(owner_id=auth.uid() and public.is_active_member() and (coalesce((public.current_plan_features()->>'max_business_profiles')::int,0)=-1 or (select count(*) from public.businesses b where b.owner_id=auth.uid())<coalesce((public.current_plan_features()->>'max_business_profiles')::int,0)));
 create policy businesses_owner_update on public.businesses for update to authenticated using((owner_id=auth.uid() and public.is_active_member()) or public.is_admin()) with check((owner_id=auth.uid() and public.is_active_member()) or public.is_admin());
 create policy businesses_owner_delete on public.businesses for delete to authenticated using((owner_id=auth.uid() and public.is_active_member()) or public.is_admin());
+
+-- Keep published business discovery public while applying investor free-tier limits.
+drop policy if exists businesses_public_read on public.businesses;
+drop policy if exists businesses_owner_read on public.businesses;
+drop policy if exists businesses_admin_read on public.businesses;
+create policy businesses_public_read on public.businesses for select to anon,authenticated using(
+ is_published and exists(select 1 from public.profiles p where p.id=businesses.owner_id and p.is_suspended=false)
+ and (auth.uid() is null
+  or coalesce((select p.account_type from public.profiles p where p.id=auth.uid()),'business'::public.account_role)<>'investor'::public.account_role
+  or coalesce((public.current_plan_features()->>'monthly_business_views')::int,0)=-1
+  or exists(select 1 from public.profile_views v where v.viewer_id=auth.uid() and v.business_id=businesses.id)
+  or (select count(*) from public.profile_views v where v.viewer_id=auth.uid() and v.business_id is not null and v.created_at>=date_trunc('month',now()))<coalesce((public.current_plan_features()->>'monthly_business_views')::int,0)));
+create policy businesses_owner_read on public.businesses for select to authenticated using(owner_id=auth.uid());
+create policy businesses_admin_read on public.businesses for select to authenticated using(public.is_admin());
