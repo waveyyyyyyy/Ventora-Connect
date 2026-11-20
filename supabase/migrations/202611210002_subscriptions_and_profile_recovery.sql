@@ -162,3 +162,20 @@ create policy businesses_public_read on public.businesses for select to anon,aut
   or (select count(*) from public.profile_views v where v.viewer_id=auth.uid() and v.business_id is not null and v.created_at>=date_trunc('month',now()))<coalesce((public.current_plan_features()->>'monthly_business_views')::int,0)));
 create policy businesses_owner_read on public.businesses for select to authenticated using(owner_id=auth.uid());
 create policy businesses_admin_read on public.businesses for select to authenticated using(public.is_admin());
+
+-- Enforce plan/account-type consistency and keep the public plan catalogue readable.
+drop policy if exists subscription_plans_read on public.subscription_plans;
+drop policy if exists subscription_plans_admin_read on public.subscription_plans;
+create policy subscription_plans_read on public.subscription_plans for select to anon,authenticated using(is_active);
+create policy subscription_plans_admin_read on public.subscription_plans for select to authenticated using(public.is_admin());
+drop policy if exists subscription_requests_create on public.subscription_requests;
+create policy subscription_requests_create on public.subscription_requests for insert to authenticated with check(user_id=auth.uid() and status='pending' and exists(select 1 from public.subscription_plans p join public.profiles u on u.id=auth.uid() where p.id=plan_id and p.account_type=u.account_type and p.is_active));
+create or replace function public.validate_subscription_plan_role() returns trigger
+language plpgsql security invoker set search_path=public as $$
+begin
+ if not exists(select 1 from public.subscription_plans p join public.profiles u on u.id=new.user_id where p.id=new.plan_id and p.account_type=u.account_type) then raise exception 'Subscription plan does not match the account type'; end if;
+ return new;
+end; $$;
+drop trigger if exists subscriptions_plan_role_guard on public.subscriptions;
+create trigger subscriptions_plan_role_guard before insert or update of user_id,plan_id on public.subscriptions for each row execute function public.validate_subscription_plan_role();
+grant execute on function public.current_plan_features() to anon,authenticated;
