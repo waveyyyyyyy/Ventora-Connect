@@ -3,6 +3,7 @@ import GustPlatform from './GustPlatform';
 const Announcements=lazy(()=>import('./Announcements'));const Saved=lazy(()=>import('./Saved'));const Workspace=lazy(()=>import('./Workspace'));const Messages=lazy(()=>import('./Messages'));const Interests=lazy(()=>import('./Interests'));const Admin=lazy(()=>import('./Admin'));const Support=lazy(()=>import('./Support'));const Legal=lazy(()=>import('./Legal'));const Matches=lazy(()=>import('./Matches'));
 const Logo=({light=false}:{light?:boolean})=><Link to="/" className={'brand '+(light?'brand-light':'')} aria-label="Ventora Connect home"><img className="brand-mark" src={import.meta.env.BASE_URL+'ventora-icon.svg'} alt=""/><span><span className="brand-word">V<span className="brand-e">Ξ</span>NTORA</span><span className="brand-sub">CONNECT</span></span></Link>;
 const fade={hidden:{opacity:0,y:24},show:{opacity:1,y:0,transition:{duration:.65,ease:'easeOut' as const}}};
+void Home; void IntroSplash;
 function Header(){
 const[open,setOpen]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business'),[authChecked,setAuthChecked]=useState(false);
 const location=useLocation(),nav=useNavigate(),listingPage=location.pathname==='/businesses'||location.pathname==='/investors';
