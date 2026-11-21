@@ -85,9 +85,8 @@ function AppRoutes({setLoader}:{setLoader:VentoraLoadingSetter}){
 
 export default function App(){
  const location=useLocation();
- const [loaders,setLoaders]=useState<Record<string,{variant:VentoraLoaderVariant;status?:string}>>({initial:{variant:'convergence'}});
+ const [loaders,setLoaders]=useState<Record<string,{variant:VentoraLoaderVariant;status?:string}>>({});
  const setLoader=useCallback<VentoraLoadingSetter>((active,variant='pulse',status,key='global')=>setLoaders(previous=>{const next={...previous};if(active)next[key]={variant:variant==='auto'?'pulse':variant,status};else delete next[key];return next}),[]);
  const activeKeys=Object.keys(loaders);const current=activeKeys.length?loaders[activeKeys.length-1]:null;
- useEffect(()=>{const timer=window.setTimeout(()=>setLoader(false,'convergence',undefined,'initial'),2380);return()=>window.clearTimeout(timer)},[setLoader]);
  return <VentoraLoadingContext.Provider value={setLoader}><AppRoutes setLoader={setLoader}/><VentoraLoader active={!!current && location.pathname==='/' } variant={current?.variant||'convergence'} motionVariant="slime-stamp" status={current?.status}/></VentoraLoadingContext.Provider>;
 }
