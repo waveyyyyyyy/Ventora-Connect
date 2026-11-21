@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useState} from 'react';
+import {useVentoraLoading} from './VentoraLoadingContext';
 import {Link} from 'react-router-dom';
-import {supabase} from './lib/supabase';import VentoraLoader from './VentoraLoader';
+import {supabase} from './lib/supabase';
 import {Bookmark,Building2,UserRound,Trash2,ArrowUpRight,ChevronDown,Filter,BriefcaseBusiness,CalendarCheck,Handshake,Send,Search,ArrowRight} from 'lucide-react';
 
 type PipelineStatus='intro_sent'|'in_review'|'call_booked'|'committed';
@@ -20,7 +21,7 @@ export default function Saved(){
  function changeStatus(item:PipelineItem,status:PipelineStatus){if(!user)return;setChanging(item.kind+':'+item.id);const map=readStatuses(user.id);map[item.kind+':'+item.id]=status;localStorage.setItem(statusStoreKey(user.id),JSON.stringify(map));setItems(old=>old.map(x=>x.id===item.id&&x.kind===item.kind?{...x,status}:x));window.setTimeout(()=>setChanging(''),260);}
  const visible=useMemo(()=>items.filter(x=>(filter==='all'||x.status===filter)&&((x.company_name||x.full_name||'')+' '+(x.industry||'')+' '+(x.city||'')+' '+(x.country||'')+' '+(x.description||x.bio||'')).toLowerCase().includes(query.toLowerCase())),[items,filter,query]);
  const counts=useMemo(()=>STATUS_OPTIONS.reduce((a,s)=>({...a,[s.value]:items.filter(x=>x.status===s.value).length}),{} as Record<PipelineStatus,number>),[items]);
- if(loading)return <VentoraLoader active variant="blueprint"/>;
+ if(loading)return null;
  if(!user)return <div className="workspace-gate"><div className="workspace-gate-card"><h1>Your next deal<br/><em>starts here.</em></h1><p>Log in to manage your saved businesses and investor leads.</p><Link className="btn btn-dark" to="/login">Log in</Link></div></div>;
  return <div className="saved-page pipeline-page"><header><Link to="/dashboard">← Workspace</Link><span>VENTORA CONNECT / DEAL PIPELINE</span></header><main><div className="pipeline-heading"><div><div className="section-kicker">YOUR SHORTLIST · {items.length} SAVED</div><h1>Deal <em>pipeline.</em></h1><p>Keep promising businesses and investor leads moving, with every next step in view.</p></div><Link className="pipeline-discover" to={role==='investor'?'/businesses':'/investors'}>Discover opportunities <ArrowUpRight size={16}/></Link></div>
  <div className="pipeline-status-overview">{STATUS_OPTIONS.map(s=>{const Icon=s.icon;return <button key={s.value} className={'pipeline-stat '+(filter===s.value?'active':'')} onClick={()=>setFilter(filter===s.value?'all':s.value)}><span><Icon size={16}/>{s.label}</span><b>{counts[s.value]||0}</b></button>})}</div>
