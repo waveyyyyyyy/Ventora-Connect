@@ -23,7 +23,29 @@ export default function GustPlatform(){
  const [auth,setAuth]=useState<'login'|'signup'|null>(null); const [mobile,setMobile]=useState(false); const [query,setQuery]=useState(''); const [filter,setFilter]=useState('All stages'); const [notice,setNotice]=useState('');
  const [profileName,setProfileName]=useState('Your venture'); const [email,setEmail]=useState(''); const [password,setPassword]=useState(''); const [busy,setBusy]=useState(false); const [booting,setBooting]=useState(true);
  useEffect(()=>{const timer=window.setTimeout(()=>setBooting(false),1050);return()=>window.clearTimeout(timer);},[]);
- useEffect(()=>{const targets=Array.from(document.querySelectorAll('.gp-public-header,.gp-hero,.gp-trust,.gp-section,.gp-audience,.gp-how,.gp-final-cta,.gp-footer'));targets.forEach(el=>el.classList.add('gp-scroll-reveal'));if(!('IntersectionObserver' in window)){targets.forEach(el=>el.classList.add('gp-is-revealed'));return;}const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('gp-is-revealed');observer.unobserve(entry.target);}}),{threshold:.12,rootMargin:'0px 0px -35px 0px'});targets.forEach(el=>observer.observe(el));return()=>observer.disconnect();},[session,auth]);
+ useEffect(()=>{
+  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealTargets=Array.from(document.querySelectorAll('.gp-public-header,.gp-hero-copy,.gp-hero-art,.gp-trust,.gp-section-heading,.gp-feature,.gp-audience-copy,.gp-preview-card,.gp-steps>div,.gp-final-cta>div,.gp-footer'));
+  const staggerGroups=['.gp-feature-grid','.gp-steps','.gp-trust div','.gp-audience-copy ul','.gp-discover-grid','.gp-stat-grid','.gp-dashboard-grid'];
+  staggerGroups.forEach(selector=>document.querySelectorAll(selector).forEach(group=>Array.from(group.children).forEach((child,index)=>{child.style.setProperty('--gp-stagger',String(Math.min(index,7)*75)+'ms');child.classList.add('gp-stagger-reveal');})));
+  if(!reduceMotion){
+   revealTargets.forEach(el=>el.classList.add('gp-scroll-reveal'));
+   if('IntersectionObserver' in window){
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('gp-is-revealed');observer.unobserve(entry.target);}}),{threshold:.08,rootMargin:'0px 0px -42px 0px'});
+    revealTargets.forEach(el=>observer.observe(el));
+    window.__ventoraRevealObserver=observer;
+   }else revealTargets.forEach(el=>el.classList.add('gp-is-revealed'));
+  }else revealTargets.forEach(el=>el.classList.add('gp-is-revealed'));
+  const progress=document.createElement('div');progress.className='gp-scroll-progress';progress.setAttribute('aria-hidden','true');document.body.appendChild(progress);
+  let raf=0;
+  const updateProgress=()=>{raf=0;const max=document.documentElement.scrollHeight-window.innerHeight;const amount=max>0?window.scrollY/max:0;progress.style.transform='scaleX('+Math.max(0,Math.min(1,amount))+')';};
+  const onScroll=()=>{if(!raf)raf=window.requestAnimationFrame(updateProgress);};
+  window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll,{passive:true});updateProgress();
+  const cards=document.querySelectorAll('.gp-feature,.gp-opportunity,.gp-preview-card,.gp-panel,.gp-stat,.gp-deal-card');
+  const onPointerMove=e=>{const r=e.currentTarget.getBoundingClientRect();e.currentTarget.style.setProperty('--gp-pointer-x',((e.clientX-r.left)/r.width*100)+'%');e.currentTarget.style.setProperty('--gp-pointer-y',((e.clientY-r.top)/r.height*100)+'%');};
+  cards.forEach(card=>card.addEventListener('pointermove',onPointerMove,{passive:true}));
+  return()=>{if(raf)window.cancelAnimationFrame(raf);window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll);progress.remove();if(window.__ventoraRevealObserver){window.__ventoraRevealObserver.disconnect();delete window.__ventoraRevealObserver;}cards.forEach(card=>card.removeEventListener('pointermove',onPointerMove));};
+ },[session,auth]);
  useEffect(()=>{if(!supabase)return;supabase.auth.getSession().then(({data})=>{setSession(data.session);if(data.session?.user){const m=data.session.user.user_metadata||{};setRole(m.account_type==='investor'?'investor':'founder');setProfileName(m.full_name||m.company_name||data.session.user.email?.split('@')[0]||'Your venture');}});const {data:{subscription}}=supabase.auth.onAuthStateChange((_e,s)=>{setSession(s);if(s?.user){const m=s.user.user_metadata||{};setRole(m.account_type==='investor'?'investor':'founder');setProfileName(m.full_name||m.company_name||s.user.email?.split('@')[0]||'Your venture');}});return()=>subscription.unsubscribe();},[]);
  const nav=role==='founder'?navFounder:navInvestor;
  const filtered=useMemo(()=>companies.filter(c=>(c.name+' '+c.tag+' '+c.desc).toLowerCase().includes(query.toLowerCase())&&(filter==='All stages'||c.stage===filter)),[query,filter]);
