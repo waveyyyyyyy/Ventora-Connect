@@ -89,3 +89,22 @@
 .vc-loader-intro .vc-loader-footer{width:min(390px,82vw)}
 .vc-loader-intro .vc-loader-progress{height:2px}
 .vc-loader-intro .vc-loader-progress i{animation-duration:2.6s}
+
+/* Original Ventora loading identity: orbital logo + staggered wordmark + typewriter copy. */
+.vc-loader-original{background:linear-gradient(145deg,#fff 0%,#fbfdff 55%,#f8fafc 100%)!important;color:#0b132b!important;pointer-events:none!important}
+.vc-loader-original:before{background:radial-gradient(ellipse at 50% 42%,rgba(37,99,235,.055),transparent 48%)!important}
+.vc-loader-original .vc-loader-brand{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;min-height:230px}
+.vc-loader-original .ventora-brand-loader{width:124px;height:124px}
+.vc-loader-original .vc-loader-wordmark{display:flex;flex-direction:column;align-items:center;gap:8px;color:#0b132b;font-family:Manrope,'DM Sans',sans-serif;font-weight:850;line-height:1}
+.vc-loader-original .vc-loader-ventora{display:flex;align-items:center;font-size:clamp(27px,6vw,36px);letter-spacing:.12em}
+.vc-loader-original .vc-loader-connect{font-size:9px;letter-spacing:.38em;padding-left:.38em;color:#64748b;font-weight:750}
+.vc-loader-original .vc-loader-status{color:#334155;justify-content:center;text-align:center;min-height:18px}
+.vc-loader-original .vc-loader-copy{display:inline-flex;white-space:pre}
+.vc-loader-original .vc-loader-copy span{display:inline-block}
+.vc-loader-original .vc-loader-progress i{background:linear-gradient(90deg,#a9c8ff,#477ce0);box-shadow:0 0 10px rgba(71,124,224,.2)}
+.vc-loader-original .vc-loader-index{color:#9aa8ba;text-align:center}
+.vc-loader-original .vc-loader-index b{color:#5289e8}
+.vc-loader-original.vc-loader-intro .ventora-brand-loader{width:142px;height:142px}
+.vc-loader-original.vc-loader-intro .vc-loader-ventora{font-size:clamp(32px,7vw,48px)}
+.vc-loader-original.vc-loader-intro .vc-loader-tagline{font:700 9px/1 'DM Sans',sans-serif;letter-spacing:.2em;color:#8795aa;margin-top:5px}
+@media(max-width:600px){.vc-loader-original .vc-loader-brand{min-height:210px}.vc-loader-original .ventora-brand-loader{width:112px;height:112px}}
