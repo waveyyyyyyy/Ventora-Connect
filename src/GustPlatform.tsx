@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { ArrowRight, Building2, Check, ChevronRight, Compass, Handshake, Home, Menu, MessageSquare, ShieldCheck, Sparkles, TrendingUp, UserRound, Users, X } from 'lucide-react';
 import { supabase } from './lib/supabase';
+import { useVentoraLoading } from './VentoraLoadingContext';
 
 import './gust-platform.css';
 
@@ -10,7 +11,7 @@ const BRAND_LOGO = `${import.meta.env.BASE_URL}ventora-icon.svg`;
 const pipeline = [{name:'Northstar Robotics',stage:'New',amount:'$1.8M'},{name:'Morrow Health',stage:'Screening',amount:'$850K'},{name:'Fieldnote',stage:'Considering',amount:'$2.2M'},{name:'Forma Labs',stage:'Due diligence',amount:'$6M'}];
 
 export default function GustPlatform(){
- const [session,setSession]=useState<any>(null); const [authChecked,setAuthChecked]=useState(false);  const [menuOpen,setMenuOpen]=useState(false); const navigate=useNavigate();
+ const [session,setSession]=useState<any>(null); const [authChecked,setAuthChecked]=useState(false); useVentoraLoading(!authChecked,'convergence','CONNECTING VENTURES...');  const [menuOpen,setMenuOpen]=useState(false); const navigate=useNavigate();
  useEffect(()=>{
   const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let revealObserver:IntersectionObserver|undefined;
