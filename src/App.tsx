@@ -30,10 +30,10 @@ useEffect(()=>{
    if(event==='SIGNED_OUT'){revision++;setHeaderUser(null);setAdminAllowed(false);setAccountType('business');setAuthChecked(true);return;}
    // Hydrate from Supabase's user endpoint before showing the public landing menu.
    const current=++revision;
-   const result=await client.auth.getUser();
+   const restored=await restoreUserSession();
    if(!active||current!==revision)return;
-   if(result.data.user){
-    const restored=result.data.user;setHeaderUser(restored);
+   if(restored){
+    setHeaderUser(restored);
     const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',restored.id).maybeSingle(),client.rpc('is_admin')]);
     if(!active||current!==revision)return;
     setAccountType(p.data?.account_type==='investor'?'investor':p.data?.account_type==='business'?'business':restored.user_metadata?.account_type==='investor'?'investor':'business');
