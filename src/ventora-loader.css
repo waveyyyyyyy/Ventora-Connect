@@ -73,3 +73,19 @@
 @keyframes brand-particle-b{0%,100%{transform:translate(0,0);opacity:.4}50%{transform:translate(-30px,-22px);opacity:1}}
 @keyframes brand-flare{0%{transform:scale(.72);opacity:.65}100%{transform:scale(1.3);opacity:0}}
 @media(prefers-reduced-motion:reduce){.ventora-brand-loader *,.ventora-brand-loader:before{animation:none!important}}
+
+
+/* Single shared overlay: never intercept menu taps or clicks. */
+.vc-loader{pointer-events:none!important;background:#fff!important;color:#0b132b!important}
+.vc-loader:before{background:radial-gradient(ellipse at 50% 44%,rgba(59,130,246,.045),transparent 48%)!important}
+.vc-loader-canvas{height:min(360px,48vh)}
+.vc-loader-lockup{gap:8px}
+.vc-loader-intro .vc-loader-canvas{height:min(430px,58vh)}
+.vc-loader-intro .vc-loader-lockup{gap:8px}
+.vc-loader-intro .ventora-brand-loader{width:132px;height:132px}
+.vc-loader-intro .ventora-brand-loader img{width:54px;height:54px}
+.vc-loader-intro .vc-loader-ventora{font-size:clamp(31px,7vw,54px);letter-spacing:.13em}
+.vc-loader-intro .vc-loader-connect{font-size:11px;letter-spacing:.42em}
+.vc-loader-intro .vc-loader-footer{width:min(390px,82vw)}
+.vc-loader-intro .vc-loader-progress{height:2px}
+.vc-loader-intro .vc-loader-progress i{animation-duration:2.6s}
