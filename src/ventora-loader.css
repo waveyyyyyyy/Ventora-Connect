@@ -38,5 +38,5 @@
 @keyframes vc-dot{0%,100%{opacity:.55;transform:scale(.85)}50%{opacity:1;transform:scale(1.1)}}
 @keyframes vc-progress{0%{transform:translateX(-115%)}100%{transform:translateX(255%)}}
 @keyframes vc-copy-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-@media(max-width:600px){.vc-loader-canvas{height:min(280px,38vh);min-height:190px}.vc-loader-footer{width:min(320px,86vw);padding:0}.vc-loader-index{font-size:7px}}.vc-loader-footer{padding-bottom:24px}.vc-loader-index{font-size:7px}}
+@media(max-width:600px){.vc-loader-canvas{height:min(280px,38vh);min-height:190px}.vc-loader-footer{width:min(320px,86vw);padding:0}.vc-loader-index{font-size:7px}}
 @media(prefers-reduced-motion:reduce){.vc-loader *, .vc-loader *:before,.vc-loader *:after{animation:none!important;transition:none!important}.vc-loader-progress i{width:100%;transform:none;opacity:.7}}
