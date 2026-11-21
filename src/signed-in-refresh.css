@@ -94,3 +94,7 @@
 .section-menu-trigger svg{width:23px!important;height:23px!important;stroke:#1c536d!important;stroke-width:2.2!important}
 .workspace-menu-backdrop{position:fixed!important;inset:0!important;z-index:9998!important;margin:0!important;padding:0!important}
 @media(max-width:760px){.workspace-sidebar.workspace-sidebar-open{width:70vw!important;max-width:70vw!important;padding:20px 14px calc(18px + env(safe-area-inset-bottom,0px))!important}.section-menu-trigger{top:0!important;left:0!important}}
+
+/* White hamburger mark, anchored exactly to the top-left corner. */
+.section-menu-trigger{background:#1c536d!important;color:#fff!important;border:0!important;border-radius:0 0 12px 0!important}
+.section-menu-trigger svg{stroke:#fff!important;color:#fff!important}
