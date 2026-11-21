@@ -1,7 +1,7 @@
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {Link,useNavigate,useSearchParams} from 'react-router-dom';
 import {supabase} from './lib/supabase';
-import {ArrowLeft,MessageCircle,Send,Search,LoaderCircle,Building2,UserRound,ChevronRight,Pin,BriefcaseBusiness,CalendarDays,ArrowUpRight} from 'lucide-react';
+import {ArrowLeft,MessageCircle,Send,Search,LoaderCircle,Building2,UserRound,ChevronRight,Pin,BriefcaseBusiness,ArrowUpRight} from 'lucide-react';
 type CompanyContext={id:string;name:string;industry?:string|null;description?:string|null;city?:string|null;country?:string|null};
 type Thread={id:string;otherId:string;name:string;avatar:string|null;accountType:string;bio:string|null;businesses:CompanyContext[];last:string;at:string};
 const formatTime=(value:string)=>value?new Date(value).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'}):'';
