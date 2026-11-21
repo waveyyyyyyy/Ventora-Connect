@@ -426,3 +426,22 @@ h1,h2,h3{font-family:'DM Sans',sans-serif!important;letter-spacing:-.035em!impor
 .ventora-directory-sidebar .workspace-member{flex:0 0 auto}
 .ventora-directory-sidebar .workspace-sidebar-bottom{margin-top:auto!important}
 @media(min-width:681px){.ventora-directory-sidebar{padding:28px 18px!important}}
+
+
+/* Shared Gust-inspired workspace navigation */
+.gust-workspace-sidebar{z-index:1002!important;display:flex!important;flex-direction:column!important;gap:0!important;background:radial-gradient(ellipse at 10% 0%,#284b82 0%,transparent 42%),linear-gradient(165deg,#142b52 0%,#0d1b36 64%,#09152b 100%)!important;border-right:1px solid #ffffff1c!important;box-shadow:24px 0 70px #07152c55!important}
+.gust-workspace-sidebar .workspace-brand{flex:0 0 auto;margin-bottom:22px}
+.gust-workspace-sidebar .workspace-member{flex:0 0 auto;min-width:0}
+.gust-workspace-sidebar .member-avatar-image{width:40px;height:40px;flex:0 0 40px;border-radius:13px;object-fit:cover;border:1px solid #ffffff30}
+.gust-workspace-sidebar .workspace-nav-label{color:#91b2e5!important;font-size:9px!important;letter-spacing:.16em!important}
+.gust-workspace-sidebar nav{flex:0 0 auto!important;gap:3px!important}
+.gust-workspace-sidebar nav button{min-height:39px!important;border:1px solid transparent!important;border-radius:10px!important;color:#dce8fb!important;background:transparent!important;font-weight:600!important;transition:background .18s,border-color .18s!important}
+.gust-workspace-sidebar nav button svg{color:#8fb7ff!important}
+.gust-workspace-sidebar nav button:hover,.gust-workspace-sidebar nav button.active{background:#ffffff13!important;border-color:#ffffff20!important;color:#fff!important}
+.gust-workspace-sidebar nav button.active{box-shadow:inset 3px 0 #83b3ff!important}
+.gust-workspace-sidebar nav button i{margin-left:auto;font-style:normal;background:#3f76d8;color:#fff;padding:2px 7px;border-radius:99px;font-size:9px}
+.gust-workspace-sidebar .workspace-sidebar-bottom{margin-top:auto!important;padding-top:15px!important;border-top:1px solid #ffffff20!important}
+.gust-workspace-sidebar .workspace-sidebar-bottom button{border:1px solid #ffffff20!important;border-radius:10px!important;background:#ffffff0d!important;color:#f3c3c8!important}
+.workspace-menu-backdrop{z-index:1001!important}
+@media(min-width:681px){.gust-workspace-sidebar{width:280px!important;padding:26px 16px 18px!important}}
+@media(max-width:680px){.gust-workspace-sidebar{width:min(300px,86vw)!important;padding:22px 16px 16px!important}}
