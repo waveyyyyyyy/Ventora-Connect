@@ -8,43 +8,37 @@ const location=useLocation(),nav=useNavigate(),listingPage=location.pathname==='
 useEffect(()=>{
  const client=supabase;if(!client)return;
  let active=true,revision=0;
- const sync=async(session:any)=>{
+ const sync=async(session:any,event?:string)=>{
   if(!active)return;
   const u=session?.user||null;
-  if(!u){setHeaderUser(null);setAdminAllowed(false);setAccountType('business');return;}
+  // A transient null session during page restoration must not wipe a valid menu.
+  // Only an explicit SIGNED_OUT event is allowed to clear the cached member.
+  if(!u){
+   if(event==='SIGNED_OUT'){revision++;setHeaderUser(null);setAdminAllowed(false);setAccountType('business');}
+   return;
+  }
   const current=++revision;setHeaderUser(u);
   const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',u.id).maybeSingle(),client.rpc('is_admin')]);
   if(!active||current!==revision)return;
   setAccountType(p.data?.account_type==='investor'?'investor':p.data?.account_type==='business'?'business':u.user_metadata?.account_type==='investor'?'investor':'business');
   setAdminAllowed(Boolean(admin.data&&!admin.error));
  };
- void client.auth.getSession().then(({data})=>sync(data.session)).catch(()=>{});
- const{data:{subscription}}=client.auth.onAuthStateChange((_event,session)=>{window.setTimeout(()=>void sync(session),0)});
- const onPageShow=()=>{void client.auth.getSession().then(({data})=>sync(data.session))};
+ void client.auth.getSession().then(({data})=>sync(data.session,'INITIAL_SESSION')).catch(()=>{});
+ const{data:{subscription}}=client.auth.onAuthStateChange((event,session)=>{window.setTimeout(()=>void sync(session,event),0)});
+ const onPageShow=()=>{void client.auth.getSession().then(({data})=>sync(data.session,'PAGESHOW'))};
  window.addEventListener('pageshow',onPageShow);
  return()=>{active=false;subscription.unsubscribe();window.removeEventListener('pageshow',onPageShow)};
 },[]);
 const close=()=>setOpen(false);
-const toggleMenu=async()=>{
- if(open){close();return;}
- const client=supabase;
- if(client){
-  const{data}=await client.auth.getSession();
-  const u=data.session?.user||null;
-  setHeaderUser(u);
-  if(u){
-   const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',u.id).maybeSingle(),client.rpc('is_admin')]);
-   setAccountType(p.data?.account_type==='investor'?'investor':p.data?.account_type==='business'?'business':u.user_metadata?.account_type==='investor'?'investor':'business');
-   setAdminAllowed(Boolean(admin.data&&!admin.error));
-  }else{setAdminAllowed(false);setAccountType('business');}
- }
- setOpen(true);
+const toggleMenu=()=>{
+ // Navigation is local UI: open immediately and never wait on Supabase/network calls.
+ setOpen(value=>!value);
 };
 const signOut=async()=>{close();const client=supabase;if(!client)return;const{error}=await client.auth.signOut();if(!error){setHeaderUser(null);nav('/login')}};
 const items=[{key:'overview',label:'Overview',to:'/dashboard?tab=overview',icon:<Compass/>},{key:'profile',label:'Personal profile',to:'/dashboard?tab=profile',icon:<Users/>},...(accountType==='investor'?[{key:'investor',label:'Investor preferences',to:'/dashboard?tab=investor',icon:<ChartNoAxesCombined/>}]:[{key:'business',label:'Manage businesses',to:'/dashboard?tab=business',icon:<Building2/>}]),{key:'verification',label:'Verification',to:'/dashboard?tab=verification',icon:<ShieldCheck/>},{key:'messages',label:'Messages',to:'/messages',icon:<Network/>},{key:'interests',label:'Investment interests',to:'/interests',icon:<Users/>},{key:'matches',label:'Suggested matches',to:'/matches',icon:<Sparkles/>},{key:'saved',label:'Saved profiles',to:'/saved',icon:<Check/>},{key:'announcements',label:'Announcements',to:'/announcements',icon:<Globe2/>},{key:'notifications',label:'Notifications',to:'/dashboard?tab=notifications',icon:<Bell/>},{key:'support',label:'Support',to:'/support',icon:<Compass/>},{key:'subscriptions',label:'Subscriptions',to:'/dashboard?tab=subscriptions',icon:<LockKeyhole/>},{key:'settings',label:'Settings',to:'/dashboard?tab=settings',icon:<LockKeyhole/>}];
 const go=(to:string)=>{close();nav(to)};
 return <><header className="header"><div className="nav-wrap"><button className="menu-btn" onClick={toggleMenu} aria-label="Open workspace navigation" aria-expanded={open}>{open?<X size={22}/>:<Menu size={22}/>}</button><Logo/><div className="nav-actions">{!listingPage&&(headerUser?<Link className="btn btn-dark nav-cta" to="/dashboard">Workspace <ArrowUpRight size={16}/></Link>:<><Link className="login-link" to="/login">Log in</Link><Link className="btn btn-dark nav-cta" to="/signup">Get started <ArrowUpRight size={16}/></Link></>)}</div></div></header>
-<AnimatePresence>{open&&<><motion.button className="workspace-menu-backdrop" aria-label="Close menu" onClick={close} initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}/><motion.aside className="workspace-sidebar ventora-directory-sidebar workspace-sidebar-open" initial={{x:"-105%"}} animate={{x:0}} exit={{x:"-105%"}} transition={{type:"spring",damping:30,stiffness:260}}>
+<AnimatePresence>{open&&<><motion.button className="workspace-menu-backdrop" aria-label="Close menu" onClick={close} initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}/><motion.aside className="workspace-sidebar ventora-directory-sidebar workspace-sidebar-open" initial={{x:"-105%"}} animate={{x:0}} exit={{x:"-105%"}} transition={{duration:.22,ease:"easeOut"}}>
 <Link to="/" onClick={close} className="workspace-brand"><span>VΞNTORA</span><small>CONNECT</small></Link>
 {headerUser?<><div className="workspace-member"><div className="member-avatar">{(headerUser.user_metadata?.full_name||headerUser.user_metadata?.name||headerUser.email||'V').slice(0,1).toUpperCase()}</div><div><strong>{headerUser.user_metadata?.full_name||headerUser.user_metadata?.name||headerUser.email||'Ventora member'}</strong><small>{accountType==='investor'?'Investor account':'Business account'}</small></div></div><div className="workspace-nav-label">WORKSPACE</div><nav>{items.map(item=><button key={item.key} onClick={()=>go(item.to)}>{item.icon}{item.label}</button>)}</nav><div className="workspace-nav-label">DISCOVER</div><nav><button className={location.pathname==='/businesses'?'active':''} onClick={()=>go('/businesses')}><Compass size={17}/>Business Listings</button><button className={location.pathname==='/investors'?'active':''} onClick={()=>go('/investors')}><ChartNoAxesCombined size={17}/>Investor Directory</button></nav>{adminAllowed&&<><div className="workspace-nav-label">ADMINISTRATION</div><nav><button onClick={()=>go('/admin')}><ShieldCheck size={17}/>Admin Portal</button></nav></>}<div className="workspace-sidebar-bottom"><button onClick={signOut}><LockKeyhole size={16}/>Sign out</button></div></>:<><div className="workspace-member"><div className="member-avatar"><Users/></div><div><strong>Welcome to Ventora</strong><small>Sign in to access your workspace</small></div></div><div className="workspace-nav-label">MEMBER ACCESS</div><nav><button onClick={()=>go('/login')}><LockKeyhole size={17}/>Log in to your account</button><button onClick={()=>go('/signup')}><Users size={17}/>Create an account</button></nav><div className="workspace-nav-label">DISCOVER</div><nav><button onClick={()=>go('/businesses')}><Building2 size={17}/>Business Listings</button><button onClick={()=>go('/investors')}><ChartNoAxesCombined size={17}/>Investor Directory</button></nav></>}
 
