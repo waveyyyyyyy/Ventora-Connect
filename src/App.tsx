@@ -1,4 +1,4 @@
-import {useEffect,useState} from 'react';import {Link,Route,Routes,Navigate,useNavigate,useParams,useLocation} from 'react-router-dom';import {motion,AnimatePresence} from 'framer-motion';import {ArrowUpRight,ArrowRight,Building2,ChartNoAxesCombined,ShieldCheck,Network,Globe2,Menu,X,Check,LockKeyhole,Sparkles,Compass,Users,ChevronRight,Bell,Bookmark,CalendarDays,FileText,MessageCircle} from 'lucide-react';import {supabase} from './lib/supabase';
+import {useEffect,useState} from 'react';import {Link,Route,Routes,useNavigate,useParams,useLocation} from 'react-router-dom';import {motion,AnimatePresence} from 'framer-motion';import {ArrowUpRight,ArrowRight,Building2,ChartNoAxesCombined,ShieldCheck,Network,Globe2,Menu,X,Check,LockKeyhole,Sparkles,Compass,Users,ChevronRight,Bell,Bookmark,CalendarDays,FileText,MessageCircle} from 'lucide-react';import {supabase} from './lib/supabase';
 import GustPlatform from './GustPlatform';
 import { VentoraLoadingContext, type VentoraLoadingSetter } from './VentoraLoadingContext';
 import Workspace from './Workspace';
