@@ -298,3 +298,52 @@ h1,h2,h3{font-family:'DM Sans',sans-serif!important;letter-spacing:-.035em!impor
 .messages-empty p{font-size:12px;line-height:1.8}
 .messages-empty a{display:inline-flex;padding:10px 15px;border-radius:999px;background:#edf4ff}
 @media(prefers-reduced-motion:reduce){.split-orbit{animation:none!important}}
+
+
+/* Messages layout: one scroll owner per pane, never split-scroll the page. */
+.messages-page{height:100dvh;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+.messages-header{flex:0 0 72px}
+.messages-shell{height:auto;flex:1;min-height:0;overflow:hidden}
+.messages-list{min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+.messages-chat{min-height:0;overflow:hidden}
+.messages-stream{min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.messages-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+@media(max-width:700px){
+ .messages-header{flex-basis:60px}
+ .messages-shell{height:auto;min-height:0;flex:1;overflow:hidden;padding:9px}
+ .messages-list,.messages-chat{height:100%;min-height:0;overflow:hidden}
+ .messages-list{overflow-y:auto;overscroll-behavior:contain}
+ .messages-list-title,.messages-search{flex:none}
+ .messages-list>button{flex:none}
+ .messages-chat{display:flex;flex-direction:column}
+ .messages-chat-head,.messages-compose{flex:none}
+ .messages-stream{flex:1;min-height:0;overflow-y:auto}
+}
+/* Consistent navigation menu treatment across landing and directory pages. */
+.header .menu-btn{width:42px;height:42px;display:grid;place-items:center;border:1px solid #e3eaf5;border-radius:13px;background:#fff;color:#1c355d;box-shadow:0 5px 16px #19345d0b}
+.header .menu-btn:hover{background:#f1f6ff;border-color:#c9d9f3;transform:translateY(-1px)}
+.header .nav.nav-open{z-index:100;max-height:calc(100dvh - 76px);overflow-y:auto;overscroll-behavior:contain}
+/* Richer, intentional section treatments: editorial headers, layered cards and tactile controls. */
+.workspace-page-title{box-shadow:0 18px 48px #18345f0a}
+.workspace-page-title h1{font-size:clamp(30px,4vw,46px);line-height:1.08}
+.workspace-panel{position:relative;overflow:hidden}
+.workspace-panel:before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#356bd0,#91b8ff,#a89df2);opacity:.8}
+.workspace-stat-grid article{position:relative;overflow:hidden}
+.workspace-stat-grid article:after{content:"";position:absolute;width:90px;height:90px;right:-35px;bottom:-42px;border:1px solid #9ab6e6;border-radius:50%;box-shadow:0 0 0 13px #9ab6e612,0 0 0 26px #9ab6e60a}
+.workspace-form{border:1px solid #e6edf7;border-radius:20px;padding:clamp(18px,3vw,30px);background:linear-gradient(145deg,#fff,#fbfcff);box-shadow:0 18px 45px #18345f08}
+.workspace-form label{font-weight:700}
+.workspace-form input,.workspace-form textarea,.workspace-form select{border-radius:11px;background:#fff}
+.subscription-card{position:relative;overflow:hidden;border-radius:22px}
+.subscription-card:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:linear-gradient(90deg,#3268ce,#8fb8ff,#a69bed)}
+.verification-panel{border-radius:22px;background:radial-gradient(circle at 100% 0,#e9f1ff,transparent 42%),#fff}
+.settings-panel{border-radius:22px;background:linear-gradient(135deg,#fff,#f1f6ff)}
+.workspace-list article{transition:background .2s ease,transform .2s ease}
+.workspace-list article:hover{background:#f6f9ff;transform:translateX(3px)}
+.directory-card{border-radius:22px;overflow:hidden}
+.directory-card-cover{position:relative}
+.directory-card-body{padding:22px}
+.directory-card-actions button{min-height:38px;border-radius:11px}
+.auth-box{border:1px solid #e6edf6;border-radius:24px;box-shadow:0 25px 80px #132b5012}
+.auth-box input{border-radius:12px}
+.value-card,.audience-card{box-shadow:0 18px 48px #172d4d0c}
+@media(prefers-reduced-motion:reduce){.workspace-list article:hover{transform:none}}
