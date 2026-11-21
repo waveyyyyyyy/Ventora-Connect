@@ -194,3 +194,8 @@ body.section-navigation-open .vc-member-section .section-menu-trigger{visibility
  .vc-member-section .section-menu-trigger{top:11px!important;left:10px!important}
  .vc-member-section-content>main{padding:24px 16px 36px!important}
 }
+
+/* Member-section hamburger matches the normal signed-in dashboard control. */
+.vc-member-section>.workspace-menu-toggle{display:grid!important;position:fixed!important;top:12px!important;left:12px!important;z-index:100102!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;flex:0 0 44px!important;place-items:center!important;padding:0!important;border:1px solid #dce8eb!important;border-radius:12px!important;background:#fff!important;color:#1c536d!important;box-shadow:0 8px 24px rgba(23,63,89,.12)!important;cursor:pointer!important}
+.vc-member-section>.workspace-menu-toggle svg{width:21px!important;height:21px!important;stroke:currentColor!important;color:inherit!important;stroke-width:2!important}
+@media(max-width:760px){.vc-member-section>.workspace-menu-toggle{top:8px!important;left:8px!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}}
