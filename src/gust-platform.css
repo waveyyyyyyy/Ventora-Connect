@@ -23,7 +23,7 @@
 .gp-primary:active,.gp-icon-btn:active,.gp-outline:active{transform:scale(.97)}
 .gp-primary:disabled{opacity:.72;cursor:wait}
 .gp-auth-card form button:disabled{position:relative}
-.gp-auth-card form button:disabled::after{content:"";width:13px;height:13px;border:2px solid #ffffff65;border-top-color:#fff;border-radius:50%;animation:gp-spin .7s linear infinite}
+
 .gp-content{animation:gp-view-enter .42s cubic-bezier(.2,.75,.25,1) both}
 .gp-flash{animation:gp-notice-in .3s ease both}
 @keyframes gp-rise-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
