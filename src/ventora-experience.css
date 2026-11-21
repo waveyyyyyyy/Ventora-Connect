@@ -65,9 +65,9 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .workspace-notice{padding:17px 20px!important;color:#405487!important}
 .notification-card,.workspace-list>article{border-radius:17px!important}
 .status-good{color:#269c87!important}
-.workspace-gate{background:radial-gradient(circle at 15% 20%,#8198ff44,transparent 30%),linear-gradient(135deg,#101a36,#1e3970)!important}
-.workspace-gate-card{background:rgba(255,255,255,.09)!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:26px!important;backdrop-filter:blur(18px);color:#fff!important;box-shadow:0 28px 90px rgba(0,0,0,.25)}
-.workspace-gate-card h1{color:#fff!important}.workspace-gate-card h1 em{color:#a7eaf0!important}
+.workspace-gate{background:linear-gradient(145deg,#fff 0%,#f8fafc 100%)!important;color:#0b132b!important}
+.workspace-gate-card{background:#fff!important;border:1px solid #e6ebf2!important;border-radius:26px!important;color:#0b132b!important;box-shadow:0 24px 70px rgba(11,19,43,.09)!important}
+.workspace-gate-card h1{color:#0b132b!important}.workspace-gate-card h1 em{color:#5576b8!important}
 
 
 .workspace-menu-backdrop{backdrop-filter:blur(6px);background:rgba(9,15,35,.58)!important}
@@ -404,13 +404,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 @keyframes vc-inline-sweep{to{transform:translateX(120%)}} 
 
 
-/* Keep the member access state on the same light brand system as loaders. */
-.workspace-gate{background:linear-gradient(145deg,#fff 0%,#f8fafc 100%)!important;color:#0b132b!important}
-.workspace-gate-card{background:#fff!important;border:1px solid #e6ebf2!important;color:#0b132b!important;box-shadow:0 24px 70px rgba(11,19,43,.09)!important;backdrop-filter:none!important}
-.workspace-gate-card h1{color:#0b132b!important}
-.workspace-gate-card h1 em{color:#5576b8!important}
-.workspace-gate-card p{color:#64748b!important}
-.workspace-gate-card .section-kicker{color:#5576b8!important}
+/* Light access state and reliable menu hit targets. */
 .workspace-menu-backdrop{z-index:9998!important;pointer-events:auto!important}
 .workspace-sidebar{z-index:9999!important}
 .workspace-sidebar.workspace-sidebar-open{pointer-events:auto!important}
