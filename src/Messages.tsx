@@ -4,7 +4,7 @@ import {Link,useNavigate,useSearchParams} from 'react-router-dom';
 import {supabase} from './lib/supabase';
 import MemberSectionLayout from './MemberSectionLayout';
 import {ArrowLeft,MessageCircle,Send,Search,Building2,UserRound,ChevronRight,Pin,BriefcaseBusiness,ArrowUpRight} from 'lucide-react';
-type CompanyContext={id:string;name:string;industry?:string|null;description?:string|null;city?:string|null;country?:string|null};
+type CompanyContext={id:string;name:string;industry?:string|null;description?:string|null;city?:string|null;country?:string|null;business_stage?:string|null;business_model?:string|null;funding_requirement?:number|null;min_investment?:number|null;max_investment?:number|null;equity_offered?:number|null;website?:string|null};
 type Thread={id:string;otherId:string;name:string;avatar:string|null;accountType:string;bio:string|null;profile:any;businesses:CompanyContext[];last:string;at:string};
 const formatTime=(value:string)=>value?new Date(value).toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'}):'';
 const dayKey=(value:string)=>new Date(value).toLocaleDateString('en-CA');
