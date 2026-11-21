@@ -2,7 +2,7 @@ import {useEffect,useMemo,useState} from 'react';
 
 import {Link} from 'react-router-dom';
 import {supabase} from './lib/supabase';
-import {Bookmark,Building2,UserRound,Trash2,ArrowUpRight,ChevronDown,Filter,BriefcaseBusiness,CalendarCheck,Handshake,Send,Search,ArrowRight} from 'lucide-react';
+import {Bookmark,Building2,UserRound,Trash2,ArrowUpRight,ChevronDown,Filter,CalendarCheck,Handshake,Send,Search} from 'lucide-react';
 import SectionMenu from './SectionMenu';
 
 type PipelineStatus='intro_sent'|'in_review'|'call_booked'|'committed';
