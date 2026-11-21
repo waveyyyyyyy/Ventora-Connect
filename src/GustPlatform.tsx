@@ -12,7 +12,7 @@ const pipeline = [{name:'Northstar Robotics',stage:'New',amount:'$1.8M'},{name:'
 
 export default function GustPlatform(){
  const [session,setSession]=useState<any>(null); const [authChecked,setAuthChecked]=useState(false); const [menuOpen,setMenuOpen]=useState(false); const navigate=useNavigate();
- useVentoraLoading(!authChecked,'convergence','CONNECTING VENTURES...');
+ useVentoraLoading(authChecked&&!session,'convergence','CONNECTING VENTURES...');
  useEffect(()=>{
   const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let revealObserver:IntersectionObserver|undefined;
