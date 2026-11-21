@@ -3,10 +3,10 @@ const Announcements=lazy(()=>import('./Announcements'));const Saved=lazy(()=>imp
 const Logo=({light=false}:{light?:boolean})=><Link to="/" className={'brand '+(light?'brand-light':'')} aria-label="Ventora Connect home"><span className="brand-word">V<span className="brand-e">Ξ</span>NTORA</span><span className="brand-sub">CONNECT</span></Link>;
 const fade={hidden:{opacity:0,y:24},show:{opacity:1,y:0,transition:{duration:.65,ease:'easeOut' as const}}};
 function Header(){
-const[open,setOpen]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business'),[sessionReady,setSessionReady]=useState(false);
+const[open,setOpen]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business');
 const location=useLocation(),nav=useNavigate(),listingPage=location.pathname==='/businesses'||location.pathname==='/investors';
 useEffect(()=>{
- const client=supabase;if(!client){setSessionReady(true);return;}
+ const client=supabase;if(!client){return;}
  let active=true,revision=0,knownUserId:string|null=null;
  const sync=async(session:any,event='GET_SESSION')=>{
   if(!active)return;
