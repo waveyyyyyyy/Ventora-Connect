@@ -52,7 +52,7 @@ export default function VentoraLoader({ active = true, status }: Props) {
       <div className="vc-loader-brand">
         <BrandOrbit/>
         <motion.div className="vc-loader-wordmark" aria-label="Ventora Connect">
-          <motion.span className="vc-loader-ventora" initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .12, duration: .55 }}>VENTORA</motion.span>
+          <span className="vc-loader-ventora">{'VENTORA'.split('').map((letter, index) => <motion.span key={index} initial={reduceMotion ? false : { opacity: 0, y: 18, filter: 'blur(5px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} transition={{ delay: .12 + index * .065, duration: .42 }}>{letter}</motion.span>)}</span>
           <motion.span className="vc-loader-connect" initial={reduceMotion ? false : { opacity: 0, letterSpacing: '.7em' }} animate={{ opacity: 1, letterSpacing: '.38em' }} transition={{ delay: .45, duration: .6 }}>CONNECT</motion.span>
         </motion.div>
       </div>
