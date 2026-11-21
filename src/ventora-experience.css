@@ -396,3 +396,5 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .settings-detail-grid b{font-size:13px;color:#2e3e68;overflow-wrap:anywhere}
 @media(max-width:640px){.workspace-toast{top:76px;right:12px;width:calc(100vw - 24px)}.settings-detail-grid{grid-template-columns:1fr;gap:13px}.workspace-upload-zone{min-height:125px}}
 @media(prefers-reduced-motion:reduce){.workspace-completion-track i,.workspace-upload-zone,.workspace-toast{animation:none!important;transition:none!important}}
+
+.workspace-toast.is-leaving{animation:ventora-toast-out .26s cubic-bezier(.4,0,.8,.2) both}@keyframes ventora-toast-out{to{opacity:0;transform:translate3d(0,-8px,0) scale(.98)}}
