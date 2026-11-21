@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { ArrowRight, Building2, Check, ChevronRight, Compass, Handshake, Home, Menu, MessageSquare, ShieldCheck, Sparkles, TrendingUp, UserRound, Users, X } from 'lucide-react';
 import { supabase } from './lib/supabase';
-import { useVentoraLoading } from './VentoraLoadingContext';
 
 import './gust-platform.css';
 
@@ -12,7 +11,6 @@ const pipeline = [{name:'Northstar Robotics',stage:'New',amount:'$1.8M'},{name:'
 
 export default function GustPlatform(){
  const [session,setSession]=useState<any>(null); const [authChecked,setAuthChecked]=useState(false); const [menuOpen,setMenuOpen]=useState(false); const navigate=useNavigate();
- useVentoraLoading(authChecked&&!session,'convergence','CONNECTING VENTURES...');
  useEffect(()=>{
   const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let revealObserver:IntersectionObserver|undefined;
