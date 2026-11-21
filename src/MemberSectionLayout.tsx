@@ -2,10 +2,10 @@ import type {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
 import WorkspaceNavigation from './WorkspaceNavigation';
 
-type Props={children:ReactNode;className?:string;actionTo?:string;actionLabel?:string};
-export default function MemberSectionLayout({children,className='',actionTo='/dashboard',actionLabel='Workspace'}:Props){
+type Props={children:ReactNode;className?:string;actionTo?:string;actionLabel?:string;user?:any};
+export default function MemberSectionLayout({children,className='',actionTo='/dashboard',actionLabel='Workspace',user}:Props){
  return <div className={'vc-member-section '+className}>
-  <WorkspaceNavigation/>
+  <WorkspaceNavigation user={user}/>
   <header className="vc-member-section-topbar">
    <div className="vc-member-section-brand"><span>VΞNTORA</span><small>CONNECT</small></div>
    <div className="vc-member-section-topbar-note">MEMBER WORKSPACE</div>
