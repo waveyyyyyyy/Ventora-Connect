@@ -68,8 +68,8 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .workspace-gate{background:radial-gradient(circle at 15% 20%,#8198ff44,transparent 30%),linear-gradient(135deg,#101a36,#1e3970)!important}
 .workspace-gate-card{background:rgba(255,255,255,.09)!important;border:1px solid rgba(255,255,255,.18)!important;border-radius:26px!important;backdrop-filter:blur(18px);color:#fff!important;box-shadow:0 28px 90px rgba(0,0,0,.25)}
 .workspace-gate-card h1{color:#fff!important}.workspace-gate-card h1 em{color:#a7eaf0!important}
-.workspace-loading{background:radial-gradient(circle at 50% 42%,#344c85,#111a35 72%)!important;color:#fff!important}
-.workspace-loading small{color:#aab9e9!important;letter-spacing:.2em}
+
+
 .workspace-menu-backdrop{backdrop-filter:blur(6px);background:rgba(9,15,35,.58)!important}
 .auth-page{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 0% 100%,rgba(118,211,229,.12),transparent 42%),#f3f5ff!important;grid-template-columns:minmax(340px,.95fr) minmax(440px,1.05fr)!important}
 .auth-page:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.35;background-image:linear-gradient(rgba(99,119,195,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(99,119,195,.08) 1px,transparent 1px);background-size:46px 46px}
