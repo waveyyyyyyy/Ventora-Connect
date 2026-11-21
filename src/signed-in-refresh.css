@@ -172,3 +172,25 @@ body.section-navigation-open .workspace-sidebar.section-drawer .workspace-sideba
 body.section-navigation-open .workspace-sidebar.section-drawer .workspace-sidebar-bottom button{
   min-height:44px!important;
 }
+
+
+/* Rebuilt member sections: one shared shell and the original workspace navigation drawer. */
+.vc-member-section{position:relative;min-height:100vh;min-height:100dvh;width:100%;overflow-x:clip;isolation:isolate}
+.vc-member-section-topbar{position:sticky;top:0;z-index:20;min-height:78px;display:flex;align-items:center;gap:20px;padding:12px 28px 12px 76px!important;border-bottom:1px solid rgba(215,229,233,.9);background:rgba(255,255,255,.9);backdrop-filter:blur(22px);box-shadow:0 8px 26px rgba(23,63,89,.045)}
+.vc-member-section-brand{display:flex;flex-direction:column;gap:1px;flex:0 0 auto;color:#173f59;font:900 16px/1 Manrope,sans-serif;letter-spacing:.06em}
+.vc-member-section-brand small{font:800 8px/1.4 'DM Sans',sans-serif;letter-spacing:.34em;color:#3d8292}
+.vc-member-section-topbar-note{margin-left:auto;color:#78919c;font-size:9px;font-weight:800;letter-spacing:.2em}
+.vc-member-section-home{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 15px;border:1px solid #dce8eb;border-radius:11px;background:#fff;color:#1c536d;text-decoration:none;font-size:12px;font-weight:800;white-space:nowrap;transition:background .18s,border-color .18s,transform .18s}
+.vc-member-section-home:hover{background:#edf4f5;border-color:#b8d2d8;transform:translateY(-1px)}
+.vc-member-section-content{width:100%;min-width:0}
+.vc-member-section-content>main{width:min(1200px,100%);margin:0 auto;padding:clamp(22px,4vw,48px)!important}
+.vc-member-section .section-menu-trigger{position:fixed!important;top:17px!important;left:16px!important;z-index:10000!important}
+body.section-navigation-open .vc-member-section .section-menu-trigger{visibility:hidden!important;pointer-events:none!important}
+@media(max-width:760px){
+ .vc-member-section-topbar{min-height:66px;padding:9px 12px 9px 62px!important;gap:10px}
+ .vc-member-section-brand{font-size:14px}
+ .vc-member-section-topbar-note{font-size:8px;letter-spacing:.12em}
+ .vc-member-section-home{min-height:37px;padding:0 11px;font-size:11px}
+ .vc-member-section .section-menu-trigger{top:11px!important;left:10px!important}
+ .vc-member-section-content>main{padding:24px 16px 36px!important}
+}
