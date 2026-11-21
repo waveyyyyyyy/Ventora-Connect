@@ -11,6 +11,6 @@ export default function MemberSectionLayout({children,className='',actionTo='/da
    <div className="vc-member-section-topbar-note">MEMBER WORKSPACE</div>
    <Link to={actionTo} className="vc-member-section-home">{actionLabel}</Link>
   </header>
-  <main className="vc-member-section-content">{children}</main>
+  <div className="vc-member-section-content">{children}</div>
  </div>;
 }
