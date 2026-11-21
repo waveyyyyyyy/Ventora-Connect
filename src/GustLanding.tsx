@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
-import {ArrowRight,ArrowUpRight,Building2,ChartNoAxesCombined,CheckCircle2,ChevronDown,Compass,FileText,Menu,MessageCircle,ShieldCheck,Sparkles,Users,X} from 'lucide-react';
+import {ArrowRight,ArrowUpRight,Building2,ChartNoAxesCombined,CheckCircle2,Compass,FileText,Menu,MessageCircle,ShieldCheck,Sparkles,Users,X} from 'lucide-react';
 import './gust-rebuild.css';
 
 const Logo=()=> <Link to="/" className="gust-logo"><span className="gust-logo-mark">V</span><span>VENTORA<small>CONNECT</small></span></Link>;
