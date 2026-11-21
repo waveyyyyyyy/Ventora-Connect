@@ -22,13 +22,21 @@ export const supabase = isSupabaseConfigured
   : null;
 
 
-// Restore a persisted session before showing any sign-in gate.
+// Restore the persisted member before any route is allowed to show a sign-in gate.
+// Supabase can briefly return an empty local session while its auth client is
+// initialising; verify with getUser and refresh before treating the member as signed out.
 export async function restoreUserSession() {
   if (!supabase) return null;
-  const current = await supabase.auth.getSession();
-  if (current.data.session?.user) return current.data.session.user;
-  const refreshed = await supabase.auth.refreshSession();
-  if (refreshed.data.session?.user) return refreshed.data.session.user;
-  const verified = await supabase.auth.getUser();
-  return verified.data.user || null;
+  try {
+    const current = await supabase.auth.getSession();
+    if (current.data.session?.user) return current.data.session.user;
+    const verified = await supabase.auth.getUser();
+    if (verified.data.user) return verified.data.user;
+    const refreshed = await supabase.auth.refreshSession();
+    if (refreshed.data.session?.user) return refreshed.data.session.user;
+    const finalCheck = await supabase.auth.getUser();
+    return finalCheck.data.user || null;
+  } catch {
+    return null;
+  }
 }
