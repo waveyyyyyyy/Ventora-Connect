@@ -65,7 +65,7 @@ export default function VentoraLoader({ active = true, variant = 'auto', status 
     return () => window.clearInterval(id);
   }, [visible, reduceMotion]);
   const messages = statusCopy[chosen];
-  const copy = status || messages[copyIndex];
+  const copy = status && copyIndex === 0 ? status : messages[copyIndex];
   return <AnimatePresence>
     {visible && <motion.div className={`vc-loader vc-loader-${chosen}`} role="status" aria-live="polite" aria-label={copy}
       initial={reduceMotion ? { opacity: 1 } : { opacity: 0, scale: .985 }}
