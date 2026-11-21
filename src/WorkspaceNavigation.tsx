@@ -2,11 +2,11 @@ import {useEffect,useState} from 'react';
 import {createPortal} from 'react-dom';
 import {Link,useLocation,useNavigate} from 'react-router-dom';
 import {supabase} from './lib/supabase';
-import {Building2,ChartNoAxesCombined,Compass,LayoutDashboard,UserRound,Bell,Settings,LogOut,ShieldCheck,Sparkles,FileCheck,Menu,X} from 'lucide-react';
+import {Building2,ChartNoAxesCombined,Compass,LayoutDashboard,UserRound,Bell,Settings,LogOut,ShieldCheck,Sparkles,MessageCircle,Target,FileCheck,LifeBuoy,Bookmark,BellRing,Menu,X} from 'lucide-react';
 
 type Profile={full_name?:string|null;account_type?:'business'|'investor'|null};
 type Props={user?:any;profile?:Profile|null;adminAllowed?:boolean;activeTab?:string;notificationCount?:number;open?:boolean;onOpenChange?:(open:boolean)=>void;onTabChange?:(tab:string)=>void};
-const navItems=[['overview','Overview',LayoutDashboard],['profile','Personal profile',UserRound],['business','Manage businesses',Building2],['investor','Investor preferences',ChartNoAxesCombined],['verification','Verification',FileCheck],['notifications','Notifications',Bell],['subscriptions','Subscriptions',Sparkles],['settings','Settings',Settings]] as const;
+const navItems=[['overview','Overview',LayoutDashboard],['profile','Personal profile',UserRound],['business','Manage businesses',Building2],['investor','Investor preferences',ChartNoAxesCombined],['verification','Verification',FileCheck],['messages','Messages',MessageCircle],['interests','Investment interests',Target],['matches','Suggested matches',Sparkles],['saved','Saved profiles',Bookmark],['announcements','Announcements',BellRing],['notifications','Notifications',Bell],['support','Support',LifeBuoy],['subscriptions','Subscriptions',Sparkles],['settings','Settings',Settings]] as const;
 export default function WorkspaceNavigation(props:Props={}){
  const location=useLocation(),nav=useNavigate();
  const[localOpen,setLocalOpen]=useState(false),[member,setMember]=useState<any>(props.user||null),[memberProfile,setMemberProfile]=useState<Profile|null>(props.profile||null),[isAdmin,setIsAdmin]=useState(Boolean(props.adminAllowed));
@@ -14,8 +14,8 @@ export default function WorkspaceNavigation(props:Props={}){
  const setOpen=(value:boolean)=>{props.onOpenChange?props.onOpenChange(value):setLocalOpen(value)};
  useEffect(()=>{if(props.user||props.profile)return;const client=supabase;if(!client)return;let active=true;async function load(){const{data}=await client!.auth.getUser();if(!active||!data.user)return;setMember(data.user);const[p,a]=await Promise.all([client!.from('profiles').select('full_name,account_type').eq('id',data.user.id).maybeSingle(),client!.rpc('is_admin')]);if(!active)return;setMemberProfile(p.data||{full_name:data.user.user_metadata?.full_name||data.user.email,account_type:'business'});setIsAdmin(Boolean(a.data&&!a.error));}void load();return()=>{active=false}},[props.user,props.profile]);
  useEffect(()=>{if(props.onTabChange)return;document.body.classList.toggle('section-navigation-open',open);return()=>document.body.classList.remove('section-navigation-open')},[open,props.onTabChange]);
- const active=props.activeTab||new URLSearchParams(location.search).get('tab')||'overview';
- function go(key:string){setOpen(false);if(props.onTabChange){props.onTabChange(key);return;}nav('/dashboard?tab='+key);}
+ const active=props.activeTab|| (location.pathname==='/messages'?'messages':location.pathname==='/interests'?'interests':location.pathname==='/matches'?'matches':location.pathname==='/saved'?'saved':location.pathname==='/announcements'?'announcements':location.pathname==='/support'?'support':new URLSearchParams(location.search).get('tab')||'overview');
+ function go(key:string){setOpen(false);if(['messages','interests','matches','saved','announcements','support'].includes(key)){nav('/'+key);return;}if(props.onTabChange){props.onTabChange(key);return;}nav('/dashboard?tab='+key);}
  async function signOut(){setOpen(false);await supabase?.auth.signOut();nav('/login');}
  const accountType=props.profile?.account_type||memberProfile?.account_type||'business';
  const name=props.profile?.full_name||memberProfile?.full_name||member?.user_metadata?.full_name||member?.user_metadata?.name||member?.email||'Ventora member';
