@@ -534,3 +534,142 @@ body.section-navigation-open .vc-member-section .section-menu-trigger{visibility
  .gp-hero:after,.gp-section:after,.gp-audience:after,.gp-how:after,.gp-trust:after,.gp-final-cta:after,.gp-footer:after,
  .hero:after,.section:after,.split-section:after,.audience-section:after,.trust-section:after,.cta-section:after,.footer:after,.auth-page:after,.simple-page:after{animation:none!important}
 }
+
+
+/* VENTORA DISCOVERY + SITEWIDE CREATIVE PASS — high contrast, layered surfaces. */
+.directory-business-hero{
+  color:#fff!important;
+  min-height:620px!important;
+  padding-top:156px!important;
+  padding-bottom:54px!important;
+  background:
+    linear-gradient(100deg,rgba(7,24,39,.94) 0%,rgba(12,42,59,.88) 48%,rgba(18,66,79,.62) 100%),
+    linear-gradient(0deg,rgba(5,20,32,.58),rgba(5,20,32,.05)),
+    url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2200&q=90') center 44%/cover!important;
+  border-bottom:1px solid rgba(163,211,211,.28)!important;
+  box-shadow:inset 0 -90px 130px rgba(5,20,32,.25)!important;
+}
+.directory-business-hero:before{
+  opacity:.42!important;
+  background-image:linear-gradient(rgba(194,231,228,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(194,231,228,.10) 1px,transparent 1px)!important;
+  background-size:54px 54px!important;
+  mask-image:linear-gradient(90deg,#000 0%,#000 48%,transparent 100%)!important;
+}
+.directory-business-hero:after{
+  right:5%!important;top:70px!important;width:420px!important;height:420px!important;
+  border-color:rgba(176,224,216,.28)!important;
+  box-shadow:0 0 0 30px rgba(176,224,216,.06),0 0 0 65px rgba(176,224,216,.045),0 0 0 105px rgba(176,224,216,.025)!important;
+}
+.directory-business-hero .section-kicker,
+.directory-business-hero .directory-hero-actions>div{color:#b9e0d8!important}
+.directory-business-hero h1,
+.directory-business-hero h1 em{color:#fff!important;text-shadow:0 3px 24px rgba(0,0,0,.38)!important}
+.directory-business-hero h1 em{color:#9bd6c4!important}
+.directory-business-hero>p{color:#e1edf0!important;text-shadow:0 2px 12px rgba(0,0,0,.35)!important}
+.directory-business-hero .directory-live-dot{background:#8ee0b8!important;box-shadow:0 0 16px #8ee0b8!important}
+.directory-business-hero .directory-create-link{
+  background:linear-gradient(110deg,#8fc9b4,#4e9a98)!important;color:#082d3d!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.22)!important
+}
+.directory-business-hero .directory-search{
+  border-color:rgba(196,226,227,.28)!important;
+  background:rgba(8,30,44,.72)!important;
+  box-shadow:0 22px 65px rgba(0,0,0,.30)!important;
+}
+.directory-business-hero .directory-search input,
+.directory-business-hero .directory-search select{
+  border-color:rgba(215,235,235,.48)!important;
+  background:rgba(248,252,251,.98)!important;color:#173f50!important;
+}
+.directory-business-hero .directory-search input::placeholder{color:#637e87!important}
+.directory-business-hero .directory-search select option{color:#173f50!important;background:#fff!important}
+.directory-results{
+  position:relative!important;isolation:isolate!important;
+  background:
+    radial-gradient(ellipse at 92% 4%,rgba(112,165,143,.22),transparent 31%),
+    radial-gradient(ellipse at 4% 54%,rgba(61,130,146,.13),transparent 34%),
+    linear-gradient(145deg,#eaf1f2 0%,#f4f7f6 48%,#e6eff0 100%)!important;
+}
+.directory-results:before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.34;
+  background-image:linear-gradient(rgba(23,63,89,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(23,63,89,.07) 1px,transparent 1px);
+  background-size:44px 44px;mask-image:linear-gradient(135deg,#000,transparent 75%);
+}
+.directory-intro-row>p{color:#405d69!important}
+.directory-result-head{color:#244b5d!important}
+.directory-result-head span:last-child{color:#4f7880!important}
+.directory-card{
+  background:linear-gradient(150deg,rgba(255,255,255,.98),rgba(232,243,242,.96))!important;
+}
+.directory-card-body{background:linear-gradient(160deg,rgba(255,255,255,.98),rgba(241,247,246,.98))!important}
+.directory-card-hook,.directory-card-meta,.directory-meta{color:#526d78!important}
+.directory-card-stats>div{background:linear-gradient(145deg,#e7f1ef,#f8fbfa)!important;border:1px solid #d5e5e2!important;border-radius:12px!important}
+.directory-card-stats small,.directory-funding-track span{color:#54717a!important}
+.directory-card-stats b{color:#183f50!important}
+.directory-empty{background:linear-gradient(140deg,#e5f0ef,#f7faf9)!important;border:1px solid #cbdedb!important;border-radius:24px!important}
+
+/* Replace broad blank white canvases with a quiet, layered Ventora atmosphere. */
+body{
+  background:
+    radial-gradient(ellipse at 8% 14%,rgba(112,165,143,.10),transparent 30%),
+    radial-gradient(ellipse at 92% 62%,rgba(61,130,146,.09),transparent 34%),
+    linear-gradient(145deg,#f0f5f5 0%,#f8faf9 48%,#eaf1f2 100%)!important;
+}
+body:before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.22;
+  background-image:linear-gradient(rgba(23,63,89,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(23,63,89,.055) 1px,transparent 1px);
+  background-size:52px 52px;
+}
+.section,.audience-section{
+  position:relative;isolation:isolate;
+  background:
+    radial-gradient(ellipse at 88% 15%,rgba(112,165,143,.13),transparent 36%),
+    linear-gradient(145deg,#f0f5f5 0%,#f8faf9 55%,#eaf2f2 100%);
+}
+.section:before,.audience-section:before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.32;
+  background-image:radial-gradient(rgba(28,83,109,.17) .8px,transparent .8px);
+  background-size:20px 20px;mask-image:linear-gradient(135deg,#000,transparent 72%);
+}
+.trust-section{
+  background:
+    radial-gradient(ellipse at 12% 12%,rgba(143,196,197,.26),transparent 34%),
+    linear-gradient(125deg,#e5efef,#f0f5f4 55%,#dce9e8)!important;
+}
+.audience-card{box-shadow:0 20px 55px rgba(23,63,89,.10)}
+.value-light{background:linear-gradient(145deg,#e5eeee,#f5f8f7)!important}
+.value-blue{background:linear-gradient(145deg,#dcebed,#eef5f4)!important}
+.auth-main{background:linear-gradient(145deg,#edf3f3,#f8faf9 58%,#e5efef)!important}
+.simple-page,.faq-list,.faq-cta{
+  background:linear-gradient(145deg,#edf3f3,#f8faf9 55%,#e6eff0)!important;
+}
+.pitch-detail-page{background:linear-gradient(145deg,#eaf1f1,#f7faf9 54%,#e3eded)!important}
+.pitch-bento{background:linear-gradient(145deg,rgba(255,255,255,.96),rgba(231,241,239,.96))!important}
+
+/* Member pages: more visible atmosphere and coloured, tactile panels. */
+.workspace,.messages-page,.interests-page,.matches-page,.saved-page,.announcements-page,.support-page{
+  background:
+    radial-gradient(ellipse at 92% 7%,rgba(112,165,143,.23),transparent 29%),
+    radial-gradient(ellipse at 5% 56%,rgba(61,130,146,.14),transparent 34%),
+    linear-gradient(145deg,#eaf1f2 0%,#f4f7f6 55%,#e5eeee 100%)!important;
+}
+.workspace-content,.vc-member-section-content{position:relative;isolation:isolate}
+.workspace-panel,.completion-panel,.workspace-form,.workspace-stat-grid>article,
+.business-manager-card,.subscription-card,.subscription-current,.workspace-list>article,
+.messages-shell,.messages-list,.messages-chat,.interest-list>article,.matches-grid>article,
+.pipeline-card,.announcement-list>article,.support-grid>form,.support-side,.support-history{
+  background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(231,241,239,.96))!important;
+}
+.workspace-welcome{position:relative;overflow:hidden}
+.workspace-welcome:after{
+  content:"";position:absolute;right:-55px;top:-115px;width:310px;height:310px;border:1px solid rgba(219,246,237,.35);border-radius:50%;
+  box-shadow:0 0 0 24px rgba(219,246,237,.08),0 0 0 54px rgba(219,246,237,.055),0 0 0 88px rgba(219,246,237,.035);pointer-events:none;
+}
+@media(max-width:760px){
+  .directory-business-hero{min-height:0!important;padding:126px 20px 30px!important;background-position:58% center!important}
+  .directory-business-hero:after{right:-180px!important;top:80px!important;width:300px!important;height:300px!important}
+  .directory-business-hero h1{font-size:clamp(39px,10vw,56px)!important;line-height:1.06!important}
+  .directory-business-hero .directory-search{grid-template-columns:1fr!important}
+  .directory-business-hero .directory-search input,.directory-business-hero .directory-search select{height:48px!important}
+  .directory-intro-row{align-items:flex-start!important;flex-direction:column!important}
+}
