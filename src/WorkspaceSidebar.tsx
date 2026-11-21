@@ -41,7 +41,7 @@ export default function WorkspaceSidebar({user,profile,adminAllowed=false,open,a
   const visibleLinks=workspaceLinks.filter(item=>!item.role||item.role===accountType);
   return <>
     {open&&<button type="button" className="workspace-menu-backdrop" aria-label="Close navigation menu" onClick={onClose}/>}
-    <aside className="workspace-sidebar workspace-sidebar-open gust-workspace-sidebar" aria-label="Main navigation">
+    <aside className={"workspace-sidebar "+(open?"workspace-sidebar-open ":"")+"gust-workspace-sidebar"} aria-label="Main navigation">
       <Link to="/" onClick={onClose} className="workspace-brand"><span>VΞNTORA</span><small>CONNECT</small></Link>
       {user?<>
         <div className="workspace-member">
