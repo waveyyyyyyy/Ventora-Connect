@@ -88,13 +88,8 @@
 @media(max-width:760px){.section-menu-trigger{top:8px!important;left:8px!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important}}
 
 
-/* Final shared drawer geometry and hamburger placement, matching the compact left-edge reference. */
-.workspace-sidebar.workspace-sidebar-open{position:fixed!important;left:0!important;top:0!important;bottom:0!important;right:auto!important;width:70vw!important;max-width:70vw!important;min-width:0!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;margin:0!important;border-radius:0!important;box-sizing:border-box!important;padding:20px 16px calc(18px + env(safe-area-inset-bottom,0px))!important;transform:translate3d(0,0,0)!important;overflow-y:auto!important;overscroll-behavior:contain!important}
-.section-menu-trigger{position:fixed!important;top:0!important;left:0!important;z-index:10000!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;display:grid!important;place-items:center!important;padding:0!important;border:0!important;border-radius:0 0 12px 0!important;background:#fff!important;color:#1c536d!important;box-shadow:0 3px 12px rgba(23,63,89,.14)!important}
-.section-menu-trigger svg{width:23px!important;height:23px!important;stroke:#1c536d!important;stroke-width:2.2!important}
-.workspace-menu-backdrop{position:fixed!important;inset:0!important;z-index:9998!important;margin:0!important;padding:0!important}
-@media(max-width:760px){.workspace-sidebar.workspace-sidebar-open{width:70vw!important;max-width:70vw!important;padding:20px 14px calc(18px + env(safe-area-inset-bottom,0px))!important}.section-menu-trigger{top:0!important;left:0!important}}
-
-/* White hamburger mark, anchored exactly to the top-left corner. */
-.section-menu-trigger{background:#1c536d!important;color:#fff!important;border:0!important;border-radius:0 0 12px 0!important}
-.section-menu-trigger svg{stroke:#fff!important;color:#fff!important}
+/* Only the six secondary signed-in sections receive the shared menu corner treatment. */
+body.section-navigation-open .workspace-sidebar.workspace-sidebar-open{position:fixed!important;left:0!important;top:0!important;bottom:0!important;right:auto!important;width:70vw!important;max-width:70vw!important;height:100dvh!important;margin:0!important;border-radius:0!important;box-sizing:border-box!important;transform:none!important}
+.section-menu-trigger{position:fixed!important;top:0!important;left:0!important;z-index:10000!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;display:grid!important;place-items:center!important;padding:0!important;border:0!important;border-radius:0 0 12px 0!important;background:#1c536d!important;color:#fff!important;box-shadow:0 3px 12px rgba(23,63,89,.14)!important}
+.section-menu-trigger svg{width:23px!important;height:23px!important;stroke:#fff!important;color:#fff!important;stroke-width:2.2!important}
+@media(max-width:760px){body.section-navigation-open .workspace-sidebar.workspace-sidebar-open{width:70vw!important;max-width:70vw!important}}
