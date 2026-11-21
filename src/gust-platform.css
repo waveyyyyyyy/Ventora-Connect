@@ -26,9 +26,6 @@
 .gp-auth-card form button:disabled::after{content:"";width:13px;height:13px;border:2px solid #ffffff65;border-top-color:#fff;border-radius:50%;animation:gp-spin .7s linear infinite}
 .gp-content{animation:gp-view-enter .42s cubic-bezier(.2,.75,.25,1) both}
 .gp-flash{animation:gp-notice-in .3s ease both}
-@keyframes gp-spin{to{transform:rotate(360deg)}}
-@keyframes gp-load-progress{0%{transform:translateX(-110%)}100%{transform:translateX(150%)}}
-@keyframes gp-loader-pop{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes gp-rise-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes gp-card-in{from{opacity:0;transform:translateY(13px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes gp-view-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -394,10 +391,8 @@ html{scroll-behavior:smooth;scroll-padding-top:90px}
 .gp-art-center{border:1px solid rgba(255,255,255,.82);box-shadow:0 25px 70px rgba(14,42,58,.2)}
 .gp-art-logo-image{width:64px;height:64px;border-radius:18px;box-shadow:0 12px 30px rgba(15,43,60,.18)}
 @keyframes gp-scenery-drift{from{transform:scale(1) translate3d(0,0,0)}to{transform:scale(1.07) translate3d(-8px,5px,0)}}
-@keyframes gp-loader-mark{0%{opacity:0;transform:translateY(16px) scale(.82) rotate(-8deg)}65%{opacity:1;transform:translateY(-3px) scale(1.04) rotate(2deg)}100%{transform:translateY(0) scale(1) rotate(0)}}
-@keyframes gp-brand-write{from{max-width:0;letter-spacing:12px;opacity:.25}to{max-width:180px;letter-spacing:4px;opacity:1}}
 @media(max-width:760px){.gp-hero{background-position:58% center}.gp-hero-art:before{inset:30px 0 15px}.gp-poster-one{left:1%;}.gp-poster-two{right:1%;}}
-@media(prefers-reduced-motion:reduce){.gp-hero-art:before,.gp-loader-inner>img,.gp-loader-inner>b{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.gp-hero-art:before{animation:none!important}}
 
 /* Top-left navigation drawer shared by the public Ventora experience */
 .gp-public-header{justify-content:space-between;gap:18px}
