@@ -373,3 +373,18 @@ h1,h2,h3{font-family:'DM Sans',sans-serif!important;letter-spacing:-.035em!impor
 @media(prefers-reduced-motion:reduce){.ventora-drawer-links a:hover{transform:none}.workspace-loader-mark i{animation:none}}
 
 .header .menu-btn{display:grid!important;}
+
+/* Workspace navigation drawer parity on public directory pages */
+.ventora-drawer-member{display:flex;align-items:center;gap:13px;padding:22px 2px 18px;border-bottom:1px solid #e4ebf6}
+.ventora-drawer-avatar{width:42px;height:42px;flex:0 0 42px;border-radius:14px;background:linear-gradient(145deg,#dce9ff,#b9d1ff);display:grid;place-items:center;color:#204d9c;font-weight:800;font-size:17px}
+.ventora-drawer-member>div:last-child{min-width:0;display:flex;flex-direction:column;gap:4px}
+.ventora-drawer-member strong{font-size:12px;color:#203653;overflow-wrap:anywhere}
+.ventora-drawer-member small{font-size:10px;color:#7c8ba3}
+.ventora-drawer-section-label{margin:19px 0 8px;padding-left:13px;font-size:9px;font-weight:800;letter-spacing:.18em;color:#8292aa}
+.ventora-workspace-drawer .ventora-drawer-links{gap:3px}
+.ventora-workspace-drawer .ventora-drawer-links a{padding:10px 13px;font-size:12px}
+.ventora-drawer-signout{padding-top:14px;margin-top:18px;border-top:1px solid #e4ebf6}
+.ventora-drawer-signout button{width:100%;display:flex;align-items:center;gap:13px;padding:12px 13px;border:1px solid transparent;border-radius:13px;background:transparent;color:#8a3d4a;font:650 12px 'DM Sans',sans-serif;text-align:left;cursor:pointer}
+.ventora-drawer-signout button svg:first-child{width:18px}
+.ventora-drawer-signout button svg:last-child{width:15px;margin-left:auto}
+.ventora-drawer-signout button:hover{background:#fff0f1;border-color:#f3dadd}
