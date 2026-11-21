@@ -1,7 +1,7 @@
 import {useEffect,useState} from 'react';
 import {createPortal} from 'react-dom';
 import {Link,useLocation,useNavigate} from 'react-router-dom';
-import {supabase} from './lib/supabase';
+import {supabase,restoreUserSession} from './lib/supabase';
 import {Building2,ChartNoAxesCombined,Compass,LayoutDashboard,UserRound,Bell,Settings,LogOut,ShieldCheck,Sparkles,MessageCircle,Target,FileCheck,LifeBuoy,Bookmark,BellRing,Menu,X} from 'lucide-react';
 
 type Profile={full_name?:string|null;account_type?:'business'|'investor'|null};
@@ -12,7 +12,7 @@ export default function WorkspaceNavigation(props:Props={}){
  const[localOpen,setLocalOpen]=useState(false),[member,setMember]=useState<any>(props.user||null),[memberProfile,setMemberProfile]=useState<Profile|null>(props.profile||null),[isAdmin,setIsAdmin]=useState(Boolean(props.adminAllowed));
  const open=props.open??localOpen;
  const setOpen=(value:boolean)=>{props.onOpenChange?props.onOpenChange(value):setLocalOpen(value)};
- useEffect(()=>{if('user' in props||props.profile)return;const client=supabase;if(!client)return;let active=true;async function load(){let{data:sessionData}=await client!.auth.getSession();let current=sessionData.session?.user||null;if(!current){const refreshed=await client!.auth.refreshSession();current=refreshed.data.session?.user||null;}if(!current){const restored=await client!.auth.getUser();current=restored.data.user||null;}if(!active||!current)return;setMember(current);const[p,a]=await Promise.all([client!.from('profiles').select('full_name,account_type').eq('id',current.id).maybeSingle(),client!.rpc('is_admin')]);if(!active)return;setMemberProfile(p.data||{full_name:current.user_metadata?.full_name||current.email,account_type:'business'});setIsAdmin(Boolean(a.data&&!a.error));}void load();return()=>{active=false}},[props.user,props.profile]);
+ useEffect(()=>{if('user' in props||props.profile)return;const client=supabase;if(!client)return;let active=true;async function load(){let current=await restoreUserSession();if(!active||!current)return;setMember(current);const[p,a]=await Promise.all([client!.from('profiles').select('full_name,account_type').eq('id',current.id).maybeSingle(),client!.rpc('is_admin')]);if(!active)return;setMemberProfile(p.data||{full_name:current.user_metadata?.full_name||current.email,account_type:'business'});setIsAdmin(Boolean(a.data&&!a.error));}void load();return()=>{active=false}},[props.user,props.profile]);
  useEffect(()=>{if(props.onTabChange)return;document.body.classList.toggle('section-navigation-open',open);return()=>document.body.classList.remove('section-navigation-open')},[open,props.onTabChange]);
  const active=props.activeTab|| (location.pathname==='/messages'?'messages':location.pathname==='/interests'?'interests':location.pathname==='/matches'?'matches':location.pathname==='/saved'?'saved':location.pathname==='/announcements'?'announcements':location.pathname==='/support'?'support':new URLSearchParams(location.search).get('tab')||'overview');
  function go(key:string){setOpen(false);if(['messages','interests','matches','saved','announcements','support'].includes(key)){nav('/'+key);return;}if(props.onTabChange){props.onTabChange(key);return;}nav('/dashboard?tab='+key);}
