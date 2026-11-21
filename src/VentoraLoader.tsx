@@ -73,23 +73,29 @@ export default function VentoraLoader({
   const [visible,setVisible]=useState(active);
   const startedAt=useRef(Date.now());
   const exitTimer=useRef<number|undefined>(undefined);
+  const wasActive=useRef(active);
 
   useEffect(()=>{
-    if(exitTimer.current!==undefined) window.clearTimeout(exitTimer.current);
+    if(exitTimer.current!==undefined){
+      window.clearTimeout(exitTimer.current);
+      exitTimer.current=undefined;
+    }
     if(active){
-      startedAt.current=Date.now();
+      if(!wasActive.current) startedAt.current=Date.now();
+      wasActive.current=true;
       setVisible(true);
     } else {
+      wasActive.current=false;
       const minimum=reduceMotion?120:2380;
       const remaining=Math.max(0,minimum-(Date.now()-startedAt.current));
-      exitTimer.current=window.setTimeout(()=>setVisible(false),remaining);
+      exitTimer.current=window.setTimeout(()=>{setVisible(false);exitTimer.current=undefined;},remaining);
     }
-    return ()=>{if(exitTimer.current!==undefined)window.clearTimeout(exitTimer.current);};
-  },[active,chosen,motionVariant,replayKey,reduceMotion]);
+    return ()=>{if(exitTimer.current!==undefined){window.clearTimeout(exitTimer.current);exitTimer.current=undefined;}};
+  },[active,reduceMotion]);
 
   return <AnimatePresence>
     {visible&&<motion.div
-      key={String(replayKey)+'-'+chosen+'-'+motionVariant}
+      key="ventora-single-loader"
       className={'vc-loader vc-loader-slime vc-loader-'+chosen+' vc-motion-'+motionVariant+' '+className}
       role="status" aria-live="polite" aria-label={message}
       initial={reduceMotion?{opacity:1,scale:1}:{opacity:0,scale:1.025}}
