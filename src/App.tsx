@@ -6,7 +6,7 @@ function Header(){
 const[open,setOpen]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business'),[sessionReady,setSessionReady]=useState(false);
 const location=useLocation(),nav=useNavigate(),listingPage=location.pathname==='/businesses'||location.pathname==='/investors';
 useEffect(()=>{
- if(!supabase){setSessionReady(true);return;}
+ const client=supabase;if(!client){setSessionReady(true);return;}
  let active=true,revision=0,knownUserId:string|null=null;
  const sync=async(session:any,event='GET_SESSION')=>{
   if(!active)return;
@@ -17,13 +17,13 @@ useEffect(()=>{
    knownUserId=null;setHeaderUser(null);setAdminAllowed(false);setAccountType('business');setSessionReady(true);return;
   }
   const current=++revision;knownUserId=u.id;setHeaderUser(u);
-  const[p,admin]=await Promise.all([supabase.from('profiles').select('account_type').eq('id',u.id).maybeSingle(),supabase.rpc('is_admin')]);
+  const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',u.id).maybeSingle(),client.rpc('is_admin')]);
   if(!active||current!==revision)return;
   setAccountType(p.data?.account_type==='investor'?'investor':p.data?.account_type==='business'?'business':u.user_metadata?.account_type==='investor'?'investor':'business');
   setAdminAllowed(Boolean(admin.data&&!admin.error));setSessionReady(true);
  };
- void supabase.auth.getSession().then(({data})=>sync(data.session,'GET_SESSION')).catch(()=>{if(active)setSessionReady(true)});
- const{data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{window.setTimeout(()=>void sync(session,event),0)});
+ void client.auth.getSession().then(({data})=>sync(data.session,'GET_SESSION')).catch(()=>{if(active)setSessionReady(true)});
+ const{data:{subscription}}=client.auth.onAuthStateChange((event,session)=>{window.setTimeout(()=>void sync(session,event),0)});
  const onPageShow=()=>{void supabase.auth.getSession().then(({data})=>{if(data.session)void sync(data.session,'PAGESHOW')})};
  window.addEventListener('pageshow',onPageShow);
  return()=>{active=false;subscription.unsubscribe();window.removeEventListener('pageshow',onPageShow)};
