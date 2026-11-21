@@ -22,7 +22,7 @@ useEffect(()=>{
   setAccountType(p.data?.account_type==='investor'?'investor':p.data?.account_type==='business'?'business':u.user_metadata?.account_type==='investor'?'investor':'business');
   setAdminAllowed(Boolean(admin.data&&!admin.error));
  };
- void client.auth.getSession().then(({data})=>sync(data.session,'GET_SESSION')).catch(()=>{if(active)setSessionReady(true)});
+ void client.auth.getSession().then(({data})=>sync(data.session,'GET_SESSION')).catch(()=>{});
  const{data:{subscription}}=client.auth.onAuthStateChange((event,session)=>{window.setTimeout(()=>void sync(session,event),0)});
  const onPageShow=()=>{void client.auth.getSession().then(({data})=>{if(data.session)void sync(data.session,'PAGESHOW')})};
  window.addEventListener('pageshow',onPageShow);
