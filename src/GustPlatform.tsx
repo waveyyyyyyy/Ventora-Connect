@@ -25,6 +25,7 @@ export default function GustPlatform(){
  useEffect(()=>{const timer=window.setTimeout(()=>setBooting(false),1050);return()=>window.clearTimeout(timer);},[]);
  useEffect(()=>{
   const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let revealObserver:IntersectionObserver|undefined;
   const revealTargets=Array.from(document.querySelectorAll('.gp-public-header,.gp-hero-copy,.gp-hero-art,.gp-trust,.gp-section-heading,.gp-feature,.gp-audience-copy,.gp-preview-card,.gp-steps>div,.gp-final-cta>div,.gp-footer'));
   const staggerGroups=['.gp-feature-grid','.gp-steps','.gp-trust div','.gp-audience-copy ul','.gp-discover-grid','.gp-stat-grid','.gp-dashboard-grid'];
   staggerGroups.forEach(selector=>document.querySelectorAll(selector).forEach(group=>Array.from(group.children).forEach((child,index)=>{child.style.setProperty('--gp-stagger',String(Math.min(index,7)*75)+'ms');child.classList.add('gp-stagger-reveal');})));
@@ -33,7 +34,7 @@ export default function GustPlatform(){
    if('IntersectionObserver' in window){
     const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('gp-is-revealed');observer.unobserve(entry.target);}}),{threshold:.08,rootMargin:'0px 0px -42px 0px'});
     revealTargets.forEach(el=>observer.observe(el));
-    window.__ventoraRevealObserver=observer;
+    revealObserver=observer;
    }else revealTargets.forEach(el=>el.classList.add('gp-is-revealed'));
   }else revealTargets.forEach(el=>el.classList.add('gp-is-revealed'));
   const progress=document.createElement('div');progress.className='gp-scroll-progress';progress.setAttribute('aria-hidden','true');document.body.appendChild(progress);
@@ -44,7 +45,7 @@ export default function GustPlatform(){
   const cards=document.querySelectorAll('.gp-feature,.gp-opportunity,.gp-preview-card,.gp-panel,.gp-stat,.gp-deal-card');
   const onPointerMove=e=>{const r=e.currentTarget.getBoundingClientRect();e.currentTarget.style.setProperty('--gp-pointer-x',((e.clientX-r.left)/r.width*100)+'%');e.currentTarget.style.setProperty('--gp-pointer-y',((e.clientY-r.top)/r.height*100)+'%');};
   cards.forEach(card=>card.addEventListener('pointermove',onPointerMove,{passive:true}));
-  return()=>{if(raf)window.cancelAnimationFrame(raf);window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll);progress.remove();if(window.__ventoraRevealObserver){window.__ventoraRevealObserver.disconnect();delete window.__ventoraRevealObserver;}cards.forEach(card=>card.removeEventListener('pointermove',onPointerMove));};
+  return()=>{if(raf)window.cancelAnimationFrame(raf);window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll);progress.remove();if(revealObserver)revealObserver.disconnect();cards.forEach(card=>card.removeEventListener('pointermove',onPointerMove));};
  },[session,auth]);
  useEffect(()=>{if(!supabase)return;supabase.auth.getSession().then(({data})=>{setSession(data.session);if(data.session?.user){const m=data.session.user.user_metadata||{};setRole(m.account_type==='investor'?'investor':'founder');setProfileName(m.full_name||m.company_name||data.session.user.email?.split('@')[0]||'Your venture');}});const {data:{subscription}}=supabase.auth.onAuthStateChange((_e,s)=>{setSession(s);if(s?.user){const m=s.user.user_metadata||{};setRole(m.account_type==='investor'?'investor':'founder');setProfileName(m.full_name||m.company_name||s.user.email?.split('@')[0]||'Your venture');}});return()=>subscription.unsubscribe();},[]);
  const nav=role==='founder'?navFounder:navInvestor;
