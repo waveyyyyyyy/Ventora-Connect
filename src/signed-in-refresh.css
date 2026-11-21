@@ -77,3 +77,6 @@
 .workspace-sidebar.section-drawer .workspace-sidebar-bottom{position:sticky!important;bottom:0!important;margin-top:auto!important;padding:13px 0 0!important}
 .workspace-sidebar.section-drawer .workspace-sidebar-bottom button{min-height:44px!important;padding:0 12px!important;border-radius:10px!important}
 @media(max-width:760px){.section-shared-menu-toggle{top:8px!important;left:8px!important}.workspace-sidebar.section-drawer{width:min(330px,88vw)!important;max-width:88vw!important;padding:20px 16px calc(18px + env(safe-area-inset-bottom,0px))!important}}
+
+/* Section pages use the same native workspace hamburger button. */
+.section-menu-trigger{display:grid!important;flex:0 0 39px!important;width:39px!important;height:39px!important;min-height:39px!important;place-items:center!important;border:1px solid #e1e8f2!important;border-radius:12px!important;background:#fff!important;color:#1c536d!important;cursor:pointer!important}
