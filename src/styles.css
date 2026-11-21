@@ -388,3 +388,9 @@ h1,h2,h3{font-family:'DM Sans',sans-serif!important;letter-spacing:-.035em!impor
 .ventora-drawer-signout button svg:first-child{width:18px}
 .ventora-drawer-signout button svg:last-child{width:15px;margin-left:auto}
 .ventora-drawer-signout button:hover{background:#fff0f1;border-color:#f3dadd}
+
+/* Keep the navigation as a true side drawer on every viewport. */
+.ventora-drawer{width:min(360px,86vw)!important;max-width:360px!important;inset:0 auto 0 0!important;height:100dvh!important;max-height:100dvh!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+.ventora-drawer-loading{min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#71809a;font-size:11px}
+.ventora-workspace-drawer .ventora-drawer-links{padding-bottom:2px}
+@media(max-width:700px){.ventora-drawer{width:min(340px,86vw)!important;max-width:340px!important;padding:22px 20px 18px!important}.ventora-drawer-intro h2{font-size:38px}.ventora-workspace-drawer .ventora-drawer-links a{padding:10px 11px}}
