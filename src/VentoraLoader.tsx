@@ -1,77 +1,50 @@
-import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import type { ReactNode } from 'react';
 
 export type VentoraLoaderVariant = 'blueprint' | 'pulse' | 'convergence' | 'auto';
-type Props = { active?: boolean; variant?: VentoraLoaderVariant; status?: string; intro?: boolean };
+type Props = { active?: boolean; variant?: VentoraLoaderVariant; status?: string; className?: string };
 
-const statusCopy = [
-  'CONNECTING VENTORA NETWORK...',
-  'ALIGNING OPPORTUNITIES...',
-  'PREPARING YOUR WORKSPACE...',
-  'SECURING YOUR PRIVATE DEAL ROOM...',
-  'SYNCING YOUR INVESTOR PIPELINE...'
-];
+const copy: Record<Exclude<VentoraLoaderVariant,'auto'>,string> = {
+  blueprint: 'VERIFYING DEAL ROOM...',
+  pulse: 'CONNECTING VENTURES...',
+  convergence: 'SYNCING INVESTOR PIPELINE...'
+};
 
-function BrandOrbit() {
-  return <div className="ventora-brand-loader" aria-hidden="true">
-    <span className="brand-loader-orbit brand-orbit-one"/>
-    <span className="brand-loader-orbit brand-orbit-two"/>
-    <span className="brand-loader-orbit brand-orbit-three"/>
-    <span className="brand-loader-particle particle-one"/>
-    <span className="brand-loader-particle particle-two"/>
-    <img src={import.meta.env.BASE_URL + 'ventora-icon.svg'} alt=""/>
-    <i className="brand-loader-flare"/>
+function Wordmark(){
+  const letters: ReactNode[] = ['V', <span className="vc-loader-e" aria-label="E"><i/><i/><i/></span>, 'N','T','O','R','A'];
+  return <div className="vc-loader-wordmark" aria-label="VENTORA CONNECT">
+    <div className="vc-loader-ventora">{letters.map((letter,index)=><span className="vc-loader-letter" key={index}>{letter}</span>)}</div>
+    <div className="vc-loader-connect">CONNECT</div>
   </div>;
 }
 
-function Typewriter({ text, disabled }: { text: string; disabled: boolean }) {
-  return <span className="vc-loader-copy" aria-label={text}>
-    {disabled ? text : text.split('').map((char, index) => (
-      <motion.span key={index} initial={{ opacity: 0, y: 5, filter: 'blur(3px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} transition={{ delay: index * .018, duration: .16, ease: 'easeOut' }}>{char === ' ' ? '\u00a0' : char}</motion.span>
-    ))}
-  </span>;
-}
+function BlueprintArt(){return <svg className="vc-loader-art vc-blueprint-art" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+  <defs><pattern id="vc-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#93c5fd" strokeWidth=".65" opacity=".48"/></pattern><linearGradient id="vc-draw" x1="0" x2="1"><stop stopColor="#93c5fd" stopOpacity="0"/><stop offset=".5" stopColor="#2563eb" stopOpacity=".8"/><stop offset="1" stopColor="#93c5fd" stopOpacity="0"/></linearGradient></defs>
+  <rect x="35" y="20" width="570" height="320" fill="url(#vc-grid)" opacity=".65"/><path className="vc-draft-line" d="M60 180H580M320 34V326M90 80H550V280H90Z" fill="none" stroke="#60a5fa" strokeWidth="1" strokeDasharray="5 8"/><path className="vc-draft-dimension" d="M90 60V45M550 60V45M90 52H550M70 80H55M70 280H55M62 80V280" fill="none" stroke="#3b82f6" strokeWidth="1"/><path className="vc-draft-sweep" d="M90 52H550" stroke="url(#vc-draw)" strokeWidth="2"/><path d="M90 80h18M90 80v18M550 80h-18M550 80v18M90 280h18M90 280v-18M550 280h-18M550 280v-18" stroke="#2563eb" strokeWidth="1.5" fill="none"/>
+</svg>}
+function PulseArt(){return <svg className="vc-loader-art vc-pulse-art" viewBox="0 0 640 360" aria-hidden="true">
+  <g className="vc-mesh" fill="none" stroke="#93c5fd" strokeWidth="1"><path d="M90 80L210 125 320 180 440 100 550 80M80 260L210 215 320 180 445 245 560 270M210 125L210 215M440 100L445 245M90 80L80 260M550 80L560 270M90 80L320 180 550 80M80 260L320 180 560 270"/></g>
+  <g className="vc-pulse-rings" fill="none" stroke="#2563eb"><circle cx="320" cy="180" r="38"/><circle cx="320" cy="180" r="38"/><circle cx="320" cy="180" r="38"/></g>
+  <g fill="#2563eb"><circle className="vc-node" cx="90" cy="80" r="3"/><circle className="vc-node" cx="550" cy="80" r="3"/><circle className="vc-node" cx="80" cy="260" r="3"/><circle className="vc-node" cx="560" cy="270" r="3"/><circle className="vc-node" cx="210" cy="125" r="3"/><circle className="vc-node" cx="445" cy="245" r="3"/></g>
+</svg>}
+function ConvergenceArt(){return <svg className="vc-loader-art vc-convergence-art" viewBox="0 0 640 360" aria-hidden="true">
+  <g fill="none" stroke="#60a5fa" strokeWidth="1"><path className="vc-trail vc-trail-a" d="M24 90L180 150 320 180"/><path className="vc-trail vc-trail-b" d="M616 90L460 150 320 180"/><path className="vc-trail vc-trail-c" d="M24 270L180 210 320 180"/><path className="vc-trail vc-trail-d" d="M616 270L460 210 320 180"/><path d="M320 28V95M320 265V332M42 180H110M530 180H598" strokeDasharray="3 7"/><path d="M305 180h30M320 165v30" stroke="#2563eb" strokeWidth="1.5"/></g>
+  <g className="vc-crosshairs" stroke="#2563eb" strokeWidth="1"><path d="M70 70h16M78 62v16M554 70h16M562 62v16M70 290h16M78 282v16M554 290h16M562 282v16"/></g>
+</svg>}
 
-export default function VentoraLoader({ active = true, status, intro = false }: Props) {
-  const reduceMotion = useReducedMotion();
-  const [copyIndex, setCopyIndex] = useState(0);
-  const [visible, setVisible] = useState(false);
-  const startedAt = useRef<number | null>(null);
-
-  useEffect(() => {
-    if (active) { startedAt.current = Date.now(); setVisible(true); return; }
-    if (startedAt.current === null) { setVisible(false); return; }
-    const remaining = Math.max(0, (intro ? 2450 : 950) - (Date.now() - startedAt.current));
-    const timer = window.setTimeout(() => setVisible(false), remaining);
-    return () => window.clearTimeout(timer);
-  }, [active, intro]);
-
-  useEffect(() => {
-    if (!visible || reduceMotion || status || intro) return;
-    const id = window.setInterval(() => setCopyIndex(index => (index + 1) % statusCopy.length), 1150);
-    return () => window.clearInterval(id);
-  }, [visible, reduceMotion, status, intro]);
-
-  const copy = status || (intro ? 'WHERE AMBITION MEETS OPPORTUNITY' : statusCopy[copyIndex]);
-  return <AnimatePresence>
-    {visible && <motion.div className={'vc-loader vc-loader-original' + (intro ? ' vc-loader-intro' : '')} role="status" aria-live="polite" aria-label={copy}
-      initial={reduceMotion ? { opacity: 1 } : { opacity: 0, scale: .985 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.018, filter: 'blur(3px)' }}
-      transition={{ duration: reduceMotion ? .12 : .34, ease: [.22,.72,.22,1] }}>
-      <div className="vc-loader-brand">
-        <BrandOrbit/>
-        <div className="vc-loader-wordmark" aria-label="Ventora Connect">
-          <span className="vc-loader-ventora">{'VENTORA'.split('').map((letter, index) => <motion.span key={index} initial={reduceMotion ? false : { opacity: 0, y: 22, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} transition={{ delay: .12 + index * .075, duration: .48, ease: [.16,1,.3,1] }}>{letter}</motion.span>)}</span>
-          <motion.span className="vc-loader-connect" initial={reduceMotion ? false : { opacity: 0, letterSpacing: '.72em' }} animate={{ opacity: 1, letterSpacing: '.38em' }} transition={{ delay: .68, duration: .68, ease: [.16,1,.3,1] }}>CONNECT</motion.span>
-          {intro && <motion.span className="vc-loader-tagline" initial={{opacity:0,y:8}} animate={{opacity:1,y:0}} transition={{delay:1.35,duration:.5}}>WHERE AMBITION MEETS OPPORTUNITY</motion.span>}
-        </div>
-      </div>
-      <div className="vc-loader-footer">
-        {!intro && <div className="vc-loader-status"><span className="vc-loader-live-dot"/><Typewriter text={copy} disabled={!!reduceMotion}/></div>}
-        <div className="vc-loader-progress" aria-hidden="true"><i/></div>
-        <span className="vc-loader-index">VENTORA CONNECT <b>·</b> {intro ? 'BUILT FOR AMBITION' : 'PRIVATE DEAL ROOM'}</span>
-      </div>
-    </motion.div>}
-  </AnimatePresence>;
+export default function VentoraLoader({active=true,variant='convergence',status,className=''}:Props){
+ const reduceMotion=useReducedMotion();
+ const chosen=variant==='auto'?'pulse':variant;
+ const message=status||copy[chosen];
+ const art=chosen==='blueprint'?<BlueprintArt/>:chosen==='pulse'?<PulseArt/>:<ConvergenceArt/>;
+ return <AnimatePresence>
+  {active&&<motion.div className={'vc-loader vc-loader-'+chosen+' '+className} role="status" aria-live="polite" aria-label={message}
+    initial={reduceMotion?{opacity:1}:{opacity:0,scale:1.025}}
+    animate={{opacity:1,scale:1}}
+    exit={reduceMotion?{opacity:0}:{opacity:0,scale:.965,filter:'blur(2px)'}}
+    transition={{duration:reduceMotion?.12:1.55,ease:[.22,.72,.22,1]}}>
+    <div className="vc-loader-canvas">{art}<div className="vc-loader-lockup"><Wordmark/><span className="vc-loader-sweep"/></div></div>
+    <div className="vc-loader-footer"><div className="vc-loader-progress"><i/></div><div className="vc-loader-status"><span className="vc-loader-live-dot"/>{message}</div><span className="vc-loader-index">VENTORA CONNECT <b>·</b> PRIVATE NETWORK</span></div>
+  </motion.div>}
+ </AnimatePresence>;
 }
