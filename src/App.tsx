@@ -24,7 +24,7 @@ useEffect(()=>{
  };
  void client.auth.getSession().then(({data})=>sync(data.session,'GET_SESSION')).catch(()=>{if(active)setSessionReady(true)});
  const{data:{subscription}}=client.auth.onAuthStateChange((event,session)=>{window.setTimeout(()=>void sync(session,event),0)});
- const onPageShow=()=>{void supabase.auth.getSession().then(({data})=>{if(data.session)void sync(data.session,'PAGESHOW')})};
+ const onPageShow=()=>{void client.auth.getSession().then(({data})=>{if(data.session)void sync(data.session,'PAGESHOW')})};
  window.addEventListener('pageshow',onPageShow);
  return()=>{active=false;subscription.unsubscribe();window.removeEventListener('pageshow',onPageShow)};
 },[]);
