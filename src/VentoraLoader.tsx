@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
 export type VentoraLoaderVariant = 'blueprint' | 'pulse' | 'convergence' | 'auto';
@@ -50,15 +50,24 @@ export default function VentoraLoader({ active = true, variant = 'auto', status 
     return next;
   }, [variant]);
   const [copyIndex, setCopyIndex] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const startedAt = useRef<number | null>(null);
   useEffect(() => {
-    if (!active || reduceMotion) return;
+    if (active) { startedAt.current = Date.now(); setVisible(true); return; }
+    if (startedAt.current === null) { setVisible(false); return; }
+    const remaining = Math.max(0, 1500 - (Date.now() - startedAt.current));
+    const timer = window.setTimeout(() => setVisible(false), remaining);
+    return () => window.clearTimeout(timer);
+  }, [active]);
+  useEffect(() => {
+    if (!visible || reduceMotion) return;
     const id = window.setInterval(() => setCopyIndex(index => (index + 1) % 3), 620);
     return () => window.clearInterval(id);
-  }, [active, reduceMotion]);
+  }, [visible, reduceMotion]);
   const messages = statusCopy[chosen];
   const copy = status || messages[copyIndex];
   return <AnimatePresence>
-    {active && <motion.div className={`vc-loader vc-loader-${chosen}`} role="status" aria-live="polite" aria-label={copy}
+    {visible && <motion.div className={`vc-loader vc-loader-${chosen}`} role="status" aria-live="polite" aria-label={copy}
       initial={reduceMotion ? { opacity: 1 } : { opacity: 0, scale: .985 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 1.018, filter: 'blur(3px)' }}
