@@ -6,7 +6,7 @@ import {Building2,ChartNoAxesCombined,Compass,LayoutDashboard,UserRound,Bell,Set
 
 type Profile={full_name?:string|null;account_type?:'business'|'investor'|null};
 type Props={user?:any;profile?:Profile|null;adminAllowed?:boolean;activeTab?:string;notificationCount?:number;open?:boolean;onOpenChange?:(open:boolean)=>void;onTabChange?:(tab:string)=>void};
-const navItems=[['overview','Overview',LayoutDashboard],['profile','Personal profile',UserRound],['business','Manage businesses',Building2],['investor','Investor preferences',ChartNoAxesCombined],['verification','Verification',FileCheck],['notifications','Notifications',Bell],['support','Support',LifeBuoy],['subscriptions','Subscriptions',Sparkles],['settings','Settings',Settings]] as const;
+const navItems=[['overview','Overview',LayoutDashboard],['profile','Personal profile',UserRound],['business','Manage businesses',Building2],['investor','Investor preferences',ChartNoAxesCombined],['verification','Verification',FileCheck],['notifications','Notifications',Bell],['subscriptions','Subscriptions',Sparkles],['settings','Settings',Settings]] as const;
 export default function WorkspaceNavigation(props:Props={}){
  const location=useLocation(),nav=useNavigate();
  const[localOpen,setLocalOpen]=useState(false),[member,setMember]=useState<any>(props.user||null),[memberProfile,setMemberProfile]=useState<Profile|null>(props.profile||null),[isAdmin,setIsAdmin]=useState(Boolean(props.adminAllowed));
