@@ -1,7 +1,7 @@
 /* Ventora Connect — unified white loading system */
-.vc-loader{position:fixed;inset:0;z-index:99999;display:grid;grid-template-rows:1fr auto;align-items:center;justify-items:center;overflow:hidden;padding:clamp(24px,5vw,56px);background:linear-gradient(145deg,#fff 0%,#fbfdff 54%,#f8fafc 100%);color:#0b132b;isolation:isolate}
+.vc-loader{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(12px,2.4vh,24px);overflow:hidden;padding:24px;background:linear-gradient(145deg,#fff 0%,#fbfdff 54%,#f8fafc 100%);color:#0b132b;isolation:isolate}
 .vc-loader:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 43%,rgba(37,99,235,.055),transparent 48%)}
-.vc-loader-canvas{position:relative;width:min(560px,88vw);height:min(390px,56vh);min-height:250px;display:grid;place-items:center}
+.vc-loader-canvas{position:relative;width:min(560px,88vw);height:min(320px,42vh);min-height:210px;display:grid;place-items:center;flex:0 1 auto}
 .vc-loader-art{position:absolute;inset:0;pointer-events:none;overflow:visible}
 .vc-loader-lockup{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:13px;animation:vc-lockup-in .75s cubic-bezier(.2,.8,.2,1) both}
 .vc-loader-wordmark{display:flex;flex-direction:column;align-items:center;gap:4px;color:#0b132b;font-family:Manrope,'DM Sans',sans-serif;font-weight:850;line-height:1;letter-spacing:.105em}
@@ -11,7 +11,7 @@
 .vc-loader-e i:nth-child(2){width:76%}.vc-loader-e i:nth-child(3){width:100%}
 .vc-loader-connect{font-size:10px;letter-spacing:.52em;padding-left:.52em;color:#53627d;font-weight:750}
 .vc-loader-tagline{font:700 9px/1 'DM Sans',sans-serif;letter-spacing:.24em;color:#8a97ac}
-.vc-loader-footer{width:min(360px,86vw);display:flex;flex-direction:column;gap:13px;align-self:end;padding-bottom:clamp(10px,4vh,38px)}
+.vc-loader-footer{width:min(360px,86vw);display:flex;flex-direction:column;gap:13px;align-self:center;padding:0;margin:0;flex:0 0 auto}
 .vc-loader-status{display:flex;align-items:center;justify-content:center;gap:9px;min-height:16px;font:750 9px/1.4 'DM Sans',sans-serif;letter-spacing:.16em;color:#253858;text-align:center}
 .vc-loader-live-dot{width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.1);animation:vc-dot 1.2s ease-in-out infinite}
 .vc-loader-copy{animation:vc-copy-in .28s ease both}
@@ -38,5 +38,5 @@
 @keyframes vc-dot{0%,100%{opacity:.55;transform:scale(.85)}50%{opacity:1;transform:scale(1.1)}}
 @keyframes vc-progress{0%{transform:translateX(-115%)}100%{transform:translateX(255%)}}
 @keyframes vc-copy-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-@media(max-width:600px){.vc-loader-canvas{height:min(340px,48vh);min-height:220px}.vc-loader-footer{padding-bottom:24px}.vc-loader-index{font-size:7px}}
+@media(max-width:600px){.vc-loader-canvas{height:min(280px,38vh);min-height:190px}.vc-loader-footer{width:min(320px,86vw);padding:0}.vc-loader-index{font-size:7px}}.vc-loader-footer{padding-bottom:24px}.vc-loader-index{font-size:7px}}
 @media(prefers-reduced-motion:reduce){.vc-loader *, .vc-loader *:before,.vc-loader *:after{animation:none!important;transition:none!important}.vc-loader-progress i{width:100%;transform:none;opacity:.7}}
