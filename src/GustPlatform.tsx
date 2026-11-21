@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { ArrowRight, Building2, Check, ChevronRight, Compass, Handshake, ShieldCheck, Sparkles, TrendingUp, Users } from 'lucide-react';
+import { ArrowRight, Check, ChevronRight, Compass, Handshake, ShieldCheck, Sparkles, TrendingUp, Users } from 'lucide-react';
 import { supabase } from './lib/supabase';
 import './gust-platform.css';
 
