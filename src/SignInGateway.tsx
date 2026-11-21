@@ -13,7 +13,10 @@ export default function SignInGateway({ active }: { active: boolean }) {
   const [phase, setPhase] = useState(0);
 
   useEffect(() => {
-    if (!active) return;
+    if (!active) {
+      setProgress(100);
+      return;
+    }
     setProgress(8);
     setPhase(0);
     if (reduceMotion) {
@@ -50,7 +53,7 @@ export default function SignInGateway({ active }: { active: boolean }) {
           <div className="gateway-grid" aria-hidden="true" />
           <div className="gateway-glow gateway-glow-a" aria-hidden="true" />
           <div className="gateway-glow gateway-glow-b" aria-hidden="true" />
-          <div className="gateway-center">
+          <div className={"gateway-center gateway-phase-" + phase}>
             <div className="gateway-network" aria-hidden="true">
               <svg viewBox="0 0 520 360" preserveAspectRatio="xMidYMid meet">
                 <defs>
@@ -65,6 +68,7 @@ export default function SignInGateway({ active }: { active: boolean }) {
                 <g className="gateway-points">
                   {[[24,34],[496,326],[4,280],[510,48],[94,0],[420,360],[430,0],[82,360],[0,160],[520,205],[260,0],[260,360]].map(([x,y],i)=><circle key={i} cx={x} cy={y} r="5" fill="url(#gatewayNode)"/>)}
                 </g>
+                <g className="gateway-travel-particles" fill="#c9e8ff" filter="url(#gatewayNode)"><circle r="4"><animateMotion dur="1.35s" repeatCount="indefinite" path="M24 34 Q160 80 260 180"/></circle><circle r="3.5"><animateMotion dur="1.55s" begin=".2s" repeatCount="indefinite" path="M496 326 Q360 270 260 180"/></circle><circle r="3"><animateMotion dur="1.45s" begin=".45s" repeatCount="indefinite" path="M4 280 Q160 230 260 180"/></circle><circle r="3.5"><animateMotion dur="1.65s" begin=".1s" repeatCount="indefinite" path="M510 48 Q360 110 260 180"/></circle></g>
               </svg>
             </div>
             <div className="gateway-radar gateway-radar-one" aria-hidden="true"/>
