@@ -8,6 +8,7 @@ type Props={
   profile?:MemberProfile|null;
   adminAllowed?:boolean;
   open:boolean;
+  alwaysVisible?:boolean;
   activeKey?:string;
   notificationCount?:number;
   onClose:()=>void;
@@ -32,14 +33,14 @@ const workspaceLinks:Array<{key:string;label:string;icon:LucideIcon;role?:'busin
   {key:'settings',label:'Account settings',icon:Settings},
 ];
 
-export default function WorkspaceSidebar({user,profile,adminAllowed=false,open,activeKey='',notificationCount=0,onClose,onNavigate,onSignOut}:Props){
-  if(!open)return null;
+export default function WorkspaceSidebar({user,profile,adminAllowed=false,open,alwaysVisible=false,activeKey='',notificationCount=0,onClose,onNavigate,onSignOut}:Props){
+  if(!open&&!alwaysVisible)return null;
   const name=profile?.full_name||user?.user_metadata?.full_name||user?.user_metadata?.name||user?.email||'Ventora member';
   const accountType=profile?.account_type||user?.user_metadata?.account_type||'business';
   const initials=String(name).trim().slice(0,1).toUpperCase()||'V';
   const visibleLinks=workspaceLinks.filter(item=>!item.role||item.role===accountType);
   return <>
-    <button type="button" className="workspace-menu-backdrop" aria-label="Close navigation menu" onClick={onClose}/>
+    {open&&<button type="button" className="workspace-menu-backdrop" aria-label="Close navigation menu" onClick={onClose}/>}
     <aside className="workspace-sidebar workspace-sidebar-open gust-workspace-sidebar" aria-label="Main navigation">
       <Link to="/" onClick={onClose} className="workspace-brand"><span>VΞNTORA</span><small>CONNECT</small></Link>
       {user?<>
