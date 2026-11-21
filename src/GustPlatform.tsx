@@ -43,7 +43,7 @@ export default function GustPlatform(){
   const onScroll=()=>{if(!raf)raf=window.requestAnimationFrame(updateProgress);};
   window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll,{passive:true});updateProgress();
   const cards=document.querySelectorAll('.gp-feature,.gp-opportunity,.gp-preview-card,.gp-panel,.gp-stat,.gp-deal-card');
-  const onPointerMove=(e:PointerEvent)=>{const target=e.currentTarget as HTMLElement;const r=target.getBoundingClientRect();target.style.setProperty('--gp-pointer-x',((e.clientX-r.left)/r.width*100)+'%');target.style.setProperty('--gp-pointer-y',((e.clientY-r.top)/r.height*100)+'%');};
+  const onPointerMove=(event:Event)=>{const e=event as PointerEvent;const target=e.currentTarget as HTMLElement;const r=target.getBoundingClientRect();target.style.setProperty('--gp-pointer-x',((e.clientX-r.left)/r.width*100)+'%');target.style.setProperty('--gp-pointer-y',((e.clientY-r.top)/r.height*100)+'%');};
   cards.forEach(card=>card.addEventListener('pointermove',onPointerMove,{passive:true}));
   return()=>{if(raf)window.cancelAnimationFrame(raf);window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',onScroll);progress.remove();if(revealObserver)revealObserver.disconnect();cards.forEach(card=>card.removeEventListener('pointermove',onPointerMove));};
  },[session,auth]);
