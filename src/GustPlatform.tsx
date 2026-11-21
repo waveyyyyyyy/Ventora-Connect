@@ -54,4 +54,3 @@ function Showcase({onJoin}:{onJoin:()=>void}){
 }
 
 function Feature({icon,title,text}:any){return <article className="gp-feature"><div>{icon}</div><h3>{title}</h3><p>{text}</p><ArrowRight size={17}/></article>}
-function BrandLoader({visible}:{visible:boolean}){return <div className={`gp-loader ${visible?'is-visible':'is-hidden'}`} aria-hidden={!visible}><div className="gp-loader-inner"><img src={BRAND_LOGO} alt=""/><span className="gp-loader-ring"/><b>VENTORA</b><small>Connecting the dots</small><div className="gp-loader-track"><i/></div></div></div>}
