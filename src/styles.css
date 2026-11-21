@@ -91,3 +91,65 @@
 .workspace-sidebar nav button svg{flex:0 0 17px!important;width:17px!important}
 .workspace-sidebar .workspace-sidebar-bottom{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important}
 .workspace-sidebar .workspace-sidebar-bottom a,.workspace-sidebar .workspace-sidebar-bottom button{display:flex!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;box-sizing:border-box!important}
+
+
+/* Ventora discovery refresh */
+.directory-hero.directory-business-hero,.directory-hero.directory-investor-hero{position:relative;overflow:hidden;padding:142px clamp(24px,7vw,110px) 58px;min-height:0;background:radial-gradient(circle at 82% 16%,rgba(91,145,255,.17),transparent 28%),linear-gradient(135deg,#f8fbff 0%,#eef4ff 52%,#fff 100%);border-bottom:1px solid #e4ebf5}
+.directory-hero.directory-business-hero:after,.directory-hero.directory-investor-hero:after{content:"";position:absolute;width:380px;height:380px;border:1px solid #b9cdf2;border-radius:50%;right:-100px;top:80px;box-shadow:0 0 0 34px #dce8fb55,0 0 0 68px #dce8fb33;pointer-events:none}
+.directory-hero .section-kicker,.directory-intro-row .section-kicker{color:#4268ad;font-size:10px;letter-spacing:.2em;font-weight:800}
+.directory-hero h1{position:relative;z-index:1;max-width:850px;font:700 clamp(42px,6vw,76px)/1.04 Manrope,sans-serif;letter-spacing:-.065em;color:#12213c;margin:24px 0 18px}
+.directory-hero h1 em{color:#3567d8;font-style:normal}
+.directory-hero>p{position:relative;z-index:1;max-width:610px;color:#61718a;font-size:16px;line-height:1.8}
+.directory-hero-actions{position:relative;z-index:2;display:flex;align-items:center;gap:22px;margin-top:28px;flex-wrap:wrap}
+.directory-hero-actions>div{display:flex;align-items:center;gap:9px;color:#65748c;font-size:9px;font-weight:800;letter-spacing:.15em}
+.directory-live-dot{width:8px;height:8px;border-radius:50%;background:#20b47b;box-shadow:0 0 0 5px #20b47b20}
+.directory-create-link{display:inline-flex;align-items:center;gap:12px;padding:14px 19px;border-radius:12px;background:#172b4d;color:#fff;font-size:12px;font-weight:750;box-shadow:0 10px 24px #172b4d20}
+.directory-create-link:hover{background:#2855a5;transform:translateY(-1px)}
+.directory-search{position:relative;z-index:2;max-width:850px;margin-top:34px;padding:9px;background:#fff;border:1px solid #dfe8f5;border-radius:16px;box-shadow:0 18px 50px #263e6410}
+.directory-search input,.directory-search select{height:52px;border:0;border-radius:10px;background:#f7f9fd;font-size:13px}
+.directory-search input{padding-left:18px}
+.directory-results{max-width:1440px;padding:54px clamp(20px,5vw,72px) 110px}
+.directory-intro-row{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;margin:0 0 28px}
+.directory-intro-row h2{font:700 clamp(26px,3vw,38px)/1.1 Manrope,sans-serif;letter-spacing:-.05em;color:#152540;margin:12px 0 0}
+.directory-intro-row>p{max-width:400px;color:#718099;font-size:13px;line-height:1.8;margin:0 0 3px}
+.directory-result-head{padding:18px 0;border-bottom:1px solid #e7edf5}
+.directory-result-head span:first-child{font-size:13px;color:#263b5d;font-weight:750}
+.directory-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:28px}
+.directory-card{padding:0!important;overflow:hidden;border:1px solid #e3eaf4;border-radius:18px;background:#fff;box-shadow:0 10px 32px #1b31500a;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.directory-card:hover{transform:translateY(-5px);border-color:#c7d7f2;box-shadow:0 22px 46px #1b315015}
+.directory-card-cover{height:154px;position:relative;overflow:hidden;background:linear-gradient(135deg,#dbe8ff,#eff4ff 52%,#e4eaf8)}
+.directory-card-cover>img{width:100%;height:100%;object-fit:cover;display:block}
+.directory-cover-art{height:100%;display:flex;align-items:center;justify-content:center;gap:15px;color:#6685bd;background:radial-gradient(circle at 70% 20%,#fff 0,transparent 35%),linear-gradient(135deg,#e6efff,#f7faff)}
+.directory-cover-art span{font-size:9px;letter-spacing:.2em;font-weight:800;color:#8aa0c4}
+.directory-card-category{position:absolute;left:16px;bottom:14px;padding:7px 10px;border:1px solid #ffffff90;border-radius:30px;background:#fffE;color:#365a9e;font-size:9px;font-weight:800;letter-spacing:.1em;backdrop-filter:blur(8px)}
+.directory-card-body{padding:21px 22px 20px}
+.directory-card-heading{display:flex;align-items:center;gap:12px;min-height:54px}
+.directory-card-heading>img,.directory-avatar{width:48px;height:48px;border-radius:14px;object-fit:cover;flex:0 0 48px;border:1px solid #e7edf7;background:#f2f6fd}
+.directory-avatar{display:grid;place-items:center;color:#315fae;font-weight:800;font-size:18px}
+.directory-card-heading h3{font:750 18px/1.2 Manrope,sans-serif;letter-spacing:-.035em;color:#182944;margin:0 0 5px}
+.directory-card-heading small{font-size:10px;color:#73839b}
+.directory-card-body>p{min-height:66px;margin:18px 0;color:#687891;font-size:12px;line-height:1.75;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.directory-card-body .directory-meta{display:flex;justify-content:space-between;gap:10px;padding:13px 0;border-top:1px solid #edf1f7;border-bottom:1px solid #edf1f7;color:#77859a;font-size:10px}
+.directory-card-actions{display:flex;align-items:center;gap:8px;margin-top:16px;flex-wrap:wrap}
+.directory-card-actions .text-link{margin-right:auto;font-size:11px;font-weight:750}
+.directory-card-actions button{border:1px solid #dbe5f3;border-radius:9px;background:#fff;padding:9px 12px;color:#315a9f;font-size:10px;font-weight:750}
+.directory-card-actions button:last-child{background:#172b4d;border-color:#172b4d;color:#fff}
+.directory-empty{max-width:700px;margin:55px auto;padding:52px 30px;text-align:center;border:1px solid #e3eaf5;border-radius:24px;background:linear-gradient(145deg,#fff,#f7faff);box-shadow:0 20px 55px #233b5b0b}
+.directory-empty-icon{width:62px;height:62px;display:grid;place-items:center;margin:0 auto 20px;border-radius:19px;background:#eaf1ff;color:#3568d5}
+.directory-empty .section-kicker{font-size:9px;letter-spacing:.18em;color:#5575b1}
+.directory-empty h3{font:750 27px/1.15 Manrope,sans-serif;letter-spacing:-.045em;color:#172944;margin:14px 0}
+.directory-empty p{max-width:470px;margin:0 auto 24px;color:#718099;font-size:13px;line-height:1.8}
+.business-manager-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0 26px}
+.business-manager-card{overflow:hidden;border:1px solid #e1e8f2;border-radius:14px;background:#fff}
+.business-manager-card.selected{border-color:#4e7ee1;box-shadow:0 0 0 3px #4e7ee11a}
+.business-manager-cover{height:78px;display:grid;place-items:center;background:linear-gradient(135deg,#e5efff,#f5f8ff);color:#7592c5;overflow:hidden}
+.business-manager-cover img{width:100%;height:100%;object-fit:cover}
+.business-manager-info{padding:13px;display:grid;gap:6px}
+.business-manager-info strong{font-size:13px;color:#172944}
+.business-manager-info span{font-size:10px;color:#73839b}
+.business-manager-info button{display:flex;align-items:center;gap:6px;justify-self:start;margin-top:5px;border:0;background:none;color:#315fbd;font-size:10px;font-weight:800;padding:0}
+.business-manager-empty{padding:22px;border:1px dashed #cbd8eb;border-radius:13px;color:#718099;font-size:12px}
+.workspace-sidebar nav{flex-direction:column!important;align-items:stretch!important}
+.workspace-sidebar nav button{width:100%!important;justify-content:flex-start!important}
+@media(max-width:900px){.directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.business-manager-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.directory-hero.directory-business-hero,.directory-hero.directory-investor-hero{padding:112px 20px 42px}.directory-hero.directory-business-hero:after,.directory-hero.directory-investor-hero:after{width:230px;height:230px;right:-120px;top:110px}.directory-hero h1{font-size:43px}.directory-hero>p{font-size:13px}.directory-intro-row{display:block}.directory-intro-row>p{margin-top:12px}.directory-grid,.business-manager-grid{grid-template-columns:1fr}.directory-card-body>p{min-height:0}.directory-results{padding:38px 17px 70px}.directory-search{gap:7px}.directory-card-actions{gap:7px}}
