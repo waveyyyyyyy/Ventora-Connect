@@ -43,3 +43,28 @@
 
 /* Ventora homepage opens on a clean white canvas. */
 .hero{background:#fff!important}
+
+/* Workspace navigation drawer */
+.workspace{display:block;min-height:100vh}
+.workspace-sidebar{position:fixed;z-index:42;left:0;top:0;bottom:0;width:280px;height:100dvh;min-height:100dvh;overflow-y:auto;transform:translateX(-105%);transition:transform .28s ease;box-shadow:18px 0 50px #07152b22}
+.workspace-sidebar.workspace-sidebar-open{transform:translateX(0)}
+.workspace-menu-backdrop{position:fixed;inset:0;z-index:41;border:0;background:#07152b80;backdrop-filter:blur(2px);cursor:pointer}
+.workspace-topbar{position:sticky;top:0;z-index:30;justify-content:flex-start;gap:18px}
+.workspace-menu-toggle{width:42px;height:42px;flex:0 0 42px;border:1px solid #e1e8f2;border-radius:12px;background:#fff;color:#172b4d;display:grid;place-items:center;cursor:pointer;transition:background .2s,border-color .2s}
+.workspace-menu-toggle:hover{background:#f2f7ff;border-color:#b8cdf2}
+.workspace-topbar>div:first-of-type{flex:1}
+.workspace-topbar .topbar-actions{margin-left:auto}
+@media(max-width:680px){
+.workspace-sidebar{width:min(300px,86vw);padding:23px 16px}
+.workspace-topbar{height:68px;padding:0 16px;gap:12px}
+.workspace-menu-toggle{width:39px;height:39px;flex-basis:39px}
+.workspace-topbar span{font-size:8px;letter-spacing:.1em}
+.workspace-topbar small{font-size:9px}
+.workspace-content{padding:25px 16px 55px}
+.workspace-welcome{align-items:flex-start;flex-direction:column}
+.workspace-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.workspace-stat-grid article{padding:15px}
+.workspace-lower-grid{grid-template-columns:1fr}
+.workspace-form{padding:19px}
+.workspace-form-grid{grid-template-columns:1fr}
+}
