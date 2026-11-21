@@ -426,3 +426,9 @@ h1,h2,h3{font-family:'DM Sans',sans-serif!important;letter-spacing:-.035em!impor
 .ventora-directory-sidebar .workspace-member{flex:0 0 auto}
 .ventora-directory-sidebar .workspace-sidebar-bottom{margin-top:auto!important}
 @media(min-width:681px){.ventora-directory-sidebar{padding:28px 18px!important}}
+
+/* Shared brand lockup: official Ventora mark + wordmark */
+.brand{flex-direction:row;align-items:center;gap:10px}
+.brand>span{display:flex;flex-direction:column;align-items:flex-start}
+.brand-mark{width:42px;height:42px;flex:0 0 42px;border-radius:12px;object-fit:cover;box-shadow:0 8px 20px rgba(15,35,65,.12)}
+@media(max-width:640px){.brand-mark{width:36px;height:36px;flex-basis:36px}.brand-word{font-size:22px}}
