@@ -14,13 +14,13 @@ useEffect(()=>{
   if(!u){
    if(event!=='SIGNED_OUT'&&knownUserId)return;
    if(event!=='SIGNED_OUT'&&event!=='GET_SESSION'&&event!=='INITIAL_SESSION')return;
-   knownUserId=null;setHeaderUser(null);setAdminAllowed(false);setAccountType('business');setSessionReady(true);return;
+   knownUserId=null;setHeaderUser(null);setAdminAllowed(false);setAccountType('business');return;
   }
   const current=++revision;knownUserId=u.id;setHeaderUser(u);
   const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',u.id).maybeSingle(),client.rpc('is_admin')]);
   if(!active||current!==revision)return;
   setAccountType(p.data?.account_type==='investor'?'investor':p.data?.account_type==='business'?'business':u.user_metadata?.account_type==='investor'?'investor':'business');
-  setAdminAllowed(Boolean(admin.data&&!admin.error));setSessionReady(true);
+  setAdminAllowed(Boolean(admin.data&&!admin.error));
  };
  void client.auth.getSession().then(({data})=>sync(data.session,'GET_SESSION')).catch(()=>{if(active)setSessionReady(true)});
  const{data:{subscription}}=client.auth.onAuthStateChange((event,session)=>{window.setTimeout(()=>void sync(session,event),0)});
