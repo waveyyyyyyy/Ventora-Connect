@@ -14,7 +14,7 @@ const statusCopy: Record<Exclude<VentoraLoaderVariant, 'auto'>, string[]> = {
 
 function BrandOrbit() {
   return <div className="ventora-brand-loader" aria-hidden="true">
-    <span className="brand-loader-orbit orbit-one"/><span className="brand-loader-orbit orbit-two"/><span className="brand-loader-orbit orbit-three"/>
+    <span className="brand-loader-orbit brand-orbit-one"/><span className="brand-loader-orbit brand-orbit-two"/><span className="brand-loader-orbit brand-orbit-three"/>
     <span className="brand-loader-particle particle-one"/><span className="brand-loader-particle particle-two"/>
     <img src={import.meta.env.BASE_URL + 'ventora-icon.svg'} alt=""/><i className="brand-loader-flare"/>
   </div>;
