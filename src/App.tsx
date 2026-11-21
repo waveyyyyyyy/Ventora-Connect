@@ -3,7 +3,7 @@ const Announcements=lazy(()=>import('./Announcements'));const Saved=lazy(()=>imp
 const Logo=({light=false}:{light?:boolean})=><Link to="/" className={'brand '+(light?'brand-light':'')} aria-label="Ventora Connect home"><span className="brand-word">V<span className="brand-e">Ξ</span>NTORA</span><span className="brand-sub">CONNECT</span></Link>;
 const fade={hidden:{opacity:0,y:24},show:{opacity:1,y:0,transition:{duration:.65,ease:'easeOut' as const}}};
 function Header(){
-const[open,setOpen]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business');
+const[open,setOpen]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business'),[authChecked,setAuthChecked]=useState(false);
 const location=useLocation(),nav=useNavigate(),listingPage=location.pathname==='/businesses'||location.pathname==='/investors';
 useEffect(()=>{
  const client=supabase;if(!client)return;
@@ -14,10 +14,21 @@ useEffect(()=>{
   // A transient null session during page restoration must not wipe a valid menu.
   // Only an explicit SIGNED_OUT event is allowed to clear the cached member.
   if(!u){
-   if(event==='SIGNED_OUT'){revision++;setHeaderUser(null);setAdminAllowed(false);setAccountType('business');}
-   return;
+   if(event==='SIGNED_OUT'){revision++;setHeaderUser(null);setAdminAllowed(false);setAccountType('business');setAuthChecked(true);return;}
+   // Hydrate from Supabase's user endpoint before showing the public landing menu.
+   const current=++revision;
+   const result=await client.auth.getUser();
+   if(!active||current!==revision)return;
+   if(result.data.user){
+    const restored=result.data.user;setHeaderUser(restored);
+    const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',restored.id).maybeSingle(),client.rpc('is_admin')]);
+    if(!active||current!==revision)return;
+    setAccountType(p.data?.account_type==='investor'?'investor':p.data?.account_type==='business'?'business':restored.user_metadata?.account_type==='investor'?'investor':'business');
+    setAdminAllowed(Boolean(admin.data&&!admin.error));
+   }
+   setAuthChecked(true);return;
   }
-  const current=++revision;setHeaderUser(u);
+  const current=++revision;setHeaderUser(u);setAuthChecked(true);
   const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',u.id).maybeSingle(),client.rpc('is_admin')]);
   if(!active||current!==revision)return;
   setAccountType(p.data?.account_type==='investor'?'investor':p.data?.account_type==='business'?'business':u.user_metadata?.account_type==='investor'?'investor':'business');
@@ -40,7 +51,7 @@ const go=(to:string)=>{close();nav(to)};
 return <><header className="header"><div className="nav-wrap"><button className="menu-btn" onClick={toggleMenu} aria-label="Open workspace navigation" aria-expanded={open}>{open?<X size={22}/>:<Menu size={22}/>}</button><Logo/><div className="nav-actions">{!listingPage&&(headerUser?<Link className="btn btn-dark nav-cta" to="/dashboard">Workspace <ArrowUpRight size={16}/></Link>:<><Link className="login-link" to="/login">Log in</Link><Link className="btn btn-dark nav-cta" to="/signup">Get started <ArrowUpRight size={16}/></Link></>)}</div></div></header>
 <AnimatePresence>{open&&<><motion.button className="workspace-menu-backdrop" aria-label="Close menu" onClick={close} initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}/><motion.aside className="workspace-sidebar ventora-directory-sidebar workspace-sidebar-open" initial={{x:"-105%"}} animate={{x:0}} exit={{x:"-105%"}} transition={{duration:.22,ease:"easeOut"}}>
 <Link to="/" onClick={close} className="workspace-brand"><span>VΞNTORA</span><small>CONNECT</small></Link>
-{headerUser?<><div className="workspace-member"><div className="member-avatar">{(headerUser.user_metadata?.full_name||headerUser.user_metadata?.name||headerUser.email||'V').slice(0,1).toUpperCase()}</div><div><strong>{headerUser.user_metadata?.full_name||headerUser.user_metadata?.name||headerUser.email||'Ventora member'}</strong><small>{accountType==='investor'?'Investor account':'Business account'}</small></div></div><div className="workspace-nav-label">WORKSPACE</div><nav>{items.map(item=><button key={item.key} onClick={()=>go(item.to)}>{item.icon}{item.label}</button>)}</nav><div className="workspace-nav-label">DISCOVER</div><nav><button className={location.pathname==='/businesses'?'active':''} onClick={()=>go('/businesses')}><Compass size={17}/>Business Listings</button><button className={location.pathname==='/investors'?'active':''} onClick={()=>go('/investors')}><ChartNoAxesCombined size={17}/>Investor Directory</button></nav>{adminAllowed&&<><div className="workspace-nav-label">ADMINISTRATION</div><nav><button onClick={()=>go('/admin')}><ShieldCheck size={17}/>Admin Portal</button></nav></>}<div className="workspace-sidebar-bottom"><button onClick={signOut}><LockKeyhole size={16}/>Sign out</button></div></>:<><div className="workspace-member"><div className="member-avatar"><Users/></div><div><strong>Welcome to Ventora</strong><small>Sign in to access your workspace</small></div></div><div className="workspace-nav-label">MEMBER ACCESS</div><nav><button onClick={()=>go('/login')}><LockKeyhole size={17}/>Log in to your account</button><button onClick={()=>go('/signup')}><Users size={17}/>Create an account</button></nav><div className="workspace-nav-label">DISCOVER</div><nav><button onClick={()=>go('/businesses')}><Building2 size={17}/>Business Listings</button><button onClick={()=>go('/investors')}><ChartNoAxesCombined size={17}/>Investor Directory</button></nav></>}
+{!authChecked?<div className="workspace-member"><div className="member-avatar"><Users/></div><div><strong>Loading your workspace</strong><small>Restoring your signed-in session…</small></div></div>:headerUser?<><div className="workspace-member"><div className="member-avatar">{(headerUser.user_metadata?.full_name||headerUser.user_metadata?.name||headerUser.email||'V').slice(0,1).toUpperCase()}</div><div><strong>{headerUser.user_metadata?.full_name||headerUser.user_metadata?.name||headerUser.email||'Ventora member'}</strong><small>{accountType==='investor'?'Investor account':'Business account'}</small></div></div><div className="workspace-nav-label">WORKSPACE</div><nav>{items.map(item=><button key={item.key} onClick={()=>go(item.to)}>{item.icon}{item.label}</button>)}</nav><div className="workspace-nav-label">DISCOVER</div><nav><button className={location.pathname==='/businesses'?'active':''} onClick={()=>go('/businesses')}><Compass size={17}/>Business Listings</button><button className={location.pathname==='/investors'?'active':''} onClick={()=>go('/investors')}><ChartNoAxesCombined size={17}/>Investor Directory</button></nav>{adminAllowed&&<><div className="workspace-nav-label">ADMINISTRATION</div><nav><button onClick={()=>go('/admin')}><ShieldCheck size={17}/>Admin Portal</button></nav></>}<div className="workspace-sidebar-bottom"><button onClick={signOut}><LockKeyhole size={16}/>Sign out</button></div></>:<><div className="workspace-member"><div className="member-avatar"><Users/></div><div><strong>Welcome to Ventora</strong><small>Sign in to access your workspace</small></div></div><div className="workspace-nav-label">MEMBER ACCESS</div><nav><button onClick={()=>go('/login')}><LockKeyhole size={17}/>Log in to your account</button><button onClick={()=>go('/signup')}><Users size={17}/>Create an account</button></nav><div className="workspace-nav-label">DISCOVER</div><nav><button onClick={()=>go('/businesses')}><Building2 size={17}/>Business Listings</button><button onClick={()=>go('/investors')}><ChartNoAxesCombined size={17}/>Investor Directory</button></nav></>}
 
 </motion.aside></>}</AnimatePresence></>}
 function BrandLoader(){return <div className="ventora-brand-loader"><span className="brand-loader-orbit orbit-one"/><span className="brand-loader-orbit orbit-two"/><span className="brand-loader-orbit orbit-three"/><span className="brand-loader-particle particle-one"/><span className="brand-loader-particle particle-two"/><img src="/ventora-icon.svg" alt="Ventora Connect"/><i className="brand-loader-flare"/></div>}
