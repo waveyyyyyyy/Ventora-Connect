@@ -43,3 +43,9 @@
 @keyframes vc-signed-scenery{from{transform:translate3d(0,0,0) rotate(-1deg)}to{transform:translate3d(-12px,10px,0) rotate(1.2deg)}}
 @media(max-width:760px){.vc-section-menu-trigger{width:42px;height:42px}.vc-signed-in-scenery{top:92px;right:8px;width:68vw;height:180px;opacity:.42}.vc-scenery-card{inset:16px 0 0 22px;padding:15px}.vc-scenery-card strong{font-size:24px}.messages-page>header,.interests-page>header,.matches-page>header,.saved-page>header,.announcements-page>header,.support-page>header{padding-right:62px!important}}
 @media(prefers-reduced-motion:reduce){.vc-signed-in-scenery,.workspace:after{animation:none!important}}
+
+/* Messages-only fix: keep the section menu visible above the header. */
+.messages-page .messages-header{position:relative!important;z-index:100001!important;overflow:visible!important}
+.messages-page .vc-section-menu{position:fixed!important;top:12px!important;right:12px!important;z-index:100010!important;display:flex!important;visibility:visible!important;opacity:1!important}
+.messages-page .vc-section-menu-trigger{display:grid!important;visibility:visible!important;opacity:1!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;border:1px solid #d7e5e9!important;border-radius:13px!important;background:#fff!important;color:#1c536d!important;box-shadow:0 8px 24px rgba(23,63,89,.2)!important;position:relative!important;z-index:100012!important}
+@media(max-width:700px){.messages-page .vc-section-menu{top:8px!important;right:8px!important}.messages-page .vc-section-menu-trigger{width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important}}
