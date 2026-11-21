@@ -71,6 +71,7 @@ export default function VentoraLoader({
   const chosen=variant==='auto'?'pulse':variant;
   const message=status||copy[chosen];
   const [visible,setVisible]=useState(active);
+  const [animationRun,setAnimationRun]=useState(0);
   const startedAt=useRef(Date.now());
   const exitTimer=useRef<number|undefined>(undefined);
   const wasActive=useRef(active);
@@ -81,7 +82,7 @@ export default function VentoraLoader({
       exitTimer.current=undefined;
     }
     if(active){
-      if(!wasActive.current) startedAt.current=Date.now();
+      if(!wasActive.current){startedAt.current=Date.now();setAnimationRun(run=>run+1);}
       wasActive.current=true;
       setVisible(true);
     } else {
@@ -95,7 +96,7 @@ export default function VentoraLoader({
 
   return <AnimatePresence>
     {visible&&<motion.div
-      key="ventora-single-loader"
+      key={"ventora-single-loader-"+animationRun}
       className={'vc-loader vc-loader-slime vc-loader-'+chosen+' vc-motion-'+motionVariant+' '+className}
       role="status" aria-live="polite" aria-label={message}
       initial={reduceMotion?{opacity:1,scale:1}:{opacity:0,scale:1.025}}
