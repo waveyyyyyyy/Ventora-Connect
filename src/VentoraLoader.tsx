@@ -26,7 +26,7 @@ function Wordmark() {
         ? <span className="vc-loader-letter vc-loader-e-slot" key={letter} aria-label="E"><i/><i/><i/></span>
         : <span className="vc-loader-letter" key={letter} style={{'--letter-index':index} as React.CSSProperties}>{letter}</span>)}
     </div>
-    <div className="vc-loader-connect"><span>CONNECT</span></div>
+    <div className="vc-loader-connect">{Array.from("CONNECT").map((letter,index)=><span key={index} style={{"--letter-index":index} as React.CSSProperties}>{letter}</span>)}</div>
   </div>;
 }
 
