@@ -1,10 +1,10 @@
-import {useEffect,useState,lazy,Suspense} from 'react';import {Link,Route,Routes,useNavigate,useParams,useLocation} from 'react-router-dom';import {motion,AnimatePresence} from 'framer-motion';import {ArrowUpRight,ArrowRight,Building2,ChartNoAxesCombined,ShieldCheck,Network,Globe2,Menu,X,Check,LockKeyhole,Sparkles,Compass,Users,ChevronRight,Bell} from 'lucide-react';import {supabase} from './lib/supabase';
+import {useEffect,useState,lazy,Suspense} from 'react';import {Link,Route,Routes,useNavigate,useParams,useLocation} from 'react-router-dom';import {motion,AnimatePresence} from 'framer-motion';import {ArrowUpRight,ArrowRight,Building2,ChartNoAxesCombined,ShieldCheck,Network,Globe2,Menu,X,Check,LockKeyhole,Sparkles,Compass,Users,ChevronRight} from 'lucide-react';import {supabase} from './lib/supabase';
 import WorkspaceSidebar from './WorkspaceSidebar';
 const Announcements=lazy(()=>import('./Announcements'));const Saved=lazy(()=>import('./Saved'));const Workspace=lazy(()=>import('./Workspace'));const Messages=lazy(()=>import('./Messages'));const Interests=lazy(()=>import('./Interests'));const Admin=lazy(()=>import('./Admin'));const Support=lazy(()=>import('./Support'));const Legal=lazy(()=>import('./Legal'));const Matches=lazy(()=>import('./Matches'));
 const Logo=({light=false}:{light?:boolean})=><Link to="/" className={'brand '+(light?'brand-light':'')} aria-label="Ventora Connect home"><span className="brand-word">V<span className="brand-e">Ξ</span>NTORA</span><span className="brand-sub">CONNECT</span></Link>;
 const fade={hidden:{opacity:0,y:24},show:{opacity:1,y:0,transition:{duration:.65,ease:'easeOut' as const}}};
 function Header(){
-const[open,setOpen]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business');
+const[open,setOpen]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business'),[,setAuthChecked]=useState(false);
 const location=useLocation(),nav=useNavigate(),listingPage=location.pathname==='/businesses'||location.pathname==='/investors';
 useEffect(()=>{
  const client=supabase;if(!client)return;
