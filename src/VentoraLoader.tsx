@@ -9,7 +9,6 @@ type Props = {
   motionVariant?: VentoraMotionVariant;
   status?: string;
   className?: string;
-  replayKey?: string | number;
 };
 
 const copy: Record<Exclude<VentoraLoaderVariant,'auto'>,string> = {
@@ -65,7 +64,7 @@ export default function VentoraLoader({
   motionVariant='slime-stamp',
   status,
   className='',
-  replayKey=0
+  
 }:Props) {
   const reduceMotion=useReducedMotion();
   const chosen=variant==='auto'?'pulse':variant;
