@@ -419,3 +419,10 @@ h1,h2,h3{font-family:'DM Sans',sans-serif!important;letter-spacing:-.035em!impor
 .page-loading strong,.workspace-loading strong{font-size:13px;letter-spacing:.02em;color:#203b65}.page-loading>span,.workspace-loading small{font-size:9px;letter-spacing:.18em;color:#7b91b4}
 .ventora-drawer-loading .ventora-brand-loader{transform:scale(.78)}
 @media(prefers-reduced-motion:reduce){.ventora-brand-loader *,.ventora-brand-loader:before{animation:none!important}}
+
+/* Reuse the Overview sidebar as an overlay on public directory pages. */
+.ventora-directory-sidebar{position:fixed!important;inset:0 auto 0 0!important;width:min(300px,86vw)!important;height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;z-index:1002!important;overflow-y:auto!important;overscroll-behavior:contain!important;transform:translateX(0)!important;box-shadow:24px 0 70px #07152c55!important}
+.ventora-directory-sidebar .workspace-brand{flex:0 0 auto}
+.ventora-directory-sidebar .workspace-member{flex:0 0 auto}
+.ventora-directory-sidebar .workspace-sidebar-bottom{margin-top:auto!important}
+@media(min-width:681px){.ventora-directory-sidebar{padding:28px 18px!important}}
