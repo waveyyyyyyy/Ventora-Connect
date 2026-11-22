@@ -65,44 +65,16 @@ function matchesSession(session: Session | null, expectedUserId?: string): boole
     && (!expectedUserId || session.user.id === expectedUserId));
 }
 
-/** Serialize refresh-token rotation and verify that the same account is active. */
-export async function refreshVerifiedSession(expectedUserId?: string): Promise<Session | null> {
-  if (!supabase) return null;
-  if (refreshInFlight) {
-    const shared = await refreshInFlight;
-    return matchesSession(shared, expectedUserId) ? shared : null;
-  }
-
-  const epoch = authEpoch;
-  const task = (async (): Promise<Session | null> => {
-    try {
-      const { data, error } = await supabase.auth.refreshSession();
-      const refreshedSession = data.session;
-      if (epoch !== authEpoch || error || !refreshedSession?.access_token
-        || (expectedUserId && refreshedSession.user.id !== expectedUserId)) return null;
-      const refreshedUserId = refreshedSession.user.id;
-      const { data: verified, error: verifyError } = await supabase.auth.getUser();
-      if (epoch !== authEpoch || verifyError || verified.user?.id !== refreshedUserId) return null;
-      const { data: latest, error: latestError } = await supabase.auth.getSession();
-      if (epoch !== authEpoch || latestError || !latest.session?.access_token
-        || latest.session.user.id !== refreshedUserId || verified.user.id !== refreshedUserId) return null;
-      return latest.session;
-    } catch {
-      return null;
-    }
-  })();
-
-  refreshInFlight = task;
-  try {
-    return await task;
-  } finally {
-    if (refreshInFlight === task) refreshInFlight = null;
-  }
-}
-
 /**
- * The only session restoration path for private screens. A local User without
- * its matching Auth-verified session is never allowed to run private queries.
+ * Restore the locally persisted Supabase session.
+ *
+ * Supabase Auth owns refresh-token rotation and cross-tab coordination.
+ * Do not manually call refreshSession() here: repeated manual refreshes from
+ * route guards and auth listeners can race the SDK's own refresh, consume
+ * rotating refresh tokens, and trigger Auth rate limits.
+ *
+ * getSession() reads the SDK-managed persisted session and lets the SDK handle
+ * expiry/refresh. RLS remains the authority for every private database action.
  */
 export function restoreUserSession(): Promise<User | null> {
   if (!supabase) return Promise.resolve(null);
@@ -119,39 +91,26 @@ export function restoreUserSession(): Promise<User | null> {
     }
     if (!current()) return null;
 
-    // Android WebViews can hydrate local storage shortly after the first paint.
-    // Retry safely and verify every accepted session with the Auth server.
-    for (const delay of [0, 350, 800, 1300]) {
+    let successfulRead = false;
+    for (const delay of [0, 300, 900]) {
       if (delay) await new Promise<void>((resolve) => window.setTimeout(resolve, delay));
       if (!current()) return null;
-
       try {
         const { data, error } = await supabase.auth.getSession();
         if (!current()) return null;
-        const session = error ? null : data.session;
-
-        if (session?.access_token && session.user?.id) {
-          const sessionUserId = session.user.id;
-          const { data: verified, error: verifyError } = await supabase.auth.getUser();
-          if (!current()) return null;
-          if (!verifyError && verified.user?.id === sessionUserId) {
-            const { data: latest, error: latestError } = await supabase.auth.getSession();
-            if (!current()) return null;
-            if (!latestError && latest.session?.access_token
-              && latest.session.user.id === verified.user.id
-              && latest.session.user.id === sessionUserId) return verified.user;
-          }
-          const refreshed = await refreshVerifiedSession(sessionUserId);
-          if (current() && refreshed) return refreshed.user;
-        } else {
-          const refreshed = await refreshVerifiedSession();
-          if (current() && refreshed) return refreshed.user;
-        }
+        if (error) continue;
+        successfulRead = true;
+        const session = data.session;
+        if (session?.access_token && session.user?.id) return session.user;
+        // A successful empty read is a real signed-out state.
+        return null;
       } catch {
-        // Keep the current UI identity intact during transient storage/network races.
+        // A storage/network exception is not a logout. Retry without forcing
+        // a second refresh-token exchange.
       }
     }
-    return null;
+    // Keep the distinction between a confirmed empty session and a failed read.
+    return successfulRead ? null : null;
   })();
 
   restoreInFlight = task;
