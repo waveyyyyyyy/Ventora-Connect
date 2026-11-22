@@ -39,7 +39,7 @@ useEffect(()=>{
  const acceptWorkspaceUser=(accepted:any)=>{
   if(!live||!accepted?.id)return;
   const nextId=accepted.id;
-  if(activeUserId.current===nextId){setUser(accepted);return;}
+  if(activeUserId.current===nextId){setAuthRestoreIssue(false);setNotice('');setUser(accepted);return;}
   activeUserId.current=nextId;setAuthRestoreIssue(false);setUser(accepted);setLoading(true);void load(accepted);
  };
  const applyUser=(next:any)=>{
