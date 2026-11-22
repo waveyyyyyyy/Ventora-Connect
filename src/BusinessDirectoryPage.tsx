@@ -20,7 +20,7 @@ useEffect(()=>{
  async function load(){
   const listQuery=investors
    ?client.from('discoverable_profiles').select('id,full_name,bio,avatar_url,country,city,website,account_type,investment_min,investment_max,preferred_industries,preferred_stages').eq('account_type','investor')
-   :client.from('discoverable_businesses').select('id,company_name,industry,description,country,city,business_stage,funding_requirement,min_investment,max_investment,owner_id,logo_url,cover_image_url);
+   :client.from('discoverable_businesses').select('id,company_name,industry,description,country,city,business_stage,funding_requirement,min_investment,max_investment,owner_id,logo_url,cover_image_url');
   const [current,result]=await Promise.all([readViewerSession(),listQuery]);
   if(!active)return;
   setViewer(current);
