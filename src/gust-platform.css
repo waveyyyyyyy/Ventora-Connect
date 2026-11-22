@@ -414,11 +414,39 @@ html{scroll-behavior:smooth;scroll-padding-top:90px}
 @media(max-width:760px){.gp-public-header{padding:15px 18px;gap:10px}.gp-public-header nav{display:none}.gp-menu-toggle{width:40px;height:40px;flex-basis:40px}.gp-public-actions{gap:8px}.gp-public-actions .gp-primary{padding:10px 13px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){.gp-public-menu,.gp-public-menu-scrim{animation:none!important}.gp-menu-toggle,.gp-public-menu>button{transition:none}}
 
-/* Keep the requested hero typewriter even when the device asks to reduce
-   decorative motion. This is the homepage's primary headline reveal. */
+
+
+/* Homepage motion is an intentional part of the experience. Keep the hero
+   headline, floating artwork and scroll reveals active on devices that report
+   reduced motion; the platform's public landing page explicitly uses motion. */
 .gp-hero .gp-typewrite{
+  display:inline-block!important;
+  max-width:100%;
   clip-path:inset(0 100% 0 0)!important;
   border-right:3px solid #3d8292!important;
   animation:gp-typewrite 1.55s steps(17,end) .45s forwards,gp-caret .75s step-end 3!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .gp-hero .gp-typewrite{animation:gp-typewrite 1.55s steps(17,end) .45s forwards,gp-caret .75s step-end 3!important;clip-path:inset(0 100% 0 0)!important}
+  .gp-hero-copy>*{animation:gp-hero-enter .8s var(--gp-ease) both!important}
+  .gp-hero-copy>.gp-pill{animation-delay:.08s!important}
+  .gp-hero-copy>h1{animation-delay:.16s!important}
+  .gp-hero-copy>p{animation-delay:.25s!important}
+  .gp-hero-copy>.gp-hero-actions{animation-delay:.34s!important}
+  .gp-hero-copy>.gp-proof{animation-delay:.43s!important}
+  .gp-hero-art .gp-art-center{animation:gp-hero-mark-enter 1.05s var(--gp-spring) .2s both,gp-logo-breathe 4s ease-in-out 1.3s infinite!important}
+  .gp-hero-art .gp-poster-one{animation:gp-poster-enter-left .95s var(--gp-spring) .22s both,gp-poster-float 7s ease-in-out 1.2s infinite!important}
+  .gp-hero-art .gp-poster-two{animation:gp-poster-enter-right .95s var(--gp-spring) .34s both,gp-poster-float 8s ease-in-out 1.3s infinite!important}
+  .gp-hero-art .gp-float-card{animation:gp-card-enter .8s var(--gp-spring) .48s both,gp-float 5s ease-in-out 1.3s infinite!important}
+  .gp-hero-art .investor-card{animation-delay:.58s,2s!important}
+  .gp-hero-art:before{animation:gp-scenery-drift 18s ease-in-out infinite alternate!important}
+  .gp-audience:before{animation:gp-watermark-drift 16s ease-in-out infinite alternate!important}
+  .gp-audience:after{animation:gp-ring-pulse 8s ease-in-out infinite!important}
+  .gp-final-cta{animation:gp-cta-gradient 14s ease infinite!important}
+  .gp-section-heading h2,.gp-audience-copy h2,.gp-how h2,.gp-final-cta h2{animation:gp-heading-shimmer 8s ease-in-out infinite!important}
+  .gp-scroll-reveal{transition:opacity .72s var(--gp-ease),transform .82s var(--gp-ease)!important}
+  .gp-scroll-reveal.gp-is-revealed{opacity:1!important;transform:translate3d(0,0,0)!important}
+  .gp-stagger-reveal{transition:opacity .58s var(--gp-ease),transform .68s var(--gp-ease)!important}
+  .gp-stagger-reveal.gp-is-revealed{opacity:1!important;transform:translate3d(0,0,0) scale(1)!important}
 }
 @media(max-width:720px){.gp-hero .gp-typewrite{white-space:normal}}
