@@ -116,7 +116,23 @@ REVOKE EXECUTE ON FUNCTION public.admin_user_directory() FROM PUBLIC;
 GRANT EXECUTE ON FUNCTION public.admin_user_directory() TO authenticated;
 
 -- Keep private conversation membership inaccessible to anonymous clients.
-REVOKE SELECT ON TABLE public.conversation_members FROM anon;
+-- Authenticated members need read-only access; membership writes happen through
+-- the SECURITY DEFINER start_conversation RPC, not direct table mutations.
+REVOKE ALL PRIVILEGES ON TABLE public.conversation_members FROM anon;
+REVOKE INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER
+  ON TABLE public.conversation_members FROM authenticated;
+GRANT SELECT ON TABLE public.conversation_members TO authenticated;
+
+-- Edge Functions using the project service-role secret still need SQL grants.
+-- BYPASSRLS does not itself grant table privileges; missing grants caused the
+-- delete-account function to fail with PostgREST 42501 on public.businesses.
+GRANT USAGE ON SCHEMA public TO service_role;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO service_role;
+GRANT USAGE, SELECT, UPDATE ON ALL SEQUENCES IN SCHEMA public TO service_role;
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public
+  GRANT ALL PRIVILEGES ON TABLES TO service_role;
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public
+  GRANT USAGE, SELECT, UPDATE ON SEQUENCES TO service_role;
 
 -- Cover the foreign keys used by workspace, messaging, discovery and admin pages.
 CREATE INDEX IF NOT EXISTS audit_logs_actor_id_idx ON public.audit_logs(actor_id);
