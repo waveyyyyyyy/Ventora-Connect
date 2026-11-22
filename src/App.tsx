@@ -118,8 +118,9 @@ function OAuthReturn(){
    if(!active)return;
    // Strip the one-time callback marker without navigating a signed-in member
    // away from the page they are currently viewing.
-   const cleanPath=location.pathname+location.search.replace(/([?&])oauth_return=1(&|$)/,(_m,lead,tail)=>tail?(lead==='?'?'?':'&'):'').replace(/[?&]$/,'')+location.hash;
-   navigate(cleanPath||'/dashboard?tab=overview',{replace:true});
+   // Supabase has restored the OAuth session. Replace the full callback URL, including its token fragment,
+   // so access/refresh tokens are never left visible in the browser address bar.
+   navigate('/dashboard?tab=overview',{replace:true});
   };
   const{data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
    if(session?.user&&(event==='SIGNED_IN'||event==='INITIAL_SESSION'||event==='TOKEN_REFRESHED'))window.setTimeout(()=>void finish(session),0);
