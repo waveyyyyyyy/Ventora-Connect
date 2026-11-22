@@ -26,15 +26,18 @@ useEffect(()=>{
   activeUserId.current=nextId;setUser(next);setLoading(true);void load(next);
  };
  const{data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
-  if(!live)return;
-  if(event!=='INITIAL_SESSION')authEventSeen=true;
-  if(session?.user){sessionResolved=true;applyUser(session.user);return;}
-  // Only a deliberate SIGNED_OUT event clears workspace identity.
-  // INITIAL_SESSION can briefly be empty while Supabase restores persisted auth.
-  if(event==='SIGNED_OUT'){
-   sessionResolved=true;if(oauthFallback)window.clearTimeout(oauthFallback);
-   activeUserId.current=null;setUser(null);setProfile(null);setLoading(false);
-  }
+  // Supabase holds its auth lock while notifying listeners. Defer all state
+  // transitions that can start database requests until after the callback exits.
+  window.setTimeout(()=>{
+   if(!live)return;
+   if(event!=='INITIAL_SESSION')authEventSeen=true;
+   if(session?.user){sessionResolved=true;applyUser(session.user);return;}
+   // Only a deliberate SIGNED_OUT event clears workspace identity.
+   if(event==='SIGNED_OUT'){
+    sessionResolved=true;if(oauthFallback)window.clearTimeout(oauthFallback);
+    activeUserId.current=null;setUser(null);setProfile(null);setLoading(false);
+   }
+  },0);
  });
  void (async()=>{
   try{
