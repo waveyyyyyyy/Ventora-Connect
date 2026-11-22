@@ -1384,3 +1384,18 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
   .vc-member-section.messages-page:before{background-position:center center!important;background-size:cover!important}
 }
 @media(prefers-reduced-motion:reduce){.vc-member-section.messages-page:before{animation:none!important}}
+
+
+/* Keep the Messages scenic poster centred against the actual viewport, not the content column. */
+.vc-member-section.messages-page:before{
+  position:fixed!important;left:0!important;top:0!important;right:auto!important;bottom:auto!important;
+  width:100vw!important;height:100dvh!important;
+  background-position:58% 50%!important;background-size:cover!important;background-repeat:no-repeat!important;
+  transform:none!important;
+}
+@media(max-width:760px){
+  .vc-member-section.messages-page:before{
+    width:100vw!important;height:100dvh!important;
+    background-position:58% 50%!important;background-size:cover!important;
+  }
+}
