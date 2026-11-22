@@ -18,6 +18,7 @@ export default function DebugPanel() {
   const [logs, setLogs] = useState<LogItem[]>([]);
   const [copied, setCopied] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [notes, setNotes] = useState('');
 
   useEffect(() => {
     let active = true;
@@ -64,9 +65,10 @@ export default function DebugPanel() {
     browser: navigator.userAgent,
     viewport: window.innerWidth + 'x' + window.innerHeight,
     online: navigator.onLine,
+    yourDescription: notes,
     totalCaptured: logs.length,
     logs: logs.slice(-MAX_LOGS)
-  }), [logs]);
+  }), [logs, notes]);
 
   if (!allowed) return null;
   const copyReport = async () => {
@@ -92,6 +94,7 @@ export default function DebugPanel() {
       </header>
       <div style={{padding:14,display:'grid',gap:10}}>
         <div style={{display:'flex',justifyContent:'space-between',fontSize:12,color:'#cbd5e1'}}><span>Captured events</span><b>{logs.length}</b></div>
+        <textarea value={notes} onChange={event=>setNotes(event.target.value)} placeholder="What did you tap, and what exact error did you see? (optional)" rows={3} style={{width:'100%',boxSizing:'border-box',resize:'vertical',border:'1px solid #475569',borderRadius:10,background:'#1e293b',color:'#f8fafc',padding:10,font:'12px system-ui'}} />
         <div style={{display:'flex',gap:8}}>
           <button type="button" onClick={copyReport} style={{...buttonStyle,background:'#a3e635',color:'#14210a',border:0,flex:1,justifyContent:'center'}}><Copy size={15}/>{copied?'Copied!':'Copy diagnostic report'}</button>
           <button type="button" onClick={()=>setLogs([])} style={{...buttonStyle,background:'#1e293b',fontSize:12,padding:'9px 11px'}}>Clear</button>
