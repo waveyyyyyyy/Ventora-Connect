@@ -683,7 +683,7 @@ body{
   radial-gradient(ellipse at 92% 38%,rgba(117,145,207,.13),transparent 34%),
   radial-gradient(ellipse at 48% 100%,rgba(145,190,180,.12),transparent 38%),
   linear-gradient(145deg,#edf3f6 0%,#f7f9fb 48%,#e8f0f3 100%)!important;
- background-attachment:fixed!important;
+ background-attachment:scroll!important;
 }
 .directory-results,.faq-list,.simple-page,.pitch-detail-page,.gp-shell,.gp-main,.gp-content,.workspace-main,.workspace-content{
  background:
@@ -961,4 +961,22 @@ body{
  .directory-business-hero:after,.directory-investor-hero:after{opacity:.16}
  .directory-card{content-visibility:visible}
  .workspace *,.support-page *,.auth-page *,.directory-card *{animation:none!important;transition:none!important}
+}
+
+
+/* Mobile scroll-performance guard: avoid fixed-background repaint work on mid-range phones. */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+  html, body, .support-page, .vc-member-section.support-page {
+    background-attachment: scroll !important;
+  }
+  .workspace-content:before,
+  .directory-results:before,
+  .pitch-detail-page:before,
+  .messages-page:before,
+  .admin-page:before,
+  .faq-page:before,
+  .legal-page:before,
+  .auth-main:before {
+    background-attachment: scroll !important;
+  }
 }
