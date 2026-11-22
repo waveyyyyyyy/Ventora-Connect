@@ -41,7 +41,7 @@ export function restoreUserSession(): Promise<import('@supabase/supabase-js').Us
       // Let the auth client's INITIAL_SESSION hydration finish if it is in flight.
       for (let attempt = 0; attempt < 6; attempt += 1) {
         if (eventUser) return eventUser;
-        const { data, error } = await supabase.auth.getSession();
+        const { data } = await supabase.auth.getSession();
         if (data.session?.user) return data.session.user;
 
         // A refresh is attempted once, after several reads have allowed storage
