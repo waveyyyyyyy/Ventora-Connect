@@ -13,7 +13,7 @@ const Announcements=lazy(()=>import('./Announcements'));
 const Support=lazy(()=>import('./Support'));
 const Admin=lazy(()=>import('./Admin'));
 const Legal=lazy(()=>import('./Legal'));
-const PUBLIC_APP_URL='https://ventora-connect.vercel.app/';
+const PUBLIC_APP_URL=`${window.location.origin}${import.meta.env.BASE_URL}`;
 
 const Logo=({light=false}:{light?:boolean})=><Link to="/" className={'brand '+(light?'brand-light':'')} aria-label="Ventora Connect home"><img className="brand-mark" src={import.meta.env.BASE_URL+'ventora-icon.svg'} alt=""/><span><span className="brand-word">V<span className="brand-e">Ξ</span>NTORA</span><span className="brand-sub">CONNECT</span></span></Link>;
 
