@@ -60,12 +60,15 @@ export async function refreshVerifiedSession(expectedUserId?: string): Promise<S
   const task = (async (): Promise<Session | null> => {
     try {
       const { data, error } = await supabase.auth.refreshSession();
-      if (epoch !== authEpoch || error || !matchesSession(data.session, expectedUserId)) return null;
+      const refreshedSession = data.session;
+      if (epoch !== authEpoch || error || !refreshedSession?.access_token
+        || (expectedUserId && refreshedSession.user.id !== expectedUserId)) return null;
+      const refreshedUserId = refreshedSession.user.id;
       const { data: verified, error: verifyError } = await supabase.auth.getUser();
-      if (epoch !== authEpoch || verifyError || verified.user?.id !== data.session.user.id) return null;
+      if (epoch !== authEpoch || verifyError || verified.user?.id !== refreshedUserId) return null;
       const { data: latest, error: latestError } = await supabase.auth.getSession();
-      if (epoch !== authEpoch || latestError || !matchesSession(latest.session, expectedUserId)
-        || latest.session.user.id !== verified.user.id) return null;
+      if (epoch !== authEpoch || latestError || !latest.session?.access_token
+        || latest.session.user.id !== refreshedUserId || verified.user.id !== refreshedUserId) return null;
       return latest.session;
     } catch {
       return null;
@@ -110,16 +113,18 @@ export function restoreUserSession(): Promise<User | null> {
         if (!current()) return null;
         const session = error ? null : data.session;
 
-        if (matchesSession(session)) {
+        if (session?.access_token && session.user?.id) {
+          const sessionUserId = session.user.id;
           const { data: verified, error: verifyError } = await supabase.auth.getUser();
           if (!current()) return null;
-          if (!verifyError && verified.user?.id === session.user.id) {
+          if (!verifyError && verified.user?.id === sessionUserId) {
             const { data: latest, error: latestError } = await supabase.auth.getSession();
             if (!current()) return null;
-            if (!latestError && matchesSession(latest.session, verified.user.id)
-              && latest.session.user.id === verified.user.id) return verified.user;
+            if (!latestError && latest.session?.access_token
+              && latest.session.user.id === verified.user.id
+              && latest.session.user.id === sessionUserId) return verified.user;
           }
-          const refreshed = await refreshVerifiedSession(session.user.id);
+          const refreshed = await refreshVerifiedSession(sessionUserId);
           if (current() && refreshed) return refreshed.user;
         } else {
           const refreshed = await refreshVerifiedSession();
