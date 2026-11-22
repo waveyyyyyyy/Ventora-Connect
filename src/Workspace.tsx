@@ -91,7 +91,7 @@ useEffect(()=>{
       if(!live)return;
       if(error){
        // A failed session read is not evidence of a real sign-out.
-       setAuthRestoreIssue(true);setNotice('Your session could not be checked because the connection is temporarily unavailable. Retry when you're back online.');
+       setAuthRestoreIssue(true);setNotice("Your session could not be checked because the connection is temporarily unavailable. Retry when you are back online.");
        setLoading(false);
        return;
       }
