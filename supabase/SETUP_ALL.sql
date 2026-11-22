@@ -763,3 +763,503 @@ where b.is_published=true and p.is_suspended=false
   and (auth.uid() is null or not exists(select 1 from public.user_blocks x where
     (x.blocker_id=auth.uid() and x.blocked_id=b.owner_id) or (x.blocker_id=b.owner_id and x.blocked_id=auth.uid())));
 grant select on public.discoverable_businesses to anon,authenticated;
+
+
+-- ============================================================
+-- Reliability, access-control and performance fixes (2026-11-22)
+-- ============================================================
+
+-- Ventora Connect: auth/session, profile-view recursion, admin RPC and index fixes.
+-- Apply after the existing 202611220001 migration.
+
+-- Private helper avoids reading profile_views from its own INSERT RLS policy.
+CREATE OR REPLACE FUNCTION private.count_monthly_business_views(p_viewer_id uuid)
+RETURNS integer
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = ''
+AS $function$
+  SELECT count(*)::integer
+  FROM public.profile_views AS pv
+  WHERE p_viewer_id = (SELECT auth.uid())
+    AND pv.viewer_id = p_viewer_id
+    AND pv.business_id IS NOT NULL
+    AND pv.created_at >= date_trunc('month', now());
+$function$;
+
+REVOKE ALL ON FUNCTION private.count_monthly_business_views(uuid) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION private.count_monthly_business_views(uuid) TO authenticated;
+
+DROP POLICY IF EXISTS profile_views_insert ON public.profile_views;
+CREATE POLICY profile_views_insert
+ON public.profile_views
+FOR INSERT
+TO authenticated
+WITH CHECK (
+  viewer_id = (SELECT auth.uid())
+  AND (SELECT public.is_active_member())
+  AND (
+    business_id IS NULL
+    OR COALESCE(
+      (SELECT p.account_type FROM public.profiles AS p WHERE p.id = (SELECT auth.uid())),
+      'business'::public.account_role
+    ) <> 'investor'::public.account_role
+    OR COALESCE(((SELECT public.current_plan_features())->>'monthly_business_views')::integer, 0) = -1
+    OR (SELECT private.count_monthly_business_views((SELECT auth.uid())))
+       < COALESCE(((SELECT public.current_plan_features())->>'monthly_business_views')::integer, 0)
+  )
+);
+
+-- The admin RPC returns email as text; auth.users.email is varchar(255).
+CREATE OR REPLACE FUNCTION public.admin_user_directory()
+RETURNS TABLE(
+  id uuid,
+  member_number bigint,
+  email text,
+  full_name text,
+  account_type text,
+  avatar_url text,
+  bio text,
+  country text,
+  city text,
+  website text,
+  linkedin_url text,
+  is_suspended boolean,
+  created_at timestamp with time zone,
+  businesses jsonb,
+  investor_details jsonb
+)
+LANGUAGE plpgsql
+STABLE
+SECURITY DEFINER
+SET search_path TO 'public', 'auth', 'pg_temp'
+AS $function$
+BEGIN
+  IF NOT public.is_admin() THEN
+    RAISE EXCEPTION 'Administrator access required';
+  END IF;
+
+  RETURN QUERY
+  SELECT
+    u.id,
+    p.member_number,
+    u.email::text,
+    p.full_name::text,
+    p.account_type::text,
+    p.avatar_url::text,
+    p.bio::text,
+    p.country::text,
+    p.city::text,
+    p.website::text,
+    p.linkedin_url::text,
+    p.is_suspended,
+    p.created_at,
+    COALESCE((
+      SELECT jsonb_agg(jsonb_build_object(
+        'id', b.id,
+        'company_name', b.company_name,
+        'industry', b.industry,
+        'description', b.description,
+        'website', b.website,
+        'city', b.city,
+        'country', b.country,
+        'business_stage', b.business_stage,
+        'funding_requirement', b.funding_requirement,
+        'min_investment', b.min_investment,
+        'max_investment', b.max_investment,
+        'is_published', b.is_published,
+        'verification_status', b.verification_status,
+        'created_at', b.created_at
+      ) ORDER BY b.created_at DESC)
+      FROM public.businesses AS b
+      WHERE b.owner_id = u.id
+    ), '[]'::jsonb),
+    CASE WHEN i.id IS NULL THEN NULL ELSE to_jsonb(i) END
+  FROM auth.users AS u
+  LEFT JOIN public.profiles AS p ON p.id = u.id
+  LEFT JOIN public.investors AS i ON i.id = u.id
+  ORDER BY lower(coalesce(u.email::text, '')), u.email::text;
+END;
+$function$;
+
+REVOKE EXECUTE ON FUNCTION public.admin_user_directory() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.admin_user_directory() TO authenticated;
+
+-- Keep private conversation membership inaccessible to anonymous clients.
+REVOKE SELECT ON TABLE public.conversation_members FROM anon;
+
+-- Cover the foreign keys used by workspace, messaging, discovery and admin pages.
+CREATE INDEX IF NOT EXISTS audit_logs_actor_id_idx ON public.audit_logs(actor_id);
+CREATE INDEX IF NOT EXISTS business_documents_business_id_idx ON public.business_documents(business_id);
+CREATE INDEX IF NOT EXISTS business_documents_owner_id_idx ON public.business_documents(owner_id);
+CREATE INDEX IF NOT EXISTS business_gallery_images_business_id_sort_order_idx ON public.business_gallery_images(business_id, sort_order);
+CREATE INDEX IF NOT EXISTS business_gallery_images_owner_id_idx ON public.business_gallery_images(owner_id);
+CREATE INDEX IF NOT EXISTS business_private_assets_owner_id_idx ON public.business_private_assets(owner_id);
+CREATE INDEX IF NOT EXISTS businesses_owner_id_created_at_idx ON public.businesses(owner_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS conversation_members_user_id_conversation_id_idx ON public.conversation_members(user_id, conversation_id);
+CREATE INDEX IF NOT EXISTS messages_sender_id_idx ON public.messages(sender_id);
+CREATE INDEX IF NOT EXISTS profile_views_business_id_idx ON public.profile_views(business_id);
+CREATE INDEX IF NOT EXISTS profile_views_viewed_profile_id_idx ON public.profile_views(viewed_profile_id);
+CREATE INDEX IF NOT EXISTS profile_views_viewer_id_created_at_idx ON public.profile_views(viewer_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS reports_reported_user_id_idx ON public.reports(reported_user_id);
+CREATE INDEX IF NOT EXISTS reports_reporter_id_idx ON public.reports(reporter_id);
+CREATE INDEX IF NOT EXISTS saved_businesses_business_id_idx ON public.saved_businesses(business_id);
+CREATE INDEX IF NOT EXISTS saved_investors_investor_id_idx ON public.saved_investors(investor_id);
+CREATE INDEX IF NOT EXISTS subscription_requests_plan_id_idx ON public.subscription_requests(plan_id);
+CREATE INDEX IF NOT EXISTS subscription_requests_reviewed_by_idx ON public.subscription_requests(reviewed_by);
+CREATE INDEX IF NOT EXISTS subscriptions_plan_id_idx ON public.subscriptions(plan_id);
+CREATE INDEX IF NOT EXISTS support_tickets_user_id_idx ON public.support_tickets(user_id);
+CREATE INDEX IF NOT EXISTS user_blocks_blocked_id_idx ON public.user_blocks(blocked_id);
+CREATE INDEX IF NOT EXISTS verification_requests_reviewer_id_idx ON public.verification_requests(reviewer_id);
+CREATE INDEX IF NOT EXISTS verification_requests_user_id_created_at_idx ON public.verification_requests(user_id, created_at DESC);
+
+
+-- Move public discovery views and privileged RPC implementations behind
+-- SECURITY INVOKER public wrappers. The only SECURITY DEFINER code remains in
+-- the non-exposed private schema and returns explicitly filtered data.
+
+CREATE OR REPLACE FUNCTION private.discoverable_profiles()
+RETURNS TABLE(
+  id uuid, full_name text, bio text, avatar_url text, country text, city text,
+  website text, account_type public.account_role, investment_min numeric,
+  investment_max numeric, preferred_industries text[], preferred_stages text[],
+  member_number bigint
+)
+LANGUAGE sql STABLE SECURITY DEFINER
+SET search_path = ''
+AS $function$
+  SELECT p.id,p.full_name,p.bio,p.avatar_url,p.country,p.city,p.website,p.account_type,
+         i.investment_min,i.investment_max,i.preferred_industries,i.preferred_stages,p.member_number
+  FROM public.profiles AS p
+  LEFT JOIN public.investors AS i ON i.id=p.id
+  WHERE p.is_suspended=false
+    AND ((p.account_type='investor'::public.account_role AND i.id IS NOT NULL)
+      OR EXISTS(SELECT 1 FROM public.businesses AS b WHERE b.owner_id=p.id AND b.is_published=true))
+    AND ((SELECT auth.uid()) IS NULL OR NOT EXISTS(
+      SELECT 1 FROM public.user_blocks AS x
+      WHERE (x.blocker_id=(SELECT auth.uid()) AND x.blocked_id=p.id)
+         OR (x.blocker_id=p.id AND x.blocked_id=(SELECT auth.uid()))
+    ));
+$function$;
+
+CREATE OR REPLACE FUNCTION private.discoverable_businesses()
+RETURNS TABLE(
+  id uuid, owner_id uuid, company_name text, slug text, industry text, description text,
+  website text, country text, city text, founded_year integer, business_stage text,
+  business_model text, funding_requirement numeric, min_investment numeric,
+  max_investment numeric, equity_offered numeric, valuation numeric,
+  verification_status public.verification_status, featured boolean,
+  created_at timestamp with time zone, updated_at timestamp with time zone,
+  logo_url text, cover_image_url text
+)
+LANGUAGE sql STABLE SECURITY DEFINER
+SET search_path = ''
+AS $function$
+  SELECT b.id,b.owner_id,b.company_name,b.slug,b.industry,b.description,b.website,b.country,b.city,
+         b.founded_year,b.business_stage,b.business_model,b.funding_requirement,b.min_investment,
+         b.max_investment,b.equity_offered,b.valuation,b.verification_status,b.featured,
+         b.created_at,b.updated_at,b.logo_url,b.cover_image_url
+  FROM public.businesses AS b
+  JOIN public.profiles AS p ON p.id=b.owner_id
+  WHERE b.is_published=true AND p.is_suspended=false
+    AND ((SELECT auth.uid()) IS NULL OR NOT EXISTS(
+      SELECT 1 FROM public.user_blocks AS x
+      WHERE (x.blocker_id=(SELECT auth.uid()) AND x.blocked_id=b.owner_id)
+         OR (x.blocker_id=b.owner_id AND x.blocked_id=(SELECT auth.uid()))
+    ));
+$function$;
+
+REVOKE ALL ON FUNCTION private.discoverable_profiles() FROM PUBLIC;
+REVOKE ALL ON FUNCTION private.discoverable_businesses() FROM PUBLIC;
+GRANT USAGE ON SCHEMA private TO anon, authenticated;
+GRANT EXECUTE ON FUNCTION private.discoverable_profiles() TO anon, authenticated;
+GRANT EXECUTE ON FUNCTION private.discoverable_businesses() TO anon, authenticated;
+
+CREATE OR REPLACE VIEW public.discoverable_profiles
+WITH (security_invoker = true)
+AS
+SELECT
+  d.id,d.full_name,d.bio,d.avatar_url,d.country,d.city,d.website,d.account_type,
+  d.investment_min::numeric(14,2) AS investment_min,
+  d.investment_max::numeric(14,2) AS investment_max,
+  d.preferred_industries,d.preferred_stages,d.member_number
+FROM private.discoverable_profiles() AS d;
+
+CREATE OR REPLACE VIEW public.discoverable_businesses
+WITH (security_invoker = true)
+AS
+SELECT
+  d.id,d.owner_id,d.company_name,d.slug,d.industry,d.description,d.website,d.country,d.city,
+  d.founded_year,d.business_stage,d.business_model,
+  d.funding_requirement::numeric(14,2) AS funding_requirement,
+  d.min_investment::numeric(14,2) AS min_investment,
+  d.max_investment::numeric(14,2) AS max_investment,
+  d.equity_offered::numeric(6,3) AS equity_offered,
+  d.valuation::numeric(16,2) AS valuation,
+  d.verification_status,d.featured,d.created_at,d.updated_at,d.logo_url,d.cover_image_url
+FROM private.discoverable_businesses() AS d;
+
+GRANT SELECT ON public.discoverable_profiles, public.discoverable_businesses TO anon, authenticated;
+
+CREATE OR REPLACE FUNCTION private.is_admin()
+RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path = ''
+AS $function$
+  SELECT EXISTS (SELECT 1 FROM public.admin_roles ar WHERE ar.user_id=(SELECT auth.uid()));
+$function$;
+
+CREATE OR REPLACE FUNCTION private.is_active_member()
+RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path = ''
+AS $function$
+  SELECT EXISTS (SELECT 1 FROM public.profiles p WHERE p.id=(SELECT auth.uid()) AND p.is_suspended=false);
+$function$;
+
+REVOKE ALL ON FUNCTION private.is_admin() FROM PUBLIC;
+REVOKE ALL ON FUNCTION private.is_active_member() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION private.is_admin() TO anon, authenticated;
+GRANT EXECUTE ON FUNCTION private.is_active_member() TO anon, authenticated;
+
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS boolean LANGUAGE sql STABLE SECURITY INVOKER SET search_path = ''
+AS $function$ SELECT private.is_admin(); $function$;
+
+CREATE OR REPLACE FUNCTION public.is_active_member()
+RETURNS boolean LANGUAGE sql STABLE SECURITY INVOKER SET search_path = ''
+AS $function$ SELECT private.is_active_member(); $function$;
+
+GRANT EXECUTE ON FUNCTION public.is_admin() TO anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.is_active_member() TO anon, authenticated;
+
+CREATE OR REPLACE FUNCTION private.business_owner_profile_count(p_owner uuid)
+RETURNS integer LANGUAGE sql STABLE SECURITY DEFINER SET search_path = ''
+AS $function$
+  SELECT count(*)::integer FROM public.businesses WHERE owner_id=p_owner;
+$function$;
+
+REVOKE ALL ON FUNCTION private.business_owner_profile_count(uuid) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION private.business_owner_profile_count(uuid) TO authenticated;
+
+CREATE OR REPLACE FUNCTION public.business_owner_profile_count(p_owner uuid)
+RETURNS integer LANGUAGE sql STABLE SECURITY INVOKER SET search_path = ''
+AS $function$
+  SELECT CASE
+    WHEN p_owner=(SELECT auth.uid()) OR private.is_admin()
+    THEN private.business_owner_profile_count(p_owner)
+    ELSE 0
+  END;
+$function$;
+
+REVOKE EXECUTE ON FUNCTION public.business_owner_profile_count(uuid) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.business_owner_profile_count(uuid) TO authenticated;
+
+CREATE OR REPLACE FUNCTION private.select_account_type(p_account_type text)
+RETURNS public.profiles LANGUAGE plpgsql SECURITY DEFINER SET search_path = ''
+AS $function$
+DECLARE
+  v_user_id uuid := (SELECT auth.uid());
+  v_profile public.profiles;
+  v_name text;
+BEGIN
+  IF v_user_id IS NULL THEN
+    RAISE EXCEPTION 'You must be signed in to choose an account type';
+  END IF;
+  IF p_account_type NOT IN ('business','investor') THEN
+    RAISE EXCEPTION 'Choose either Business or Investor';
+  END IF;
+  SELECT * INTO v_profile FROM public.profiles WHERE id=v_user_id FOR UPDATE;
+  IF FOUND THEN
+    IF v_profile.account_type_selected THEN
+      RAISE EXCEPTION 'Your account type has already been selected and cannot be changed';
+    END IF;
+    PERFORM set_config('app.account_type_selection_user',v_user_id::text,true);
+    UPDATE public.profiles
+      SET account_type=p_account_type::public.account_role,account_type_selected=true,updated_at=now()
+      WHERE id=v_user_id RETURNING * INTO v_profile;
+  ELSE
+    SELECT coalesce(raw_user_meta_data->>'full_name',raw_user_meta_data->>'name','')
+      INTO v_name FROM auth.users WHERE id=v_user_id;
+    INSERT INTO public.profiles(id,full_name,account_type,account_type_selected)
+      VALUES(v_user_id,coalesce(v_name,''),p_account_type::public.account_role,true)
+      RETURNING * INTO v_profile;
+  END IF;
+  RETURN v_profile;
+END;
+$function$;
+
+REVOKE ALL ON FUNCTION private.select_account_type(text) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION private.select_account_type(text) TO authenticated;
+
+CREATE OR REPLACE FUNCTION public.select_account_type(p_account_type text)
+RETURNS public.profiles LANGUAGE sql VOLATILE SECURITY INVOKER SET search_path = ''
+AS $function$ SELECT private.select_account_type(p_account_type); $function$;
+
+REVOKE EXECUTE ON FUNCTION public.select_account_type(text) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.select_account_type(text) TO authenticated;
+
+CREATE OR REPLACE FUNCTION private.start_conversation(target_user uuid)
+RETURNS uuid LANGUAGE plpgsql VOLATILE SECURITY DEFINER SET search_path = ''
+AS $function$
+DECLARE
+  v_user_id uuid := (SELECT auth.uid());
+  new_conversation uuid;
+  existing_conversation uuid;
+BEGIN
+  IF v_user_id IS NULL OR target_user IS NULL OR target_user=v_user_id THEN
+    RAISE EXCEPTION 'Invalid conversation participants';
+  END IF;
+  IF EXISTS (
+    SELECT 1 FROM public.user_blocks b
+    WHERE (b.blocker_id=v_user_id AND b.blocked_id=target_user)
+       OR (b.blocker_id=target_user AND b.blocked_id=v_user_id)
+  ) THEN
+    RAISE EXCEPTION 'Messaging is unavailable for this member';
+  END IF;
+  SELECT cm.conversation_id INTO existing_conversation
+  FROM public.conversation_members cm
+  WHERE cm.user_id=v_user_id
+    AND EXISTS (SELECT 1 FROM public.conversation_members other
+      WHERE other.conversation_id=cm.conversation_id AND other.user_id=target_user)
+  LIMIT 1;
+  IF existing_conversation IS NOT NULL THEN RETURN existing_conversation; END IF;
+  INSERT INTO public.conversations DEFAULT VALUES RETURNING id INTO new_conversation;
+  INSERT INTO public.conversation_members(conversation_id,user_id)
+    VALUES(new_conversation,v_user_id),(new_conversation,target_user);
+  RETURN new_conversation;
+END;
+$function$;
+
+REVOKE ALL ON FUNCTION private.start_conversation(uuid) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION private.start_conversation(uuid) TO authenticated;
+
+CREATE OR REPLACE FUNCTION public.start_conversation(target_user uuid)
+RETURNS uuid LANGUAGE sql VOLATILE SECURITY INVOKER SET search_path = ''
+AS $function$ SELECT private.start_conversation(target_user); $function$;
+
+REVOKE EXECUTE ON FUNCTION public.start_conversation(uuid) FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.start_conversation(uuid) TO authenticated;
+
+CREATE OR REPLACE FUNCTION private.admin_user_directory()
+RETURNS TABLE(
+  id uuid, member_number bigint, email text, full_name text, account_type text,
+  avatar_url text, bio text, country text, city text, website text, linkedin_url text,
+  is_suspended boolean, created_at timestamp with time zone, businesses jsonb,
+  investor_details jsonb
+)
+LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = ''
+AS $function$
+BEGIN
+  IF NOT private.is_admin() THEN RAISE EXCEPTION 'Administrator access required'; END IF;
+  RETURN QUERY
+  SELECT u.id,p.member_number,u.email::text,p.full_name::text,p.account_type::text,
+         p.avatar_url::text,p.bio::text,p.country::text,p.city::text,p.website::text,
+         p.linkedin_url::text,p.is_suspended,p.created_at,
+         COALESCE((
+           SELECT jsonb_agg(jsonb_build_object(
+             'id',b.id,'company_name',b.company_name,'industry',b.industry,
+             'description',b.description,'website',b.website,'city',b.city,
+             'country',b.country,'business_stage',b.business_stage,
+             'funding_requirement',b.funding_requirement,'min_investment',b.min_investment,
+             'max_investment',b.max_investment,'is_published',b.is_published,
+             'verification_status',b.verification_status,'created_at',b.created_at
+           ) ORDER BY b.created_at DESC)
+           FROM public.businesses b WHERE b.owner_id=u.id
+         ),'[]'::jsonb),
+         CASE WHEN i.id IS NULL THEN NULL ELSE to_jsonb(i) END
+  FROM auth.users u
+  LEFT JOIN public.profiles p ON p.id=u.id
+  LEFT JOIN public.investors i ON i.id=u.id
+  ORDER BY lower(coalesce(u.email::text,'')),u.email::text;
+END;
+$function$;
+
+REVOKE ALL ON FUNCTION private.admin_user_directory() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION private.admin_user_directory() TO authenticated;
+
+CREATE OR REPLACE FUNCTION public.admin_user_directory()
+RETURNS TABLE(
+  id uuid, member_number bigint, email text, full_name text, account_type text,
+  avatar_url text, bio text, country text, city text, website text, linkedin_url text,
+  is_suspended boolean, created_at timestamp with time zone, businesses jsonb,
+  investor_details jsonb
+)
+LANGUAGE sql STABLE SECURITY INVOKER SET search_path = ''
+AS $function$ SELECT * FROM private.admin_user_directory(); $function$;
+
+REVOKE EXECUTE ON FUNCTION public.admin_user_directory() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.admin_user_directory() TO authenticated;
+
+
+-- Wrap auth helper calls in scalar subqueries so PostgreSQL evaluates them
+-- once per statement instead of once per row. Preserve already-wrapped calls.
+DO $$
+DECLARE
+  p record;
+  role_list text;
+  using_expr text;
+  check_expr text;
+  using_clause text;
+  check_clause text;
+BEGIN
+  FOR p IN
+    SELECT schemaname, tablename, policyname, permissive, roles, cmd, qual, with_check
+    FROM pg_policies
+    WHERE schemaname = 'public'
+      AND (
+        coalesce(qual, '') ~* 'auth\.(uid|role|jwt|email)\(\)'
+        OR coalesce(with_check, '') ~* 'auth\.(uid|role|jwt|email)\(\)'
+      )
+  LOOP
+    SELECT string_agg(
+      CASE WHEN r.role_name = 'public' THEN 'PUBLIC' ELSE quote_ident(r.role_name) END,
+      ', '
+    )
+    INTO role_list
+    FROM unnest(p.roles) AS r(role_name);
+
+    using_expr := p.qual;
+    check_expr := p.with_check;
+
+    IF using_expr IS NOT NULL THEN
+      using_expr := replace(using_expr, 'private.is_conversation_participant(conversation_id)', 'private.is_conversation_participant(conversation_id, auth.uid())');
+      using_expr := regexp_replace(using_expr, 'SELECT[[:space:]]+auth\.uid\(\)', '__AUTH_UID_SELECT__', 'gi');
+      using_expr := regexp_replace(using_expr, 'auth\.uid\(\)', '(SELECT auth.uid())', 'gi');
+      using_expr := replace(using_expr, '__AUTH_UID_SELECT__', 'SELECT auth.uid()');
+      using_expr := regexp_replace(using_expr, 'SELECT[[:space:]]+auth\.role\(\)', '__AUTH_ROLE_SELECT__', 'gi');
+      using_expr := regexp_replace(using_expr, 'auth\.role\(\)', '(SELECT auth.role())', 'gi');
+      using_expr := replace(using_expr, '__AUTH_ROLE_SELECT__', 'SELECT auth.role()');
+      using_expr := regexp_replace(using_expr, 'SELECT[[:space:]]+auth\.jwt\(\)', '__AUTH_JWT_SELECT__', 'gi');
+      using_expr := regexp_replace(using_expr, 'auth\.jwt\(\)', '(SELECT auth.jwt())', 'gi');
+      using_expr := replace(using_expr, '__AUTH_JWT_SELECT__', 'SELECT auth.jwt()');
+      using_expr := regexp_replace(using_expr, 'SELECT[[:space:]]+auth\.email\(\)', '__AUTH_EMAIL_SELECT__', 'gi');
+      using_expr := regexp_replace(using_expr, 'auth\.email\(\)', '(SELECT auth.email())', 'gi');
+      using_expr := replace(using_expr, '__AUTH_EMAIL_SELECT__', 'SELECT auth.email()');
+    END IF;
+
+    IF check_expr IS NOT NULL THEN
+      check_expr := replace(check_expr, 'private.is_conversation_participant(conversation_id)', 'private.is_conversation_participant(conversation_id, auth.uid())');
+      check_expr := regexp_replace(check_expr, 'SELECT[[:space:]]+auth\.uid\(\)', '__AUTH_UID_SELECT__', 'gi');
+      check_expr := regexp_replace(check_expr, 'auth\.uid\(\)', '(SELECT auth.uid())', 'gi');
+      check_expr := replace(check_expr, '__AUTH_UID_SELECT__', 'SELECT auth.uid()');
+      check_expr := regexp_replace(check_expr, 'SELECT[[:space:]]+auth\.role\(\)', '__AUTH_ROLE_SELECT__', 'gi');
+      check_expr := regexp_replace(check_expr, 'auth\.role\(\)', '(SELECT auth.role())', 'gi');
+      check_expr := replace(check_expr, '__AUTH_ROLE_SELECT__', 'SELECT auth.role()');
+      check_expr := regexp_replace(check_expr, 'SELECT[[:space:]]+auth\.jwt\(\)', '__AUTH_JWT_SELECT__', 'gi');
+      check_expr := regexp_replace(check_expr, 'auth\.jwt\(\)', '(SELECT auth.jwt())', 'gi');
+      check_expr := replace(check_expr, '__AUTH_JWT_SELECT__', 'SELECT auth.jwt()');
+      check_expr := regexp_replace(check_expr, 'SELECT[[:space:]]+auth\.email\(\)', '__AUTH_EMAIL_SELECT__', 'gi');
+      check_expr := regexp_replace(check_expr, 'auth\.email\(\)', '(SELECT auth.email())', 'gi');
+      check_expr := replace(check_expr, '__AUTH_EMAIL_SELECT__', 'SELECT auth.email()');
+    END IF;
+
+    using_clause := CASE WHEN using_expr IS NULL THEN '' ELSE ' USING (' || using_expr || ')' END;
+    check_clause := CASE WHEN check_expr IS NULL THEN '' ELSE ' WITH CHECK (' || check_expr || ')' END;
+
+    EXECUTE format('DROP POLICY %I ON %I.%I', p.policyname, p.schemaname, p.tablename);
+    EXECUTE format(
+      'CREATE POLICY %I ON %I.%I AS %s FOR %s TO %s%s%s',
+      p.policyname, p.schemaname, p.tablename, p.permissive, p.cmd,
+      role_list, using_clause, check_clause
+    );
+  END LOOP;
+END $$;
+
