@@ -1240,3 +1240,18 @@ body:has(.directory-investor-hero) .directory-card {
   .workspace-signout-button {transition:none!important}
   .workspace-signout-button:active {transform:none}
 }
+
+
+/* Legacy drawer markup, if mounted by an older signed-in shell, uses the same treatment. */
+.ventora-drawer-signout button {
+  appearance:none!important;-webkit-appearance:none!important;
+  width:100%!important;min-height:44px!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:12px!important;
+  padding:11px 12px!important;border:1px solid transparent!important;border-radius:11px!important;
+  background:transparent!important;background-color:transparent!important;background-image:none!important;box-shadow:none!important;
+  color:rgba(241,245,249,.85)!important;font:600 12px 'DM Sans',sans-serif!important;text-align:left!important;cursor:pointer!important;
+}
+.ventora-drawer-signout button svg {color:rgba(241,245,249,.85)!important}
+.ventora-drawer-signout button:hover,.ventora-drawer-signout button:focus-visible {
+  background:rgba(255,255,255,.09)!important;border-color:rgba(255,255,255,.12)!important;color:#fff!important;outline:none!important;
+}
+.ventora-drawer-signout button:hover svg,.ventora-drawer-signout button:focus-visible svg {color:#fff!important}
