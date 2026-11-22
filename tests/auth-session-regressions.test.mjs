@@ -12,8 +12,11 @@ const read = (path) => readFile(new URL(path, import.meta.url), 'utf8');
 test('a failed profile query never opens the first-time role chooser', () => {
   assert.equal(shouldOfferRoleSelection({ data: null, error: { message: 'Auth session missing' } }), false);
   assert.equal(shouldOfferRoleSelection({ data: null, error: { message: 'Network error' } }), false);
-  assert.equal(shouldOfferRoleSelection({ data: null, error: null }), true);
-  assert.equal(shouldOfferRoleSelection({ data: { account_type_selected: true }, error: null }), false);
+  assert.equal(shouldOfferRoleSelection({ data: null, error: null }, { user_metadata: {} }), false);
+  assert.equal(shouldOfferRoleSelection({ data: null, error: null }, { user_metadata: { account_type_pending: true } }), true);
+  assert.equal(shouldOfferRoleSelection({ data: null, error: null }, { user_metadata: { account_type: 'investor' } }), false);
+  assert.equal(shouldOfferRoleSelection({ data: { account_type: 'business', account_type_selected: false }, error: null }, { user_metadata: {} }), false);
+  assert.equal(shouldOfferRoleSelection({ data: { account_type_selected: true }, error: null }, { user_metadata: { account_type_pending: true } }), false);
 });
 
 test('database permission denied is not treated as an expired login', () => {
@@ -41,7 +44,8 @@ test('the app wires the regression policies into the real auth paths', async () 
   assert.match(auth, /requireActiveSession/);
   assert.doesNotMatch(auth, /auth\.refreshSession\s*\(/);
   assert.match(workspace, /if\s*\(p\.error\)/);
-  assert.match(workspace, /shouldOfferRoleSelection\(p\)/);
+  assert.match(workspace, /shouldOfferRoleSelection\(p,u\)/);
+  assert.match(workspace, /metadataRole=u\.user_metadata\?\.account_type/);
   assert.match(workspace, /requireActiveSession\(user\.id\)/);
   assert.doesNotMatch(workspace, /auth\.refreshSession\s*\(/);
   assert.match(messages, /isAuthRefreshError\(error\)/);
