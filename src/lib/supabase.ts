@@ -55,7 +55,9 @@ if (supabase) {
 let restoreInFlight: Promise<import('@supabase/supabase-js').User | null> | null = null;
 export function restoreUserSession(): Promise<import('@supabase/supabase-js').User | null> {
   if (!supabase) return Promise.resolve(null);
-  if (observedAuthSession?.user) return Promise.resolve(observedAuthSession.user);
+  // Always read the live Supabase session before returning a user. A cached
+  // user object alone can outlive its access token and cause PostgREST to send
+  // protected queries as anon (401/42501) during mobile session restoration.
   if (restoreInFlight) return restoreInFlight;
 
   const epoch = authEpoch;
@@ -68,7 +70,6 @@ export function restoreUserSession(): Promise<import('@supabase/supabase-js').Us
       ]);
     }
     if (!stillCurrent()) return null;
-    if (observedAuthSession?.user) return observedAuthSession.user;
 
     // Recheck mobile storage hydration a few times, but only accept a user
     // when Supabase also has the matching access-token session.
@@ -76,7 +77,6 @@ export function restoreUserSession(): Promise<import('@supabase/supabase-js').Us
     for (const delay of delays) {
       if (delay) await new Promise<void>((resolve) => window.setTimeout(resolve, delay));
       if (!stillCurrent()) return null;
-      if (observedAuthSession?.user) return observedAuthSession.user;
 
       try {
         const { data, error } = await supabase.auth.getSession();
@@ -105,7 +105,7 @@ export function restoreUserSession(): Promise<import('@supabase/supabase-js').Us
       }
     }
 
-    return stillCurrent() ? observedAuthSession?.user || null : null;
+    return null;
   })();
 
   restoreInFlight = task;
