@@ -1741,3 +1741,83 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
    backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
  }
 }
+
+
+/* FULL-LENGTH SCENIC SEQUENCE: each signed-in poster page gets a vertical gallery
+   of full-viewport landscapes, so scrolling reveals the next image instead of
+   running out of wallpaper. Cards remain separate translucent surfaces. */
+:root{
+  --vc-scene-1:url("https://images.unsplash.com/photo-1638057733961-591fa542f718?auto=format&fit=crop&w=2400&q=90");
+  --vc-scene-2:url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2400&q=88");
+  --vc-scene-3:url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2400&q=88");
+  --vc-scene-4:url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=2400&q=88");
+  --vc-scene-5:url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=88");
+  --vc-scene-6:url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2400&q=88");
+  --vc-scene-7:url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2400&q=88");
+  --vc-scene-8:url("https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2400&q=88");
+}
+.workspace:has(.workspace-tab-overview)::before{
+  position:absolute!important;inset:0!important;bottom:0!important;
+  background-image:
+    linear-gradient(rgba(9,29,36,.24),rgba(9,29,36,.24)),
+    var(--vc-scene-1),var(--vc-scene-2),var(--vc-scene-3),var(--vc-scene-4),
+    var(--vc-scene-5),var(--vc-scene-6),var(--vc-scene-7),var(--vc-scene-8)!important;
+  background-size:100% 800vh,100% 100vh,100% 100vh,100% 100vh,100% 100vh,
+    100% 100vh,100% 100vh,100% 100vh,100% 100vh!important;
+  background-position:0 0,0 0,0 100vh,0 200vh,0 300vh,0 400vh,0 500vh,0 600vh,0 700vh!important;
+  background-repeat:no-repeat!important;background-attachment:scroll!important;
+  transform:none!important;will-change:auto!important;opacity:1!important;
+}
+.workspace:has(.workspace-tab-overview){overflow:visible!important}
+.workspace:has(.workspace-tab-overview)>.workspace-main,
+.workspace:has(.workspace-tab-overview) .workspace-content.workspace-tab-overview{
+  background:transparent!important;
+}
+.vc-member-section.messages-page,
+.vc-member-section.interests-page,
+.vc-member-section.matches-page,
+.vc-member-section.saved-page,
+.vc-member-section.announcements-page,
+.vc-member-section.support-page{
+  position:relative!important;isolation:isolate!important;
+  background-color:#183a3c!important;
+  background-image:
+    linear-gradient(rgba(10,30,35,.30),rgba(10,30,35,.30)),
+    var(--vc-scene-1),var(--vc-scene-2),var(--vc-scene-3),var(--vc-scene-4),
+    var(--vc-scene-5),var(--vc-scene-6),var(--vc-scene-7),var(--vc-scene-8)!important;
+  background-size:100% 800vh,100% 100vh,100% 100vh,100% 100vh,100% 100vh,
+    100% 100vh,100% 100vh,100% 100vh,100% 100vh!important;
+  background-position:0 0,0 0,0 100vh,0 200vh,0 300vh,0 400vh,0 500vh,0 600vh,0 700vh!important;
+  background-repeat:no-repeat!important;background-attachment:scroll!important;
+}
+.vc-member-section.messages-page::before,
+.vc-member-section.interests-page::before,
+.vc-member-section.matches-page::before,
+.vc-member-section.saved-page::before,
+.vc-member-section.announcements-page::before,
+.vc-member-section.support-page::before{
+  position:absolute!important;inset:0!important;content:""!important;
+  background:none!important;opacity:0!important;pointer-events:none!important;
+}
+.vc-member-section.messages-page main,
+.vc-member-section.interests-page main,
+.vc-member-section.matches-page main,
+.vc-member-section.saved-page main,
+.vc-member-section.announcements-page main,
+.vc-member-section.support-page main{background:transparent!important}
+@media(max-width:900px){
+ .workspace:has(.workspace-tab-overview)::before,
+ .vc-member-section.messages-page,
+ .vc-member-section.interests-page,
+ .vc-member-section.matches-page,
+ .vc-member-section.saved-page,
+ .vc-member-section.announcements-page,
+ .vc-member-section.support-page{
+  background-size:100% 800vh,100% 100svh,100% 100svh,100% 100svh,100% 100svh,
+    100% 100svh,100% 100svh,100% 100svh,100% 100svh!important;
+  background-position:0 0,0 0,0 100svh,0 200svh,0 300svh,0 400svh,0 500svh,0 600svh,0 700svh!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .workspace:has(.workspace-tab-overview)::before{transform:none!important}
+}
