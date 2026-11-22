@@ -2103,3 +2103,35 @@ body:has(.directory-investor-hero) .directory-results{
    center 400svh,center 500svh,center 600svh,center 700svh!important;
  }
 }
+
+
+/* SITE-WIDE TEXT LEGIBILITY PASS.
+   Keep the scenic photography, but give typography enough separation to remain
+   readable over both bright skies and dark landscape areas. Card surfaces and
+   their established text colors are intentionally left unchanged. */
+:where(.workspace,.vc-member-section,#root:has(.directory-business-hero),#root:has(.directory-investor-hero)) :where(h1,h2,h3,h4,h5,h6,p,span,small,strong,em,label,a,li,dt,dd,th,td,legend,figcaption,.section-kicker,.eyebrow,.workspace-stat-grid article){
+  text-shadow:0 1px 2px rgba(0,0,0,.92),0 0 7px rgba(0,0,0,.58),0 0 1px rgba(255,255,255,.72)!important;
+}
+:where(.workspace,.vc-member-section,#root:has(.directory-business-hero),#root:has(.directory-investor-hero)) :where(.workspace-page-title,.workspace-section-heading,.directory-hero-copy,.directory-editorial-strip,.directory-results-heading,.messages-empty-state,.empty-state,.notice,.alert){
+  text-shadow:0 1px 2px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.72)!important;
+}
+:where(.workspace,.vc-member-section,#root:has(.directory-business-hero),#root:has(.directory-investor-hero)) :where(.section-kicker,.eyebrow,.workspace-page-title .section-kicker,.workspace-topbar>div:first-of-type span){
+  display:inline-block;
+  padding:3px 7px;
+  border-radius:3px;
+  background:rgba(10,27,34,.58)!important;
+  color:#f4fbfc!important;
+  text-shadow:none!important;
+}
+:where(.workspace,.vc-member-section,#root:has(.directory-business-hero),#root:has(.directory-investor-hero)) :where(a:not(.btn):not(.button)){
+  text-decoration-thickness:1px;
+  text-underline-offset:3px;
+}
+:where(.workspace,.vc-member-section,#root:has(.directory-business-hero),#root:has(.directory-investor-hero)) :where(input,textarea,select,option){
+  text-shadow:none!important;
+}
+@media(prefers-contrast:more){
+  :where(.workspace,.vc-member-section,#root:has(.directory-business-hero),#root:has(.directory-investor-hero)) :where(h1,h2,h3,h4,h5,h6,p,span,small,strong,em,label,a,li,dt,dd,th,td){
+    text-shadow:0 1px 2px #000,0 0 9px #000!important;
+  }
+}
