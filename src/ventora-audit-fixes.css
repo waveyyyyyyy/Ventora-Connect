@@ -1507,3 +1507,16 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
  .admin-topbar-logo .brand-sub{font-size:5px!important;letter-spacing:.34em!important}
  .admin-page>main>header button{gap:5px!important;padding:7px!important;font-size:8px!important}
 }
+
+
+/* The member-section top bars use the dark studio header treatment, so keep the official lockup white there. */
+.vc-member-section-topbar>.vc-member-section-logo .brand-word,
+.vc-member-section-topbar>.vc-member-section-logo .brand-sub{color:#fff!important}
+/* Workspace header uses the existing three-column mobile grid at tablet widths. */
+@media(max-width:760px) and (min-width:431px){
+ .workspace-topbar>.workspace-topbar-logo{grid-area:brand!important;min-width:0!important;flex:initial!important;margin:0!important}
+ .workspace-topbar>.workspace-command{grid-area:search!important}
+ .workspace-topbar .topbar-actions{grid-area:actions!important;justify-self:end!important}
+}
+.admin-page>aside>.admin-brand-lockup .brand-word,
+.admin-page>aside>.admin-brand-lockup .brand-sub{color:#132A3A!important}
