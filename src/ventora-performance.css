@@ -390,7 +390,7 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 .gp-deck-heading i b{width:6px;height:6px;border-radius:50%;background:#10b981;box-shadow:0 0 0 4px rgba(16,185,129,.1)}
 .gp-deck-tabs{display:flex;gap:5px;margin:12px 0 10px;overflow-x:auto;scrollbar-width:none}
 .gp-deck-tabs::-webkit-scrollbar{display:none}
-.gp-deck-tabs button{flex:0 0 auto;border:1px solid rgba(15,34,52,.09);border-radius:999px;padding:8px 10px;background:rgba(255,255,255,.8);color:#617987;font:700 9px/1.2 inherit;cursor:pointer;transition:transform .22s ease,background .22s ease,color .22s ease}
+.gp-deck-tabs button{flex:0 0 auto;border:1px solid rgba(15,34,52,.09);border-radius:999px;padding:8px 10px;background:rgba(255,255,255,.8);color:#617987;font-family:inherit;font-size:9px;line-height:1.2;font-weight:700;cursor:pointer;transition:transform .22s ease,background .22s ease,color .22s ease}
 .gp-deck-tabs button.active{background:#102f45;color:#fff;border-color:#102f45}
 .gp-deck-tabs button:active{transform:scale(.97)}
 .gp-deck-preview{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:11px;padding:11px;border-radius:11px;background:rgba(255,255,255,.84);border:1px solid rgba(15,34,52,.07);animation:vc-deck-enter .42s cubic-bezier(.2,.8,.2,1) both}
