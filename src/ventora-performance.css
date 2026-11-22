@@ -268,3 +268,17 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
  .workspace-command{height:38px}
  .pitch-action-dock .btn{flex-basis:100%;width:100%}
 }
+
+
+/* Two-speed studio ticker rails beneath the live showcase. */
+.gp-ticker-rails{position:relative;z-index:1;display:grid;gap:8px;max-width:1160px;margin:42px auto 0;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.gp-ticker-track{display:flex;align-items:center;gap:24px;width:max-content;min-width:200%;white-space:nowrap;animation:vc-ticker-left 34s linear infinite;color:rgba(247,248,247,.78);font:700 10px Manrope,sans-serif;letter-spacing:.2em}
+.gp-ticker-track.reverse{animation-name:vc-ticker-right;animation-duration:42s;color:rgba(183,216,201,.8)}
+.gp-ticker-track i{font-style:normal;color:#38bdf8;font-size:16px}
+@keyframes vc-ticker-left{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@keyframes vc-ticker-right{from{transform:translate3d(-50%,0,0)}to{transform:translate3d(0,0,0)}}
+@media(max-width:760px){.gp-ticker-rails{margin-top:28px}.gp-ticker-track{font-size:9px;gap:16px;animation-duration:44s}.gp-ticker-track.reverse{animation-duration:52s}}
+/* Correct fixed-action-dock legacy positioning while keeping it in document flow. */
+.pitch-action-dock{left:auto!important;transform:none!important}
+.admin-page{padding:0!important}
+@media(prefers-reduced-motion:reduce){.gp-ticker-track{animation:none!important;transform:none!important}}
