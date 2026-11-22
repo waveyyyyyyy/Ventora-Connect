@@ -519,3 +519,31 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
   .vc-hero-glass strong{font-size:22px!important;margin:8px 0!important}
   .vc-hero-stamp{right:7%;bottom:5%}
 }
+
+
+/* Final compact pass: remove the mobile bottom void and lift the decorative artwork into the content area. */
+.vc-overview-hero{align-content:center!important;align-items:center!important}
+.vc-hero-art{min-height:0!important;align-self:stretch!important}
+@media(max-width:760px){
+  .vc-overview-hero{padding-top:22px!important;padding-bottom:14px!important}
+  .vc-hero-art{
+    position:absolute!important;
+    right:-34px!important;
+    bottom:-18px!important;
+    top:auto!important;
+    width:164px!important;
+    min-height:124px!important;
+    height:124px!important;
+    opacity:.22!important;
+  }
+  .vc-hero-glass{min-height:124px!important;width:116px!important;padding:10px!important}
+  .vc-hero-glass strong{font-size:21px!important;margin:7px 0!important}
+  .vc-hero-stamp{display:none!important}
+}
+@media(max-width:520px){
+  .vc-overview-hero{padding-bottom:12px!important}
+  .vc-hero-art{right:-27px!important;bottom:-14px!important;width:140px!important;height:108px!important;min-height:108px!important}
+  .vc-hero-glass{width:104px!important;min-height:108px!important;padding:8px!important}
+  .vc-hero-glass strong{font-size:18px!important;line-height:.95}
+  .vc-hero-glass span,.vc-hero-glass small{font-size:6px!important}
+}
