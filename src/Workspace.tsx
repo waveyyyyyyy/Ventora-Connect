@@ -25,18 +25,6 @@ useEffect(()=>{
  }
  const oauthReturnPending=new URLSearchParams(window.location.search).get('oauth_return')==='1';
  const oauthFallback=oauthReturnPending?window.setTimeout(()=>{if(live&&!activeUserId.current&&!sessionResolved)setLoading(false)},15000):null;
- const readLocalSessionUser=async(expectedUserId?:string)=>{
-  if(!live)return undefined;
-  try{
-   const{data,error}=await supabase!.auth.getSession();
-   if(error)return undefined;
-   const localUser=data.session?.user;
-   if(localUser?.id&&(!expectedUserId||localUser.id===expectedUserId))return localUser;
-   return null;
-  }catch{
-   return undefined;
-  }
- };
  const acceptWorkspaceUser=(accepted:any)=>{
   if(!live||!accepted?.id)return;
   const nextId=accepted.id;
@@ -69,30 +57,18 @@ useEffect(()=>{
    }
   },0);
  });
- void restoreUserSession().then(async restored=>{
+ void restoreUserSession().then(restored=>{
   if(!live||sessionResolved)return;
   if(restored){sessionResolved=true;applyUser(restored);return;}
-  // A failed server verification is not proof that the member is signed out.
-  // Check the locally persisted Supabase session before rendering the login gate.
-  const localUser=await readLocalSessionUser();
-  if(!live||sessionResolved)return;
-  if(localUser){sessionResolved=true;acceptWorkspaceUser(localUser);return;}
-  if(localUser===undefined){
-   setAuthRestoreIssue(true);setNotice('Ventora could not check your saved sign-in because the connection is unavailable. Your account has not been signed out.');
-   setLoading(false);return;
-  }
-  // Wait for any newer auth event before deciding this is genuinely signed out.
+  // No saved session was found after Supabase initialization and shared retries.
+  // Do not force a login on an auth event that is still arriving.
   if(!authEventSeen){sessionResolved=true;setLoading(false);}
- }).catch(async()=>{
+ }).catch(()=>{
   if(!live||authEventSeen||oauthReturnPending)return;
-  const localUser=await readLocalSessionUser();
-  if(!live||authEventSeen)return;
-  if(localUser){sessionResolved=true;acceptWorkspaceUser(localUser);return;}
-  if(localUser===undefined){
-   setAuthRestoreIssue(true);setNotice('Ventora could not check your saved sign-in because the connection is unavailable. Your account has not been signed out.');
-   setLoading(false);return;
-  }
-  sessionResolved=true;setLoading(false);
+  // A restoration exception is an unknown state, never a logout.
+  setAuthRestoreIssue(true);
+  setNotice('Ventora is reconnecting to your saved sign-in. Your account has not been signed out.');
+  setLoading(false);
  });
  return()=>{live=false;if(oauthFallback)window.clearTimeout(oauthFallback);subscription.unsubscribe()};
 },[]);
