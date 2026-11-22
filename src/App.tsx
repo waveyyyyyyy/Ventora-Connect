@@ -116,7 +116,43 @@ function AppRoutes({setLoader}:{setLoader:VentoraLoadingSetter}){
  return <Suspense fallback={null}><Routes><Route path="/" element={<GustPlatform/>}/><Route path="/signup" element={<Auth signup onGatewayChange={(active)=>setLoader(active,'convergence','CONNECTING VENTURES...','auth')}/>}/><Route path="/login" element={<Auth onGatewayChange={(active)=>setLoader(active,'convergence','CONNECTING VENTURES...','auth')}/>}/><Route path="/dashboard" element={<Dashboard/>}/><Route path="/payment-coming-soon" element={<PaymentComingSoon/>}/><Route path="/messages" element={<Messages/>}/><Route path="/interests" element={<Interests/>}/><Route path="/matches" element={<Matches/>}/><Route path="/saved" element={<Saved/>}/><Route path="/announcements" element={<Announcements/>}/><Route path="/support" element={<Support/>}/><Route path="/admin" element={<Admin/>}/><Route path="/reset-password" element={<PasswordReset onGatewayChange={(active)=>setLoader(active,'convergence','VERIFYING ACCOUNT...','auth')}/>}/><Route path="/businesses" element={<Directory/>}/><Route path="/business/:id" element={<PublicProfile/>}/><Route path="/member/:id" element={<PublicProfile investor/>}/><Route path="/investors" element={<Directory investors/>}/><Route path="/about" element={<Info title="A network for the next generation of ambition." copy="Ventora Connect brings businesses and investors together through thoughtful discovery, trusted profiles and meaningful conversations."/>}/><Route path="/faq" element={<FAQ/>}/><Route path="/help" element={<FAQ/>}/><Route path="/contact" element={<FAQ/>}/><Route path="/how-it-works" element={<Info title="From discovery to conversation." copy="Create a profile, explore members whose stated preferences align with yours, message them directly, and continue the conversation privately."/>}/><Route path="/business-solutions" element={<Info title="A more considered way to meet investors." copy="Build a company profile, explain your funding requirements, share a private pitch deck, discover investors and manage expressions of interest. Publishing a profile does not guarantee funding."/>}/><Route path="/investor-solutions" element={<Info title="Discover businesses with context." copy="Define your investment interests, explore published company profiles, request conversations and track non-binding expressions of interest. Ventora does not provide investment advice or execute investments."/>}/><Route path="/success-stories" element={<Info title="Real outcomes, when they are ready to be shared." copy="There are no verified Ventora success stories to publish yet. We will only feature stories with the participants’ permission and clear supporting context."/>}/><Route path="/privacy" element={<Legal doc="privacy"/>}/><Route path="/terms" element={<Legal doc="terms"/>}/><Route path="/risk" element={<Legal doc="risk"/>}/><Route path="/legal/:doc" element={<Legal/>}/><Route path="*" element={<Info title="This page is on its way." copy="The page you're looking for isn't available yet."/>}/></Routes></Suspense>;
 }
 
-function OAuthReturn(){const location=useLocation(),navigate=useNavigate();useEffect(()=>{if(!supabase)return;let active=true;let navigating=false;const finish=async(session:any)=>{if(!active||navigating||!session?.user)return;let pending=false;try{pending=window.localStorage.getItem('ventora-google-oauth-pending')==='1'||window.sessionStorage.getItem('ventora-google-oauth-pending')==='1';}catch{}if(!pending)return;navigating=true;try{const createdAt=Date.parse(session.user.created_at||'');const isNewAccount=!session.user.user_metadata?.account_type&&Number.isFinite(createdAt)&&Date.now()-createdAt<30*60*1000;if(isNewAccount&&!session.user.user_metadata?.account_type_pending){await supabase?.auth.updateUser({data:{account_type_pending:true}});}}catch{}try{window.localStorage.removeItem('ventora-google-oauth-pending');window.localStorage.removeItem('ventora-google-oauth-role');window.sessionStorage.removeItem('ventora-google-oauth-pending');window.sessionStorage.removeItem('ventora-google-oauth-role');}catch{}if(location.pathname!== '/dashboard'||!location.search.includes('tab=overview'))navigate('/dashboard?tab=overview',{replace:true});};const{data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{if(session?.user&&(event==='SIGNED_IN'||event==='INITIAL_SESSION'||event==='TOKEN_REFRESHED'))window.setTimeout(()=>finish(session),0)});void supabase.auth.getSession().then(({data})=>finish(data.session)).catch(()=>{});return()=>{active=false;subscription.unsubscribe()}},[location.pathname,location.search,navigate]);return null;}
+function OAuthReturn(){
+ const location=useLocation(),navigate=useNavigate();
+ useEffect(()=>{
+  // This handler is only for the one-time Google OAuth callback URL.
+  // It must never react to stale storage flags while a member browses the site.
+  if(!supabase||new URLSearchParams(location.search).get('oauth_return')!=='1')return;
+  let active=true,finishing=false;
+  const finish=async(session:any)=>{
+   if(!active||finishing||!session?.user)return;
+   finishing=true;
+   try{
+    const createdAt=Date.parse(session.user.created_at||'');
+    const isNewAccount=!session.user.user_metadata?.account_type&&Number.isFinite(createdAt)&&Date.now()-createdAt<30*60*1000;
+    if(isNewAccount&&!session.user.user_metadata?.account_type_pending){
+     await supabase?.auth.updateUser({data:{account_type_pending:true}});
+    }
+   }catch{}
+   try{
+    window.localStorage.removeItem('ventora-google-oauth-pending');
+    window.localStorage.removeItem('ventora-google-oauth-role');
+    window.sessionStorage.removeItem('ventora-google-oauth-pending');
+    window.sessionStorage.removeItem('ventora-google-oauth-role');
+   }catch{}
+   if(!active)return;
+   // Strip the one-time callback marker without navigating a signed-in member
+   // away from the page they are currently viewing.
+   const cleanPath=location.pathname+location.search.replace(/([?&])oauth_return=1(&|$)/,(_m,lead,tail)=>tail?(lead==='?'?'?':'&'):'').replace(/[?&]$/,'')+location.hash;
+   navigate(cleanPath||'/dashboard?tab=overview',{replace:true});
+  };
+  const{data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
+   if(session?.user&&(event==='SIGNED_IN'||event==='INITIAL_SESSION'||event==='TOKEN_REFRESHED'))window.setTimeout(()=>void finish(session),0);
+  });
+  void supabase.auth.getSession().then(({data})=>finish(data.session)).catch(()=>{});
+  return()=>{active=false;subscription.unsubscribe()};
+ },[location.pathname,location.search,location.hash,navigate]);
+ return null;
+}
 export default function App(){
  const setLoader:VentoraLoadingSetter=()=>{};
  return <VentoraLoadingContext.Provider value={setLoader}><OAuthReturn/><AppRoutes setLoader={setLoader}/><DebugPanel/></VentoraLoadingContext.Provider>;
