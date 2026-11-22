@@ -1399,3 +1399,46 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
     background-position:58% 50%!important;background-size:cover!important;
   }
 }
+
+
+/* Messages: make the selected conversation occupy the single mobile grid cell. */
+@media(max-width:760px){
+  .vc-member-section.messages-page .messages-studio{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    grid-template-rows:minmax(0,1fr)!important;
+    align-items:stretch!important;
+    justify-items:stretch!important;
+  }
+  .vc-member-section.messages-page .messages-studio>.messages-list,
+  .vc-member-section.messages-page .messages-studio>.messages-chat{
+    grid-column:1!important;grid-row:1!important;
+    width:100%!important;max-width:100%!important;min-width:0!important;
+    min-height:0!important;height:100%!important;max-height:100%!important;
+    margin:0!important;
+  }
+  .vc-member-section.messages-page .messages-studio:not(.has-current)>.messages-list{display:flex!important}
+  .vc-member-section.messages-page .messages-studio:not(.has-current)>.messages-chat{display:none!important}
+  .vc-member-section.messages-page .messages-studio.has-current>.messages-list{display:none!important}
+  .vc-member-section.messages-page .messages-studio.has-current>.messages-chat{
+    display:flex!important;flex-direction:column!important;overflow:hidden!important;
+  }
+  .vc-member-section.messages-page .messages-chat-workspace{
+    display:flex!important;flex:1 1 0!important;min-height:0!important;min-width:0!important;
+    width:100%!important;overflow:hidden!important;
+  }
+  .vc-member-section.messages-page .messages-chat-main{
+    display:flex!important;flex:1 1 0!important;flex-direction:column!important;
+    min-width:0!important;min-height:0!important;width:100%!important;overflow:hidden!important;
+  }
+  .vc-member-section.messages-page .messages-stream{
+    display:flex!important;flex:1 1 0!important;min-height:0!important;min-width:0!important;
+    overflow-y:auto!important;overscroll-behavior:contain!important;
+  }
+  .vc-member-section.messages-page .messages-compose{display:flex!important;flex:0 0 auto!important;width:100%!important}
+  .vc-member-section.messages-page .messages-mobile-back{display:flex!important}
+  .vc-member-section.messages-page .message-profile-drawer{
+    position:absolute!important;inset:0!important;z-index:5!important;
+    width:100%!important;max-width:100%!important;flex:none!important;
+  }
+}
