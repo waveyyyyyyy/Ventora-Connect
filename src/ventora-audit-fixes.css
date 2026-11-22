@@ -1520,3 +1520,9 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 }
 .admin-page>aside>.admin-brand-lockup .brand-word,
 .admin-page>aside>.admin-brand-lockup .brand-sub{color:#132A3A!important}
+
+
+/* Reserve a clear hamburger zone on every member-section header, not only Messages. */
+@media(max-width:760px){
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar{padding-left:66px!important}
+}
