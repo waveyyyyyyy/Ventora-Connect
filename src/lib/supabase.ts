@@ -22,13 +22,13 @@ export const supabase = isSupabaseConfigured
   : null;
 
 
-// Track Supabase's initial persisted-session hydration centrally. A route can
-// mount before getSession() has finished reading local storage; waiting for
-// INITIAL_SESSION avoids mistaking that temporary empty read for a signed-out user.
-let observedAuthUser: import('@supabase/supabase-js').User | null = null;
+// Keep one authoritative view of the active Supabase session. A user object
+// without its matching session is not enough: PostgREST would still send the
+// request as anon and protected membership queries would fail.
 let observedAuthSession: import('@supabase/supabase-js').Session | null = null;
 let initialAuthResolved = false;
 let resolveInitialAuth!: () => void;
+let authEpoch = 0;
 const initialAuthReady = new Promise<void>((resolve) => {
   resolveInitialAuth = resolve;
 });
@@ -36,10 +36,10 @@ const initialAuthReady = new Promise<void>((resolve) => {
 if (supabase) {
   supabase.auth.onAuthStateChange((event, session) => {
     if (session?.user) {
-      observedAuthUser = session.user;
       observedAuthSession = session;
-    } else if (event === 'SIGNED_OUT') {
-      observedAuthUser = null;
+    } else if (event === 'SIGNED_OUT' || event === 'INITIAL_SESSION') {
+      // INITIAL_SESSION with no session is authoritative. Do not retain a
+      // stale user from an earlier page lifecycle or expired local token.
       observedAuthSession = null;
     }
 
@@ -50,61 +50,95 @@ if (supabase) {
   });
 }
 
-// All protected routes share this single restoration path. It waits for the
-// auth client's initial local-storage hydration before reading the session,
-// preventing Messages and the directory from racing Supabase startup.
+// All protected routes share this restoration path. A generation counter
+// prevents an older in-flight restore from returning a user after sign-out.
 let restoreInFlight: Promise<import('@supabase/supabase-js').User | null> | null = null;
 export function restoreUserSession(): Promise<import('@supabase/supabase-js').User | null> {
   if (!supabase) return Promise.resolve(null);
+  if (observedAuthSession?.user) return Promise.resolve(observedAuthSession.user);
   if (restoreInFlight) return restoreInFlight;
 
-  restoreInFlight = (async () => {
-    if (observedAuthSession?.user) return observedAuthSession.user;
-
-    // Do not mistake a delayed mobile WebView/local-storage hydration for a
-    // signed-out account. Wait for Supabase's INITIAL_SESSION notification.
+  const epoch = authEpoch;
+  const task = (async () => {
+    const stillCurrent = () => epoch === authEpoch;
     if (!initialAuthResolved) {
       await Promise.race([
         initialAuthReady,
         new Promise<void>((resolve) => window.setTimeout(resolve, 10000)),
       ]);
     }
+    if (!stillCurrent()) return null;
     if (observedAuthSession?.user) return observedAuthSession.user;
 
-    // Mobile browsers can briefly return an empty getSession result while
-    // restoring persisted credentials. Recheck rather than surfacing a false
-    // "sign-in is being restored" warning on the first Message tap.
-    const delays = [0, 500, 1000, 1500];
+    // Recheck mobile storage hydration a few times, but only accept a user
+    // when Supabase also has the matching access-token session.
+    const delays = [0, 400, 900, 1400];
     for (const delay of delays) {
       if (delay) await new Promise<void>((resolve) => window.setTimeout(resolve, delay));
+      if (!stillCurrent()) return null;
       if (observedAuthSession?.user) return observedAuthSession.user;
+
       try {
         const { data, error } = await supabase.auth.getSession();
+        if (!stillCurrent()) return null;
         if (!error && data.session?.user) {
           observedAuthSession = data.session;
-          observedAuthUser = data.session.user;
           return data.session.user;
         }
       } catch {
         // Continue to the server-verified fallback.
       }
+
       try {
         const { data, error } = await supabase.auth.getUser();
+        if (!stillCurrent()) return null;
         if (!error && data.user) {
-          observedAuthUser = data.user;
-          return data.user;
+          const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+          if (!stillCurrent()) return null;
+          if (!sessionError && sessionData.session?.user?.id === data.user.id) {
+            observedAuthSession = sessionData.session;
+            return sessionData.session.user;
+          }
         }
       } catch {
         // Retry while the persisted session finishes restoring.
       }
     }
 
-    return observedAuthSession?.user || observedAuthUser;
-  })().finally(() => {
-    restoreInFlight = null;
-  });
+    return stillCurrent() ? observedAuthSession?.user || null : null;
+  })();
 
-  return restoreInFlight;
+  restoreInFlight = task;
+  void task.finally(() => {
+    if (restoreInFlight === task) restoreInFlight = null;
+  });
+  return task;
+}
+
+// One sign-out path for every navigation surface. Local scope clears this
+// device's session without revoking other devices, and pending OAuth flags
+// cannot accidentally send the next visit through an old callback.
+export async function signOutUser(): Promise<void> {
+  if (!supabase) return;
+  authEpoch += 1;
+  restoreInFlight = null;
+
+  const { error } = await supabase.auth.signOut({ scope: 'local' });
+  if (error) throw error;
+
+  observedAuthSession = null;
+  initialAuthResolved = true;
+  resolveInitialAuth();
+
+  try {
+    window.localStorage.removeItem('sb-nlkcnewcrcgylubqulph-auth-token');
+    window.localStorage.removeItem('ventora-google-oauth-pending');
+    window.localStorage.removeItem('ventora-google-oauth-role');
+    window.sessionStorage.removeItem('ventora-google-oauth-pending');
+    window.sessionStorage.removeItem('ventora-google-oauth-role');
+  } catch {
+    // The Supabase sign-out already completed; storage cleanup is best effort.
+  }
 }
 
 export type MessagingProfileCheck = { complete: boolean; missing: string[]; percent: number };
