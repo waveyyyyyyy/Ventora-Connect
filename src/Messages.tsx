@@ -1,6 +1,7 @@
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {Link,useLocation,useSearchParams} from 'react-router-dom';
 import {supabase,checkMessagingProfile,restoreUserSession,refreshVerifiedSession} from './lib/supabase';
+import { isAuthRefreshError } from './lib/auth-session-policy.mjs';
 import MemberSectionLayout from './MemberSectionLayout';
 import {ArrowLeft,MessageCircle,Send,Search,ChevronDown,Pin,ArrowUpRight,CheckCheck,PanelRightClose,PanelRightOpen} from 'lucide-react';
 
@@ -17,7 +18,9 @@ export default function Messages(){
  async function runMessagesRequest<T extends {error:any}>(request:()=>PromiseLike<T>,expectedUserId?:string):Promise<T>{
   let result=await request();
   const error=result.error;
-  const needsRefresh=Boolean(error&&(error.code==='42501'||error.code==='PGRST301'||error.code==='PGRST302'||error.status===401||/invalid jwt|jwt expired|not authenticated/i.test(error.message||'')));
+  // 42501 is a database permission/RLS error, not an expired login. Never
+  // refresh a member's session for ordinary authorization failures.
+  const needsRefresh=isAuthRefreshError(error);
   if(needsRefresh&&client){
    const refreshed=await refreshVerifiedSession(expectedUserId||user?.id);
    if(refreshed&&(!expectedUserId||refreshed.user.id===expectedUserId)
