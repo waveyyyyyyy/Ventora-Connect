@@ -105,7 +105,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 @keyframes vc-orbit{to{transform:rotate(360deg)}}
 @keyframes vc-rise{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:800px){.auth-page{grid-template-columns:1fr!important}.auth-aside{min-height:310px!important;padding:25px 26px 34px!important}.auth-aside>div{margin:46px 0 0!important}.auth-aside:after{width:310px;right:-10%;top:5%}.auth-main{padding:22px 18px 40px!important}.auth-box{margin:36px auto 0!important}.workspace-content{padding:20px 15px 48px!important}.workspace-welcome{padding:25px 21px!important;border-radius:21px!important}.workspace-welcome:after{font-size:48px;right:2%}.workspace-stat-grid{gap:12px}.workspace-stat-grid>article{padding:17px!important}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
 
 /* Shared visual language for every signed-in destination */
 .messages-page,.interests-page,.matches-page,.saved-page,.announcements-page,.admin-page,.support-page{min-height:100vh!important;padding:clamp(24px,4vw,54px)!important;background:radial-gradient(ellipse at 90% 0%,rgba(133,150,255,.18),transparent 32%),radial-gradient(ellipse at 0% 80%,rgba(105,214,230,.11),transparent 35%),#f4f6ff!important;color:#18264a!important;position:relative;isolation:isolate}
@@ -544,7 +544,7 @@ body{overflow-x:clip}
  @keyframes vc-studio-sheen{0%,72%,100%{transform:translateX(-125%)}84%{transform:translateX(125%)}}
 }
 @media(prefers-reduced-motion:reduce){
- *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+ html{scroll-behavior:auto!important}
 }
 
 
