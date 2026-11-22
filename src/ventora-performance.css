@@ -485,3 +485,19 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
  .gp-hero-art .gp-poster,.gp-hero-art .gp-float-card,.gp-hero-art .gp-art-center,.gp-hero-art .gp-art-orbit,.gp-showcase-window,.gp-showcase-data,.gp-showcase-orbit,.gp-ticker-track,.gp-final-cta:before,.gp-final-cta:after,.gp-hero-deck:before,.gp-primary:after,.directory-create-link:after{animation:none!important}
  .gp-type-cursor{display:none!important}
 }
+
+
+/* Signed-in motion budget: static textures, transform-only scenery, reduced mobile glass. */
+.directory-business-hero:after,.directory-investor-hero:after{animation:none!important;background-position:0 0!important}
+.vc-member-section:after,.directory-results:after,.admin-page:after{animation:vc-ambient-drift 48s ease-in-out infinite alternate!important;will-change:transform}
+@keyframes vc-ambient-drift{from{transform:translate3d(0,0,0) rotate(-2deg)}to{transform:translate3d(-12px,-9px,0) rotate(2deg)}}
+@media(max-width:760px){
+ .directory-card,.admin-stat-grid article,.admin-table,.admin-callout,.admin-page>main>header,.workspace-topbar,.vc-member-section-topbar,.gp-public-header,.gp-float-card,.gp-pill,.gp-public-menu-scrim,.workspace-sidebar{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ .vc-member-section:after,.directory-results:after,.admin-page:after{opacity:.09!important;animation-duration:64s!important}
+ .directory-business-hero:after,.directory-investor-hero:after{display:none!important}
+ .directory-card{background:#fff!important}
+ .admin-stat-grid article,.admin-table,.admin-callout{background:#fff!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .vc-member-section:after,.directory-results:after,.admin-page:after{animation:none!important}
+}
