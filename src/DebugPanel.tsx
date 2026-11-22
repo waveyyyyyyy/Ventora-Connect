@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { supabase, restoreUserSession } from './lib/supabase';
 import { Bug, Copy, X, ChevronDown, ChevronUp } from 'lucide-react';
 
@@ -101,11 +101,11 @@ export default function DebugPanel() {
       setCopied(true); window.setTimeout(() => setCopied(false), 2200);
     }
   };
-  const panelStyle: React.CSSProperties = { position: 'fixed', right: 14, bottom: 14, zIndex: 99999, fontFamily: 'system-ui,sans-serif' };
+  const panelStyle: CSSProperties = { position: 'fixed', right: 14, bottom: 14, zIndex: 99999, fontFamily: 'system-ui,sans-serif' };
   const buttonStyle: React.CSSProperties = { border: '1px solid #526071', borderRadius: 999, background: '#111827', color: 'white', padding: '11px 15px', display: 'flex', alignItems: 'center', gap: 8, fontWeight: 700, boxShadow: '0 8px 30px #0005', cursor: 'pointer' };
   return <div style={panelStyle}>
     {!open ? <button type="button" style={buttonStyle} onClick={() => setOpen(true)}><Bug size={17}/> Debug <span style={{background:'#ef4444',borderRadius:99,minWidth:19,textAlign:'center',fontSize:11,padding:'2px 5px'}}>{logs.length}</span></button> :
-    <section style={{width:'min( min(92vw, 390px), 390px)', maxHeight:'min(72vh,620px)', overflow:'hidden', border:'1px solid #475569', borderRadius:18, background:'#0f172a', color:'#f8fafc', boxShadow:'0 18px 60px #0008'}}>
+    <section style={{width:'min(92vw, 390px)', maxHeight:'min(72vh,620px)', overflow:'hidden', border:'1px solid #475569', borderRadius:18, background:'#0f172a', color:'#f8fafc', boxShadow:'0 18px 60px #0008'}}>
       <header style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:14,borderBottom:'1px solid #334155'}}>
         <div style={{display:'flex',alignItems:'center',gap:9}}><Bug size={18}/><strong>Private debug panel</strong><span style={{fontSize:11,color:'#94a3b8'}}>ADMIN</span></div>
         <button type="button" aria-label="Close debug panel" onClick={()=>setOpen(false)} style={{background:'transparent',border:0,color:'white',padding:4}}><X size={19}/></button>
