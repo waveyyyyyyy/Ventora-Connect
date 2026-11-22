@@ -1,11 +1,13 @@
 import React,{useDeferredValue,useEffect,useMemo,useState} from 'react';
 import {Link,useNavigate} from 'react-router-dom';
 import {ArrowUpRight,Building2,ChartNoAxesCombined,ShieldCheck,Bookmark,UserRoundCheck} from 'lucide-react';
-import {supabase,restoreUserSession,checkMessagingProfile} from './lib/supabase';
+import {supabase,restoreUserSession,requireActiveSession,checkMessagingProfile} from './lib/supabase';
 
 async function readViewerSession(){
  if(!supabase)return null;
- return restoreUserSession();
+ const user=await restoreUserSession();
+ if(!user)return null;
+ try{await requireActiveSession(user.id);return user;}catch{return null;}
 }
 function publishDirectoryViewer(user:any){
  if(typeof window!=='undefined'&&user?.id)window.dispatchEvent(new CustomEvent('ventora:directory-viewer',{detail:user}));
