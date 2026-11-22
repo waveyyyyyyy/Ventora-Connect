@@ -2064,8 +2064,7 @@ body:has(.directory-investor-hero) .directory-results{
   center 400vh,center 500vh,center 600vh,center 700vh!important;
  background-repeat:no-repeat!important;background-attachment:scroll!important;
 }
-.workspace:has(.workspace-content.workspace-tab-subscriptions) .workspace-content,
-.workspace:has(.workspace-content.workspace-tab-subscriptions) .workspace-content>*{
+.workspace:has(.workspace-content.workspace-tab-subscriptions) .workspace-content{
  background-color:transparent!important;
 }
 
