@@ -37,108 +37,83 @@ export const supabase = isSupabaseConfigured
     })
   : null;
 
-// A cached User object alone does not mean the current PostgREST request will
-// carry a valid JWT. All private routes use this shared, server-verified gate.
-let initialAuthResolved = false;
-let resolveInitialAuth!: () => void;
-let authEpoch = 0;
-let cachedAuthUser: User | null = null;
+// A cached Session (rather than a bare User) keeps the member interface stable
+// during a transient SDK refresh failure. Protected actions must still call
+// requireActiveSession() before performing account-setup writes.
+const STORAGE_KEY = 'sb-nlkcnewcrcgylubqulph-auth-token';
+let cachedAuthSession: Session | null = null;
+let manualSignOutPending = false;
+let restoreInFlight: Promise<User | null> | null = null;
+let verifiedSessionInFlight: Promise<{ user: User; session: Session } | null> | null = null;
 
-// A saved user snapshot is used only to keep the interface from falsely
-// redirecting to login during a temporary refresh/rate-limit failure. It is
-// never used as proof of authorization; Supabase RLS still requires a valid JWT.
-function readStoredUserSnapshot(): User | null {
+function readStoredSessionSnapshot(): Session | null {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = window.localStorage.getItem('sb-nlkcnewcrcgylubqulph-auth-token');
+    const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const saved = JSON.parse(raw);
-    return saved?.user?.id ? saved.user as User : null;
+    return saved?.access_token && saved?.refresh_token && saved?.user?.id
+      ? saved as Session
+      : null;
   } catch {
     return null;
   }
 }
-const initialAuthReady = new Promise<void>((resolve) => {
-  resolveInitialAuth = resolve;
-});
-let restoreInFlight: Promise<User | null> | null = null;
+
+cachedAuthSession = readStoredSessionSnapshot();
 
 if (supabase) {
   supabase.auth.onAuthStateChange((event, session) => {
-    if (session?.user) cachedAuthUser = session.user;
-    if (event === 'SIGNED_OUT') cachedAuthUser = readStoredUserSnapshot();
-    if (event === 'INITIAL_SESSION' && !initialAuthResolved) {
-      initialAuthResolved = true;
-      resolveInitialAuth();
+    if (session?.access_token && session.user?.id) {
+      cachedAuthSession = session;
+    } else if (event === 'SIGNED_OUT') {
+      if (!retainCachedSessionOnUnexpectedSignOut(manualSignOutPending, cachedAuthSession)) {
+        cachedAuthSession = null;
+      }
     }
     if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
-      authEpoch += 1;
       restoreInFlight = null;
     }
   });
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('storage', (event) => {
+      if (event.key !== STORAGE_KEY) return;
+      if (event.newValue === null) {
+        cachedAuthSession = null;
+        restoreInFlight = null;
+        verifiedSessionInFlight = null;
+      } else {
+        cachedAuthSession = readStoredSessionSnapshot();
+      }
+    });
+  }
 }
 
 /**
- * Restore the locally persisted Supabase session.
- *
- * Supabase Auth owns refresh-token rotation and cross-tab coordination.
- * Do not manually call refreshSession() here: repeated manual refreshes from
- * route guards and auth listeners can race the SDK's own refresh, consume
- * rotating refresh tokens, and trigger Auth rate limits.
- *
- * getSession() reads the SDK-managed persisted session and lets the SDK handle
- * expiry/refresh. RLS remains the authority for every private database action.
+ * Return the last known member identity for UI continuity. The cached Session
+ * is never treated as proof for a sensitive write: those call requireActiveSession.
+ * Supabase Auth remains responsible for rotating and persisting refresh tokens.
  */
 export function restoreUserSession(): Promise<User | null> {
   if (!supabase) return Promise.resolve(null);
-  if (cachedAuthUser) return Promise.resolve(cachedAuthUser);
+  if (cachedAuthSession?.user?.id) return Promise.resolve(cachedAuthSession.user);
   if (restoreInFlight) return restoreInFlight;
 
   const task = (async (): Promise<User | null> => {
-    // Let Supabase finish reading its persisted session before doing our own
-    // read. Every part of the app shares this single in-flight restoration.
-    if (!initialAuthResolved) {
-      await Promise.race([
-        initialAuthReady,
-        new Promise<void>((resolve) => window.setTimeout(resolve, 12000)),
-      ]);
+    try {
+      const { data, error } = await supabase.auth.getSession();
+      if (data.session?.access_token && data.session.user?.id) {
+        cachedAuthSession = data.session;
+        return data.session.user;
+      }
+      // Do not convert a temporary SDK/network error into a UI sign-out.
+      if (cachedAuthSession?.user?.id) return cachedAuthSession.user;
+      if (error) return null;
+      return null;
+    } catch {
+      return cachedAuthSession?.user ?? null;
     }
-    if (cachedAuthUser) return cachedAuthUser;
-
-    // A temporary 429/network error must not be mistaken for a manual logout.
-    // Retry through the SDK (never call refreshSession directly here), then
-    // retain the last locally saved identity for UI continuity if storage still
-    // contains a session. Backend/RLS requests remain fully authenticated-only.
-    for (let attempt = 0; attempt < 4; attempt += 1) {
-      try {
-        const { data, error } = await supabase.auth.getSession();
-        if (data.session?.user) {
-          cachedAuthUser = data.session.user;
-          return data.session.user;
-        }
-        if (!error) {
-          const savedUser = readStoredUserSnapshot();
-          if (savedUser) {
-            cachedAuthUser = savedUser;
-            return savedUser;
-          }
-          return null;
-        }
-      } catch {
-        // Treat a failed read as unknown, not as a sign-out.
-      }
-
-      const savedUser = readStoredUserSnapshot();
-      if (savedUser) {
-        cachedAuthUser = savedUser;
-        return savedUser;
-      }
-      if (attempt < 3) {
-        await new Promise<void>((resolve) => window.setTimeout(resolve, 500 * (attempt + 1)));
-      }
-    }
-
-    return readStoredUserSnapshot();
   })();
 
   restoreInFlight = task;
@@ -149,37 +124,79 @@ export function restoreUserSession(): Promise<User | null> {
 }
 
 /**
- * Compatibility helper for message requests that need one retry after an auth
- * error. It reads the SDK-managed session; it deliberately does not force a
- * refresh, so it cannot compete with Supabase's token rotation.
+ * Verify a session before sensitive setup actions. getSession() delegates
+ * expiry handling to the SDK; this helper never calls refreshSession() itself.
  */
-export async function refreshVerifiedSession(expectedUserId?: string) {
-  if (!supabase) return null;
+export async function requireActiveSession(expectedUserId?: string): Promise<Session> {
+  if (!supabase) throw new Error('Authentication is not configured.');
   const { data, error } = await supabase.auth.getSession();
-  if (error || !data.session?.access_token || !data.session.user?.id) return null;
-  if (expectedUserId && data.session.user.id !== expectedUserId) return null;
-  cachedAuthUser = data.session.user;
-  return { user: data.session.user, session: data.session };
+  if (error) throw error;
+  const session = data.session;
+  if (!session?.access_token || !session.user?.id) {
+    throw new Error('Your saved sign-in is reconnecting. Please wait a moment and try again. You have not been signed out.');
+  }
+  if (expectedUserId && session.user.id !== expectedUserId) {
+    throw new Error('The active sign-in belongs to a different account. Please retry after the session finishes restoring.');
+  }
+  const { data: verified, error: verifyError } = await supabase.auth.getUser(session.access_token);
+  if (verifyError || verified.user?.id !== session.user.id) {
+    throw new Error('Your sign-in is temporarily unavailable. Please wait a moment and try again.');
+  }
+  cachedAuthSession = session;
+  return session;
+}
+
+/**
+ * Parallel message requests share one session-recovery attempt. This prevents
+ * a batch of expired-JWT failures from launching competing refresh requests.
+ */
+export function refreshVerifiedSession(expectedUserId?: string) {
+  if (!supabase) return Promise.resolve(null);
+  if (!verifiedSessionInFlight) {
+    const task = (async (): Promise<{ user: User; session: Session } | null> => {
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        const session = data.session;
+        if (error || !session?.access_token || !session.user?.id) return null;
+        const { data: verified, error: verifyError } = await supabase.auth.getUser(session.access_token);
+        if (verifyError || verified.user?.id !== session.user.id) return null;
+        cachedAuthSession = session;
+        return { user: session.user, session };
+      } catch {
+        return null;
+      }
+    })();
+    verifiedSessionInFlight = task;
+    void task.finally(() => {
+      if (verifiedSessionInFlight === task) verifiedSessionInFlight = null;
+    });
+  }
+  return verifiedSessionInFlight.then((result) => {
+    if (!result || (expectedUserId && result.user.id !== expectedUserId)) return null;
+    return result;
+  });
 }
 
 export async function signOutUser(): Promise<void> {
   if (!supabase) return;
-  authEpoch += 1;
-  restoreInFlight = null;
-  const { error } = await supabase.auth.signOut({ scope: 'local' });
-  if (error) throw error;
-  cachedAuthUser = null;
-  initialAuthResolved = true;
-  resolveInitialAuth();
-
+  manualSignOutPending = true;
   try {
-    window.localStorage.removeItem('sb-nlkcnewcrcgylubqulph-auth-token');
-    window.localStorage.removeItem('ventora-google-oauth-pending');
-    window.localStorage.removeItem('ventora-google-oauth-role');
-    window.sessionStorage.removeItem('ventora-google-oauth-pending');
-    window.sessionStorage.removeItem('ventora-google-oauth-role');
-  } catch {
-    // Supabase sign-out has completed; storage cleanup is best effort.
+    const { error } = await supabase.auth.signOut({ scope: 'local' });
+    if (error) throw error;
+    cachedAuthSession = null;
+    restoreInFlight = null;
+    verifiedSessionInFlight = null;
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+      window.localStorage.removeItem('ventora-google-oauth-pending');
+      window.localStorage.removeItem('ventora-google-oauth-role');
+      window.sessionStorage.removeItem('ventora-google-oauth-pending');
+      window.sessionStorage.removeItem('ventora-google-oauth-role');
+    } catch {
+      // Supabase sign-out has completed; storage cleanup is best effort.
+    }
+  } finally {
+    manualSignOutPending = false;
   }
 }
 
