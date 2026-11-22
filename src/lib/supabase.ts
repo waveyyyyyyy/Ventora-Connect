@@ -40,13 +40,16 @@ export const supabase = isSupabaseConfigured
 let initialAuthResolved = false;
 let resolveInitialAuth!: () => void;
 let authEpoch = 0;
+let cachedAuthUser: User | null = null;
 const initialAuthReady = new Promise<void>((resolve) => {
   resolveInitialAuth = resolve;
 });
 let restoreInFlight: Promise<User | null> | null = null;
 
 if (supabase) {
-  supabase.auth.onAuthStateChange((event) => {
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (session?.user) cachedAuthUser = session.user;
+    if (event === 'SIGNED_OUT') cachedAuthUser = null;
     if (event === 'INITIAL_SESSION' && !initialAuthResolved) {
       initialAuthResolved = true;
       resolveInitialAuth();
@@ -76,36 +79,32 @@ function matchesSession(session: Session | null, expectedUserId?: string): boole
  */
 export function restoreUserSession(): Promise<User | null> {
   if (!supabase) return Promise.resolve(null);
+  if (cachedAuthUser) return Promise.resolve(cachedAuthUser);
   if (restoreInFlight) return restoreInFlight;
 
   const epoch = authEpoch;
   const task = (async (): Promise<User | null> => {
-    const current = () => epoch === authEpoch;
     if (!initialAuthResolved) {
       await Promise.race([
         initialAuthReady,
         new Promise<void>((resolve) => window.setTimeout(resolve, 10000)),
       ]);
     }
-    if (!current()) return null;
-
-    for (const delay of [0, 300, 900]) {
-      if (delay) await new Promise<void>((resolve) => window.setTimeout(resolve, delay));
-      if (!current()) return null;
-      try {
-        const { data, error } = await supabase.auth.getSession();
-        if (!current()) return null;
-        if (error) continue;
-        const session = data.session;
-        if (session?.access_token && session.user?.id) return session.user;
-        // A successful empty read is a real signed-out state.
-        return null;
-      } catch {
-        // A storage/network exception is not a logout. Retry without forcing
-        // a second refresh-token exchange.
-      }
+    if (epoch !== authEpoch) return cachedAuthUser;
+    if (cachedAuthUser) return cachedAuthUser;
+    try {
+      // One SDK-managed read only. Supabase owns token refresh and persistence;
+      // callers must never force refreshSession() as a side effect of routing.
+      const { data, error } = await supabase.auth.getSession();
+      if (epoch !== authEpoch) return cachedAuthUser;
+      if (error) return null;
+      const user = data.session?.user || null;
+      if (user) cachedAuthUser = user;
+      return user;
+    } catch {
+      // A storage/network error is not proof that the member signed out.
+      return null;
     }
-    return null;
   })();
 
   restoreInFlight = task;
@@ -121,6 +120,7 @@ export async function signOutUser(): Promise<void> {
   restoreInFlight = null;
   const { error } = await supabase.auth.signOut({ scope: 'local' });
   if (error) throw error;
+  cachedAuthUser = null;
   initialAuthResolved = true;
   resolveInitialAuth();
 
