@@ -15,8 +15,9 @@ export default function BusinessDirectoryPage({investors=false,Header,Footer}:{i
 const[query,setQuery]=useState(''),[industry,setIndustry]=useState(''),[stage,setStage]=useState(''),[ticket,setTicket]=useState('');const deferredQuery=useDeferredValue(query);const[items,setItems]=useState<any[]>([]);const[loading,setLoading]=useState(true);const[error,setError]=useState('');const[viewer,setViewer]=useState<any>(null);const[busy,setBusy]=useState('');const[message,setMessage]=useState('');const[savedIds,setSavedIds]=useState<string[]>([]);const nav=useNavigate();
 useEffect(()=>{
  let active=true;
- const client=supabase;
- if(!client){setLoading(false);return()=>{active=false;};}
+ const maybeClient=supabase;
+ if(!maybeClient){setLoading(false);return()=>{active=false;};}
+ const client=maybeClient as NonNullable<typeof maybeClient>;
  async function load(){
   const listQuery=investors
    ?client.from('discoverable_profiles').select('id,full_name,bio,avatar_url,country,city,website,account_type,investment_min,investment_max,preferred_industries,preferred_stages').eq('account_type','investor')
