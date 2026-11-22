@@ -440,3 +440,15 @@ body{background-color:#f3f7f8;background-image:radial-gradient(ellipse at 92% 7%
  .directory-search input,.directory-search select{min-height:46px}
 }
 @media(hover:none){.directory-card:hover{transform:none!important}}
+
+
+/* High-visibility profile completion prompt in discovery results */
+.directory-profile-alert{display:flex;align-items:center;gap:16px;width:100%;margin:18px 0 26px;padding:20px 22px;border:1px solid rgba(36,88,99,.22);border-radius:20px;background:linear-gradient(115deg,rgba(226,241,239,.98),rgba(247,251,250,.98) 58%,rgba(235,244,245,.98));box-shadow:0 12px 30px rgba(26,72,81,.09);color:#183b43;position:relative;isolation:isolate}
+.directory-profile-alert:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;border-radius:20px 0 0 20px;background:linear-gradient(180deg,#2c7880,#1c4f5a)}
+.directory-profile-alert-icon{width:46px;height:46px;flex:0 0 46px;display:grid;place-items:center;border-radius:15px;background:#d6eae7;color:#205b63}
+.directory-profile-alert-copy{min-width:0;flex:1}
+.directory-profile-alert-copy strong{display:block;font-size:15px;font-weight:750;letter-spacing:-.01em;color:#173b43}
+.directory-profile-alert-copy p{margin:5px 0 0;font-size:13px;line-height:1.55;color:#526b70}
+.directory-profile-alert-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:0 0 auto;padding:12px 16px;border-radius:12px;background:#1e5660;color:#fff;text-decoration:none;font-size:13px;font-weight:700;box-shadow:0 6px 16px rgba(30,86,96,.18);transition:transform .18s ease,background .18s ease}
+.directory-profile-alert-action:hover{background:#164650;transform:translateY(-1px)}
+@media(max-width:640px){.directory-profile-alert{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;margin:16px 0 22px;padding:16px;border-radius:17px}.directory-profile-alert-icon{width:44px;height:44px;flex-basis:44px}.directory-profile-alert-copy strong{font-size:14px}.directory-profile-alert-copy p{font-size:12.5px}.directory-profile-alert-action{grid-column:1/-1;width:100%;min-height:44px;margin-top:2px}}
