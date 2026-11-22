@@ -5,9 +5,26 @@ const url = (import.meta.env.VITE_SUPABASE_URL as string | undefined)
 const key = (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined)
   || 'sb_publishable_nJm5OWA2sXxIfAEQpuQ4Xw_YUQrWCer';
 
+type DiagnosticEvent = { kind: string; message: string; source?: string; status?: number };
+let diagnosticSink: ((event: DiagnosticEvent) => void) | null = null;
+export function setDiagnosticCapture(sink: ((event: DiagnosticEvent) => void) | null) { diagnosticSink = sink; }
+const diagnosticFetch: typeof fetch = async (input, init) => {
+  const rawUrl = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url;
+  const method = (init?.method || (typeof input !== 'string' && !(input instanceof URL) ? input.method : 'GET')).toUpperCase();
+  const safePath = (() => { try { return new URL(rawUrl, url).pathname; } catch { return '[unknown path]'; } })();
+  try {
+    const response = await globalThis.fetch(input, init);
+    if (!response.ok) diagnosticSink?.({ kind: 'Supabase/API request failed', message: method + ' ' + safePath + ' returned HTTP ' + response.status, source: 'Supabase', status: response.status });
+    return response;
+  } catch (error) {
+    diagnosticSink?.({ kind: 'Supabase/API network failure', message: method + ' ' + safePath + ': ' + (error instanceof Error ? error.message : 'Network request failed'), source: 'Supabase' });
+    throw error;
+  }
+};
 export const isSupabaseConfigured = Boolean(url && key);
 export const supabase = isSupabaseConfigured
   ? createClient(url, key, {
+      global: { fetch: diagnosticFetch },
       auth: {
         autoRefreshToken: true,
         persistSession: true,
