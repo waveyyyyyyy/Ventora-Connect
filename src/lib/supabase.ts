@@ -1,4 +1,5 @@
-import { createClient, type User } from '@supabase/supabase-js';
+import { createClient, type Session, type User } from '@supabase/supabase-js';
+import { retainCachedSessionOnUnexpectedSignOut } from './auth-session-policy.mjs';
 
 const url = (import.meta.env.VITE_SUPABASE_URL as string | undefined)
   || 'https://nlkcnewcrcgylubqulph.supabase.co';
