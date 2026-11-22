@@ -1981,3 +1981,69 @@ body:has(.directory-results){background:transparent!important;background-image:n
    100vw 100svh,100vw 100svh,100vw 100svh,100vw 100svh!important;
  }
 }
+
+
+/* FINAL FULL-DOCUMENT SCENIC FIX.
+   Put the poster stack on the content-sized main/page canvas (not a fixed
+   viewport pseudo-element), so Overview continues all the way to its footer. */
+.workspace:has(.workspace-content.workspace-tab-overview)>.workspace-main{
+  position:relative!important;isolation:isolate!important;
+  background-color:#193d42!important;
+  background-image:
+    linear-gradient(rgba(9,29,36,.22),rgba(9,29,36,.22)),
+    var(--vc-scene-1),var(--vc-scene-2),var(--vc-scene-3),var(--vc-scene-4),
+    var(--vc-scene-5),var(--vc-scene-6),var(--vc-scene-7),var(--vc-scene-8)!important;
+  background-size:100% 100%,100% 100vh,100% 100vh,100% 100vh,100% 100vh,
+    100% 100vh,100% 100vh,100% 100vh,100% 100vh!important;
+  background-position:0 0,center 0,center 100vh,center 200vh,center 300vh,
+    center 400vh,center 500vh,center 600vh,center 700vh!important;
+  background-repeat:no-repeat!important;background-attachment:scroll!important;
+}
+.workspace:has(.workspace-content.workspace-tab-overview)::before{
+  position:absolute!important;top:0!important;right:0!important;bottom:0!important;left:0!important;
+  height:auto!important;inset:0!important;z-index:-1!important;
+}
+.workspace:has(.workspace-content.workspace-tab-overview)>.workspace-main,
+.workspace:has(.workspace-content.workspace-tab-overview) .workspace-content{
+  background-color:transparent!important;
+}
+
+/* Business Directory + Investor Directory: extend the same eight scenic
+   panels across the entire document, including the results and footer area. */
+body:has(.directory-business-hero),
+body:has(.directory-investor-hero){
+  position:relative!important;isolation:isolate!important;min-height:100vh!important;
+  background:transparent!important;
+}
+body:has(.directory-business-hero)::before,
+body:has(.directory-investor-hero)::before{
+  content:""!important;display:block!important;position:absolute!important;
+  top:0!important;right:0!important;bottom:0!important;left:0!important;
+  z-index:-1!important;pointer-events:none!important;
+  background-color:#193d42!important;
+  background-image:
+    linear-gradient(rgba(9,29,36,.24),rgba(9,29,36,.24)),
+    var(--vc-scene-1),var(--vc-scene-2),var(--vc-scene-3),var(--vc-scene-4),
+    var(--vc-scene-5),var(--vc-scene-6),var(--vc-scene-7),var(--vc-scene-8)!important;
+  background-size:100% 100%,100% 100vh,100% 100vh,100% 100vh,100% 100vh,
+    100% 100vh,100% 100vh,100% 100vh,100% 100vh!important;
+  background-position:0 0,center 0,center 100vh,center 200vh,center 300vh,
+    center 400vh,center 500vh,center 600vh,center 700vh!important;
+  background-repeat:no-repeat!important;background-attachment:scroll!important;
+}
+body:has(.directory-business-hero) .directory-hero,
+body:has(.directory-investor-hero) .directory-hero,
+body:has(.directory-business-hero) .directory-results,
+body:has(.directory-investor-hero) .directory-results{
+  background:transparent!important;background-image:none!important;
+}
+@media(max-width:900px){
+  .workspace:has(.workspace-content.workspace-tab-overview)>.workspace-main,
+  body:has(.directory-business-hero)::before,
+  body:has(.directory-investor-hero)::before{
+    background-size:100% 100%,100% 100svh,100% 100svh,100% 100svh,100% 100svh,
+      100% 100svh,100% 100svh,100% 100svh,100% 100svh!important;
+    background-position:0 0,center 0,center 100svh,center 200svh,center 300svh,
+      center 400svh,center 500svh,center 600svh,center 700svh!important;
+  }
+}
