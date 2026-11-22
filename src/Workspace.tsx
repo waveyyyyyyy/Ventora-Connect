@@ -43,8 +43,30 @@ useEffect(()=>{
    if(session?.user){sessionResolved=true;applyUser(session.user);return;}
    // Only a deliberate SIGNED_OUT event clears workspace identity.
    if(event==='SIGNED_OUT'){
-    sessionResolved=true;if(oauthFallback)window.clearTimeout(oauthFallback);
-    activeUserId.current=null;setUser(null);setProfile(null);setBusinesses([]);setBusiness(emptyBusiness);setInvestor(emptyInvestor);setAdminAllowed(false);setRoleChoiceRequired(false);setNotifications([]);setStats({notifications:0,views:0});setPlans([]);setCurrentPlan(null);setPlanRequests([]);setVerificationStatus('not_submitted');setNotice('');setLoading(false);
+    // Supabase can emit a transient SIGNED_OUT while Android WebView storage
+    // or refresh-token state is being restored. Re-check before clearing UI.
+    const signedOutUserId=activeUserId.current;
+    void restoreUserSession().then((restored)=>{
+     if(!live)return;
+     if(restored){
+      sessionResolved=true;
+      applyUser(restored);
+      return;
+     }
+     // A deliberate local sign-out clears the persisted token before this
+     // callback. Only clear the workspace after that absence is confirmed.
+     void supabase?.auth.getSession().then(({data,error})=>{
+      if(!live)return;
+      if(!error&&data.session?.user){
+       sessionResolved=true;
+       applyUser(data.session.user);
+       return;
+      }
+      if(activeUserId.current!==signedOutUserId)return;
+      sessionResolved=true;if(oauthFallback)window.clearTimeout(oauthFallback);
+      activeUserId.current=null;setUser(null);setProfile(null);setBusinesses([]);setBusiness(emptyBusiness);setInvestor(emptyInvestor);setAdminAllowed(false);setRoleChoiceRequired(false);setNotifications([]);setStats({notifications:0,views:0});setPlans([]);setCurrentPlan(null);setPlanRequests([]);setVerificationStatus('not_submitted');setNotice('');setLoading(false);
+     });
+    });
    }
   },0);
  });
