@@ -1662,3 +1662,82 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 @media(prefers-reduced-motion:reduce){
  .workspace:has(.workspace-tab-overview)::before{transform:none!important;will-change:auto!important}
 }
+
+
+/* OVERVIEW LEGIBILITY + GLASS SURFACES — let the countryside show through without washing out copy. */
+.workspace-tab-overview .vc-editorial-strip,
+.workspace-tab-overview .vc-overview-stage,
+.workspace-tab-overview .vc-action-stage,
+.workspace-tab-overview .vc-identity-card,
+.workspace-tab-overview .vc-metric-card,
+.workspace-tab-overview .completion-panel,
+.workspace-tab-overview .vc-action-tile,
+.workspace-tab-overview .vc-overview-stage .vc-stage-tabs{
+  background:rgba(248,252,251,.70)!important;
+  background-image:none!important;
+  color:#102b38!important;
+  border:1px solid rgba(255,255,255,.58)!important;
+  box-shadow:0 14px 38px rgba(8,25,34,.16)!important;
+  backdrop-filter:blur(5px)!important;
+  -webkit-backdrop-filter:blur(5px)!important;
+}
+/* Editorial copy was inheriting pale/white text over a translucent light panel. */
+.workspace-tab-overview .vc-editorial-main,
+.workspace-tab-overview .vc-editorial-main *,
+.workspace-tab-overview .vc-editorial-strip,
+.workspace-tab-overview .vc-editorial-strip *:not(.vc-editorial-side):not(.vc-editorial-side *),
+.workspace-tab-overview .vc-overview-stage,
+.workspace-tab-overview .vc-overview-stage p,
+.workspace-tab-overview .vc-overview-stage h1,
+.workspace-tab-overview .vc-overview-stage h2,
+.workspace-tab-overview .vc-overview-stage h3,
+.workspace-tab-overview .vc-overview-stage small,
+.workspace-tab-overview .vc-identity-card,
+.workspace-tab-overview .vc-identity-card *,
+.workspace-tab-overview .vc-metric-card,
+.workspace-tab-overview .vc-metric-card *,
+.workspace-tab-overview .completion-panel,
+.workspace-tab-overview .completion-panel *,
+.workspace-tab-overview .vc-action-tile,
+.workspace-tab-overview .vc-action-tile *{
+  color:#102b38!important;
+  text-shadow:none!important;
+}
+.workspace-tab-overview .vc-editorial-main h1,
+.workspace-tab-overview .vc-editorial-main h2,
+.workspace-tab-overview .vc-editorial-main h3,
+.workspace-tab-overview .vc-overview-stage h1,
+.workspace-tab-overview .vc-overview-stage h2,
+.workspace-tab-overview .vc-overview-stage h3{
+  color:#102b38!important;
+}
+.workspace-tab-overview .vc-editorial-main p,
+.workspace-tab-overview .vc-editorial-main small,
+.workspace-tab-overview .vc-editorial-main span,
+.workspace-tab-overview .vc-overview-stage p,
+.workspace-tab-overview .vc-overview-stage small,
+.workspace-tab-overview .vc-identity-card p,
+.workspace-tab-overview .vc-metric-card p,
+.workspace-tab-overview .completion-panel p{
+  color:#405965!important;
+}
+.workspace-tab-overview .vc-editorial-side,
+.workspace-tab-overview .vc-editorial-side *{
+  color:#fff!important;
+}
+.workspace-tab-overview .vc-overview-hero.workspace-welcome{
+  background:linear-gradient(120deg,rgba(19,42,58,.88),rgba(36,88,99,.84))!important;
+}
+@media(max-width:900px){
+ .workspace-tab-overview .vc-editorial-strip,
+ .workspace-tab-overview .vc-overview-stage,
+ .workspace-tab-overview .vc-action-stage,
+ .workspace-tab-overview .vc-identity-card,
+ .workspace-tab-overview .vc-metric-card,
+ .workspace-tab-overview .completion-panel,
+ .workspace-tab-overview .vc-action-tile,
+ .workspace-tab-overview .vc-overview-stage .vc-stage-tabs{
+   background:rgba(248,252,251,.78)!important;
+   backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+ }
+}
