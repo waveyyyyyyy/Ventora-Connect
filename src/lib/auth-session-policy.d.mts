@@ -6,7 +6,7 @@ export function retainCachedSessionOnUnexpectedSignOut(
 export function shouldOfferRoleSelection(profileResult: {
   data?: { account_type_selected?: boolean } | null;
   error?: unknown;
-} | null): boolean;
+} | null, user?: { user_metadata?: { account_type_pending?: boolean; account_type?: string } } | null): boolean;
 
 export function isAuthRefreshError(error: {
   code?: string;
