@@ -50,7 +50,6 @@ export default function DebugPanel() {
     setDiagnosticCapture((event) => add({ time: new Date().toISOString(), kind: event.kind, message: redact(event.message), source: event.source, status: event.status }));
     window.addEventListener('error', onError);
     window.addEventListener('unhandledrejection', onRejection);
-    window.fetch = wrappedFetch;
     return () => {
       window.removeEventListener('error', onError);
       window.removeEventListener('unhandledrejection', onRejection);
