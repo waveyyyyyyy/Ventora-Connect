@@ -985,3 +985,21 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 .delete-account-confirm input{width:100%;min-height:43px;padding:10px 12px;border:1px solid #d7dfe5;border-radius:9px;background:#fff;color:#182d3c}
 .delete-account-confirm>div{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:9px}
 @media(max-width:640px){.workspace-panel.account-danger-zone{padding:16px!important}.delete-account-confirm>div{display:grid;grid-template-columns:1fr}.delete-account-confirm>div button{width:100%}}
+
+
+/* Post-registration account-type choice */
+.role-choice-page{min-height:100dvh;display:grid;place-items:center;padding:32px 20px;background:radial-gradient(ellipse at 12% 8%,rgba(38,104,126,.13),transparent 38%),radial-gradient(ellipse at 88% 92%,rgba(43,91,108,.12),transparent 34%),#f4f7f9}
+.role-choice-card{width:min(760px,100%);padding:clamp(26px,5vw,54px);border:1px solid rgba(31,63,78,.12);border-radius:28px;background:rgba(255,255,255,.94);box-shadow:0 28px 90px rgba(15,34,52,.12)}
+.role-choice-card h1{margin:14px 0 10px;color:#10283a;font-size:clamp(34px,6vw,54px);line-height:1.05;letter-spacing:-.045em}
+.role-choice-card h1 em{color:#2c6571;font-style:normal}
+.role-choice-card>p{max-width:580px;color:#526474;line-height:1.7}
+.role-choice-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:30px}
+.role-choice-options button{display:flex;min-height:220px;flex-direction:column;align-items:flex-start;gap:12px;padding:24px;text-align:left;border:1px solid #dbe4e9;border-radius:20px;background:linear-gradient(145deg,#fff,#f5f8fa);color:#173247;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.role-choice-options button:hover:not(:disabled){transform:translateY(-3px);border-color:#5b8793;box-shadow:0 16px 34px rgba(20,54,70,.1)}
+.role-choice-options button:disabled{opacity:.65;cursor:wait}
+.role-choice-options button>svg{color:#2c6571}
+.role-choice-options button strong{font-size:20px}
+.role-choice-options button span{color:#647585;font-size:14px;line-height:1.6}
+.role-choice-options button b{display:flex;align-items:center;gap:8px;margin-top:auto;font-size:13px}
+.role-choice-error{color:#a33434!important}
+@media(max-width:600px){.role-choice-options{grid-template-columns:1fr}.role-choice-options button{min-height:180px}.role-choice-card{border-radius:22px}}
