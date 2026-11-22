@@ -972,7 +972,7 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 @media(max-width:700px){.messages-error{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));max-width:none;transform:none;justify-content:space-between;gap:8px;font-size:10px}.messages-error>a{padding:8px 10px}}
 
 /* Account deletion danger zone */
-.account-danger-zone{margin-top:18px;border:1px solid rgba(190,45,45,.2);background:linear-gradient(135deg,rgba(255,247,247,.96),rgba(255,255,255,.98))}
+.workspace-panel.account-danger-zone{margin-top:18px!important;padding:20px!important;border:1px solid rgba(190,45,45,.2)!important;border-radius:16px!important;background:linear-gradient(135deg,rgba(255,247,247,.96),rgba(255,255,255,.98))!important;box-shadow:0 12px 32px rgba(120,30,30,.045)!important}
 .account-danger-zone h3{margin:8px 0 6px;color:#8e2525;font-size:18px}
 .account-danger-zone p{max-width:680px;color:#66727d;font-size:12px;line-height:1.7}
 .btn-danger-outline,.btn-danger-solid{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:11px 15px;font-weight:750;cursor:pointer}
@@ -984,4 +984,4 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 .delete-account-confirm label strong{color:#a52b2b;letter-spacing:.04em}
 .delete-account-confirm input{width:100%;min-height:43px;padding:10px 12px;border:1px solid #d7dfe5;border-radius:9px;background:#fff;color:#182d3c}
 .delete-account-confirm>div{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:9px}
-@media(max-width:640px){.account-danger-zone{padding:16px}.delete-account-confirm>div{display:grid;grid-template-columns:1fr}.delete-account-confirm>div button{width:100%}}
+@media(max-width:640px){.workspace-panel.account-danger-zone{padding:16px!important}.delete-account-confirm>div{display:grid;grid-template-columns:1fr}.delete-account-confirm>div button{width:100%}}
