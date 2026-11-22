@@ -61,34 +61,42 @@ export function restoreUserSession(): Promise<import('@supabase/supabase-js').Us
   restoreInFlight = (async () => {
     if (observedAuthSession?.user) return observedAuthSession.user;
 
+    // Do not mistake a delayed mobile WebView/local-storage hydration for a
+    // signed-out account. Wait for Supabase's INITIAL_SESSION notification.
     if (!initialAuthResolved) {
       await Promise.race([
         initialAuthReady,
-        new Promise<void>((resolve) => window.setTimeout(resolve, 6000)),
+        new Promise<void>((resolve) => window.setTimeout(resolve, 10000)),
       ]);
     }
-
     if (observedAuthSession?.user) return observedAuthSession.user;
 
-    try {
-      const { data, error } = await supabase.auth.getSession();
-      if (!error && data.session?.user) {
-        observedAuthSession = data.session;
-        observedAuthUser = data.session.user;
-        return data.session.user;
+    // Mobile browsers can briefly return an empty getSession result while
+    // restoring persisted credentials. Recheck rather than surfacing a false
+    // "sign-in is being restored" warning on the first Message tap.
+    const delays = [0, 500, 1000, 1500];
+    for (const delay of delays) {
+      if (delay) await new Promise<void>((resolve) => window.setTimeout(resolve, delay));
+      if (observedAuthSession?.user) return observedAuthSession.user;
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        if (!error && data.session?.user) {
+          observedAuthSession = data.session;
+          observedAuthUser = data.session.user;
+          return data.session.user;
+        }
+      } catch {
+        // Continue to the server-verified fallback.
       }
-    } catch {
-      // Continue to the verified-user fallback below.
-    }
-
-    try {
-      const { data, error } = await supabase.auth.getUser();
-      if (!error && data.user) {
-        observedAuthUser = data.user;
-        return data.user;
+      try {
+        const { data, error } = await supabase.auth.getUser();
+        if (!error && data.user) {
+          observedAuthUser = data.user;
+          return data.user;
+        }
+      } catch {
+        // Retry while the persisted session finishes restoring.
       }
-    } catch {
-      // A failed verification is not treated as an explicit sign-out event.
     }
 
     return observedAuthSession?.user || observedAuthUser;
