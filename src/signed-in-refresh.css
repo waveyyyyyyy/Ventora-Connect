@@ -1128,3 +1128,5 @@ body:has(.directory-business-hero) .directory-card,
 body:has(.directory-investor-hero) .directory-card {
   box-shadow: 0 5px 18px rgba(23,63,89,.06) !important;
 }
+
+.workspace-signout-error{margin:0 0 10px;padding:9px 11px;border:1px solid rgba(255,150,150,.28);border-radius:8px;background:rgba(150,30,30,.16);color:#ffd2d2;font-size:11px;line-height:1.45}
