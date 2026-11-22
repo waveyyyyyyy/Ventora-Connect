@@ -1,6 +1,5 @@
 import {lazy,Suspense,useDeferredValue,useEffect,useMemo,useState} from 'react';import {Link,Route,Routes,useNavigate,useParams,useLocation} from 'react-router-dom';import {ArrowUpRight,Building2,ChartNoAxesCombined,ShieldCheck,Menu,X,LockKeyhole,Sparkles,Compass,Users,Bell,Bookmark,CalendarDays,FileText,MessageCircle,UserRoundCheck} from 'lucide-react';import {supabase,restoreUserSession,checkMessagingProfile,signOutUser} from './lib/supabase';
 import { VentoraLoadingContext, type VentoraLoadingSetter } from './VentoraLoadingContext';
-import DebugPanel from './DebugPanel';
 import WorkspaceNavigation from './WorkspaceNavigation';
 
 const GustPlatform=lazy(()=>import('./GustPlatform'));
@@ -54,8 +53,7 @@ useEffect(()=>{
    setAuthChecked(true);return;
   }
   const current=++revision;setHeaderUser(u);setAuthChecked(true);
-   if(event==='SIGNED_IN'&&(location.pathname==='/'||location.pathname==='/login'))nav('/dashboard?tab=overview',{replace:true});
-  const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',u.id).maybeSingle(),client.rpc('is_admin')]);
+   const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',u.id).maybeSingle(),client.rpc('is_admin')]);
   if(!active||current!==revision)return;
   setAccountType(u.user_metadata?.account_type==='investor'?'investor':u.user_metadata?.account_type==='business'?'business':p.data?.account_type==='investor'?'investor':'business');
   setAdminAllowed(Boolean(admin.data&&!admin.error));
@@ -155,5 +153,5 @@ function OAuthReturn(){
 }
 export default function App(){
  const setLoader:VentoraLoadingSetter=()=>{};
- return <VentoraLoadingContext.Provider value={setLoader}><OAuthReturn/><AppRoutes setLoader={setLoader}/><DebugPanel/></VentoraLoadingContext.Provider>;
+ return <VentoraLoadingContext.Provider value={setLoader}><OAuthReturn/><AppRoutes setLoader={setLoader}/></VentoraLoadingContext.Provider>;
 }
