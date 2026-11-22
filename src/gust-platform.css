@@ -413,3 +413,12 @@ html{scroll-behavior:smooth;scroll-padding-top:90px}
 @keyframes gp-menu-slide{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:translateX(0)}}
 @media(max-width:760px){.gp-public-header{padding:15px 18px;gap:10px}.gp-public-header nav{display:none}.gp-menu-toggle{width:40px;height:40px;flex-basis:40px}.gp-public-actions{gap:8px}.gp-public-actions .gp-primary{padding:10px 13px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){.gp-public-menu,.gp-public-menu-scrim{animation:none!important}.gp-menu-toggle,.gp-public-menu>button{transition:none}}
+
+/* Keep the requested hero typewriter even when the device asks to reduce
+   decorative motion. This is the homepage's primary headline reveal. */
+.gp-hero .gp-typewrite{
+  clip-path:inset(0 100% 0 0)!important;
+  border-right:3px solid #3d8292!important;
+  animation:gp-typewrite 1.55s steps(17,end) .45s forwards,gp-caret .75s step-end 3!important;
+}
+@media(max-width:720px){.gp-hero .gp-typewrite{white-space:normal}}
