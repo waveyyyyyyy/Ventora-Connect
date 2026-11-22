@@ -22,45 +22,76 @@ export const supabase = isSupabaseConfigured
   : null;
 
 
-// Keep a module-wide view of the auth client state. Supabase emits INITIAL_SESSION
-// after it hydrates local storage; this listener never performs auth/network work.
+// Track Supabase's initial persisted-session hydration centrally. A route can
+// mount before getSession() has finished reading local storage; waiting for
+// INITIAL_SESSION avoids mistaking that temporary empty read for a signed-out user.
 let observedAuthUser: import('@supabase/supabase-js').User | null = null;
+let observedAuthSession: import('@supabase/supabase-js').Session | null = null;
+let initialAuthResolved = false;
+let resolveInitialAuth!: () => void;
+const initialAuthReady = new Promise<void>((resolve) => {
+  resolveInitialAuth = resolve;
+});
+
 if (supabase) {
   supabase.auth.onAuthStateChange((event, session) => {
-    if (session?.user) observedAuthUser = session.user;
-    else if (event === 'SIGNED_OUT') observedAuthUser = null;
+    if (session?.user) {
+      observedAuthUser = session.user;
+      observedAuthSession = session;
+    } else if (event === 'SIGNED_OUT') {
+      observedAuthUser = null;
+      observedAuthSession = null;
+    }
+
+    if (event === 'INITIAL_SESSION' && !initialAuthResolved) {
+      initialAuthResolved = true;
+      resolveInitialAuth();
+    }
   });
 }
 
-// Resolve the already-persisted session without rotating refresh tokens.
-// Navigation and route mounts must never compete to refresh the same token.
+// All protected routes share this single restoration path. It waits for the
+// auth client's initial local-storage hydration before reading the session,
+// preventing Messages and the directory from racing Supabase startup.
 let restoreInFlight: Promise<import('@supabase/supabase-js').User | null> | null = null;
 export function restoreUserSession(): Promise<import('@supabase/supabase-js').User | null> {
   if (!supabase) return Promise.resolve(null);
   if (restoreInFlight) return restoreInFlight;
 
   restoreInFlight = (async () => {
-    // On a hard refresh Supabase may still be hydrating its persisted session.
-    // Retry reads briefly; never refresh/rotate the token just to navigate.
-    for (let attempt = 0; attempt < 5; attempt += 1) {
-      try {
-        const { data, error } = await supabase.auth.getSession();
-        if (!error && data.session?.user) {
-          observedAuthUser = data.session.user;
-          return data.session.user;
-        }
-        if (observedAuthUser) return observedAuthUser;
-        const { data: verified, error: verifyError } = await supabase.auth.getUser();
-        if (!verifyError && verified.user) {
-          observedAuthUser = verified.user;
-          return verified.user;
-        }
-      } catch {
-        // A short-lived storage/refresh race is not a sign-out.
-      }
-      if (attempt < 4) await new Promise(resolve => window.setTimeout(resolve, 300));
+    if (observedAuthSession?.user) return observedAuthSession.user;
+
+    if (!initialAuthResolved) {
+      await Promise.race([
+        initialAuthReady,
+        new Promise<void>((resolve) => window.setTimeout(resolve, 6000)),
+      ]);
     }
-    return observedAuthUser;
+
+    if (observedAuthSession?.user) return observedAuthSession.user;
+
+    try {
+      const { data, error } = await supabase.auth.getSession();
+      if (!error && data.session?.user) {
+        observedAuthSession = data.session;
+        observedAuthUser = data.session.user;
+        return data.session.user;
+      }
+    } catch {
+      // Continue to the verified-user fallback below.
+    }
+
+    try {
+      const { data, error } = await supabase.auth.getUser();
+      if (!error && data.user) {
+        observedAuthUser = data.user;
+        return data.user;
+      }
+    } catch {
+      // A failed verification is not treated as an explicit sign-out event.
+    }
+
+    return observedAuthSession?.user || observedAuthUser;
   })().finally(() => {
     restoreInFlight = null;
   });
