@@ -40,27 +40,27 @@ export function restoreUserSession(): Promise<import('@supabase/supabase-js').Us
   if (restoreInFlight) return restoreInFlight;
 
   restoreInFlight = (async () => {
-    try {
-      const { data, error } = await supabase.auth.getSession();
-      if (!error && data.session?.user) {
-        observedAuthUser = data.session.user;
-        return data.session.user;
+    // On a hard refresh Supabase may still be hydrating its persisted session.
+    // Retry reads briefly; never refresh/rotate the token just to navigate.
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      try {
+        const { data, error } = await supabase.auth.getSession();
+        if (!error && data.session?.user) {
+          observedAuthUser = data.session.user;
+          return data.session.user;
+        }
+        if (observedAuthUser) return observedAuthUser;
+        const { data: verified, error: verifyError } = await supabase.auth.getUser();
+        if (!verifyError && verified.user) {
+          observedAuthUser = verified.user;
+          return verified.user;
+        }
+      } catch {
+        // A short-lived storage/refresh race is not a sign-out.
       }
-
-      // A route can mount during a brief empty-session event while the auth
-      // client is hydrating. Prefer the user already observed by the shared
-      // client, then use getUser (the same fallback used by the workspace).
-      if (observedAuthUser) return observedAuthUser;
-
-      const { data: verified, error: verifyError } = await supabase.auth.getUser();
-      if (!verifyError && verified.user) {
-        observedAuthUser = verified.user;
-        return verified.user;
-      }
-      return observedAuthUser;
-    } catch {
-      return observedAuthUser;
+      if (attempt < 4) await new Promise(resolve => window.setTimeout(resolve, 300));
     }
+    return observedAuthUser;
   })().finally(() => {
     restoreInFlight = null;
   });
