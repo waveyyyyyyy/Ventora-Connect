@@ -40,7 +40,7 @@ export default function GustPlatform(){
   }else revealTargets.forEach(el=>el.classList.add('gp-is-revealed'));
   const progress=document.createElement('div');progress.className='gp-scroll-progress';progress.setAttribute('aria-hidden','true');document.body.appendChild(progress);
   let raf=0;
-  const updateProgress=()=>{raf=0;const max=document.documentElement.scrollHeight-window.innerHeight;const amount=max>0?window.scrollY/max:0;progress.style.transform='scaleX('+Math.max(0,Math.min(1,amount))+')';};
+  const updateProgress=()=>{raf=0;const max=document.documentElement.scrollHeight-window.innerHeight;const amount=max>0?window.scrollY/max:0;progress.style.transform='scaleX('+Math.max(0,Math.min(1,amount))+')';if(art)art.style.setProperty('--gp-parallax',String(Math.min(window.scrollY,500)));};
   const onScroll=()=>{if(!raf)raf=window.requestAnimationFrame(updateProgress);};
   window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll,{passive:true});updateProgress();
   const cards=document.querySelectorAll('.gp-feature,.gp-opportunity,.gp-preview-card,.gp-panel,.gp-stat,.gp-deal-card');
