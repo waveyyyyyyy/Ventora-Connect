@@ -31,17 +31,20 @@ export function restoreUserSession(): Promise<import('@supabase/supabase-js').Us
   if (restoreInFlight) return restoreInFlight;
   restoreInFlight = (async () => {
     try {
-      const { data, error } = await supabase.auth.getSession();
+      // First trust the persisted Supabase session. Do not call signOut or
+      // clear storage as a side effect of a temporary restoration failure.
+      const { data } = await supabase.auth.getSession();
       if (data.session?.user) return data.session.user;
-      // A transient getSession error can occur while the browser is restoring
-      // or refreshing a persisted session. Verify before treating the member
-      // as signed out; never let a temporary read failure redirect them away.
+
+      // If storage hydration is still catching up, verify the current user.
       const verified = await supabase.auth.getUser();
       if (!verified.error && verified.data.user) return verified.data.user;
-      if (error) {
-        const refreshed = await supabase.auth.refreshSession();
-        if (!refreshed.error && refreshed.data.session?.user) return refreshed.data.session.user;
-      }
+
+      // A missing session can be a transient refresh-token race on mobile.
+      // Try one refresh before any caller treats the visitor as signed out.
+      const refreshed = await supabase.auth.refreshSession();
+      if (!refreshed.error && refreshed.data.session?.user) return refreshed.data.session.user;
+
       return null;
     } catch {
       return null;
