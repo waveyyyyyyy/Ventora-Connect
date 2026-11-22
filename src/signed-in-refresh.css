@@ -1075,3 +1075,56 @@ body{
     scroll-behavior: auto !important;
   }
 }
+
+
+/* Strong mobile performance mode for every authenticated workspace surface. */
+.workspace *,
+.workspace *::before,
+.workspace *::after,
+.vc-member-section *,
+.vc-member-section *::before,
+.vc-member-section *::after,
+.admin-page *,
+.admin-page *::before,
+.admin-page *::after,
+body:has(.directory-business-hero) .directory-card,
+body:has(.directory-business-hero) .directory-card *,
+body:has(.directory-investor-hero) .directory-card,
+body:has(.directory-investor-hero) .directory-card * {
+  animation: none !important;
+  transition: none !important;
+  filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  will-change: auto !important;
+}
+.workspace *,
+.vc-member-section *,
+.admin-page * {
+  scroll-behavior: auto !important;
+}
+.workspace::before,
+.workspace::after,
+.vc-member-section::before,
+.vc-member-section::after {
+  animation: none !important;
+}
+.workspace .workspace-topbar,
+.vc-member-section-topbar,
+.workspace .workspace-sidebar,
+.vc-member-section .workspace-sidebar {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.workspace .workspace-panel,
+.workspace .workspace-stat-grid > article,
+.workspace .workspace-form,
+.workspace .business-manager-card,
+.vc-member-section article,
+.admin-page article {
+  box-shadow: 0 4px 14px rgba(23,63,89,.045) !important;
+}
+body:has(.directory-business-hero) .directory-card,
+body:has(.directory-investor-hero) .directory-card {
+  box-shadow: 0 5px 18px rgba(23,63,89,.06) !important;
+}
