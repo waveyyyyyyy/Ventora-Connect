@@ -61,11 +61,6 @@ if (supabase) {
   });
 }
 
-function matchesSession(session: Session | null, expectedUserId?: string): boolean {
-  return Boolean(session?.access_token && session.user?.id
-    && (!expectedUserId || session.user.id === expectedUserId));
-}
-
 /**
  * Restore the locally persisted Supabase session.
  *
@@ -112,6 +107,20 @@ export function restoreUserSession(): Promise<User | null> {
     if (restoreInFlight === task) restoreInFlight = null;
   });
   return task;
+}
+
+/**
+ * Compatibility helper for message requests that need one retry after an auth
+ * error. It reads the SDK-managed session; it deliberately does not force a
+ * refresh, so it cannot compete with Supabase's token rotation.
+ */
+export async function refreshVerifiedSession(expectedUserId?: string) {
+  if (!supabase) return null;
+  const { data, error } = await supabase.auth.getSession();
+  if (error || !data.session?.access_token || !data.session.user?.id) return null;
+  if (expectedUserId && data.session.user.id !== expectedUserId) return null;
+  cachedAuthUser = data.session.user;
+  return { user: data.session.user, session: data.session };
 }
 
 export async function signOutUser(): Promise<void> {
