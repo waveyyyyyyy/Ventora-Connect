@@ -750,3 +750,108 @@ body{
  .gp-feature,.gp-content,.gp-flash,.gp-float-card,.gp-art-orbit,.gp-art-center,.gp-art-logo-image,.gp-poster,
  .workspace-welcome:after,.workspace-panel:after,.workspace-stat-grid>article:before{animation:none!important}
 }
+
+
+/* Ventora ambient surfaces + mobile rendering budget. */
+.directory-results,
+.pitch-detail-page,
+.messages-page,
+.admin-page,
+.faq-page,
+.legal-page {
+  background:
+    radial-gradient(ellipse at 88% 8%, rgba(61,130,146,.13), transparent 34%),
+    radial-gradient(ellipse at 8% 82%, rgba(112,165,143,.12), transparent 36%),
+    linear-gradient(145deg, #f8fbfc 0%, #edf4f5 54%, #f5f8fb 100%) !important;
+}
+.auth-main {
+  background:
+    radial-gradient(ellipse at 90% 12%, rgba(61,130,146,.13), transparent 38%),
+    radial-gradient(ellipse at 8% 92%, rgba(112,165,143,.12), transparent 36%),
+    linear-gradient(145deg, #fbfdfe 0%, #f0f6f7 100%) !important;
+}
+.directory-results,
+.pitch-detail-page,
+.messages-page,
+.admin-page,
+.faq-page,
+.legal-page,
+.auth-main {
+  position: relative;
+  isolation: isolate;
+}
+.directory-results:before,
+.pitch-detail-page:before,
+.messages-page:before,
+.admin-page:before,
+.faq-page:before,
+.legal-page:before,
+.auth-main:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  top: 22px;
+  right: clamp(12px, 4vw, 56px);
+  width: min(30vw, 340px);
+  height: 190px;
+  border-radius: 28px;
+  opacity: .12;
+  background:
+    linear-gradient(135deg, rgba(23,63,89,.1), rgba(28,83,109,.25)),
+    url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=75') center/cover;
+  mask-image: linear-gradient(135deg, #000 20%, transparent 95%);
+}
+.directory-results > *,
+.pitch-detail-page > *,
+.messages-page > *,
+.admin-page > *,
+.faq-page > *,
+.legal-page > *,
+.auth-main > * { position: relative; }
+
+@media (max-width: 760px) {
+  /* Avoid per-frame blur and large shadow repaint costs on mid-range phones. */
+  .workspace-topbar,
+  .messages-page > header,
+  .interests-page > header,
+  .matches-page > header,
+  .saved-page > header,
+  .announcements-page > header,
+  .support-page > header,
+  .vc-scenery-card,
+  .vc-section-menu-panel {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .workspace:after,
+  .vc-signed-in-scenery { animation: none !important; }
+  .workspace:after { opacity: .10 !important; }
+  .vc-signed-in-scenery { opacity: .22 !important; }
+  .workspace-sidebar,
+  .workspace-welcome,
+  .workspace-panel,
+  .workspace-form,
+  .workspace-stat-grid > article,
+  .business-manager-card,
+  .subscription-card,
+  .messages-shell,
+  .messages-list,
+  .messages-chat {
+    box-shadow: 0 8px 22px rgba(23,63,89,.07) !important;
+  }
+  .gp-scroll-reveal,
+  .gp-stagger-reveal {
+    transform: none !important;
+    filter: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .directory-results:before,
+  .pitch-detail-page:before,
+  .messages-page:before,
+  .admin-page:before,
+  .faq-page:before,
+  .legal-page:before,
+  .auth-main:before { display: none !important; }
+}
