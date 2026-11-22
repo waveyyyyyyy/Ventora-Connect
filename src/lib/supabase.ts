@@ -72,7 +72,7 @@ export type MessagingProfileCheck = { complete: boolean; missing: string[]; perc
 export async function checkMessagingProfile(userId: string): Promise<MessagingProfileCheck> {
   if (!supabase) return { complete: false, missing: ['Account connection'], percent: 0 };
   const { data: profile, error } = await supabase.from('profiles')
-    .select('account_type,full_name,bio,city,country,website')
+    .select('account_type,full_name,bio,city,country')
     .eq('id', userId).maybeSingle();
   if (error || !profile) return { complete: false, missing: ['Personal profile'], percent: 0 };
   const fields: Array<[string, boolean]> = [
@@ -86,24 +86,20 @@ export async function checkMessagingProfile(userId: string): Promise<MessagingPr
       .select('investment_min,investment_max,preferred_industries,preferred_stages,investment_strategy')
       .eq('id', userId).maybeSingle();
     fields.push(
-      ['Minimum investment', data?.investment_min != null],
-      ['Maximum investment', data?.investment_max != null],
+      ['Investment range', data?.investment_min != null || data?.investment_max != null],
       ['Preferred industries', Boolean(data?.preferred_industries?.length)],
       ['Preferred stages', Boolean(data?.preferred_stages?.length)],
-      ['Investment strategy', Boolean(data?.investment_strategy?.trim())],
     );
   } else {
-    const { data } = await supabase.from('discoverable_businesses')
-      .select('company_name,industry,description,city,country,business_stage,business_model,funding_requirement')
+    // Read the owner's editable business record, not the public discoverable
+    // view (which can hide unpublished drafts and make 100% impossible).
+    const { data } = await supabase.from('businesses')
+      .select('company_name,industry,description')
       .eq('owner_id', userId).limit(1).maybeSingle();
     fields.push(
-      ['Published company name', Boolean(data?.company_name?.trim())],
+      ['Company name', Boolean(data?.company_name?.trim())],
       ['Company industry', Boolean(data?.industry?.trim())],
       ['Company overview', Boolean(data?.description?.trim())],
-      ['Company location', Boolean(data?.city?.trim() && data?.country?.trim())],
-      ['Business stage', Boolean(data?.business_stage?.trim())],
-      ['Business model', Boolean(data?.business_model?.trim())],
-      ['Funding requirement', data?.funding_requirement != null],
     );
   }
   const missing = fields.filter(([, ok]) => !ok).map(([label]) => label);
