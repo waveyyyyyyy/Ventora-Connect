@@ -2047,3 +2047,60 @@ body:has(.directory-investor-hero) .directory-results{
       center 400svh,center 500svh,center 600svh,center 700svh!important;
   }
 }
+
+
+/* Subscription tab: keep the eight scenic posters behind the entire content
+   document, not just the first viewport/hero strip. */
+.workspace:has(.workspace-content.workspace-tab-subscriptions)>.workspace-main{
+ position:relative!important;isolation:isolate!important;min-height:100vh!important;
+ background-color:#193d42!important;
+ background-image:
+  linear-gradient(rgba(9,29,36,.22),rgba(9,29,36,.22)),
+  var(--vc-scene-1),var(--vc-scene-2),var(--vc-scene-3),var(--vc-scene-4),
+  var(--vc-scene-5),var(--vc-scene-6),var(--vc-scene-7),var(--vc-scene-8)!important;
+ background-size:100% 100%,100% 100vh,100% 100vh,100% 100vh,100% 100vh,
+  100% 100vh,100% 100vh,100% 100vh,100% 100vh!important;
+ background-position:0 0,center 0,center 100vh,center 200vh,center 300vh,
+  center 400vh,center 500vh,center 600vh,center 700vh!important;
+ background-repeat:no-repeat!important;background-attachment:scroll!important;
+}
+.workspace:has(.workspace-content.workspace-tab-subscriptions) .workspace-content,
+.workspace:has(.workspace-content.workspace-tab-subscriptions) .workspace-content>*{
+ background-color:transparent!important;
+}
+
+/* Directory scenic sequence belongs to #root (the full document canvas),
+   because opaque body/root children previously hid the body wallpaper. */
+#root:has(.directory-business-hero),
+#root:has(.directory-investor-hero){
+ position:relative!important;isolation:isolate!important;min-height:100vh!important;
+ background-color:#193d42!important;
+ background-image:
+  linear-gradient(rgba(9,29,36,.24),rgba(9,29,36,.24)),
+  var(--vc-scene-1),var(--vc-scene-2),var(--vc-scene-3),var(--vc-scene-4),
+  var(--vc-scene-5),var(--vc-scene-6),var(--vc-scene-7),var(--vc-scene-8)!important;
+ background-size:100% 100%,100% 100vh,100% 100vh,100% 100vh,100% 100vh,
+  100% 100vh,100% 100vh,100% 100vh,100% 100vh!important;
+ background-position:0 0,center 0,center 100vh,center 200vh,center 300vh,
+  center 400vh,center 500vh,center 600vh,center 700vh!important;
+ background-repeat:no-repeat!important;background-attachment:scroll!important;
+}
+#root:has(.directory-business-hero) .directory-hero,
+#root:has(.directory-investor-hero) .directory-hero,
+#root:has(.directory-business-hero) .directory-editorial-strip,
+#root:has(.directory-investor-hero) .directory-editorial-strip,
+#root:has(.directory-business-hero) .directory-results,
+#root:has(.directory-investor-hero) .directory-results,
+#root:has(.directory-business-hero) .footer,
+#root:has(.directory-investor-hero) .footer{
+ background-color:transparent!important;background-image:none!important;
+}
+@media(max-width:900px){
+ .workspace:has(.workspace-content.workspace-tab-subscriptions)>.workspace-main,
+ #root:has(.directory-business-hero),#root:has(.directory-investor-hero){
+  background-size:100% 100%,100% 100svh,100% 100svh,100% 100svh,100% 100svh,
+   100% 100svh,100% 100svh,100% 100svh,100% 100svh!important;
+  background-position:0 0,center 0,center 100svh,center 200svh,center 300svh,
+   center 400svh,center 500svh,center 600svh,center 700svh!important;
+ }
+}
