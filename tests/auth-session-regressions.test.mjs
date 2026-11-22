@@ -42,12 +42,18 @@ test('the app wires the regression policies into the real auth paths', async () 
   assert.match(auth, /retainCachedSessionOnUnexpectedSignOut/);
   assert.match(auth, /verifiedSessionInFlight/);
   assert.match(auth, /requireActiveSession/);
+  assert.doesNotMatch(auth, /if \(cachedAuthSession\?\.user\?\.id\) return Promise\.resolve\(cachedAuthSession\.user\)/);
+  assert.match(auth, /await requireActiveSession\(userId\)/);
   assert.doesNotMatch(auth, /auth\.refreshSession\s*\(/);
   assert.match(workspace, /if\s*\(p\.error\)/);
   assert.match(workspace, /shouldOfferRoleSelection\(p,u\)/);
   assert.match(workspace, /metadataRole=u\.user_metadata\?\.account_type/);
   assert.match(workspace, /requireActiveSession\(user\.id\)/);
+  assert.match(workspace, /await requireActiveSession\(userId\)/);
   assert.doesNotMatch(workspace, /auth\.refreshSession\s*\(/);
   assert.match(messages, /isAuthRefreshError\(error\)/);
+  assert.match(messages, /await requireActiveSession\(currentUser\.id\)/);
+  const directory = await read('../src/BusinessDirectoryPage.tsx');
+  assert.match(directory, /await requireActiveSession\(user\.id\)/);
   assert.doesNotMatch(messages, /error\.code\s*===\s*['"]42501['"]/);
 });
