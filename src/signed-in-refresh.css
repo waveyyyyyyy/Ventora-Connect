@@ -847,3 +847,70 @@ body{
   .legal-page:before,
   .auth-main:before { display: none !important; }
 }
+
+
+/* SIGNED-IN WORKSPACE VISUAL RESET — visible scenery, no blank white canvases. */
+.workspace {
+  background:
+    radial-gradient(ellipse at 12% 12%, rgba(90,151,163,.22), transparent 34%),
+    radial-gradient(ellipse at 94% 72%, rgba(113,163,153,.19), transparent 36%),
+    linear-gradient(135deg,#e7eff1 0%,#f2f6f6 48%,#e3edef 100%) !important;
+}
+.workspace-content {
+  position:relative !important;
+  isolation:isolate !important;
+  background:
+    radial-gradient(ellipse at 8% 16%,rgba(95,155,166,.16),transparent 32%),
+    radial-gradient(ellipse at 95% 84%,rgba(125,166,154,.15),transparent 35%),
+    linear-gradient(145deg,#eaf1f2 0%,#f4f7f6 54%,#e7eff0 100%) !important;
+}
+.workspace-content:before {
+  content:"";
+  position:absolute;
+  z-index:0;
+  pointer-events:none;
+  top:12px;
+  right:clamp(12px,3vw,42px);
+  width:min(43vw,560px);
+  height:270px;
+  border-radius:26px;
+  opacity:.24;
+  background:
+    linear-gradient(100deg,rgba(231,241,242,.12),rgba(23,63,89,.10)),
+    url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1100&q=75") center/cover;
+  mask-image:linear-gradient(115deg,transparent 0%,#000 28%,#000 76%,transparent 100%);
+}
+.workspace-content > * {position:relative;z-index:1}
+.workspace-welcome {
+  background:
+    linear-gradient(100deg,rgba(15,48,67,.97) 0%,rgba(28,83,109,.91) 58%,rgba(35,101,113,.68) 100%),
+    url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=80") center/cover !important;
+  border:1px solid rgba(255,255,255,.22) !important;
+}
+.workspace-panel,.completion-panel,.workspace-form,.workspace-stat-grid>article,
+.business-manager-card,.subscription-card,.subscription-current,.workspace-list>article {
+  background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(222,236,237,.94)) !important;
+  border-color:rgba(91,137,148,.22) !important;
+}
+.workspace-page-title {background:linear-gradient(100deg,rgba(220,235,237,.88),rgba(245,249,248,.78))!important;border-radius:18px;padding:18px 22px!important}
+
+/* Keep the signed-in app inexpensive to paint on mid-range Android phones. */
+@media (max-width: 900px), (hover:none) and (pointer:coarse) {
+  .workspace, .workspace *,
+  .workspace *:before, .workspace *:after {
+    animation:none !important;
+    transition:none !important;
+    scroll-behavior:auto !important;
+    filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    backdrop-filter:none !important;
+    will-change:auto !important;
+  }
+  .workspace:after {animation:none!important;transform:none!important;opacity:.12!important}
+  .workspace-content:before {opacity:.18!important;mask-image:none!important;border-radius:18px!important}
+  .workspace-topbar {background:rgba(245,249,249,.97)!important}
+  .workspace-panel,.completion-panel,.workspace-form,.workspace-stat-grid>article,
+  .business-manager-card,.subscription-card,.subscription-current,.workspace-list>article,
+  .workspace-welcome {box-shadow:0 5px 16px rgba(23,63,89,.07)!important}
+  .workspace-menu-backdrop {backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+}
