@@ -74,7 +74,6 @@ if (supabase) {
  */
 export function restoreUserSession(): Promise<User | null> {
   if (!supabase) return Promise.resolve(null);
-  if (cachedAuthUser) return Promise.resolve(cachedAuthUser);
   if (restoreInFlight) return restoreInFlight;
 
   const epoch = authEpoch;
@@ -88,14 +87,19 @@ export function restoreUserSession(): Promise<User | null> {
     if (epoch !== authEpoch) return cachedAuthUser;
     if (cachedAuthUser) return cachedAuthUser;
     try {
-      // One SDK-managed read only. Supabase owns token refresh and persistence;
-      // callers must never force refreshSession() as a side effect of routing.
-      const { data, error } = await supabase.auth.getSession();
-      if (epoch !== authEpoch) return cachedAuthUser;
-      if (error) return null;
-      const user = data.session?.user || null;
-      if (user) cachedAuthUser = user;
-      return user;
+      // Read the SDK-managed persisted session. On mobile browsers, a route
+      // transition can briefly overlap the SDK's cross-tab storage lock; retry
+      // empty/error reads before treating the member as signed out.
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        const { data, error } = await supabase.auth.getSession();
+        if (epoch !== authEpoch) return cachedAuthUser;
+        if (!error && data.session?.user) {
+          cachedAuthUser = data.session.user;
+          return data.session.user;
+        }
+        if (attempt < 2) await new Promise<void>((resolve) => window.setTimeout(resolve, 450));
+      }
+      return null;
     } catch {
       // A storage/network error is not proof that the member signed out.
       return null;
