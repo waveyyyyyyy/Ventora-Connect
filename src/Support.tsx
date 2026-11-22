@@ -34,7 +34,7 @@ export default function Support(){
     <label className="support-field"><span>SUBJECT</span><input required maxLength={120} value={subject} onChange={e=>setSubject(e.target.value)} placeholder="A short title for your request"/></label>
     <label className="support-field"><span>HOW CAN WE HELP?</span><textarea required rows={6} maxLength={5000} value={message} onChange={e=>setMessage(e.target.value)} placeholder="Share the details, what you expected, and what happened…"/></label>
     <div className="support-form-foot"><small>{message.length}/5000 characters · Linked to {user?.email||'your member account'}</small><button className="support-submit" disabled={busy||!subject.trim()||!message.trim()} type="submit">{busy?'Sending request…':'Submit request'} <Send size={16}/></button></div>
-    {notice&&<div className={notice.startsWith('Request received')?'support-notice success':'support-notice'} role="status">{notice.startsWith('Request received')&&<CheckCircle2 size={16}/ >}{notice}</div>}
+    {notice&&<div className={notice.startsWith('Request received')?'support-notice success':'support-notice'} role="status">{notice.startsWith('Request received')&&<CheckCircle2 size={16}/>}{notice}</div>}
    </form>
    <aside className="support-editorial-side">
     <article className="support-care-card support-care-dark"><span>OUR PROMISE / 01</span><div className="support-care-number">01</div><h3>Clarity over<br/><em>complexity.</em></h3><p>Useful answers, clear ownership and a next step you can act on.</p><div className="support-care-line"/></article>
