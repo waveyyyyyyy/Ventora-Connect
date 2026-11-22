@@ -463,3 +463,25 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
  .gp-hero-deck:before,.gp-poster-focus,.gp-scroll-progress{animation:none!important}
  .gp-poster-focus{transform:translate3d(-50%,-50%,0)}
 }
+
+
+/* Final paint-cost pass: legacy shimmer/background-position loops are now static. */
+.gp-section-heading h2,.gp-audience-copy h2,.gp-how h2,.gp-final-cta h2{animation:none!important;background-position:100% 0!important}
+.gp-final-cta{animation:none!important;background-size:100% 100%!important}
+.gp-feature,.gp-opportunity,.gp-preview-card,.gp-panel,.gp-stat,.gp-deal-card,.gp-steps>div,.gp-primary,.gp-outline,.gp-icon-btn{transition-property:transform,opacity,color,background-color!important;transition-duration:.24s!important}
+.gp-feature:hover,.gp-opportunity:hover,.gp-preview-card:hover,.gp-panel:hover,.gp-stat:hover,.gp-deal-card:hover{box-shadow:none!important}
+.gp-showcase-tabs button.active:after{position:absolute;inset:0;content:"";overflow:hidden;border-radius:inherit;pointer-events:none;background:linear-gradient(110deg,transparent,rgba(255,255,255,.38),transparent);transform:translate3d(-110%,0,0)}
+.gp-showcase-window:after{left:0;right:0;top:0;bottom:0;background:linear-gradient(112deg,transparent 22%,rgba(255,255,255,.16) 42%,transparent 58%);pointer-events:none}
+.gp-hero-art .gp-poster:before{top:-60%;width:45%;height:220%}
+@media(max-width:760px){
+ .gp-hero-art .gp-art-orbit.orbit-one{animation-duration:28s!important}
+ .gp-hero-art .gp-art-orbit.orbit-two{animation-duration:18s!important}
+ .gp-showcase-stats>div{animation:none!important}
+ .gp-showcase-chart i{animation-duration:4.5s!important}
+ .gp-ticker-track{animation-duration:48s!important}
+ .gp-hero-art:before{filter:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .gp-hero-art .gp-poster,.gp-hero-art .gp-float-card,.gp-hero-art .gp-art-center,.gp-hero-art .gp-art-orbit,.gp-showcase-window,.gp-showcase-data,.gp-showcase-orbit,.gp-ticker-track,.gp-final-cta:before,.gp-final-cta:after,.gp-hero-deck:before,.gp-primary:after,.directory-create-link:after{animation:none!important}
+ .gp-type-cursor{display:none!important}
+}
