@@ -422,3 +422,21 @@ body{background-color:#f3f7f8;background-image:radial-gradient(ellipse at 92% 7%
 @media(hover:none){
   .btn:hover,.directory-card:hover,.directory-card-actions button:hover{transform:none!important;box-shadow:none!important}
 }
+
+/* Business discovery performance: avoid costly card compositing and image
+   decoding work while scrolling, especially on mid-range Android devices. */
+.directory-results{content-visibility:auto;contain-intrinsic-size:1100px;contain:layout style}
+.directory-grid{contain:layout paint style;content-visibility:auto;contain-intrinsic-size:900px}
+.directory-card{content-visibility:auto;contain:layout paint style;contain-intrinsic-size:480px;transition:none!important;transform:none!important;box-shadow:0 5px 16px rgba(16,37,74,.055)!important}
+.directory-card:hover{transform:none!important;box-shadow:0 5px 16px rgba(16,37,74,.055)!important}
+.directory-card-category,.directory-card-trust{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.directory-card-cover>img{content-visibility:auto;object-fit:cover}
+@media(max-width:760px){
+ .directory-hero,.directory-results{background-attachment:scroll!important}
+ .directory-card{contain:layout paint style;content-visibility:auto;contain-intrinsic-size:460px;padding:0!important}
+ .directory-card-cover{height:126px}
+ .directory-card-body{padding:16px}
+ .directory-card-category,.directory-card-trust{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+ .directory-search input,.directory-search select{min-height:46px}
+}
+@media(hover:none){.directory-card:hover{transform:none!important}}
