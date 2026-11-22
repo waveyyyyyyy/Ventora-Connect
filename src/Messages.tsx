@@ -1,6 +1,6 @@
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {Link,useLocation,useSearchParams} from 'react-router-dom';
-import {supabase,restoreUserSession,checkMessagingProfile} from './lib/supabase';
+import {supabase,checkMessagingProfile} from './lib/supabase';
 import MemberSectionLayout from './MemberSectionLayout';
 import {ArrowLeft,MessageCircle,Send,Search,ChevronDown,Pin,ArrowUpRight,CheckCheck,PanelRightClose,PanelRightOpen} from 'lucide-react';
 
