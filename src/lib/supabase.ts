@@ -31,17 +31,7 @@ export const supabase = isSupabaseConfigured
         detectSessionInUrl: true,
         storage: typeof window !== 'undefined' ? window.localStorage : undefined,
         storageKey: 'sb-nlkcnewcrcgylubqulph-auth-token',
-        // Serialize auth operations across every Ventora tab/window sharing
-        // this origin. Supabase's default lockless coordination can still let
-        // multiple independently-created clients race the same refresh token;
-        // the shared Web Lock prevents a burst of parallel refresh requests.
-        lock: async (name, _acquireTimeout, operation) => {
-          if (typeof navigator === 'undefined' || !navigator.locks?.request) {
-            return operation();
-          }
-          return navigator.locks.request(name, { mode: 'exclusive' }, () => operation());
-        },
-        lockAcquireTimeout: 15000,
+
       },
     })
   : null;
