@@ -1582,3 +1582,83 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
  .vc-member-section-logo .brand-word .brand-e,
  .admin-topbar-logo .brand-word .brand-e{font-size:1.10em!important}
 }
+
+
+/* OVERVIEW SCENIC CANVAS — keep all imagery on the outer viewport, never inside cards. */
+.workspace:has(.workspace-tab-overview){
+  position:relative!important;isolation:isolate!important;
+  background:transparent!important;overflow:clip!important;
+}
+.workspace:has(.workspace-tab-overview)::before{
+  content:""!important;position:fixed!important;inset:-34px 0 -34px!important;z-index:-1!important;
+  pointer-events:none!important;display:block!important;opacity:.92!important;
+  background-image:linear-gradient(115deg,rgba(10,35,43,.28),rgba(19,42,58,.20) 48%,rgba(10,35,43,.34)),url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2400&q=88")!important;
+  background-size:cover!important;background-position:center 48%!important;background-repeat:no-repeat!important;
+  transform:translate3d(0,calc(var(--vc-scroll-shift,0px) * -1),0)!important;
+  will-change:transform,opacity!important;
+}
+.workspace:has(.workspace-tab-overview)>.workspace-main{position:relative!important;z-index:1!important;background:transparent!important;min-height:100dvh!important}
+.workspace:has(.workspace-tab-overview) .workspace-content.workspace-tab-overview{
+  background:transparent!important;background-image:none!important;isolation:isolate!important;
+}
+.workspace:has(.workspace-tab-overview) .workspace-content.workspace-tab-overview:before,
+.workspace:has(.workspace-tab-overview) .workspace-content.workspace-tab-overview:after{display:none!important;content:none!important;background:none!important}
+/* Clean, readable studio surfaces: no embedded building/office photography. */
+.workspace-tab-overview .vc-overview-hero.workspace-welcome{
+  background:linear-gradient(120deg,rgba(19,42,58,.97),rgba(36,88,99,.94))!important;
+  border:1px solid rgba(255,255,255,.24)!important;color:#fff!important;
+  box-shadow:0 24px 64px rgba(8,25,34,.22)!important;
+}
+.workspace-tab-overview .vc-overview-hero:before,
+.workspace-tab-overview .vc-overview-hero:after,
+.workspace-tab-overview .vc-hero-art:before,
+.workspace-tab-overview .vc-editorial-strip:before,
+.workspace-tab-overview .vc-editorial-strip:after,
+.workspace-tab-overview .vc-editorial-side:before,
+.workspace-tab-overview .vc-identity-card:before,
+.workspace-tab-overview .vc-action-stage:before{background-image:none!important}
+.workspace-tab-overview .vc-editorial-strip,
+.workspace-tab-overview .vc-overview-stage,
+.workspace-tab-overview .vc-action-stage,
+.workspace-tab-overview .vc-identity-card,
+.workspace-tab-overview .vc-metric-card,
+.workspace-tab-overview .completion-panel{
+  background:rgba(255,255,255,.92)!important;background-image:none!important;
+  color:#0F2234!important;border:1px solid rgba(19,42,58,.12)!important;
+  box-shadow:0 16px 42px rgba(8,25,34,.13)!important;
+  backdrop-filter:blur(8px)!important;-webkit-backdrop-filter:blur(8px)!important;
+}
+.workspace-tab-overview .vc-editorial-main,
+.workspace-tab-overview .vc-editorial-side{background:transparent!important;background-image:none!important}
+.workspace-tab-overview .vc-editorial-side{background:linear-gradient(145deg,#132A3A,#245863)!important;color:#fff!important}
+.workspace-tab-overview .vc-editorial-side strong,
+.workspace-tab-overview .vc-editorial-side small,
+.workspace-tab-overview .vc-editorial-side>span{color:#fff!important}
+.workspace-tab-overview .vc-moving-screen{
+  background:linear-gradient(145deg,#132A3A,#245863)!important;background-image:none!important;
+  border:1px solid rgba(255,255,255,.22)!important;color:#fff!important;
+}
+.workspace-tab-overview .vc-action-tile{
+  background:rgba(255,255,255,.88)!important;background-image:none!important;
+  border:1px solid rgba(19,42,58,.12)!important;color:#0F2234!important;
+}
+.workspace-tab-overview .vc-identity-card{background:rgba(255,255,255,.94)!important}
+.workspace-tab-overview .vc-overview-stage .vc-stage-tabs{background:rgba(255,255,255,.86)!important}
+.workspace-tab-overview .vc-hero-glass{background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.24)!important}
+/* The navbar is an opaque, top-flush studio layer; scrolling content cannot bleed through. */
+.workspace:has(.workspace-tab-overview) .workspace-topbar{
+  position:sticky!important;top:0!important;z-index:120!important;
+  background:#FFFFFF!important;background-image:none!important;
+  border-bottom:1px solid #E2E8F0!important;box-shadow:0 8px 26px rgba(15,34,52,.10)!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
+@media(max-width:900px){
+ .workspace:has(.workspace-tab-overview) .workspace-topbar{background:#F8FAFC!important}
+ .workspace:has(.workspace-tab-overview)::before{opacity:.78!important;background-position:center 50%!important}
+ .workspace-tab-overview .vc-editorial-strip,.workspace-tab-overview .vc-overview-stage,
+ .workspace-tab-overview .vc-action-stage,.workspace-tab-overview .vc-identity-card,
+ .workspace-tab-overview .vc-metric-card,.workspace-tab-overview .completion-panel{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .workspace:has(.workspace-tab-overview)::before{transform:none!important;will-change:auto!important}
+}
