@@ -30,7 +30,7 @@ const[open,setOpen]=useState(false),[adminAllowed,setAdminAllowed]=useState(fals
 const location=useLocation(),nav=useNavigate(),listingPage=location.pathname==='/businesses'||location.pathname==='/investors';
 useEffect(()=>{
  const client=supabase;if(!client)return;
- let active=true,revision=0;
+ let active=true,revision=0,authEventSeen=false;
  const sync=async(session:any,event?:string)=>{
   if(!active)return;
   const u=session?.user||null;
@@ -46,7 +46,7 @@ useEffect(()=>{
     setHeaderUser(restored);
     const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',restored.id).maybeSingle(),client.rpc('is_admin')]);
     if(!active||current!==revision)return;
-    setAccountType(p.data?.account_type==='investor'?'investor':p.data?.account_type==='business'?'business':restored.user_metadata?.account_type==='investor'?'investor':'business');
+    setAccountType(restored.user_metadata?.account_type==='investor'?'investor':restored.user_metadata?.account_type==='business'?'business':p.data?.account_type==='investor'?'investor':'business');
     setAdminAllowed(Boolean(admin.data&&!admin.error));
    }
    setAuthChecked(true);return;
@@ -54,11 +54,11 @@ useEffect(()=>{
   const current=++revision;setHeaderUser(u);setAuthChecked(true);
   const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',u.id).maybeSingle(),client.rpc('is_admin')]);
   if(!active||current!==revision)return;
-  setAccountType(p.data?.account_type==='investor'?'investor':p.data?.account_type==='business'?'business':u.user_metadata?.account_type==='investor'?'investor':'business');
+  setAccountType(u.user_metadata?.account_type==='investor'?'investor':u.user_metadata?.account_type==='business'?'business':p.data?.account_type==='investor'?'investor':'business');
   setAdminAllowed(Boolean(admin.data&&!admin.error));
  };
- void client.auth.getSession().then(({data})=>sync(data.session,'INITIAL_SESSION')).catch(()=>{});
- const{data:{subscription}}=client.auth.onAuthStateChange((event,session)=>{window.setTimeout(()=>void sync(session,event),0)});
+ void client.auth.getSession().then(({data})=>{if(!authEventSeen)void sync(data.session,'INITIAL_SESSION')}).catch(()=>{});
+ const{data:{subscription}}=client.auth.onAuthStateChange((event,session)=>{authEventSeen=true;window.setTimeout(()=>void sync(session,event),0)});
  const onPageShow=()=>{void client.auth.getSession().then(({data})=>sync(data.session,'PAGESHOW'))};
  window.addEventListener('pageshow',onPageShow);
  return()=>{active=false;subscription.unsubscribe();window.removeEventListener('pageshow',onPageShow)};
