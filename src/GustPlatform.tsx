@@ -39,12 +39,12 @@ export default function GustPlatform(){
    revealObserver=observer;
   }else revealTargets.forEach(el=>el.classList.add('gp-is-revealed'));
   const progress=document.createElement('div');progress.className='gp-scroll-progress';progress.setAttribute('aria-hidden','true');document.body.appendChild(progress);
+  const art=document.querySelector<HTMLElement>('.gp-hero-art');
   let raf=0;
   const updateProgress=()=>{raf=0;const max=document.documentElement.scrollHeight-window.innerHeight;const amount=max>0?window.scrollY/max:0;progress.style.transform='scaleX('+Math.max(0,Math.min(1,amount))+')';if(art)art.style.setProperty('--gp-parallax',String(Math.min(window.scrollY,500)));};
   const onScroll=()=>{if(!raf)raf=window.requestAnimationFrame(updateProgress);};
   window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll,{passive:true});updateProgress();
   const cards=document.querySelectorAll('.gp-feature,.gp-opportunity,.gp-preview-card,.gp-panel,.gp-stat,.gp-deal-card');
-  const art=document.querySelector<HTMLElement>('.gp-hero-art');
   const onPointerMove=(event:Event)=>{const e=event as PointerEvent;const target=e.currentTarget as HTMLElement;const r=target.getBoundingClientRect();const x=(e.clientX-r.left)/Math.max(1,r.width),y=(e.clientY-r.top)/Math.max(1,r.height);target.style.setProperty('--gp-pointer-x',(x*100)+'%');target.style.setProperty('--gp-pointer-y',(y*100)+'%');target.style.setProperty('--gp-tilt-x',((.5-y)*4)+'deg');target.style.setProperty('--gp-tilt-y',((x-.5)*4)+'deg');};
   const onPointerLeave=(event:Event)=>{const target=event.currentTarget as HTMLElement;target.style.setProperty('--gp-tilt-x','0deg');target.style.setProperty('--gp-tilt-y','0deg');};
   const hasFinePointer=window.matchMedia('(hover: hover) and (pointer: fine)').matches;
