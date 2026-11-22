@@ -54,6 +54,15 @@ on conflict (user_id) do update set role = excluded.role;
 
 Do not make the admin role self-service. Only a trusted project owner should execute this step.
 
+## Canonical production deployment
+
+The only supported public production host is **https://ventora-connect.vercel.app**.
+
+- Source repository: `waveyyyyyyy/Ventora-Connect`, branch `main`.
+- Vercel project: `ventora-connect`.
+- GitHub Pages publishing has been retired and its separate site removed.
+- Do not publish this app through GitHub Pages or another Vercel project; use the single Vercel project above.
+
 ## Local development
 
 ```bash
