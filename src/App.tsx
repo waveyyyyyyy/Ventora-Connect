@@ -52,7 +52,7 @@ useEffect(()=>{
    }
    setAuthChecked(true);return;
   }
-  const current=++revision;setHeaderUser(u);setAuthChecked(true);
+  const current=++revision;setHeaderUser(u);setAuthChecked(true);\n  // Google OAuth can return to the public root when the provider's redirect\n  // URL is normalized by the hosting layer. If this is the just-completed\n  // OAuth handoff, route into the workspace as soon as the session exists.\n  let oauthPending=false;try{oauthPending=window.localStorage.getItem('ventora-google-oauth-pending')==='1'||window.sessionStorage.getItem('ventora-google-oauth-pending')==='1';}catch{}\n  if((event==='SIGNED_IN'||oauthPending)&&(location.pathname==='/'||location.pathname==='/login'))nav('/dashboard?tab=overview',{replace:true});
   const[p,admin]=await Promise.all([client.from('profiles').select('account_type').eq('id',u.id).maybeSingle(),client.rpc('is_admin')]);
   if(!active||current!==revision)return;
   setAccountType(u.user_metadata?.account_type==='investor'?'investor':u.user_metadata?.account_type==='business'?'business':p.data?.account_type==='investor'?'investor':'business');
