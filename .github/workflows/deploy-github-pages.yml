@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - fix/auth-session-regressions-20261123
   workflow_dispatch:
 
 permissions:
@@ -34,6 +35,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
+
+      - name: Run authentication regression tests
+        run: pnpm test
 
       - name: Build static site
         run: pnpm build
