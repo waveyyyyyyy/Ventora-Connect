@@ -1,4 +1,4 @@
-import { createClient, type Session, type User } from '@supabase/supabase-js';
+import { createClient, type User } from '@supabase/supabase-js';
 
 const url = (import.meta.env.VITE_SUPABASE_URL as string | undefined)
   || 'https://nlkcnewcrcgylubqulph.supabase.co';
@@ -44,7 +44,6 @@ const initialAuthReady = new Promise<void>((resolve) => {
   resolveInitialAuth = resolve;
 });
 let restoreInFlight: Promise<User | null> | null = null;
-let refreshInFlight: Promise<Session | null> | null = null;
 
 if (supabase) {
   supabase.auth.onAuthStateChange((event) => {
@@ -55,7 +54,6 @@ if (supabase) {
     if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
       authEpoch += 1;
       restoreInFlight = null;
-      refreshInFlight = null;
     }
   });
 }
@@ -91,7 +89,6 @@ export function restoreUserSession(): Promise<User | null> {
     }
     if (!current()) return null;
 
-    let successfulRead = false;
     for (const delay of [0, 300, 900]) {
       if (delay) await new Promise<void>((resolve) => window.setTimeout(resolve, delay));
       if (!current()) return null;
@@ -99,7 +96,6 @@ export function restoreUserSession(): Promise<User | null> {
         const { data, error } = await supabase.auth.getSession();
         if (!current()) return null;
         if (error) continue;
-        successfulRead = true;
         const session = data.session;
         if (session?.access_token && session.user?.id) return session.user;
         // A successful empty read is a real signed-out state.
@@ -109,8 +105,7 @@ export function restoreUserSession(): Promise<User | null> {
         // a second refresh-token exchange.
       }
     }
-    // Keep the distinction between a confirmed empty session and a failed read.
-    return successfulRead ? null : null;
+    return null;
   })();
 
   restoreInFlight = task;
@@ -124,7 +119,6 @@ export async function signOutUser(): Promise<void> {
   if (!supabase) return;
   authEpoch += 1;
   restoreInFlight = null;
-  refreshInFlight = null;
   const { error } = await supabase.auth.signOut({ scope: 'local' });
   if (error) throw error;
   initialAuthResolved = true;
