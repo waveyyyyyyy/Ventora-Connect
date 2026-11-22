@@ -43,7 +43,7 @@ useEffect(()=>{
   // A transient null session during page restoration must not wipe a valid menu.
   // Only an explicit SIGNED_OUT event is allowed to clear the cached member.
   if(!u){
-   if(event==='SIGNED_OUT'){revision++;setHeaderUser(null);setAdminAllowed(false);setAccountType('business');setAuthChecked(true);return;}
+   if(event==='SIGNED_OUT'){/* Explicit sign-out handlers clear this UI after signOutUser succeeds. Ignore transient SDK sign-out events here. */return;}
    // Hydrate from Supabase's user endpoint before showing the public landing menu.
    const current=++revision;
    const restored=await restoreUserSession();
