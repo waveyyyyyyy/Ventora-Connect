@@ -18,7 +18,7 @@ body{background-color:var(--vc-surface);background-image:radial-gradient(ellipse
  .gp-scroll-progress{display:none!important}
 }
 @media(prefers-reduced-motion:reduce){
- *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+ html{scroll-behavior:auto!important}
 }
 
 /* Business discovery: keep the first viewport light on mobile; render more cards on demand. */
