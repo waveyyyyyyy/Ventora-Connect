@@ -788,3 +788,16 @@ body{overflow-x:clip}
  .workspace-sidebar{transition:none!important}
  .workspace-panel:after,.workspace-stat-grid>article:before,.business-manager-card:after,.subscription-card:after{animation:none!important}
 }
+
+
+/* Auth surfaces: keep the premium layout while avoiding costly mobile paint effects. */
+.auth-page{background:#f4f6fb!important;}
+.auth-page:before{display:none!important;}
+.auth-aside:after{animation:none!important;box-shadow:0 0 0 38px rgba(174,197,255,.045),0 0 0 82px rgba(174,197,255,.025)!important;}
+.auth-box{background:#fff!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:0 12px 34px rgba(40,57,117,.075)!important;animation:none!important;}
+.auth-aside{background:linear-gradient(150deg,#101a37 0%,#1c3266 60%,#101a37 100%)!important;}
+.auth-aside:before{opacity:.45;}
+.auth-box input,.role-select button,.auth-submit,.auth-back-button{transition:background-color .14s ease,border-color .14s ease,box-shadow .14s ease,color .14s ease!important;}
+.auth-box input:focus{box-shadow:0 0 0 3px rgba(129,149,239,.12)!important;}
+@media(max-width:800px){.auth-aside:after{animation:none!important;}.auth-box{margin:24px auto 0!important;}}
+@media(prefers-reduced-motion:no-preference){.auth-page,.auth-box,.auth-aside:after{animation:none!important;}}
