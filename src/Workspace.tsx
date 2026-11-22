@@ -53,58 +53,26 @@ useEffect(()=>{
  const applyUser=(next:any)=>{
   if(!live||!next?.id)return;
   if(oauthFallback)window.clearTimeout(oauthFallback);
-  // Prefer a server-verified identity, but do not show the login gate just
-  // because getUser/refresh temporarily fails while a local session exists.
-  void restoreUserSession().then(async(verified)=>{
-   if(!live)return;
-   if(verified?.id===next.id){acceptWorkspaceUser(verified);return;}
-   const localUser=await readLocalSessionUser(next.id);
-   if(!live)return;
-   // The auth event itself also carries the active user. If storage is
-   // temporarily unavailable, preserve that identity instead of rendering
-   // the signed-out screen during a transient restoration race.
-   acceptWorkspaceUser(localUser||next);
-  });
+  // Supabase auth events carry the session identity. Accept it immediately;
+  // do not start another verification/refresh cycle for every TOKEN_REFRESHED.
+  acceptWorkspaceUser(next);
  };
  const{data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
-  // Supabase holds its auth lock while notifying listeners. Defer all state
-  // transitions that can start database requests until after the callback exits.
+  // Defer React/database work until the Supabase auth callback has completed.
   window.setTimeout(()=>{
    if(!live)return;
    if(event!=='INITIAL_SESSION')authEventSeen=true;
    if(session?.user){sessionResolved=true;applyUser(session.user);return;}
-   // Only a deliberate SIGNED_OUT event clears workspace identity.
    if(event==='SIGNED_OUT'){
-    // Supabase can emit a transient SIGNED_OUT while Android WebView storage
-    // or refresh-token state is being restored. Re-check before clearing UI.
-    const signedOutUserId=activeUserId.current;
-    void restoreUserSession().then((restored)=>{
-     if(!live)return;
-     if(restored){
-      sessionResolved=true;
-      applyUser(restored);
-      return;
-     }
-     // A deliberate local sign-out clears the persisted token before this
-     // callback. Only clear the workspace after that absence is confirmed.
-     void supabase?.auth.getSession().then(({data,error})=>{
-      if(!live)return;
-      if(error){
-       // A failed session read is not evidence of a real sign-out.
-       setAuthRestoreIssue(true);setNotice("Your session could not be checked because the connection is temporarily unavailable. Retry when you are back online.");
-       setLoading(false);
-       return;
-      }
-      if(data.session?.user){
-       sessionResolved=true;
-       applyUser(data.session.user);
-       return;
-      }
-      if(activeUserId.current!==signedOutUserId)return;
-      sessionResolved=true;if(oauthFallback)window.clearTimeout(oauthFallback);
-      activeUserId.current=null;setAuthRestoreIssue(false);setUser(null);setProfile(null);setBusinesses([]);setBusiness(emptyBusiness);setInvestor(emptyInvestor);setAdminAllowed(false);setRoleChoiceRequired(false);setNotifications([]);setStats({notifications:0,views:0});setPlans([]);setCurrentPlan(null);setPlanRequests([]);setVerificationStatus('not_submitted');setNotice('');setLoading(false);
-     });
-    });
+    // Unexpected SDK sign-out events must not throw a member out of the UI.
+    // The explicit Sign out action clears the workspace after signOutUser()
+    // succeeds. If a refresh/network issue emits SIGNED_OUT, keep the current
+    // workspace visible and let the persisted session recover.
+    sessionResolved=true;
+    if(activeUserId.current){
+     setAuthRestoreIssue(true);
+     setNotice('Your connection to sign-in was interrupted. Your workspace is staying open while the session reconnects.');
+    }
    }
   },0);
  });
