@@ -914,3 +914,51 @@ body{
   .workspace-welcome {box-shadow:0 5px 16px rgba(23,63,89,.07)!important}
   .workspace-menu-backdrop {backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 }
+
+
+/* Ventora visual refresh: support, authentication and discovery use the same art direction. */
+.support-page,.vc-member-section.support-page{
+  color:#dce9ed!important;
+  background:
+    linear-gradient(115deg,rgba(14,43,62,.92),rgba(20,67,88,.82)),
+    url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=80') center/cover fixed!important;
+}
+.support-page .vc-member-section-topbar{background:rgba(17,54,74,.92)!important;border-color:rgba(255,255,255,.14)!important;backdrop-filter:none!important}
+.support-page .vc-member-section-brand,.support-page .vc-member-section-topbar-note{color:#e6f1f2!important}
+.support-page .vc-member-section-brand small{color:#a9d0ce!important}
+.support-page .vc-member-section-home{background:linear-gradient(110deg,#8fc4b4,#4d9aa0)!important;color:#14394d!important;border:0!important}
+.support-page .vc-member-section-content{position:relative;isolation:isolate}
+.support-page .vc-member-section-content:before{content:"";position:absolute;z-index:-1;inset:0 0 auto;height:390px;pointer-events:none;background:linear-gradient(90deg,rgba(17,54,74,.94),rgba(17,54,74,.46)),url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1600&q=75') center/cover}
+.support-page .support-hero h1,.support-page .support-hero p,.support-page .support-hero .section-kicker,.support-page .support-history h2{color:#f3f8f8!important}
+.support-page .support-hero h1 em{color:#a9d9c9!important}
+.support-page .support-grid>form,.support-page .support-side,.support-page .support-history{background:rgba(246,250,250,.96)!important;border:1px solid rgba(255,255,255,.32)!important;border-radius:22px!important;box-shadow:0 18px 44px rgba(4,24,36,.2)!important}
+.support-page .support-side h2,.support-page .support-side b,.support-page .support-grid form b{color:#18384e!important}
+.support-page .support-side p,.support-page .support-grid form small{color:#617985!important}
+.support-page .support-history{color:#24495b!important}
+.support-page .support-history h2{color:#18384e!important}
+.support-page .support-history article{border-color:#dce8eb!important}
+.support-page .support-history article b{color:#18384e!important}
+.auth-page{background:linear-gradient(120deg,#edf4f5,#e6eff1 58%,#f6f8f8)!important}
+.auth-aside{background:linear-gradient(110deg,rgba(15,47,67,.94),rgba(22,73,93,.72)),url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=75') center/cover!important}
+.auth-main{background:radial-gradient(ellipse at 85% 12%,rgba(112,165,143,.14),transparent 40%),linear-gradient(140deg,#f8fbfb,#eaf2f4)!important}
+.auth-box{background:rgba(255,255,255,.94)!important;border:1px solid #dce8eb!important;box-shadow:0 18px 48px rgba(23,63,89,.1)!important}
+.directory-business-hero,.directory-investor-hero{position:relative;isolation:isolate;overflow:hidden}
+.directory-business-hero:after,.directory-investor-hero:after{content:"";position:absolute;z-index:-1;inset:0 0 0 45%;pointer-events:none;opacity:.28;background:linear-gradient(90deg,transparent,rgba(23,63,89,.22)),url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=70') center/cover;mask-image:linear-gradient(90deg,transparent,#000 28%)}
+.directory-card-cover img{display:block;width:100%;height:100%;object-fit:cover}
+.directory-cover-art{background:linear-gradient(135deg,#173f59,#1c536d 55%,#3d8292)!important}
+.directory-cover-art:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.13)),url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=700&q=65') center/cover;opacity:.42;mix-blend-mode:screen}
+.directory-results{background:linear-gradient(145deg,#f2f7f8,#eaf1f3)!important}
+.directory-card{content-visibility:auto;contain-intrinsic-size:380px 520px}
+.directory-card,.directory-grid{transform:none!important;filter:none!important}
+.directory-card{box-shadow:0 10px 28px rgba(23,63,89,.08)!important}
+.workspace:after{animation:none!important}
+.workspace,.workspace-content,.workspace-welcome,.workspace-panel,.workspace-form,.support-page,.vc-member-section-topbar,.auth-page,.auth-aside,.auth-main,.directory-hero,.directory-card{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.workspace *,.support-page *,.auth-page *,.directory-card *{scroll-behavior:auto!important}
+@media(max-width:760px),(hover:none){
+ .workspace:after{display:none!important}
+ .support-page,.vc-member-section.support-page{background:linear-gradient(145deg,#173f59,#1c536d 60%,#edf4f5)!important}
+ .support-page .vc-member-section-content:before{height:300px}
+ .directory-business-hero:after,.directory-investor-hero:after{opacity:.16}
+ .directory-card{content-visibility:visible}
+ .workspace *,.support-page *,.auth-page *,.directory-card *{animation:none!important;transition:none!important}
+}
