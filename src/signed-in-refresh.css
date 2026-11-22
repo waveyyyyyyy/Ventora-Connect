@@ -802,14 +802,6 @@ body{
     url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=75') center/cover;
   mask-image: linear-gradient(135deg, #000 20%, transparent 95%);
 }
-.directory-results > *,
-.pitch-detail-page > *,
-.messages-page > *,
-.admin-page > *,
-.faq-page > *,
-.legal-page > *,
-.auth-main > * { position: relative; }
-
 @media (max-width: 760px) {
   /* Avoid per-frame blur and large shadow repaint costs on mid-range phones. */
   .workspace-topbar,
