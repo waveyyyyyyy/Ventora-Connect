@@ -11,7 +11,10 @@ const pipeline = [{name:'Northstar Robotics',stage:'New',amount:'$1.8M'},{name:'
 
 export default function GustPlatform(){
  const [session,setSession]=useState<any>(null); const [authChecked,setAuthChecked]=useState(false); const [typedHeadline,setTypedHeadline]=useState(''); const [menuOpen,setMenuOpen]=useState(false); const [adminAllowed,setAdminAllowed]=useState(false); const navigate=useNavigate();
- useEffect(()=>{\n  const phrase='the right people.';let index=0;setTypedHeadline('');const start=window.setTimeout(()=>{const timer=window.setInterval(()=>{index+=1;setTypedHeadline(phrase.slice(0,index));if(index>=phrase.length)window.clearInterval(timer);},115);},450);return()=>window.clearTimeout(start);\n },[]);\n useEffect(()=>{
+ useEffect(()=>{
+  const phrase='the right people.';let index=0;setTypedHeadline('');let timer=0;const start=window.setTimeout(()=>{timer=window.setInterval(()=>{index+=1;setTypedHeadline(phrase.slice(0,index));if(index>=phrase.length)window.clearInterval(timer);},115);},450);return()=>{window.clearTimeout(start);if(timer)window.clearInterval(timer);};
+ },[]);
+ useEffect(()=>{
   let revealObserver:IntersectionObserver|undefined;
   const revealTargets=Array.from(document.querySelectorAll('.gp-public-header,.gp-hero-copy,.gp-hero-art,.gp-trust,.gp-section-heading,.gp-feature,.gp-audience-copy,.gp-preview-card,.gp-steps>div,.gp-final-cta>div,.gp-footer'));
   const staggerGroups=['.gp-feature-grid','.gp-steps','.gp-trust div','.gp-audience-copy ul','.gp-discover-grid','.gp-stat-grid','.gp-dashboard-grid'];
@@ -40,7 +43,8 @@ export default function GustPlatform(){
 
 
 function Showcase({onJoin}:{onJoin:()=>void}){
- const [active,setActive]=useState<'founder'|'investor'|'network'>('founder');\n useEffect(()=>{const order:['founder','investor','network']=['founder','investor','network'];const timer=window.setInterval(()=>setActive(current=>order[(order.indexOf(current)+1)%order.length]),6500);return()=>window.clearInterval(timer);},[]);
+ const [active,setActive]=useState<'founder'|'investor'|'network'>('founder');
+ useEffect(()=>{const order:Array<'founder'|'investor'|'network'>=['founder','investor','network'];const timer=window.setInterval(()=>setActive(current=>order[(order.indexOf(current)+1)%order.length]),6500);return()=>window.clearInterval(timer);},[]);
  const panels={
   founder:{eyebrow:'FOUNDER VIEW',title:'Your story, in the right room.',copy:'A clear company profile helps aligned investors understand your vision, traction and next milestone.',stats:[['Profile strength','86%'],['Investor views','128'],['New interest','12']],items:['Company story & milestones','Fundraising snapshot','Investor conversations']},
   investor:{eyebrow:'INVESTOR VIEW',title:'A sharper lens on opportunity.',copy:'Bring discovery, evaluation and deal flow into one focused workspace built around your investment thesis.',stats:[['Active opportunities','24'],['In diligence','06'],['New this week','08']],items:['Thesis-aligned discovery','Organised deal pipeline','Founder communication']},
