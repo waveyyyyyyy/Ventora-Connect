@@ -79,6 +79,10 @@ async function load(u:any){
  const isCurrent=()=>activeUserId.current===userId;
  setLoading(true);
  try{
+  // Do not issue member-table requests with the anon role while the SDK is
+  // still hydrating the persisted session from localStorage.
+  await requireActiveSession(userId);
+  if(!isCurrent())return;
   const[adminCheck,p]=await Promise.all([
    supabase.rpc('is_admin'),
    supabase.from('profiles').select('id,full_name,account_type,account_type_selected,bio,country,city,website,linkedin_url,avatar_url,created_at').eq('id',userId).maybeSingle()
