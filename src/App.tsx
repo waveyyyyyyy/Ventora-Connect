@@ -1,4 +1,4 @@
-import {lazy,Suspense,useDeferredValue,useEffect,useMemo,useState} from 'react';import {Link,Route,Routes,useNavigate,useParams,useLocation} from 'react-router-dom';import {ArrowUpRight,Building2,ChartNoAxesCombined,ShieldCheck,Menu,X,LockKeyhole,Sparkles,Compass,Users,Bell,Bookmark,CalendarDays,FileText,MessageCircle,UserRoundCheck} from 'lucide-react';import {supabase,restoreUserSession,checkMessagingProfile,signOutUser} from './lib/supabase';
+import {lazy,Suspense,useEffect,useState} from 'react';import {Link,Route,Routes,useNavigate,useParams,useLocation} from 'react-router-dom';import {ArrowUpRight,Building2,ChartNoAxesCombined,ShieldCheck,Menu,X,LockKeyhole,Sparkles,Compass,Users,Bell,Bookmark,CalendarDays,FileText,MessageCircle} from 'lucide-react';import {supabase,restoreUserSession,checkMessagingProfile,signOutUser} from './lib/supabase';
 import { VentoraLoadingContext, type VentoraLoadingSetter } from './VentoraLoadingContext';
 import WorkspaceNavigation from './WorkspaceNavigation';
 import BusinessDirectoryPage from './BusinessDirectoryPage';
@@ -25,10 +25,6 @@ async function readViewerSession(){
  // A transient empty getSession result must never be interpreted as a sign-out.
  return restoreUserSession();
 }
-function publishDirectoryViewer(user:any){
- if(typeof window!=='undefined'&&user?.id)window.dispatchEvent(new CustomEvent('ventora:directory-viewer',{detail:user}));
-}
-
 
 function Header({directoryUser}:{directoryUser?:any}={}){
 const[open,setOpen]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business'),[authChecked,setAuthChecked]=useState(false);
