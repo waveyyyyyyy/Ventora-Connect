@@ -823,3 +823,199 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 .footer:before{
  background:linear-gradient(90deg,rgba(7,22,35,.35),rgba(7,22,35,.05)),url("https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=2200&q=85") center/cover!important;
 }
+
+
+/* VENTORA CREATIVE WORLDS — section-specific visual art direction */
+:root{
+ --vc-creative-ink:#102b39;
+ --vc-creative-teal:#245863;
+ --vc-creative-mint:#b7e3d6;
+ --vc-creative-glass:rgba(245,250,249,.78);
+}
+@keyframes vc-art-drift{0%{transform:translate3d(-1.5%,0,0) scale(1.04)}50%{transform:translate3d(1.5%,-1%,0) scale(1.08)}100%{transform:translate3d(-1.5%,0,0) scale(1.04)}}
+@keyframes vc-art-glow{0%,100%{opacity:.34;transform:translate3d(0,0,0) scale(.96)}50%{opacity:.72;transform:translate3d(2%,-2%,0) scale(1.08)}}
+@keyframes vc-poster-sheen{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes vc-marquee-float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-7px) rotate(1deg)}}
+@keyframes vc-orbit-slow{to{transform:rotate(360deg)}}
+
+/* Shared member-section canvas: layered artwork stays behind controls and content. */
+.vc-member-section{
+ position:relative;isolation:isolate;
+ background-color:#edf3f2!important;
+ background-image:
+  radial-gradient(ellipse at 12% 8%,rgba(117,183,166,.19),transparent 34%),
+  radial-gradient(ellipse at 90% 38%,rgba(40,105,113,.13),transparent 32%),
+  linear-gradient(145deg,#f4f7f5 0%,#eaf0ef 55%,#f6f7f4 100%)!important;
+}
+.vc-member-section:before{
+ content:"";position:absolute;z-index:-1;pointer-events:none;inset:0 0 auto;height:min(760px,82vh);
+ background:
+  linear-gradient(180deg,rgba(239,246,243,.18),rgba(239,246,243,.82) 74%,#edf3f2),
+  url("https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=2200&q=80") center 38%/cover no-repeat;
+ opacity:.42;animation:vc-art-drift 34s ease-in-out infinite;
+}
+.vc-member-section:after{
+ content:"";position:absolute;z-index:-1;pointer-events:none;top:90px;right:-130px;width:420px;height:420px;border-radius:50%;
+ background:radial-gradient(circle,rgba(75,154,139,.2),rgba(75,154,139,0) 68%);
+ filter:blur(10px);animation:vc-art-glow 13s ease-in-out infinite;
+}
+.vc-member-section-topbar,.vc-member-section-content{position:relative;z-index:1}
+.vc-member-section-topbar{backdrop-filter:blur(18px)!important;background:rgba(248,251,249,.76)!important;border-bottom:1px solid rgba(35,83,91,.1)!important}
+.vc-member-section-content{background:transparent!important}
+
+/* Give every member destination its own visual poster rather than repeating one wallpaper. */
+.vc-member-section.messages-page:before{
+ background:linear-gradient(180deg,rgba(9,31,43,.54),rgba(9,31,43,.93)),url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2000&q=80") center/cover;
+ height:100%;opacity:.94;animation:none;
+}
+.vc-member-section.messages-page{background:#102b39!important;color:#edf5f2}
+.vc-member-section.matches-page:before{
+ background:linear-gradient(180deg,rgba(12,39,48,.34),rgba(237,243,242,.94) 88%),url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=2000&q=80") center 45%/cover;
+}
+.vc-member-section.saved-page:before{
+ background:linear-gradient(180deg,rgba(22,55,61,.28),rgba(237,243,242,.96) 86%),url("https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=2000&q=80") center/cover;
+}
+.vc-member-section.interests-page:before{
+ background:linear-gradient(180deg,rgba(23,51,68,.24),rgba(237,243,242,.96) 86%),url("https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=2000&q=80") center/cover;
+}
+.vc-member-section.support-page:before{
+ background:linear-gradient(180deg,rgba(14,42,53,.36),rgba(237,243,242,.95) 88%),url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2000&q=80") center/cover;
+}
+.vc-member-section.announcements-page:before{
+ background:linear-gradient(180deg,rgba(14,42,53,.3),rgba(237,243,242,.95) 88%),url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2000&q=80") center/cover;
+}
+
+/* Poster-like section headers with ambient color, fine grain and a moving highlight. */
+.vc-member-section-content main>h1,
+.vc-member-section-content .support-hero-v2,
+.vc-member-section-content .messages-list,
+.vc-member-section-content .messages-chat,
+.vc-member-section-content .matches-hero,
+.vc-member-section-content .saved-hero,
+.vc-member-section-content .interests-hero{
+ position:relative;
+}
+.vc-member-section-content main>h1{
+ text-wrap:balance;
+}
+.vc-member-section-content main>h1:after{
+ content:"";display:block;width:clamp(64px,10vw,112px);height:3px;margin-top:17px;border-radius:8px;
+ background:linear-gradient(90deg,#245863,#75b9a6,#d4e9df,#245863);background-size:200% 100%;
+ animation:vc-poster-sheen 8s linear infinite;
+}
+
+/* Overview: blend abstract color fields and a photographic editorial rail into the dashboard. */
+.workspace{
+ position:relative;isolation:isolate;
+ background:
+  radial-gradient(ellipse at 80% 14%,rgba(102,170,153,.19),transparent 30%),
+  linear-gradient(135deg,#f1f5f3 0%,#e8efed 48%,#f5f6f1 100%)!important;
+}
+.workspace:before{
+ content:"";position:absolute;z-index:0;pointer-events:none;inset:0 0 auto;height:520px;
+ background:linear-gradient(180deg,rgba(13,38,49,.18),rgba(13,38,49,.06) 48%,rgba(241,245,243,.96)),
+ url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=2200&q=80") center 48%/cover;
+ opacity:.48;animation:vc-art-drift 38s ease-in-out infinite;
+}
+.workspace>*{position:relative;z-index:1}
+.vc-overview-hero{box-shadow:0 28px 75px rgba(13,44,54,.22)!important}
+.vc-overview-ticker{background:linear-gradient(100deg,#102b39,#245863 48%,#173d48)!important}
+.vc-editorial-strip{position:relative;isolation:isolate;overflow:hidden}
+.vc-editorial-strip:before{
+ content:"";position:absolute;z-index:-1;inset:0;
+ background:linear-gradient(110deg,rgba(12,40,50,.2),rgba(12,40,50,.02)),url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1600&q=75") center/cover;
+ opacity:.2;animation:vc-art-drift 30s ease-in-out infinite;
+}
+.vc-moving-screen{box-shadow:0 24px 70px rgba(12,42,52,.18)!important}
+.vc-action-tile{backdrop-filter:blur(16px);box-shadow:0 18px 48px rgba(20,55,61,.1)!important}
+.vc-identity-card{position:relative;overflow:hidden}
+.vc-identity-card:after{
+ content:"";position:absolute;right:-45px;bottom:-85px;width:220px;height:220px;border:1px solid rgba(126,190,174,.34);border-radius:50%;box-shadow:0 0 0 22px rgba(126,190,174,.07),0 0 0 48px rgba(126,190,174,.045);pointer-events:none;
+}
+
+/* Business discovery keeps its own poster set; introduce a moving color ribbon between results. */
+.directory-editorial-strip{position:relative}
+.directory-editorial-panel{isolation:isolate}
+.directory-editorial-panel:after{
+ content:"";position:absolute;z-index:1;inset:auto 0 0;height:3px;
+ background:linear-gradient(90deg,transparent,#a5ddc9,#fff,transparent);background-size:220% 100%;
+ animation:vc-poster-sheen 9s linear infinite;pointer-events:none;
+}
+.directory-results{position:relative}
+.directory-results:before{
+ content:"";position:absolute;pointer-events:none;top:0;right:0;width:36%;height:260px;
+ background:radial-gradient(ellipse,rgba(71,139,128,.12),transparent 70%);
+}
+
+/* Public landing page: richer art direction, keeping the existing hero layout and copy. */
+.gp-hero{isolation:isolate;position:relative}
+.gp-hero:after{
+ content:"";position:absolute;z-index:0;pointer-events:none;inset:0;
+ background:
+  radial-gradient(ellipse at 12% 80%,rgba(135,190,165,.22),transparent 34%),
+  radial-gradient(ellipse at 82% 18%,rgba(57,123,133,.18),transparent 36%),
+  url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=2200&q=75") center/cover;
+ opacity:.13;mix-blend-mode:multiply;animation:vc-art-drift 42s ease-in-out infinite;
+}
+.gp-hero>*{position:relative;z-index:1}
+.gp-showcase,.gp-audience,.gp-final-cta{position:relative;isolation:isolate;overflow:hidden}
+.gp-showcase:before,.gp-audience:before,.gp-final-cta:before{
+ content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;opacity:.16;
+ background:url("https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1800&q=75") center/cover;
+ animation:vc-art-drift 36s ease-in-out infinite;
+}
+.gp-audience:before{background-image:url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1800&q=75")}
+.gp-final-cta:before{background-image:url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1800&q=75");opacity:.2}
+
+/* Admin gets a focused control-room atmosphere, not the public-site wallpaper. */
+.admin-page{position:relative;isolation:isolate;background:#edf3f2!important}
+.admin-page:before{
+ content:"";position:absolute;z-index:0;pointer-events:none;inset:0;
+ background:linear-gradient(115deg,rgba(238,245,242,.94),rgba(238,245,242,.82)),url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2000&q=75") center/cover;
+ opacity:.65;
+}
+.admin-page>*{position:relative;z-index:1}
+.admin-page>aside{background:linear-gradient(160deg,#102b39,#245863 75%,#173c46)!important}
+.admin-page .admin-content>section,.admin-page .admin-content>article,.admin-page .admin-stat-grid>article{
+ backdrop-filter:blur(12px);
+}
+
+/* Small motion details across cards, posters and section transitions. */
+.vc-member-section .workspace-panel,
+.vc-member-section .support-care-card,
+.vc-member-section .support-ticket,
+.vc-member-section .announcement-list>article,
+.vc-member-section .matches-card,
+.vc-member-section .saved-card,
+.vc-member-section .interest-card{
+ transition:transform .35s cubic-bezier(.2,.75,.25,1),box-shadow .35s ease,border-color .35s ease;
+}
+@media(hover:hover) and (pointer:fine){
+ .vc-member-section .support-care-card:hover,
+ .vc-member-section .support-ticket:hover,
+ .vc-member-section .announcement-list>article:hover,
+ .vc-member-section .matches-card:hover,
+ .vc-member-section .saved-card:hover,
+ .vc-member-section .interest-card:hover{
+  transform:translateY(-4px);box-shadow:0 20px 50px rgba(20,58,64,.13);
+ }
+}
+@media(max-width:760px){
+ .vc-member-section:before{height:540px;opacity:.34;animation-duration:48s}
+ .workspace:before{height:420px;opacity:.35;animation-duration:48s}
+ .vc-member-section:after{width:260px;height:260px;right:-120px;top:150px}
+ .vc-overview-hero,.vc-moving-screen,.vc-action-tile{backdrop-filter:none}
+ .gp-hero:after,.gp-showcase:before,.gp-audience:before,.gp-final-cta:before{animation:none;opacity:.1}
+}
+@media(prefers-reduced-motion:reduce){
+ .vc-member-section:before,.workspace:before,.vc-editorial-strip:before,
+ .directory-editorial-panel:after,.vc-member-section-content main>h1:after,
+ .gp-hero:after,.gp-showcase:before,.gp-audience:before,.gp-final-cta:before{
+  animation:none!important;transform:none!important;
+ }
+ .vc-member-section .workspace-panel,.vc-member-section .support-care-card,
+ .vc-member-section .support-ticket,.vc-member-section .announcement-list>article,
+ .vc-member-section .matches-card,.vc-member-section .saved-card,.vc-member-section .interest-card{
+  transition:none!important;
+ }
+}
