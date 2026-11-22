@@ -1,5 +1,6 @@
 import {lazy,Suspense,useDeferredValue,useEffect,useMemo,useState} from 'react';import {Link,Route,Routes,useNavigate,useParams,useLocation} from 'react-router-dom';import {ArrowUpRight,Building2,ChartNoAxesCombined,ShieldCheck,Menu,X,LockKeyhole,Sparkles,Compass,Users,Bell,Bookmark,CalendarDays,FileText,MessageCircle,UserRoundCheck} from 'lucide-react';import {supabase,restoreUserSession,checkMessagingProfile,signOutUser} from './lib/supabase';
 import { VentoraLoadingContext, type VentoraLoadingSetter } from './VentoraLoadingContext';
+import DebugPanel from './DebugPanel';
 import WorkspaceNavigation from './WorkspaceNavigation';
 
 const GustPlatform=lazy(()=>import('./GustPlatform'));
@@ -116,5 +117,5 @@ function AppRoutes({setLoader}:{setLoader:VentoraLoadingSetter}){
 function OAuthReturn(){const location=useLocation(),navigate=useNavigate();useEffect(()=>{if(!supabase)return;let active=true;let navigating=false;const finish=async(session:any)=>{if(!active||navigating||!session?.user)return;let pending=false;try{pending=window.localStorage.getItem('ventora-google-oauth-pending')==='1'||window.sessionStorage.getItem('ventora-google-oauth-pending')==='1';}catch{}if(!pending)return;navigating=true;try{const createdAt=Date.parse(session.user.created_at||'');const isNewAccount=!session.user.user_metadata?.account_type&&Number.isFinite(createdAt)&&Date.now()-createdAt<30*60*1000;if(isNewAccount&&!session.user.user_metadata?.account_type_pending){await supabase?.auth.updateUser({data:{account_type_pending:true}});}}catch{}try{window.localStorage.removeItem('ventora-google-oauth-pending');window.localStorage.removeItem('ventora-google-oauth-role');window.sessionStorage.removeItem('ventora-google-oauth-pending');window.sessionStorage.removeItem('ventora-google-oauth-role');}catch{}if(location.pathname!== '/dashboard'||!location.search.includes('tab=overview'))navigate('/dashboard?tab=overview',{replace:true});};const{data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{if(session?.user&&(event==='SIGNED_IN'||event==='INITIAL_SESSION'||event==='TOKEN_REFRESHED'))window.setTimeout(()=>finish(session),0)});void supabase.auth.getSession().then(({data})=>finish(data.session)).catch(()=>{});return()=>{active=false;subscription.unsubscribe()}},[location.pathname,location.search,navigate]);return null;}
 export default function App(){
  const setLoader:VentoraLoadingSetter=()=>{};
- return <VentoraLoadingContext.Provider value={setLoader}><OAuthReturn/><AppRoutes setLoader={setLoader}/></VentoraLoadingContext.Provider>;
+ return <VentoraLoadingContext.Provider value={setLoader}><OAuthReturn/><AppRoutes setLoader={setLoader}/><DebugPanel/></VentoraLoadingContext.Provider>;
 }
