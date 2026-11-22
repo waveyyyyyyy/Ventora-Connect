@@ -97,7 +97,9 @@ if (supabase) {
  */
 export function restoreUserSession(): Promise<User | null> {
   if (!supabase) return Promise.resolve(null);
-  if (cachedAuthSession?.user?.id) return Promise.resolve(cachedAuthSession.user);
+  // Always let the Supabase SDK hydrate its own auth state before returning a
+  // cached identity. Returning the local snapshot immediately can cause the
+  // first REST requests to go out without an Authorization bearer token.
   if (restoreInFlight) return restoreInFlight;
 
   const task = (async (): Promise<User | null> => {
@@ -208,6 +210,7 @@ export async function checkMessagingProfile(userId: string): Promise<MessagingPr
   if (!current || current.id !== userId) {
     return { complete: false, missing: ['Verified sign-in'], percent: 0 };
   }
+  await requireActiveSession(userId);
 
   const { data: profile, error: profileError } = await supabase.from('profiles')
     .select('account_type,full_name,bio,city,country')
