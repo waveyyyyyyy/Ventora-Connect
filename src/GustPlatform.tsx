@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { ArrowRight, Building2, Check, ChevronRight, Compass, Handshake, Home, Menu, MessageSquare, ShieldCheck, Sparkles, TrendingUp, UserRound, Users, X } from 'lucide-react';
+import { ArrowRight, Check, ChevronRight, Compass, Handshake, Home, Menu, MessageSquare, ShieldCheck, Sparkles, TrendingUp, UserRound, Users, X } from 'lucide-react';
 import { supabase } from './lib/supabase';
 
 import './gust-platform.css';
