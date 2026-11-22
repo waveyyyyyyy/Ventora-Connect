@@ -25,7 +25,6 @@ export const supabase = isSupabaseConfigured
 // Keep one authoritative view of the active Supabase session. A user object
 // without its matching session is not enough: PostgREST would still send the
 // request as anon and protected membership queries would fail.
-let observedAuthSession: import('@supabase/supabase-js').Session | null = null;
 let initialAuthResolved = false;
 let resolveInitialAuth!: () => void;
 let authEpoch = 0;
@@ -34,15 +33,7 @@ const initialAuthReady = new Promise<void>((resolve) => {
 });
 
 if (supabase) {
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (session?.user) {
-      observedAuthSession = session;
-    } else if (event === 'SIGNED_OUT' || event === 'INITIAL_SESSION') {
-      // INITIAL_SESSION with no session is authoritative. Do not retain a
-      // stale user from an earlier page lifecycle or expired local token.
-      observedAuthSession = null;
-    }
-
+  supabase.auth.onAuthStateChange((event) => {
     if (event === 'INITIAL_SESSION' && !initialAuthResolved) {
       initialAuthResolved = true;
       resolveInitialAuth();
@@ -82,7 +73,6 @@ export function restoreUserSession(): Promise<import('@supabase/supabase-js').Us
         const { data, error } = await supabase.auth.getSession();
         if (!stillCurrent()) return null;
         if (!error && data.session?.user) {
-          observedAuthSession = data.session;
           return data.session.user;
         }
       } catch {
@@ -96,7 +86,6 @@ export function restoreUserSession(): Promise<import('@supabase/supabase-js').Us
           const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
           if (!stillCurrent()) return null;
           if (!sessionError && sessionData.session?.user?.id === data.user.id) {
-            observedAuthSession = sessionData.session;
             return sessionData.session.user;
           }
         }
@@ -126,7 +115,6 @@ export async function signOutUser(): Promise<void> {
   const { error } = await supabase.auth.signOut({ scope: 'local' });
   if (error) throw error;
 
-  observedAuthSession = null;
   initialAuthResolved = true;
   resolveInitialAuth();
 
