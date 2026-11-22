@@ -84,25 +84,11 @@ function Directory({investors=false}:{investors?:boolean}){
 const[query,setQuery]=useState(''),[industry,setIndustry]=useState(''),[stage,setStage]=useState(''),[ticket,setTicket]=useState('');const deferredQuery=useDeferredValue(query);const[items,setItems]=useState<any[]>([]);const[loading,setLoading]=useState(true);const[error,setError]=useState('');const[viewer,setViewer]=useState<any>(null);const[busy,setBusy]=useState('');const[message,setMessage]=useState('');const[savedIds,setSavedIds]=useState<string[]>([]);const[visibleCount,setVisibleCount]=useState(6);const nav=useNavigate();useEffect(()=>{setVisibleCount(6)},[query,industry,stage,ticket]);
 useEffect(()=>{let active=true;let authSub:any;const client=supabase;if(!client){setLoading(false);return()=>{active=false}}async function load(){if(!client){setLoading(false);return;}const listQuery=investors?client.from('discoverable_profiles').select('id,full_name,bio,avatar_url,country,city,website,account_type,investment_min,investment_max,preferred_industries,preferred_stages').eq('account_type','investor').limit(60):client.from('discoverable_businesses').select('id,company_name,industry,description,country,city,business_stage,funding_requirement,min_investment,max_investment,owner_id,logo_url,cover_image_url').limit(60);const[current,result]=await Promise.all([readViewerSession(),listQuery]);if(!active)return;setViewer(current);if(result.error)setError(result.error.message);else setItems(result.data||[]);if(current){const table=investors?'saved_investors':'saved_businesses',key=investors?'investor_id':'business_id';const{data:saved}=await client.from(table).select(key).eq('user_id',current.id);if(!active)return;setSavedIds((saved||[]).map((x:any)=>x[key]));}setLoading(false);}load();const auth=client.auth.onAuthStateChange((event,session)=>{window.setTimeout(()=>{if(!active)return;if(session?.user){setViewer(session.user);const key=investors?'investor_id':'business_id';void client.from(investors?'saved_investors':'saved_businesses').select(key).eq('user_id',session.user.id).then(({data})=>{if(active)setSavedIds((data||[]).map((x:any)=>x[key]));});}else if(event==='SIGNED_OUT'){setViewer(null);setSavedIds([]);}},0);});authSub=auth.data.subscription;return()=>{active=false;authSub?.unsubscribe()}},[investors]);
 async function ensureViewer(){
- // Prefer the live directory session, then actively re-check Supabase from the
- // user gesture. Mobile browsers can mount the directory before INITIAL_SESSION
- // has finished restoring local storage.
- if(viewer?.id)return viewer;
- let current=await readViewerSession();
- if(!current&&supabase){
-  for(const delay of [0,500,1000,1500]){
-   if(delay)await new Promise(resolve=>window.setTimeout(resolve,delay));
-   try{
-    const{data,error}=await supabase.auth.getSession();
-    if(!error&&data.session?.user){current=data.session.user;break;}
-   }catch{}
-   try{
-    const{data,error}=await supabase.auth.getUser();
-    if(!error&&data.user){current=data.user;break;}
-   }catch{}
-  }
- }
- if(current)setViewer(current);
+ // Never trust a cached user object on its own. The Supabase session must also
+ // exist so the following RPC is sent with the authenticated JWT, not as anon.
+ const current=await readViewerSession();
+ if(current?.id)setViewer(current);
+ else setViewer(null);
  return current;
 }
 function readableSupabaseError(error:any){
