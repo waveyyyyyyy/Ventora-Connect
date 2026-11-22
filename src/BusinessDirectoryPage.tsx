@@ -70,7 +70,7 @@ useEffect(()=>{
    frame=0;
    const shift=Math.min(44,Math.max(-44,window.scrollY*.045));
    hero?.style.setProperty('--directory-parallax',shift+'px');
-   footer?.style.setProperty('--directory-parallax',Math.min(26,Math.max(-26,(window.scrollY-(footer?.offsetTop||0))*.035)+'px'));
+   footer?.style.setProperty('--directory-parallax',Math.min(26,Math.max(-26,(window.scrollY-(footer?.offsetTop||0))*.035))+'px');
   });
  };
  if(!reduce){window.addEventListener('scroll',update,{passive:true});update();}
