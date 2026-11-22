@@ -32,12 +32,17 @@ export function restoreUserSession(): Promise<import('@supabase/supabase-js').Us
   restoreInFlight = (async () => {
     try {
       const { data, error } = await supabase.auth.getSession();
-      if (error) return null;
       if (data.session?.user) return data.session.user;
-      // getSession waits for Supabase auth initialization and its automatic
-      // refresh cycle. Only ask the user endpoint when no local session exists.
+      // A transient getSession error can occur while the browser is restoring
+      // or refreshing a persisted session. Verify before treating the member
+      // as signed out; never let a temporary read failure redirect them away.
       const verified = await supabase.auth.getUser();
-      return verified.error ? null : verified.data.user;
+      if (!verified.error && verified.data.user) return verified.data.user;
+      if (error) {
+        const refreshed = await supabase.auth.refreshSession();
+        if (!refreshed.error && refreshed.data.session?.user) return refreshed.data.session.user;
+      }
+      return null;
     } catch {
       return null;
     }
