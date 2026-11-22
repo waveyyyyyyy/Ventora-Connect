@@ -1162,3 +1162,59 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
   animation:none!important;transform:none!important;
  }
 }
+
+
+/* EVERY WORKSPACE DESTINATION gets its own scenic editorial poster.
+   The image sits behind the page content, with a soft fade for readable forms. */
+.workspace-content[class*="workspace-tab-"]{position:relative;isolation:isolate;overflow:hidden}
+.workspace-content[class*="workspace-tab-"]>*{position:relative;z-index:1}
+.workspace-content[class*="workspace-tab-"]:before{
+ content:"";position:absolute;z-index:0;pointer-events:none;top:0;left:50%;transform:translateX(-50%);
+ width:min(1600px,calc(100% + 80px));height:490px;border-radius:0 0 34px 34px;
+ background-position:center;background-size:cover;opacity:.82;
+ mask-image:linear-gradient(#000 0%,#000 42%,transparent 100%);
+}
+.workspace-tab-profile:before{
+ background-image:linear-gradient(110deg,rgba(9,34,48,.42),rgba(23,74,78,.14)),url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2000&q=85");
+}
+.workspace-tab-business:before{
+ background-image:linear-gradient(110deg,rgba(8,37,48,.48),rgba(28,77,75,.16)),url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=2000&q=85");
+}
+.workspace-tab-investor:before{
+ background-image:linear-gradient(110deg,rgba(8,36,49,.38),rgba(34,78,79,.12)),url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2000&q=85");
+}
+.workspace-tab-verification:before{
+ background-image:linear-gradient(110deg,rgba(9,37,49,.48),rgba(31,79,79,.18)),url("https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=2000&q=85");
+}
+.workspace-tab-notifications:before{
+ background-image:linear-gradient(110deg,rgba(9,37,49,.46),rgba(27,73,79,.16)),url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=2000&q=85");
+}
+.workspace-tab-subscriptions:before{
+ background-image:linear-gradient(110deg,rgba(8,36,48,.42),rgba(26,76,78,.16)),url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2000&q=85");
+}
+.workspace-tab-settings:before{
+ background-image:linear-gradient(110deg,rgba(8,35,48,.48),rgba(25,73,80,.18)),url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=2000&q=85");
+}
+.workspace-tab-profile .workspace-page-title,.workspace-tab-business .workspace-page-title,
+.workspace-tab-investor .workspace-page-title,.workspace-tab-verification .workspace-page-title,
+.workspace-tab-notifications .workspace-page-title,.workspace-tab-subscriptions .workspace-page-title,
+.workspace-tab-settings .workspace-page-title{
+ position:relative;isolation:isolate;
+}
+.workspace-tab-profile .workspace-page-title .section-kicker,
+.workspace-tab-business .workspace-page-title .section-kicker,
+.workspace-tab-investor .workspace-page-title .section-kicker,
+.workspace-tab-verification .workspace-page-title .section-kicker,
+.workspace-tab-notifications .workspace-page-title .section-kicker,
+.workspace-tab-subscriptions .workspace-page-title .section-kicker,
+.workspace-tab-settings .workspace-page-title .section-kicker{
+ display:inline-flex;align-items:center;padding:8px 12px;border-radius:999px;
+ color:#f2fbf7!important;background:rgba(13,42,52,.48);border:1px solid rgba(255,255,255,.28);
+ backdrop-filter:blur(12px);
+}
+@media(max-width:760px){
+ .workspace-content[class*="workspace-tab-"]:before{height:360px;width:calc(100% + 24px);border-radius:0 0 22px 22px}
+}
+@media(prefers-reduced-motion:reduce){
+ .workspace-content[class*="workspace-tab-"]:before{animation:none!important;transform:translateX(-50%)!important}
+}
