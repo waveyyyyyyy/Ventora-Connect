@@ -22,21 +22,27 @@ export const supabase = isSupabaseConfigured
   : null;
 
 
-// Restore the persisted member before any route is allowed to show a sign-in gate.
-// Supabase can briefly return an empty local session while its auth client is
-// initialising; verify with getUser and refresh before treating the member as signed out.
-export async function restoreUserSession() {
-  if (!supabase) return null;
-  try {
-    const current = await supabase.auth.getSession();
-    if (current.data.session?.user) return current.data.session.user;
-    const verified = await supabase.auth.getUser();
-    if (verified.data.user) return verified.data.user;
-    const refreshed = await supabase.auth.refreshSession();
-    if (refreshed.data.session?.user) return refreshed.data.session.user;
-    const finalCheck = await supabase.auth.getUser();
-    return finalCheck.data.user || null;
-  } catch {
-    return null;
-  }
+// Restore a persisted member through one shared in-flight check.
+// Several routes can mount together; sharing this promise prevents parallel
+// refresh attempts from racing and invalidating the same rotating refresh token.
+let restoreInFlight: Promise<import('@supabase/supabase-js').User | null> | null = null;
+export function restoreUserSession(): Promise<import('@supabase/supabase-js').User | null> {
+  if (!supabase) return Promise.resolve(null);
+  if (restoreInFlight) return restoreInFlight;
+  restoreInFlight = (async () => {
+    try {
+      const { data, error } = await supabase.auth.getSession();
+      if (error) return null;
+      if (data.session?.user) return data.session.user;
+      // getSession waits for Supabase auth initialization and its automatic
+      // refresh cycle. Only ask the user endpoint when no local session exists.
+      const verified = await supabase.auth.getUser();
+      return verified.error ? null : verified.data.user;
+    } catch {
+      return null;
+    }
+  })().finally(() => {
+    restoreInFlight = null;
+  });
+  return restoreInFlight;
 }
