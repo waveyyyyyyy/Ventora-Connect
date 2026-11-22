@@ -18,20 +18,41 @@ useEffect(()=>{
  let live=true,authEventSeen=false,sessionResolved=false;
  const oauthReturnPending=new URLSearchParams(window.location.search).get('oauth_return')==='1';
  const oauthFallback=oauthReturnPending?window.setTimeout(()=>{if(live&&!activeUserId.current&&!sessionResolved)setLoading(false)},15000):null;
+ const readLocalSessionUser=async(expectedUserId?:string)=>{
+  // getSession reads the locally persisted session without requiring a
+  // successful Auth-server round trip. This prevents network/refresh hiccups
+  // from being mistaken for a signed-out account.
+  for(const delay of [0,350,800,1300]){
+   if(delay)await new Promise<void>(resolve=>window.setTimeout(resolve,delay));
+   if(!live)return null;
+   try{
+    const{data,error}=await supabase!.auth.getSession();
+    const localUser=data.session?.user;
+    if(!error&&localUser?.id&&(!expectedUserId||localUser.id===expectedUserId))return localUser;
+   }catch{}
+  }
+  return null;
+ };
+ const acceptWorkspaceUser=(accepted:any)=>{
+  if(!live||!accepted?.id)return;
+  const nextId=accepted.id;
+  if(activeUserId.current===nextId){setUser(accepted);setLoading(false);return;}
+  activeUserId.current=nextId;setUser(accepted);setLoading(true);void load(accepted);
+ };
  const applyUser=(next:any)=>{
   if(!live||!next?.id)return;
   if(oauthFallback)window.clearTimeout(oauthFallback);
-  // Verify the same identity after auth storage hydration before private reads.
-  void restoreUserSession().then((verified)=>{
+  // Prefer a server-verified identity, but do not show the login gate just
+  // because getUser/refresh temporarily fails while a local session exists.
+  void restoreUserSession().then(async(verified)=>{
    if(!live)return;
-   if(!verified||verified.id!==next.id){
-    setNotice('Your sign-in is still being restored. Private workspace data will load when it is verified.');
-    setLoading(false);
-    return;
-   }
-   const nextId=verified.id;
-   if(activeUserId.current===nextId){setUser(verified);setLoading(false);return;}
-   activeUserId.current=nextId;setUser(verified);setLoading(true);void load(verified);
+   if(verified?.id===next.id){acceptWorkspaceUser(verified);return;}
+   const localUser=await readLocalSessionUser(next.id);
+   if(!live)return;
+   // The auth event itself also carries the active user. If storage is
+   // temporarily unavailable, preserve that identity instead of rendering
+   // the signed-out screen during a transient restoration race.
+   acceptWorkspaceUser(localUser||next);
   });
  };
  const{data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
@@ -70,13 +91,22 @@ useEffect(()=>{
    }
   },0);
  });
- void restoreUserSession().then(restored=>{
+ void restoreUserSession().then(async restored=>{
   if(!live||sessionResolved)return;
   if(restored){sessionResolved=true;applyUser(restored);return;}
+  // A failed server verification is not proof that the member is signed out.
+  // Check the locally persisted Supabase session before rendering the login gate.
+  const localUser=await readLocalSessionUser();
+  if(!live||sessionResolved)return;
+  if(localUser){sessionResolved=true;acceptWorkspaceUser(localUser);return;}
   // Wait for any newer auth event before deciding this is genuinely signed out.
   if(!authEventSeen){sessionResolved=true;setLoading(false);}
- }).catch(()=>{
-  if(live&&!authEventSeen&&!oauthReturnPending){sessionResolved=true;setLoading(false);}
+ }).catch(async()=>{
+  if(!live||authEventSeen||oauthReturnPending)return;
+  const localUser=await readLocalSessionUser();
+  if(!live||authEventSeen)return;
+  if(localUser){sessionResolved=true;acceptWorkspaceUser(localUser);return;}
+  sessionResolved=true;setLoading(false);
  });
  return()=>{live=false;if(oauthFallback)window.clearTimeout(oauthFallback);subscription.unsubscribe()};
 },[]);
