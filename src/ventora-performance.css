@@ -282,3 +282,15 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 .pitch-action-dock{left:auto!important;transform:none!important}
 .admin-page{padding:0!important}
 @media(prefers-reduced-motion:reduce){.gp-ticker-track{animation:none!important;transform:none!important}}
+
+
+@media(hover:hover) and (pointer:fine){
+ .gp-hero-art .gp-poster,.gp-hero-art .gp-float-card{
+  rotate:var(--gp-tilt-axis-x,0) var(--gp-tilt-axis-y,1) 0 var(--gp-tilt-angle,0deg);
+  transform-style:preserve-3d;
+  transition:rotate .2s cubic-bezier(.2,.8,.2,1),filter .25s ease;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .gp-hero-art .gp-poster,.gp-hero-art .gp-float-card{rotate:none!important}
+}
