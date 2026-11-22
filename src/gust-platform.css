@@ -93,7 +93,7 @@
 }
 @media(prefers-reduced-motion:reduce){
  .gp-scroll-reveal{opacity:1;transform:none;transition:none}
- .gp-poster,.gp-typewrite,.gp-hero:before,.gp-hero:after,.gp-audience:before,.gp-audience:after,.gp-final-cta,.gp-final-cta:before,.gp-final-cta:after,.gp-section-heading h2,.gp-audience-copy h2,.gp-how h2,.gp-final-cta h2{animation:none!important;clip-path:none!important}
+ .gp-poster,.gp-hero:before,.gp-hero:after,.gp-audience:before,.gp-audience:after,.gp-final-cta,.gp-final-cta:before,.gp-final-cta:after,.gp-section-heading h2,.gp-audience-copy h2,.gp-how h2,.gp-final-cta h2{animation:none!important;clip-path:none!important}
 }
 
 
@@ -422,12 +422,12 @@ html{scroll-behavior:smooth;scroll-padding-top:90px}
 .gp-hero .gp-typewrite{
   display:inline-block!important;
   max-width:100%;
-  clip-path:inset(0 100% 0 0)!important;
+  clip-path:inset(0 100% 0 0);
   border-right:3px solid #3d8292!important;
   animation:gp-typewrite 1.55s steps(17,end) .45s forwards,gp-caret .75s step-end 3!important;
 }
 @media(prefers-reduced-motion:reduce){
-  .gp-hero .gp-typewrite{animation:gp-typewrite 1.55s steps(17,end) .45s forwards,gp-caret .75s step-end 3!important;clip-path:inset(0 100% 0 0)!important}
+  .gp-hero .gp-typewrite{animation:gp-typewrite 1.55s steps(17,end) .45s forwards,gp-caret .75s step-end 3!important;clip-path:inset(0 100% 0 0)}
   .gp-hero-copy>*{animation:gp-hero-enter .8s var(--gp-ease) both!important}
   .gp-hero-copy>.gp-pill{animation-delay:.08s!important}
   .gp-hero-copy>h1{animation-delay:.16s!important}
