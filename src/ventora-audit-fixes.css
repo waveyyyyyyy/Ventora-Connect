@@ -120,3 +120,23 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 /* Keep the shared Messages navigation trigger in the same top-left position as other member sections. */
 .vc-member-section.messages-page .workspace-menu-toggle{position:fixed!important;top:13px!important;left:18px!important;right:auto!important;bottom:auto!important;margin:0!important;transform:none!important;z-index:70!important}
 @media(max-width:700px){.vc-member-section.messages-page .workspace-menu-toggle{top:9px!important;left:12px!important;right:auto!important;width:39px!important;height:39px!important}}
+
+/* Messages composer stays inside the visible chat panel on mobile and desktop. */
+.vc-member-section.messages-page>.vc-member-section-content{display:flex!important;flex-direction:column!important;flex:1 1 0!important;min-height:0!important;overflow:hidden!important}
+.vc-member-section.messages-page .messages-studio{flex:1 1 0!important;min-height:0!important}
+.vc-member-section.messages-page .messages-chat{min-height:0!important;height:100%!important}
+.vc-member-section.messages-page .messages-chat-workspace{flex:1 1 0!important;min-height:0!important}
+.vc-member-section.messages-page .messages-chat-main{flex:1 1 0!important;min-height:0!important}
+.vc-member-section.messages-page .messages-stream{flex:1 1 0!important;min-height:0!important}
+.vc-member-section.messages-page .messages-compose{position:relative!important;inset:auto!important;flex:0 0 auto!important;display:grid!important;align-items:center!important;grid-template-columns:minmax(0,1fr) 48px!important;gap:8px!important;width:100%!important;box-sizing:border-box!important;margin-top:auto!important;padding:10px 10px calc(10px + env(safe-area-inset-bottom))!important;background:var(--messages-panel,#fff)!important}
+.vc-member-section.messages-page .messages-compose textarea{min-height:44px!important;max-height:120px!important;box-sizing:border-box!important}
+.vc-member-section.messages-page .messages-compose button{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;flex:0 0 48px!important}
+.workspace-nav-group{margin:0 0 15px!important}
+.workspace-nav-group .workspace-nav-label{margin:0 0 7px!important;padding:0 18px!important;font-size:10px!important;letter-spacing:.16em!important;font-weight:800!important;opacity:.72}
+.workspace-sidebar-scroll> .workspace-nav-group nav{display:grid!important;gap:4px!important}
+.workspace-sidebar-scroll> .workspace-nav-group nav button{width:100%!important;min-height:43px!important;text-align:left!important}
+@media(max-width:760px){
+ .vc-member-section.messages-page>.vc-member-section-content{padding:6px 8px 0!important}
+ .vc-member-section.messages-page .messages-compose{padding:8px 8px calc(8px + env(safe-area-inset-bottom))!important}
+ .vc-member-section.messages-page .messages-compose .composer-hint{display:none!important}
+}
