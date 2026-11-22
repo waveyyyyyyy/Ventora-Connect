@@ -42,6 +42,21 @@ let initialAuthResolved = false;
 let resolveInitialAuth!: () => void;
 let authEpoch = 0;
 let cachedAuthUser: User | null = null;
+
+// A saved user snapshot is used only to keep the interface from falsely
+// redirecting to login during a temporary refresh/rate-limit failure. It is
+// never used as proof of authorization; Supabase RLS still requires a valid JWT.
+function readStoredUserSnapshot(): User | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage.getItem('sb-nlkcnewcrcgylubqulph-auth-token');
+    if (!raw) return null;
+    const saved = JSON.parse(raw);
+    return saved?.user?.id ? saved.user as User : null;
+  } catch {
+    return null;
+  }
+}
 const initialAuthReady = new Promise<void>((resolve) => {
   resolveInitialAuth = resolve;
 });
@@ -50,7 +65,7 @@ let restoreInFlight: Promise<User | null> | null = null;
 if (supabase) {
   supabase.auth.onAuthStateChange((event, session) => {
     if (session?.user) cachedAuthUser = session.user;
-    if (event === 'SIGNED_OUT') cachedAuthUser = null;
+    if (event === 'SIGNED_OUT') cachedAuthUser = readStoredUserSnapshot();
     if (event === 'INITIAL_SESSION' && !initialAuthResolved) {
       initialAuthResolved = true;
       resolveInitialAuth();
@@ -75,36 +90,54 @@ if (supabase) {
  */
 export function restoreUserSession(): Promise<User | null> {
   if (!supabase) return Promise.resolve(null);
+  if (cachedAuthUser) return Promise.resolve(cachedAuthUser);
   if (restoreInFlight) return restoreInFlight;
 
-  const epoch = authEpoch;
   const task = (async (): Promise<User | null> => {
+    // Let Supabase finish reading its persisted session before doing our own
+    // read. Every part of the app shares this single in-flight restoration.
     if (!initialAuthResolved) {
       await Promise.race([
         initialAuthReady,
-        new Promise<void>((resolve) => window.setTimeout(resolve, 10000)),
+        new Promise<void>((resolve) => window.setTimeout(resolve, 12000)),
       ]);
     }
-    if (epoch !== authEpoch) return cachedAuthUser;
     if (cachedAuthUser) return cachedAuthUser;
-    try {
-      // Read the SDK-managed persisted session. On mobile browsers, a route
-      // transition can briefly overlap the SDK's cross-tab storage lock; retry
-      // empty/error reads before treating the member as signed out.
-      for (let attempt = 0; attempt < 3; attempt += 1) {
+
+    // A temporary 429/network error must not be mistaken for a manual logout.
+    // Retry through the SDK (never call refreshSession directly here), then
+    // retain the last locally saved identity for UI continuity if storage still
+    // contains a session. Backend/RLS requests remain fully authenticated-only.
+    for (let attempt = 0; attempt < 4; attempt += 1) {
+      try {
         const { data, error } = await supabase.auth.getSession();
-        if (epoch !== authEpoch) return cachedAuthUser;
-        if (!error && data.session?.user) {
+        if (data.session?.user) {
           cachedAuthUser = data.session.user;
           return data.session.user;
         }
-        if (attempt < 2) await new Promise<void>((resolve) => window.setTimeout(resolve, 450));
+        if (!error) {
+          const savedUser = readStoredUserSnapshot();
+          if (savedUser) {
+            cachedAuthUser = savedUser;
+            return savedUser;
+          }
+          return null;
+        }
+      } catch {
+        // Treat a failed read as unknown, not as a sign-out.
       }
-      return null;
-    } catch {
-      // A storage/network error is not proof that the member signed out.
-      return null;
+
+      const savedUser = readStoredUserSnapshot();
+      if (savedUser) {
+        cachedAuthUser = savedUser;
+        return savedUser;
+      }
+      if (attempt < 3) {
+        await new Promise<void>((resolve) => window.setTimeout(resolve, 500 * (attempt + 1)));
+      }
     }
+
+    return readStoredUserSnapshot();
   })();
 
   restoreInFlight = task;
