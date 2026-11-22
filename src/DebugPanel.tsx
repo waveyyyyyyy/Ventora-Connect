@@ -27,7 +27,7 @@ export default function DebugPanel() {
         const user = await restoreUserSession();
         if (!active || !user || !supabase) return;
         const { data, error } = await supabase.rpc('is_admin');
-        if (active && !error && data === true) setAllowed(true);
+        if (active && !error) setAllowed(Boolean(data));
       } catch { /* Debug tooling must never affect the app. */ }
     };
     void check();
