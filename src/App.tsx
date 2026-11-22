@@ -62,9 +62,9 @@ useEffect(()=>{
   setAccountType(u.user_metadata?.account_type==='investor'?'investor':u.user_metadata?.account_type==='business'?'business':p.data?.account_type==='investor'?'investor':'business');
   setAdminAllowed(Boolean(admin.data&&!admin.error));
  };
- void client.auth.getSession().then(({data})=>{if(!authEventSeen)void sync(data.session,'INITIAL_SESSION')}).catch(()=>{});
+ void restoreUserSession().then(user=>{if(!authEventSeen)void sync(user?{user}:null,'INITIAL_SESSION')}).catch(()=>{});
  const{data:{subscription}}=client.auth.onAuthStateChange((event,session)=>{authEventSeen=true;window.setTimeout(()=>void sync(session,event),0)});
- const onPageShow=()=>{void client.auth.getSession().then(({data})=>sync(data.session,'PAGESHOW'))};
+ const onPageShow=()=>{void restoreUserSession().then(user=>sync(user?{user}:null,'PAGESHOW'))};
  const onDirectoryViewer=(event:Event)=>{const next=(event as CustomEvent).detail;if(next?.id){setHeaderUser(next);setAuthChecked(true);}};
  window.addEventListener('pageshow',onPageShow);
  window.addEventListener('ventora:directory-viewer',onDirectoryViewer);
@@ -129,7 +129,7 @@ function OAuthReturn(){
   const{data:{subscription}}=supabase.auth.onAuthStateChange((event,session)=>{
    if(session?.user&&(event==='SIGNED_IN'||event==='INITIAL_SESSION'||event==='TOKEN_REFRESHED'))window.setTimeout(()=>void finish(session),0);
   });
-  void supabase.auth.getSession().then(({data})=>finish(data.session)).catch(()=>{});
+  void restoreUserSession().then(user=>finish(user?{user}:null)).catch(()=>{});
   return()=>{active=false;subscription.unsubscribe()};
  },[location.pathname,location.search,location.hash,navigate]);
  return null;
