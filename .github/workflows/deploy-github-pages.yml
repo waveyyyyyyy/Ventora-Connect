@@ -7,6 +7,7 @@ on:
       - fix/auth-session-regressions-20261123
       - fix/prevent-random-role-selector-20261123
       - fix/member-api-auth-and-page-backgrounds-20261123
+      - fix/sitewide-text-contrast-20261123
   workflow_dispatch:
 
 permissions:
