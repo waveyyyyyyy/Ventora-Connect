@@ -40,3 +40,53 @@ body{background-color:var(--vc-surface);background-image:radial-gradient(ellipse
  .directory-results{background-image:linear-gradient(145deg,#f8fbfc,#edf4f5)!important}
  .directory-load-more{flex-direction:column;gap:8px}
 }
+
+
+/* Discovery performance: fewer image-heavy cards in the first paint, then progressive reveal. */
+.directory-grid{content-visibility:auto;contain:layout style}
+.directory-card{content-visibility:auto!important;contain-intrinsic-size:1px 470px!important;contain:layout paint style}
+.directory-card-cover img,.directory-card-heading img{content-visibility:auto;object-fit:cover}
+.directory-card-cover{contain:layout paint}
+.directory-card-actions button{touch-action:manipulation}
+@media(max-width:760px){
+ .directory-grid{content-visibility:auto;contain-intrinsic-size:1px 2800px}
+ .directory-card{content-visibility:auto!important;contain-intrinsic-size:1px 440px!important}
+ .directory-card-cover img,.directory-card-heading img{max-width:100%;height:auto}
+}
+
+/* Restore the homepage typewriter on touch devices without re-enabling heavy page-wide motion. */
+@media(max-width:900px),(hover:none) and (pointer:coarse){
+ .gp-typewrite{
+  clip-path:inset(0 100% 0 0)!important;
+  border-right:3px solid #3d8292!important;
+  animation:gp-typewrite 1.55s steps(17,end) .45s forwards,gp-caret .75s step-end 3!important;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .gp-typewrite{clip-path:none!important;border-right:0!important;animation:none!important}
+}
+
+/* Full-bleed editorial layout: let the page scenery breathe beyond individual panels. */
+.directory-hero{
+ width:100%!important;max-width:none!important;margin:0!important;
+ border-radius:0!important;padding-left:max(22px,calc((100% - 1180px)/2))!important;
+ padding-right:max(22px,calc((100% - 1180px)/2))!important;
+}
+.directory-results{width:100%!important;max-width:none!important}
+.workspace-content{max-width:none!important}
+.workspace-page-title{
+ background:transparent!important;border:0!important;border-radius:0!important;
+ box-shadow:none!important;padding:22px 0 30px!important;
+}
+.workspace-panel{
+ background:transparent!important;border:0!important;box-shadow:none!important;
+ padding:0!important;
+}
+.workspace-list>article{
+ background:rgba(255,255,255,.56)!important;border-color:rgba(91,137,148,.14)!important;
+ box-shadow:none!important;
+}
+@media(max-width:760px){
+ .directory-hero{padding-left:20px!important;padding-right:20px!important}
+ .workspace-page-title{padding:14px 0 22px!important}
+}
