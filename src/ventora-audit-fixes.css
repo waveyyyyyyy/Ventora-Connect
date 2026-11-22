@@ -1569,3 +1569,16 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
  .admin-topbar-logo .brand-word{font-size:12px!important;letter-spacing:.02em!important}
  .admin-topbar-logo .brand-sub{font-size:5px!important;letter-spacing:.3em!important}
 }
+
+
+/* Give the blue three-bar E in the wordmark the same visual weight as the letters around it. */
+.brand .brand-word .brand-e{
+  font-size:1.28em!important;font-weight:800!important;line-height:.78!important;
+  transform:scaleX(1.12) scaleY(1.08)!important;transform-origin:center center!important;
+  margin:0 2px!important;vertical-align:-.015em!important;
+}
+@media(max-width:430px){
+ .workspace-topbar-logo .brand-word .brand-e,
+ .vc-member-section-logo .brand-word .brand-e,
+ .admin-topbar-logo .brand-word .brand-e{font-size:1.3em!important}
+}
