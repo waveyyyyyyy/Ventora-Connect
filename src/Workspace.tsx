@@ -1,6 +1,6 @@
 
 import {useEffect,useMemo,useRef,useState} from 'react';
-import {Link,Navigate,useNavigate,useLocation} from 'react-router-dom';
+import {Link,useNavigate,useLocation} from 'react-router-dom';
 import {supabase,restoreUserSession,signOutUser,checkMessagingProfile} from './lib/supabase';
 import WorkspaceNavigation from './WorkspaceNavigation';
 import {ArrowUpRight,Building2,ChartNoAxesCombined,Compass,LayoutDashboard,UserRound,Bell,Settings,LogOut,Save,ShieldCheck,Eye,CheckCircle2,Sparkles,FileCheck,Upload,Search,MessageCircle,Target,BellRing,Bookmark,LifeBuoy,Trash2} from 'lucide-react';
