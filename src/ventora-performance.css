@@ -958,3 +958,15 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
  .messages-page .messages-chat-head .message-profile-toggle{margin-right:0!important}
  .messages-page>.workspace-menu-toggle,.messages-page>.section-menu-trigger{top:8px!important;right:8px!important;left:auto!important;width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important}
 }
+
+
+/* Registration role step and clearer optional profile links. */
+.auth-role-step{display:flex;flex-direction:column;gap:5px;margin:18px 0 10px;padding:13px 14px;border:1px solid rgba(36,88,99,.15);border-radius:13px;background:linear-gradient(120deg,#f2f7f6,#fff)}
+.auth-role-step>span{font-size:8px;font-weight:850;letter-spacing:.16em;color:#245863}
+.auth-role-step>b{font-size:13px;color:#132a3a}
+.auth-role-step>small{font-size:10px;line-height:1.5;color:#718187}
+.workspace-form-grid label small{font-size:9px;font-weight:650;color:#718187;margin-left:5px}
+.messages-error{display:flex;align-items:center;gap:13px;line-height:1.55}
+.messages-error>span{min-width:0}
+.messages-error>a{flex:0 0 auto;padding:8px 11px;border-radius:9px;background:#245863;color:#fff;font-weight:800;text-decoration:none}
+@media(max-width:700px){.messages-error{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));max-width:none;transform:none;justify-content:space-between;gap:8px;font-size:10px}.messages-error>a{padding:8px 10px}}
