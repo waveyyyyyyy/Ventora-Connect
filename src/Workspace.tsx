@@ -25,24 +25,16 @@ useEffect(()=>{
  const oauthReturnPending=new URLSearchParams(window.location.search).get('oauth_return')==='1';
  const oauthFallback=oauthReturnPending?window.setTimeout(()=>{if(live&&!activeUserId.current&&!sessionResolved)setLoading(false)},15000):null;
  const readLocalSessionUser=async(expectedUserId?:string)=>{
-  // getSession reads the locally persisted session without requiring a
-  // successful Auth-server round trip. This prevents network/refresh hiccups
-  // from being mistaken for a signed-out account.
-  let sessionReadSuccessfully=false;
-  for(const delay of [0,500,1200,2500,4500]){
-   if(delay)await new Promise<void>(resolve=>window.setTimeout(resolve,delay));
-   if(!live)return undefined;
-   try{
-    const{data,error}=await supabase!.auth.getSession();
-    if(error)continue;
-    sessionReadSuccessfully=true;
-    const localUser=data.session?.user;
-    if(localUser?.id&&(!expectedUserId||localUser.id===expectedUserId))return localUser;
-   }catch{}
+  if(!live)return undefined;
+  try{
+   const{data,error}=await supabase!.auth.getSession();
+   if(error)return undefined;
+   const localUser=data.session?.user;
+   if(localUser?.id&&(!expectedUserId||localUser.id===expectedUserId))return localUser;
+   return null;
+  }catch{
+   return undefined;
   }
-  // null means Supabase successfully confirmed there is no matching session.
-  // undefined means every read failed; never treat a network/storage error as logout.
-  return sessionReadSuccessfully?null:undefined;
  };
  const acceptWorkspaceUser=(accepted:any)=>{
   if(!live||!accepted?.id)return;
