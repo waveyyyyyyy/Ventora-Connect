@@ -92,14 +92,15 @@ async function load(u:any){
    return;
   }
   setAuthRestoreIssue(false);
-  const needsRole=shouldOfferRoleSelection(p);
+  const needsRole=shouldOfferRoleSelection(p,u);
   if(needsRole){
    setProfile(p.data||{id:userId,full_name:u.user_metadata?.full_name||u.user_metadata?.name||'',account_type:'business',account_type_selected:false,bio:'',country:'',city:'',website:'',linkedin_url:'',avatar_url:null});
    setRoleChoiceRequired(true);
    return;
   }
   setRoleChoiceRequired(false);
-  const fallbackRole=(p.data?.account_type||'business') as 'business'|'investor';
+  const metadataRole=u.user_metadata?.account_type;
+  const fallbackRole=(p.data?.account_type||(metadataRole==='investor'||metadataRole==='business'?metadataRole:'business')) as 'business'|'investor';
   const activeProfile:Profile={...(p.data||{id:userId,full_name:u.user_metadata?.full_name||u.user_metadata?.name||'',account_type_selected:false,bio:'',country:'',city:'',website:'',linkedin_url:'',avatar_url:null}),account_type:fallbackRole};
   if(activeProfile.account_type==='investor'){
    const investorSetup=await supabase.from('investors').upsert({id:userId},{onConflict:'id'});
