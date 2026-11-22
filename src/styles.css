@@ -536,7 +536,7 @@ body{background-color:#f3f7f8;background-image:radial-gradient(ellipse at 92% 7%
 .message-row.mine .message-bubble{background:#183b70;color:#fff;border-radius:14px 14px 4px 14px}
 .message-bubble small{display:flex;align-items:center;justify-content:flex-end;gap:5px;text-align:right;font-size:8px;opacity:.7;margin-top:7px}
 .messages-compose{flex:none;display:grid;grid-template-columns:minmax(0,1fr) 42px;align-items:end;gap:5px 10px;padding:12px 14px;border-top:1px solid #edf1f6;background:#fff}
-.messages-compose textarea{width:100%;min-width:0;min-height:42px;max-height:130px;resize:vertical;border:1px solid #dfe7f1;border-radius:14px;padding:12px 14px;font:11px/1.5 inherit;outline:none;color:#243b5f}
+.messages-compose textarea{width:100%;min-width:0;min-height:42px;max-height:130px;resize:vertical;border:1px solid #dfe7f1;border-radius:14px;padding:12px 14px;font:inherit;font-size:11px;line-height:1.5;outline:none;color:#243b5f}
 .messages-compose textarea:focus{border-color:#9bb9ee;box-shadow:0 0 0 3px #eaf1ff}
 .composer-hint{grid-column:1;font-size:8px;color:#a0aabd;padding-left:4px}
 .messages-compose button{grid-column:2;grid-row:1;width:42px;height:42px;border:0;border-radius:13px;background:#173b70;color:#fff;display:grid;place-items:center;cursor:pointer}
