@@ -7,9 +7,13 @@ export function retainCachedSessionOnUnexpectedSignOut(manualSignOutPending, cac
   return !manualSignOutPending && Boolean(cachedSession?.access_token && cachedSession?.user?.id);
 }
 
-export function shouldOfferRoleSelection(profileResult) {
+export function shouldOfferRoleSelection(profileResult, user) {
   if (!profileResult || profileResult.error) return false;
-  return !profileResult.data || profileResult.data.account_type_selected !== true;
+  const metadata = user?.user_metadata ?? user ?? {};
+  // The role chooser is strictly a first-time onboarding step. A missing
+  // profile row alone is never evidence that an existing member needs setup.
+  if (profileResult.data?.account_type_selected === true) return false;
+  return metadata.account_type_pending === true && !metadata.account_type;
 }
 
 export function isAuthRefreshError(error) {
