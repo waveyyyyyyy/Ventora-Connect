@@ -12,18 +12,15 @@ const pipeline = [{name:'Northstar Robotics',stage:'New',amount:'$1.8M'},{name:'
 export default function GustPlatform(){
  const [session,setSession]=useState<any>(null); const [authChecked,setAuthChecked]=useState(false); const [menuOpen,setMenuOpen]=useState(false); const [adminAllowed,setAdminAllowed]=useState(false); const navigate=useNavigate();
  useEffect(()=>{
-  const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let revealObserver:IntersectionObserver|undefined;
   const revealTargets=Array.from(document.querySelectorAll('.gp-public-header,.gp-hero-copy,.gp-hero-art,.gp-trust,.gp-section-heading,.gp-feature,.gp-audience-copy,.gp-preview-card,.gp-steps>div,.gp-final-cta>div,.gp-footer'));
   const staggerGroups=['.gp-feature-grid','.gp-steps','.gp-trust div','.gp-audience-copy ul','.gp-discover-grid','.gp-stat-grid','.gp-dashboard-grid'];
   staggerGroups.forEach(selector=>document.querySelectorAll(selector).forEach(group=>Array.from(group.children).forEach((child:Element,index)=>{const item=child as HTMLElement;item.style.setProperty('--gp-stagger',String(Math.min(index,7)*75)+'ms');item.classList.add('gp-stagger-reveal');})));
-  if(!reduceMotion){
-   revealTargets.forEach(el=>el.classList.add('gp-scroll-reveal'));
-   if('IntersectionObserver' in window){
-    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('gp-is-revealed');observer.unobserve(entry.target);}}),{threshold:.08,rootMargin:'0px 0px -42px 0px'});
-    revealTargets.forEach(el=>observer.observe(el));
-    revealObserver=observer;
-   }else revealTargets.forEach(el=>el.classList.add('gp-is-revealed'));
+  revealTargets.forEach(el=>el.classList.add('gp-scroll-reveal'));
+  if('IntersectionObserver' in window){
+   const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('gp-is-revealed');observer.unobserve(entry.target);}}),{threshold:.08,rootMargin:'0px 0px -42px 0px'});
+   revealTargets.forEach(el=>observer.observe(el));
+   revealObserver=observer;
   }else revealTargets.forEach(el=>el.classList.add('gp-is-revealed'));
   const progress=document.createElement('div');progress.className='gp-scroll-progress';progress.setAttribute('aria-hidden','true');document.body.appendChild(progress);
   let raf=0;
