@@ -22,48 +22,44 @@ export const supabase = isSupabaseConfigured
   : null;
 
 
-// Restore a persisted member through one shared in-flight check.
-// Supabase may still be hydrating local storage when a mobile route mounts.
-// Wait for its initial auth event and retry session reads before attempting
-// a single refresh, so concurrent route mounts cannot race refresh-token rotation.
+// Keep a module-wide view of the auth client state. Supabase emits INITIAL_SESSION
+// after it hydrates local storage; this listener never performs auth/network work.
+let observedAuthUser: import('@supabase/supabase-js').User | null = null;
+if (supabase) {
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (session?.user) observedAuthUser = session.user;
+    else if (event === 'SIGNED_OUT') observedAuthUser = null;
+  });
+}
+
+// Resolve the already-persisted session without rotating refresh tokens.
+// Navigation and route mounts must never compete to refresh the same token.
 let restoreInFlight: Promise<import('@supabase/supabase-js').User | null> | null = null;
 export function restoreUserSession(): Promise<import('@supabase/supabase-js').User | null> {
   if (!supabase) return Promise.resolve(null);
   if (restoreInFlight) return restoreInFlight;
 
   restoreInFlight = (async () => {
-    let eventUser: import('@supabase/supabase-js').User | null = null;
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) eventUser = session.user;
-    });
-
     try {
-      // Let the auth client's INITIAL_SESSION hydration finish if it is in flight.
-      for (let attempt = 0; attempt < 6; attempt += 1) {
-        if (eventUser) return eventUser;
-        const { data } = await supabase.auth.getSession();
-        if (data.session?.user) return data.session.user;
-
-        // A refresh is attempted once, after several reads have allowed storage
-        // hydration to settle. Never clear persisted auth on a failed refresh.
-        if (attempt === 3) {
-          const refreshed = await supabase.auth.refreshSession();
-          if (refreshed.data.session?.user) return refreshed.data.session.user;
-        }
-
-        if (attempt < 5) {
-          await new Promise(resolve => window.setTimeout(resolve, 350));
-        }
+      const { data, error } = await supabase.auth.getSession();
+      if (!error && data.session?.user) {
+        observedAuthUser = data.session.user;
+        return data.session.user;
       }
 
-      if (eventUser) return eventUser;
-      const verified = await supabase.auth.getUser();
-      if (!verified.error && verified.data.user) return verified.data.user;
-      return null;
+      // A route can mount during a brief empty-session event while the auth
+      // client is hydrating. Prefer the user already observed by the shared
+      // client, then use getUser (the same fallback used by the workspace).
+      if (observedAuthUser) return observedAuthUser;
+
+      const { data: verified, error: verifyError } = await supabase.auth.getUser();
+      if (!verifyError && verified.user) {
+        observedAuthUser = verified.user;
+        return verified.user;
+      }
+      return observedAuthUser;
     } catch {
-      return eventUser;
-    } finally {
-      subscription.unsubscribe();
+      return observedAuthUser;
     }
   })().finally(() => {
     restoreInFlight = null;
