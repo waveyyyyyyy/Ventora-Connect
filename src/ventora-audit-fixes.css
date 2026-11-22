@@ -793,3 +793,33 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
  .directory-card,.directory-card:after,.directory-editorial-panel{transition:none!important}
  .directory-card{opacity:1!important;transform:none!important}
 }
+
+
+/* Distinct architectural photography across the discovery journey — avoid repeating one skyline image. */
+.directory-hero.directory-business-hero,
+.directory-hero.directory-investor-hero{
+ background:
+  linear-gradient(105deg,rgba(8,25,39,.94) 0%,rgba(15,34,52,.86) 48%,rgba(30,77,88,.72) 100%),
+  url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=2200&q=85") center 46%/cover no-repeat!important;
+}
+.directory-editorial-primary:before{
+ background-image:linear-gradient(90deg,rgba(8,28,42,.38),rgba(8,28,42,.88)),url("https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=80")!important;
+}
+.directory-editorial-secondary:before{
+ background-image:linear-gradient(180deg,rgba(15,34,52,.16),rgba(15,34,52,.88)),url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=80")!important;
+}
+.directory-editorial-tertiary:before{
+ background-image:linear-gradient(180deg,rgba(15,34,52,.14),rgba(15,34,52,.9)),url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1000&q=80")!important;
+}
+.directory-cover-art{
+ background:
+  linear-gradient(115deg,rgba(15,34,52,.78),rgba(30,77,88,.58)),
+  url("https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=75") center/cover!important;
+}
+.footer{
+ background:linear-gradient(110deg,rgba(8,22,35,.96),rgba(15,34,52,.9) 54%,rgba(30,77,88,.78)),
+ url("https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=2200&q=85") center 48%/cover no-repeat!important;
+}
+.footer:before{
+ background:linear-gradient(90deg,rgba(7,22,35,.35),rgba(7,22,35,.05)),url("https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=2200&q=85") center/cover!important;
+}
