@@ -3,7 +3,7 @@ import {useEffect,useMemo,useRef,useState} from 'react';
 import {Link,Navigate,useNavigate,useLocation} from 'react-router-dom';
 import {supabase,restoreUserSession,signOutUser,checkMessagingProfile} from './lib/supabase';
 import WorkspaceNavigation from './WorkspaceNavigation';
-import {ArrowUpRight,Building2,ChartNoAxesCombined,Compass,LayoutDashboard,UserRound,Bell,Settings,LogOut,Save,ShieldCheck,Eye,CheckCircle2,Sparkles,FileCheck,Upload,Search,MessageCircle,Target,BellRing,Bookmark,LifeBuoy,Trash2} from 'lucide-react';
+import {ArrowUpRight,Building2,ChartNoAxesCombined,Compass,LayoutDashboard,UserRound,Bell,Settings,LogOut,Save,ShieldCheck,Eye,Sparkles,FileCheck,Upload,Search,MessageCircle,Target,BellRing,Bookmark,LifeBuoy,Trash2} from 'lucide-react';
 
 type Profile={id:string;full_name:string;account_type:'business'|'investor';account_type_selected:boolean;bio:string|null;country:string|null;city:string|null;website:string|null;linkedin_url:string|null;avatar_url:string|null};
 type Business={id?:string;company_name:string;industry:string;description:string;website:string;country:string;city:string;founded_year:string;business_stage:string;business_model:string;funding_requirement:string;min_investment:string;max_investment:string;equity_offered:string;is_published:boolean;logo_url?:string|null;cover_image_url?:string|null;pitch_deck_path?:string|null};
