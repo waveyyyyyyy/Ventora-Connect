@@ -8,14 +8,12 @@ body{background-color:var(--vc-surface);background-image:radial-gradient(ellipse
 .directory-grid{contain:layout style}
 .workspace,.workspace-content,.workspace-main{background-color:transparent}
 @media(max-width:760px){
- .gp-scroll-reveal,.gp-stagger-reveal{opacity:1!important;transform:none!important;transition:none!important}
  .gp-feature,.gp-opportunity,.gp-preview-card,.gp-panel,.gp-stat,.gp-deal-card,.directory-card,.workspace-panel,.workspace-form{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
  .directory-card{content-visibility:auto;contain-intrinsic-size:440px}
  .workspace-topbar{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
  .workspace:after,.vc-signed-in-scenery{animation:none!important}
  .workspace:after{position:absolute!important;opacity:.12!important}
  .directory-hero:after{opacity:.13;background-size:64px 64px}
- .gp-scroll-progress{display:none!important}
 }
 @media(prefers-reduced-motion:reduce){
  html{scroll-behavior:auto!important}
@@ -52,18 +50,6 @@ body{background-color:var(--vc-surface);background-image:radial-gradient(ellipse
  .directory-grid{content-visibility:auto;contain-intrinsic-size:1px 2800px}
  .directory-card{content-visibility:auto!important;contain-intrinsic-size:1px 440px!important}
  .directory-card-cover img,.directory-card-heading img{max-width:100%;height:auto}
-}
-
-/* Restore the homepage typewriter on touch devices without re-enabling heavy page-wide motion. */
-@media(max-width:900px),(hover:none) and (pointer:coarse){
- .gp-typewrite{
-  clip-path:inset(0 100% 0 0)!important;
-  border-right:3px solid #3d8292!important;
-  animation:gp-typewrite 1.55s steps(17,end) .45s forwards,gp-caret .75s step-end 3!important;
- }
-}
-@media(prefers-reduced-motion:reduce){
- .gp-typewrite{clip-path:none!important;border-right:0!important;animation:none!important}
 }
 
 /* Full-bleed editorial layout: let the page scenery breathe beyond individual panels. */
