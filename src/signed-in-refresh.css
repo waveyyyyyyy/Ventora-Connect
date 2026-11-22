@@ -980,3 +980,98 @@ body{
     background-attachment: scroll !important;
   }
 }
+
+
+/* Signed-in performance pass: keep the visual design, remove continuous GPU-heavy work. */
+.workspace,
+.messages-page,
+.interests-page,
+.matches-page,
+.saved-page,
+.announcements-page,
+.support-page,
+.admin-page {
+  background-attachment: scroll !important;
+  -webkit-overflow-scrolling: touch;
+}
+.workspace::after,
+.vc-signed-in-scenery,
+.workspace-page-title::before,
+.workspace-page-title::after {
+  animation: none !important;
+}
+.workspace-topbar,
+.messages-page > header,
+.interests-page > header,
+.matches-page > header,
+.saved-page > header,
+.announcements-page > header,
+.support-page > header,
+.vc-section-menu-panel {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+.workspace-topbar {
+  background: rgba(255,255,255,.97) !important;
+}
+.messages-page > header,
+.interests-page > header,
+.matches-page > header,
+.saved-page > header,
+.announcements-page > header,
+.support-page > header {
+  background: rgba(255,255,255,.97) !important;
+}
+.workspace-panel,
+.workspace-form,
+.workspace-stat-grid > article,
+.business-manager-card,
+.subscription-card,
+.subscription-current,
+.workspace-list > article,
+.messages-shell,
+.messages-list,
+.messages-chat,
+.interest-list > article,
+.matches-grid > article,
+.pipeline-card,
+.announcement-list > article,
+.support-grid > form,
+.support-side,
+.support-history,
+.admin-member-card,
+.admin-business-card {
+  box-shadow: 0 7px 22px rgba(23,63,89,.055) !important;
+}
+@media (max-width: 760px) {
+  .workspace *,
+  .messages-page *,
+  .interests-page *,
+  .matches-page *,
+  .saved-page *,
+  .announcements-page *,
+  .support-page *,
+  .admin-page * {
+    scroll-behavior: auto !important;
+  }
+  .workspace-list article:hover,
+  .ventora-drawer-links a:hover,
+  .vc-section-menu-panel a:hover {
+    transform: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .workspace *,
+  .messages-page *,
+  .interests-page *,
+  .matches-page *,
+  .saved-page *,
+  .announcements-page *,
+  .support-page *,
+  .admin-page * {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
