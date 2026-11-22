@@ -408,7 +408,7 @@ h1,h2,h3{font-family:'DM Sans',sans-serif!important;letter-spacing:-.035em!impor
 
 /* Ambient page treatment: keep interior routes from feeling like blank white
    sheets while leaving the deliberately art-directed public homepage intact. */
-body{background-color:#f3f7f8;background-image:radial-gradient(ellipse at 92% 7%,rgba(112,165,143,.14),transparent 34%),radial-gradient(ellipse at 4% 78%,rgba(61,130,146,.10),transparent 38%),linear-gradient(145deg,#f9fbfc 0%,#f1f6f7 100%);background-attachment:fixed}
+body{background-color:#f3f7f8;background-image:radial-gradient(ellipse at 92% 7%,rgba(112,165,143,.14),transparent 34%),radial-gradient(ellipse at 4% 78%,rgba(61,130,146,.10),transparent 38%),linear-gradient(145deg,#f9fbfc 0%,#f1f6f7 100%);background-attachment:scroll}
 .directory-results{background:radial-gradient(ellipse at 92% 12%,rgba(112,165,143,.12),transparent 34%),linear-gradient(145deg,#f8fbfc 0%,#edf4f5 100%)}
 .directory-card{content-visibility:auto;contain-intrinsic-size:460px}
 .directory-grid{contain:layout style}
