@@ -673,3 +673,80 @@ body:before{
   .directory-business-hero .directory-search input,.directory-business-hero .directory-search select{height:48px!important}
   .directory-intro-row{align-items:flex-start!important;flex-direction:column!important}
 }
+
+
+/* Global visual atmosphere: layered scenery without adding image payloads or paint-heavy effects. */
+html,body{min-height:100%;background-color:#edf3f7!important}
+body{
+ background:
+  radial-gradient(ellipse at 8% 18%,rgba(88,151,164,.13),transparent 32%),
+  radial-gradient(ellipse at 92% 38%,rgba(117,145,207,.13),transparent 34%),
+  radial-gradient(ellipse at 48% 100%,rgba(145,190,180,.12),transparent 38%),
+  linear-gradient(145deg,#edf3f6 0%,#f7f9fb 48%,#e8f0f3 100%)!important;
+ background-attachment:fixed!important;
+}
+.directory-results,.faq-list,.simple-page,.pitch-detail-page,.gp-shell,.gp-main,.gp-content,.workspace-main,.workspace-content{
+ background:
+  radial-gradient(ellipse at 92% 8%,rgba(112,165,183,.12),transparent 32%),
+  radial-gradient(ellipse at 6% 78%,rgba(128,150,207,.09),transparent 35%),
+  linear-gradient(145deg,rgba(239,245,248,.97),rgba(248,250,252,.98) 54%,rgba(232,241,244,.97))!important;
+}
+.directory-results{max-width:none!important;padding-left:max(24px,calc((100% - 1320px)/2))!important;padding-right:max(24px,calc((100% - 1320px)/2))!important}
+.directory-card,.gp-opportunity,.gp-panel,.gp-stat,.gp-preview-card,.gp-empty,.workspace-panel,.workspace-form,.workspace-stat-grid>article{
+ background:linear-gradient(145deg,rgba(255,255,255,.97),rgba(231,241,245,.96))!important;
+}
+.directory-card{box-shadow:0 9px 26px rgba(24,56,82,.055)!important}
+.gp-audience,.gp-how,.gp-section,.gp-trust{
+ background:
+  radial-gradient(ellipse at 88% 12%,rgba(111,169,176,.15),transparent 35%),
+  linear-gradient(140deg,#edf4f5,#f7f9fa 56%,#e7f0f1)!important;
+}
+.gp-shell{background:
+ radial-gradient(ellipse at 90% 5%,rgba(119,162,196,.15),transparent 30%),
+ radial-gradient(ellipse at 4% 72%,rgba(126,174,164,.12),transparent 34%),
+ linear-gradient(145deg,#edf3f5,#f8fafb 54%,#e8f0f2)!important}
+.gp-main{background:transparent!important}
+.gp-sidebar,.gp-topbar{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.directory-hero,.gp-showcase,.gp-final-cta,.workspace-welcome{isolation:isolate}
+.directory-hero:after,.gp-showcase:before,.workspace-welcome:after{
+ pointer-events:none;
+}
+
+/* Lower paint/compositing costs on phones and tablets. Keep static scenery and layout. */
+@media(max-width:900px), (hover:none) and (pointer:coarse){
+ html{scroll-behavior:auto!important}
+ .gp-scroll-reveal,.gp-stagger-reveal{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+ .gp-public-header,.gp-hero-copy,.gp-hero-art,.gp-trust,.gp-section,.gp-audience,.gp-how,.gp-final-cta,.gp-footer,
+ .gp-feature,.gp-content,.gp-flash,.gp-float-card,.gp-art-orbit,.gp-art-center,.gp-art-logo-image,
+ .gp-hero:before,.gp-hero:after,.gp-audience:before,.gp-audience:after,.gp-final-cta:before,.gp-final-cta:after,
+ .gp-poster,.gp-typewrite,.gp-showcase-stage,.gp-scroll-progress{
+  animation:none!important;clip-path:none!important;
+ }
+ .gp-float-card,.gp-art-center,.gp-preview-card,.gp-feature,.gp-opportunity,.gp-panel,.gp-stat,.gp-deal-card,
+ .workspace-panel,.workspace-stat-grid>article,.business-manager-card,.subscription-card,.workspace-welcome,
+ .workspace-topbar,.workspace-sidebar,.admin-page>aside,.admin-page>main>header,
+ .directory-card,.pitch-bento,.workspace-toast,.workspace-menu-backdrop,.gp-public-menu-scrim,
+ [role="dialog"],.modal-backdrop,.drawer-backdrop{
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+ }
+ .gp-feature,.gp-opportunity,.gp-panel,.gp-stat,.gp-preview-card,.gp-deal-card,
+ .workspace-panel,.workspace-stat-grid>article,.business-manager-card,.subscription-card,.directory-card{
+  will-change:auto!important;box-shadow:0 7px 20px rgba(20,48,78,.055)!important;
+  transition:background-color .12s ease,border-color .12s ease!important;
+ }
+ .gp-opportunity:hover,.gp-panel:hover,.gp-stat:hover,.gp-preview-card:hover,
+ .workspace-stat-grid>article:hover,.workspace-panel:hover,.business-manager-card:hover,.subscription-card:hover{
+  transform:none!important;box-shadow:0 7px 20px rgba(20,48,78,.055)!important;
+ }
+ .workspace-panel:after,.workspace-stat-grid>article:before,.business-manager-card:after,.subscription-card:after{
+  animation:none!important;display:none!important;
+ }
+ .network-visual:before,.cta-orb{filter:none!important;opacity:.22!important}
+ .gp-scroll-progress{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .gp-scroll-reveal,.gp-stagger-reveal{opacity:1!important;transform:none!important}
+ .gp-public-header,.gp-hero-copy,.gp-hero-art,.gp-trust,.gp-section,.gp-audience,.gp-how,.gp-final-cta,.gp-footer,
+ .gp-feature,.gp-content,.gp-flash,.gp-float-card,.gp-art-orbit,.gp-art-center,.gp-art-logo-image,.gp-poster,
+ .workspace-welcome:after,.workspace-panel:after,.workspace-stat-grid>article:before{animation:none!important}
+}
