@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
-import { supabase, restoreUserSession } from './lib/supabase';
+import { supabase, restoreUserSession, setDiagnosticCapture } from './lib/supabase';
 import { Bug, Copy, X, ChevronDown, ChevronUp } from 'lucide-react';
 
 type LogItem = { time: string; kind: string; message: string; source?: string; status?: number };
@@ -46,34 +46,14 @@ export default function DebugPanel() {
       time: new Date().toISOString(), kind: 'Unhandled promise rejection',
       message: redact(event.reason instanceof Error ? event.reason.message : event.reason)
     });
-    const originalFetch = window.fetch.bind(window);
-    const wrappedFetch: typeof window.fetch = async (input, init) => {
-      const rawUrl = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url;
-      const method = (init?.method || (typeof input !== 'string' && !(input instanceof URL) ? input.method : 'GET')).toUpperCase();
-      try {
-        const response = await originalFetch(input, init);
-        if (!response.ok) add({
-          time: new Date().toISOString(), kind: 'HTTP request failed',
-          message: method + ' ' + new URL(rawUrl, window.location.href).pathname + ' returned ' + response.status,
-          source: new URL(rawUrl, window.location.href).origin,
-          status: response.status
-        });
-        return response;
-      } catch (error) {
-        add({
-          time: new Date().toISOString(), kind: 'Network request failed',
-          message: method + ' ' + (() => { try { return new URL(rawUrl, window.location.href).pathname; } catch { return '[unknown path]'; } })() + ': ' + redact(error instanceof Error ? error.message : error)
-        });
-        throw error;
-      }
-    };
+    setDiagnosticCapture((event) => add({ time: new Date().toISOString(), kind: event.kind, message: redact(event.message), source: event.source, status: event.status }));
     window.addEventListener('error', onError);
     window.addEventListener('unhandledrejection', onRejection);
     window.fetch = wrappedFetch;
     return () => {
       window.removeEventListener('error', onError);
       window.removeEventListener('unhandledrejection', onRejection);
-      if (window.fetch === wrappedFetch) window.fetch = originalFetch;
+      setDiagnosticCapture(null);
     };
   }, [allowed]);
 
