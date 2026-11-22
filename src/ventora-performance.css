@@ -941,3 +941,20 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
  .message-gate-missing{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){.messages-thread,.messages-compose button,.deal-context-pill>svg:last-child,.message-profile-drawer{animation:none!important;transition:none!important}}
+
+/* Full-viewport private rooms: remove the generic member-section chrome. */
+.vc-member-section.messages-page{height:100dvh!important;min-height:100dvh!important;max-height:100dvh!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;background:#f4f7f9!important}
+.messages-page>.vc-member-section-topbar{display:none!important}
+.messages-page>.vc-member-section-content{height:100dvh!important;min-height:0!important;flex:1 1 auto!important;width:100%!important;overflow:hidden!important}
+.messages-page .vc-member-section-content>main.messages-studio{width:100%!important;max-width:none!important;height:100dvh!important;min-height:0!important;max-height:100dvh!important;margin:0!important;padding:16px 20px!important;grid-template-columns:minmax(290px,350px) minmax(0,1fr)!important;gap:15px!important}
+.messages-page>.workspace-menu-toggle,.messages-page>.section-menu-trigger{top:12px!important;left:auto!important;right:14px!important;z-index:100102!important}
+.messages-page .messages-list-title{padding-right:66px!important}
+.messages-page .messages-chat-head{padding-right:66px!important}
+@media(max-width:700px){
+ .messages-page .vc-member-section-content>main.messages-studio{height:100dvh!important;min-height:0!important;max-height:100dvh!important;padding:0!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:minmax(0,1fr)!important;gap:0!important}
+ .messages-page .messages-list,.messages-page .messages-chat{height:100%!important;min-height:0!important;border-radius:0!important;border-left:0!important;border-right:0!important}
+ .messages-page .messages-list-title{padding:18px 66px 13px 17px!important}
+ .messages-page .messages-chat-head{padding:12px 62px 12px 10px!important}
+ .messages-page .messages-chat-head .message-profile-toggle{margin-right:0!important}
+ .messages-page>.workspace-menu-toggle,.messages-page>.section-menu-trigger{top:8px!important;right:8px!important;left:auto!important;width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important}
+}
