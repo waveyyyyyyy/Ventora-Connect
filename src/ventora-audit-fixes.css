@@ -1218,3 +1218,45 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 @media(prefers-reduced-motion:reduce){
  .workspace-content[class*="workspace-tab-"]:before{animation:none!important;transform:translateX(-50%)!important}
 }
+
+
+/* Messages full-screen Japanese countryside poster: page backdrop, not a cropped card image. */
+.vc-member-section.messages-page{
+ position:relative!important;isolation:isolate!important;min-height:100dvh!important;
+ background:#102f36!important;
+}
+.vc-member-section.messages-page:before{
+ content:""!important;position:fixed!important;inset:0!important;z-index:-1!important;
+ pointer-events:none!important;
+ background:
+  linear-gradient(180deg,rgba(8,31,39,.48),rgba(8,35,41,.58)),
+  url("https://images.unsplash.com/photo-1761052877503-c76a2801ed5b?auto=format&fit=crop&w=2400&q=90") center center/cover no-repeat!important;
+}
+.vc-member-section.messages-page>.vc-member-section-content{
+ position:relative!important;z-index:0!important;background:transparent!important;
+}
+.messages-page .messages-studio{
+ position:relative!important;background:transparent!important;
+}
+.messages-page .messages-list{
+ background:rgba(9,35,44,.70)!important;backdrop-filter:blur(12px);
+}
+.messages-page .messages-list:before{display:none!important}
+.messages-page .messages-chat{
+ background:rgba(226,239,233,.84)!important;backdrop-filter:blur(14px);
+}
+.messages-page .messages-stream{
+ background:linear-gradient(145deg,rgba(231,242,235,.62),rgba(220,235,228,.72))!important;
+}
+.messages-page .messages-no-selection{
+ background:rgba(10,38,50,.62)!important;backdrop-filter:blur(12px);
+}
+@media(max-width:760px){
+ .vc-member-section.messages-page{min-height:100dvh!important}
+ .vc-member-section.messages-page:before{
+  background:
+   linear-gradient(180deg,rgba(8,31,39,.42),rgba(8,35,41,.62)),
+   url("https://images.unsplash.com/photo-1761052877503-c76a2801ed5b?auto=format&fit=crop&w=1800&q=90") center center/cover no-repeat!important;
+ }
+ .messages-page .messages-studio{background:transparent!important}
+}
