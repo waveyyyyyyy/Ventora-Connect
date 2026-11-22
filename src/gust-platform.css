@@ -421,35 +421,3 @@ html{scroll-behavior:smooth;scroll-padding-top:90px}
 }
 @keyframes gp-typewriter-width{to{width:17ch}}
 
-/* The global reduced-motion rule was unintentionally disabling the public
-   homepage's typewriter, hero artwork, showcase transitions and scroll reveals.
-   Keep motion on this art-directed page while leaving workspace routes alone. */
-@media(prefers-reduced-motion:reduce){
-  .gp-public-header *,
-  .gp-hero *,
-  .gp-trust *,
-  .gp-section *,
-  .gp-audience *,
-  .gp-showcase *,
-  .gp-how *,
-  .gp-final-cta *,
-  .gp-footer *{
-    animation-duration:.9s!important;
-    animation-iteration-count:1!important;
-    transition-duration:.65s!important;
-  }
-  .gp-hero h1 .gp-typewrite{
-    width:0;
-    animation:gp-typewriter-width 2.15s steps(17,end) .55s forwards,gp-caret .75s step-end 4!important;
-    animation-duration:2.15s,.75s!important;
-    animation-iteration-count:1,4!important;
-  }
-  .gp-hero-art .gp-art-center{animation:gp-logo-breathe 4s ease-in-out infinite!important}
-  .gp-hero-art .gp-poster-one{animation:gp-poster-float 7s ease-in-out infinite!important}
-  .gp-hero-art .gp-poster-two{animation:gp-poster-float 8s ease-in-out -2s infinite!important}
-  .gp-hero-art .gp-float-card{animation:gp-float 5s ease-in-out infinite!important}
-  .gp-scroll-reveal.gp-is-revealed,.gp-stagger-reveal.gp-is-revealed{
-    opacity:1!important;
-    transform:translate3d(0,0,0) scale(1)!important;
-  }
-}
