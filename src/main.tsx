@@ -7,6 +7,7 @@ import './ventora-experience.css';
 import './gust-platform.css';
 import './ventora-loader.css';
 import './signed-in-refresh.css';
+import './ventora-performance.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
