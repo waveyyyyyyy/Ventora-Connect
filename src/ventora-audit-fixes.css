@@ -1821,3 +1821,22 @@ button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
 @media(prefers-reduced-motion:reduce){
  .workspace:has(.workspace-tab-overview)::before{transform:none!important}
 }
+
+
+/* Directory is a two-part long page; let its landscape sequence continue behind
+   both the hero and the result list rather than restarting at the section break. */
+body:has(.directory-business-hero),
+body:has(.directory-investor-hero){
+  background-color:#183a3c!important;
+  background-image:
+    linear-gradient(rgba(10,30,35,.28),rgba(10,30,35,.28)),
+    var(--vc-scene-1),var(--vc-scene-2),var(--vc-scene-3),var(--vc-scene-4),
+    var(--vc-scene-5),var(--vc-scene-6),var(--vc-scene-7),var(--vc-scene-8)!important;
+  background-size:100% 800vh,100% 100vh,100% 100vh,100% 100vh,100% 100vh,
+    100% 100vh,100% 100vh,100% 100vh,100% 100vh!important;
+  background-position:0 0,0 0,0 100vh,0 200vh,0 300vh,0 400vh,0 500vh,0 600vh,0 700vh!important;
+  background-repeat:no-repeat!important;background-attachment:scroll!important;
+}
+body:has(.directory-business-hero) .directory-business-hero,
+body:has(.directory-investor-hero) .directory-investor-hero,
+body:has(.directory-results){background:transparent!important;background-image:none!important}
