@@ -2970,3 +2970,28 @@ html,body,#root{width:100%;max-width:100%;min-width:0;overflow-x:clip;overscroll
  .workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion,
  .workspace-menu-backdrop{transition:none!important;will-change:auto!important}
 }
+
+/* Reliable full-screen menu layer: outside taps dismiss it and the page cannot scroll behind it. */
+.workspace-menu-backdrop{
+ position:fixed!important;inset:0!important;z-index:9998!important;
+ display:block!important;width:100vw!important;height:100dvh!important;
+ margin:0!important;padding:0!important;border:0!important;border-radius:0!important;
+ background:rgba(7,18,28,.52)!important;cursor:pointer!important;
+}
+.workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion{
+ position:fixed!important;top:0!important;left:0!important;bottom:0!important;
+ z-index:9999!important;height:100dvh!important;max-height:100dvh!important;
+ overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;
+}
+.workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion.is-closing{
+ visibility:visible;pointer-events:none;
+ transition:transform .30s cubic-bezier(.4,0,.2,1),opacity .24s ease,visibility 0s linear .32s!important;
+}
+.workspace-menu-backdrop.is-closing{
+ visibility:visible;pointer-events:none;
+ transition:opacity .24s ease,visibility 0s linear .32s!important;
+}
+@media(prefers-reduced-motion:reduce){
+ .workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion.is-closing,
+ .workspace-menu-backdrop.is-closing{transition:none!important}
+}
