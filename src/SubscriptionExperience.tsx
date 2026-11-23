@@ -1,5 +1,5 @@
 import {useMemo,useState} from 'react';
-import {ArrowUpRight,Check,ShieldCheck,Eye,MessageCircle,Building2,ChartNoAxesCombined,LockKeyhole,Sparkles,Headphones,Layers3} from 'lucide-react';
+import {ArrowUpRight,Check,ShieldCheck,Eye,Building2,ChartNoAxesCombined,LockKeyhole,Sparkles} from 'lucide-react';
 import './subscription-experience.css';
 
 type Lens='business'|'investor';
