@@ -3104,3 +3104,57 @@ body.vc-navigation-open #root{
     transition:opacity .12s linear,transform .12s linear,visibility 0s!important;
   }
 }
+
+
+/* Definitive menu layer override: keep the backdrop blur enabled after all legacy rules. */
+body.vc-navigation-open #root{
+  filter:blur(9px) saturate(.72)!important;
+  pointer-events:none!important;
+  user-select:none!important;
+  transition:filter .34s cubic-bezier(.2,.7,.2,1)!important;
+}
+body:not(.vc-navigation-open) #root{
+  filter:none!important;
+  transition:filter .34s cubic-bezier(.2,.7,.2,1)!important;
+}
+.workspace-menu-backdrop{
+  position:fixed!important;inset:0!important;
+  width:100vw!important;height:100vh!important;height:100dvh!important;
+  z-index:2147483000!important;display:block!important;
+  background:rgba(5,15,25,.18)!important;
+  -webkit-backdrop-filter:blur(10px) saturate(.72)!important;
+  backdrop-filter:blur(10px) saturate(.72)!important;
+  opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+  transition:opacity .34s ease,visibility 0s linear .38s!important;
+}
+.workspace-menu-backdrop.is-open{
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+  transition:opacity .34s ease,visibility 0s!important;
+}
+.workspace-menu-backdrop.is-closing{
+  opacity:0!important;visibility:visible!important;pointer-events:none!important;
+  transition:opacity .30s ease,visibility 0s linear .34s!important;
+}
+.workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion{
+  transform:translate3d(-105%,0,0)!important;
+  opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+  transition:transform .42s cubic-bezier(.22,.8,.22,1),opacity .30s ease,visibility 0s linear .44s!important;
+}
+.workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion.is-open{
+  transform:translate3d(0,0,0)!important;
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+  transition:transform .42s cubic-bezier(.22,.8,.22,1),opacity .30s ease,visibility 0s!important;
+}
+.workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion.is-closing{
+  transform:translate3d(-105%,0,0)!important;
+  opacity:0!important;visibility:visible!important;pointer-events:none!important;
+  transition:transform .38s cubic-bezier(.4,0,.2,1),opacity .28s ease,visibility 0s linear .42s!important;
+}
+@media(prefers-reduced-motion:reduce){
+  body.vc-navigation-open #root,#root{transition:filter .15s linear!important}
+  .workspace-menu-backdrop,.workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion,
+  .workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion.is-open,
+  .workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion.is-closing{
+    transition:opacity .15s linear,transform .15s linear,visibility 0s!important;
+  }
+}
