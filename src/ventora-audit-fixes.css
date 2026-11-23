@@ -4808,3 +4808,131 @@ body>.workspace-menu-toggle{
   .workspace-content .form-actions{align-items:stretch;flex-direction:column}
   .workspace-content .form-actions .btn{width:100%;min-width:0}
 }
+
+
+/* Cohesive brand, navigation, contrast and auth finishing pass */
+:root{
+ --vc-ink:#0F2234;
+ --vc-ink-2:#132A3A;
+ --vc-teal:#245863;
+ --vc-teal-deep:#1E4D58;
+ --vc-emerald:#10B981;
+}
+html,body,#root{min-width:0;max-width:100%;overflow-x:clip}
+body{color:var(--vc-ink);overscroll-behavior-y:auto}
+.brand{display:inline-flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;min-width:0;color:var(--vc-ink)!important;text-decoration:none}
+.brand .brand-mark{display:block;flex:none;width:36px;height:36px;object-fit:contain}
+.brand .brand-copy{display:flex;flex-direction:column;align-items:flex-start;min-width:0;line-height:1}
+.brand .brand-word{font:800 19px/1 Manrope,sans-serif;letter-spacing:.09em;color:inherit}
+.brand .brand-e{color:#245863!important}
+.brand .brand-sub{margin-top:5px;padding-left:1px;font-size:8px;letter-spacing:.42em;color:inherit;opacity:.78}
+.brand-light{color:#fff!important}
+.gp-public-header{position:relative;z-index:30;min-width:0}
+.gp-brand-lockup{flex:none;max-width:100%}
+.gp-brand-lockup .brand-word{font-size:19px}
+.gp-public-header .gp-brand-lockup{margin-right:auto}
+.gp-public-header nav{min-width:0}
+.gp-public-header .gp-public-actions{flex:none}
+.gp-public-menu-scrim,.workspace-menu-backdrop,.vc-section-menu-backdrop{
+ position:fixed!important;inset:0!important;z-index:1090!important;
+ background:rgba(8,24,36,.48)!important;
+ backdrop-filter:blur(9px)!important;-webkit-backdrop-filter:blur(9px)!important;
+ opacity:0;transition:opacity .28s ease!important;
+}
+.gp-public-menu-scrim{z-index:1090!important}
+.gp-public-menu-scrim[aria-hidden="true"],.workspace-menu-backdrop.is-closing,.vc-section-menu-backdrop.is-closing{pointer-events:none}
+.gp-public-menu-scrim{opacity:1}
+.workspace-menu-backdrop.is-open,.vc-section-menu-backdrop.is-open{opacity:1}
+.workspace-sidebar,.gp-public-menu{
+ z-index:1100!important;max-width:min(360px,88vw)!important;
+ box-shadow:24px 0 70px rgba(5,20,31,.28)!important;
+}
+.workspace-sidebar .vc-drawer-brand{display:flex!important;align-items:center!important;flex-direction:row!important;gap:10px!important;padding:7px 0 22px!important}
+.workspace-sidebar .vc-drawer-brand:after{display:none!important}
+.workspace-sidebar .vc-drawer-brand .brand-mark{width:34px;height:34px}
+.workspace-sidebar .vc-drawer-brand .brand-word{font-size:18px}
+.gp-public-menu{background:rgba(248,251,251,.97)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important}
+.gp-public-menu-head .gp-brand-lockup{margin-right:auto}
+.gp-public-menu button,.workspace-sidebar nav button{min-width:0;max-width:100%;overflow-wrap:anywhere}
+.gp-public-header .gp-membership-nav{color:#245863!important}
+.gp-public-header .gp-primary,.gp-public-actions .gp-primary{background:#245863!important;color:#fff!important}
+.gp-public-header .gp-primary:hover{background:#1E4D58!important}
+.gp-pill,.gp-hero-copy .gp-pill,.gp-hero .gp-pill{background:rgba(255,255,255,.88)!important;color:#245863!important;border:1px solid rgba(36,88,99,.2)!important;box-shadow:0 8px 24px rgba(15,34,52,.08)}
+.gp-hero{color:#0F2234!important}
+.gp-hero-copy h1,.gp-hero-copy h2,.gp-section-heading h2,.gp-audience-copy h2{color:#0F2234!important}
+.gp-hero-copy p,.gp-section-heading p,.gp-audience-copy p{color:#526875!important}
+.gp-feature,.gp-preview-card,.gp-opportunity,.gp-stat-card,.gp-dashboard-card{
+ color:#132A3A;
+ background:rgba(255,255,255,.82)!important;
+ border:1px solid rgba(255,255,255,.9)!important;
+ backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.gp-feature h3,.gp-preview-card h3,.gp-opportunity h3{color:#132A3A!important}
+.gp-feature p,.gp-preview-card p,.gp-opportunity p{color:#5c707b!important}
+.gp-footer{
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+ align-items:center!important;gap:24px 36px!important;
+ width:min(1240px,calc(100% - 48px))!important;margin:0 auto!important;
+ padding:34px 0 26px!important;border-top:1px solid rgba(36,88,99,.2)!important;
+ color:#132A3A!important;
+}
+.gp-footer>span{color:#5d707b!important}
+.gp-footer>div:not(.gp-brand){display:flex;flex-wrap:wrap;justify-content:flex-end;gap:12px 22px;min-width:0}
+.gp-footer a{color:#425c69!important}
+.gp-footer small{grid-column:1/-1;padding-top:15px;border-top:1px solid rgba(36,88,99,.12);color:#72838c!important}
+.footer{background:#132A3A!important;color:#f5f8f8!important}
+.footer .brand-light{color:#fff!important}
+.footer-links a,.footer-links b,.footer-bottom{color:#d7e3e5!important}
+.footer-links a:hover{color:#fff!important}
+.auth-page{min-width:0;overflow-x:clip;background:#f3f7f7!important}
+.auth-aside{background:linear-gradient(145deg,#0F2234,#1E4D58)!important;color:#fff!important}
+.auth-aside h1,.auth-aside h1 em,.auth-aside p{color:#fff!important}
+.auth-main{min-width:0}
+.auth-box{width:min(100%,520px)!important;min-width:0!important}
+.auth-box h2{max-width:100%;font-size:clamp(27px,4vw,40px)!important;line-height:1.12!important;letter-spacing:-.045em!important;overflow-wrap:normal!important;word-break:normal!important;color:#0F2234!important}
+.auth-box>p{color:#5b707b!important;line-height:1.7}
+.auth-box label{color:#244455!important}
+.auth-box input:not([type="checkbox"]){min-width:0;width:100%;max-width:100%;border-color:#cbd9dc!important;background:rgba(255,255,255,.92)!important;color:#132A3A!important}
+.auth-box input:focus{outline:2px solid rgba(36,88,99,.22)!important;border-color:#245863!important}
+.auth-submit{background:#245863!important;color:#fff!important}
+.google-btn{border-color:#cbd9dc!important;color:#1c3b4d!important;background:#fff!important}
+.vc-notice-dialog{background:rgba(250,252,252,.98)!important;color:#132A3A!important;border:1px solid rgba(255,255,255,.95)!important;box-shadow:0 28px 90px rgba(8,24,36,.24)!important}
+.vc-notice-dialog-headline{background:linear-gradient(145deg,#0F2234,#245863)!important;color:#fff!important}
+.vc-notice-dialog-headline h2,.vc-notice-dialog-headline .vc-notice-overline{color:#fff!important}
+.vc-notice-brand{display:inline-flex!important;margin:0 0 18px!important;align-self:flex-start}
+.vc-notice-brand .brand-word{font-size:16px!important}
+.vc-notice-brand .brand-mark{width:30px!important;height:30px!important}
+.vc-notice-dialog>p{color:#435b68!important;line-height:1.7!important}
+.vc-notice-dismiss{background:#245863!important;color:#fff!important}
+.vc-membership-plan li>svg{flex:none;color:#10B981!important}
+.vc-membership-plan li>.vc-feature-not-included{flex:none;color:#829198!important;font-size:18px;font-weight:700;line-height:1}
+.vc-membership-table-row>span.not-included{color:#87949a!important}
+.vc-membership-table-row>span.not-included .vc-feature-not-included{color:#9aa5aa!important}
+.vc-membership-table-row>span.included{color:#245863!important}
+.vc-membership-table-row>span.included svg{color:#10B981!important}
+@media(max-width:760px){
+ .gp-public-header{padding-inline:15px!important;gap:12px!important}
+ .gp-public-header .gp-brand-lockup .brand-word{font-size:16px}
+ .gp-public-header .gp-brand-lockup .brand-mark{width:31px;height:31px}
+ .gp-public-header nav{display:none!important}
+ .gp-public-header .gp-public-actions{gap:8px!important}
+ .gp-public-header .gp-primary{padding:10px 12px!important;font-size:11px!important}
+ .gp-footer{grid-template-columns:minmax(0,1fr)!important;width:calc(100% - 32px)!important;gap:14px!important}
+ .gp-footer>div:not(.gp-brand){justify-content:flex-start!important}
+ .gp-footer small{grid-column:1}
+ .auth-page{display:flex;flex-direction:column}
+ .auth-aside{min-height:190px!important;padding:24px!important}
+ .auth-aside>div:last-child{margin-top:20px}
+ .auth-aside h1{font-size:clamp(30px,8vw,42px)!important;line-height:1.04!important}
+ .auth-main{padding:25px 16px 40px!important}
+ .auth-box{padding:26px 20px!important}
+}
+@media(max-width:360px){
+ .gp-public-header .gp-public-actions .gp-primary{padding:9px 9px!important}
+ .gp-public-header .gp-login{font-size:11px!important}
+ .brand .brand-word{font-size:16px}
+ .brand .brand-mark{width:30px;height:30px}
+}
+@media(prefers-reduced-motion:reduce){
+ .workspace-menu-backdrop,.vc-section-menu-backdrop,.gp-public-menu-scrim{transition:none!important}
+}
