@@ -2895,3 +2895,78 @@ html,body,#root{width:100%;max-width:100%;min-width:0;overflow-x:clip;overscroll
  .vc-overview-studio .vc-next-list button b{font-size:13px}
  .vc-overview-studio .vc-next-list button small{font-size:10.5px}
 }
+
+
+/* Activity strip: make every metric legible against the dark scenic Overview backdrop. */
+.vc-overview-studio .vc-overview-pulse{
+  position:relative;isolation:isolate;
+  border:1px solid rgba(255,255,255,.92)!important;border-radius:16px;
+  background:rgba(250,253,252,.97)!important;
+  box-shadow:0 14px 34px rgba(7,24,37,.18);
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  overflow:hidden
+}
+.vc-overview-studio .vc-pulse-item{color:#102b3a!important;background:transparent!important;padding:19px clamp(13px,2.6vw,27px)}
+.vc-overview-studio .vc-pulse-item+.vc-pulse-item{border-left:1px solid rgba(16,43,58,.13)!important}
+.vc-overview-studio .vc-pulse-label{color:#24594f!important;font-size:10px;font-weight:900;letter-spacing:.11em;line-height:1.45}
+.vc-overview-studio .vc-pulse-label i{flex:0 0 7px;width:7px;height:7px;box-shadow:0 0 0 4px rgba(16,185,129,.13)}
+.vc-overview-studio .vc-pulse-item strong{color:#102b3a!important;font-size:clamp(27px,3.4vw,37px);font-weight:800;line-height:1.15}
+.vc-overview-studio .vc-pulse-plan strong{font-size:clamp(19px,2.5vw,27px)}
+.vc-overview-studio .vc-pulse-item small{color:#405866!important;font-size:11px;font-weight:600;line-height:1.5}
+.vc-overview-studio .vc-pulse-item:hover{background:#edf5f1!important}
+@media(max-width:760px){
+ .vc-overview-studio .vc-overview-pulse{grid-template-columns:repeat(3,minmax(0,1fr));margin:14px 0 22px;border-radius:13px}
+ .vc-overview-studio .vc-pulse-item{padding:14px 9px}
+ .vc-overview-studio .vc-pulse-label{font-size:clamp(6.5px,1.8vw,8px);letter-spacing:.035em;gap:5px}
+ .vc-overview-studio .vc-pulse-item strong{font-size:clamp(21px,5.8vw,29px)}
+ .vc-overview-studio .vc-pulse-plan strong{font-size:clamp(15px,4vw,21px)}
+ .vc-overview-studio .vc-pulse-item small{font-size:9px;line-height:1.4}
+}
+@media(max-width:380px){
+ .vc-overview-studio .vc-pulse-item{padding:12px 6px}
+ .vc-overview-studio .vc-pulse-label{font-size:6px;letter-spacing:0}
+ .vc-overview-studio .vc-pulse-item small{font-size:8px}
+}
+
+/* Overview scroll performance: keep the scenic image static instead of repainting it on every scroll. */
+.vc-overview-studio:before{transform:none!important;will-change:auto!important}
+.vc-overview-studio:after{opacity:.09!important;mix-blend-mode:normal!important}
+.vc-overview-studio>.vc-overview-spotlight,
+.vc-overview-studio>.vc-overview-next,
+.vc-overview-studio>.vc-overview-account,
+.vc-overview-studio>.vc-overview-membership,
+.vc-overview-studio>.vc-profile-progress-band{contain:layout paint}
+@media(max-width:760px){
+ .vc-overview-studio:after{display:none!important}
+ .vc-overview-studio:before{background-position:center center;background-size:cover}
+ .vc-overview-studio .vc-overview-pulse,
+ .vc-overview-studio .vc-profile-progress-band,
+ .vc-overview-studio .vc-overview-account,
+ .vc-overview-studio .vc-overview-membership{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+}
+
+/* Three-line navigation drawer: GPU-friendly slide + fade in both directions. */
+.workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion{
+  transform:translate3d(-105%,0,0)!important;opacity:0;
+  visibility:hidden;pointer-events:none;
+  transition:transform .24s cubic-bezier(.22,.75,.25,1),opacity .2s ease,visibility 0s linear .26s!important;
+  will-change:transform,opacity
+}
+.workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion.is-open{
+  transform:translate3d(0,0,0)!important;opacity:1;visibility:visible;pointer-events:auto;
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .22s ease,visibility 0s!important
+}
+.workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion.is-closing{
+  transform:translate3d(-105%,0,0)!important;opacity:0;visibility:hidden;pointer-events:none
+}
+.workspace-menu-backdrop{
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .2s ease,visibility 0s linear .22s!important;
+  backdrop-filter:none!important
+}
+.workspace-menu-backdrop.is-open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .2s ease,visibility 0s!important}
+.workspace-menu-backdrop.is-closing{opacity:0;visibility:hidden;pointer-events:none}
+@media(prefers-reduced-motion:reduce){
+ .workspace-sidebar.ventora-directory-sidebar.workspace-sidebar-motion,
+ .workspace-menu-backdrop{transition:none!important;will-change:auto!important}
+}
