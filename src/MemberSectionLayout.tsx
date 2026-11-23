@@ -1,15 +1,21 @@
 import type {ReactNode} from 'react';
 import {Link} from 'react-router-dom';
+import {Bell,UserRound} from 'lucide-react';
 import WorkspaceNavigation from './WorkspaceNavigation';
 import BrandLogo from './BrandLogo';
 
 type Props={children:ReactNode;className?:string;actionTo?:string;actionLabel?:string;user?:any};
-export default function MemberSectionLayout({children,className='',actionTo='/dashboard',actionLabel='Workspace',user}:Props){
+export default function MemberSectionLayout({children,className='',user}:Props){
+ const initials=String(user?.user_metadata?.full_name||user?.user_metadata?.name||'').trim().split(/\\s+/).filter(Boolean).map((part:string)=>part[0]).join('').slice(0,2).toUpperCase()||'V';
  return <div className={'vc-member-section '+className}>
-  <WorkspaceNavigation user={user}/>
-  <header className="vc-member-section-topbar">
-   <BrandLogo to="/dashboard?tab=overview" className="vc-member-section-logo"/>
-   <Link to={actionTo} className="vc-member-section-home">{actionLabel}</Link>
+  <header className="workspace-topbar vc-unified-member-topbar">
+   <WorkspaceNavigation user={user}/>
+   <BrandLogo to="/dashboard?tab=overview" className="workspace-topbar-logo"/>
+   <div className="vc-member-topbar-spacer" aria-hidden="true"/>
+   <div className="topbar-actions">
+    <Link to="/dashboard?tab=notifications" aria-label="Notifications" title="Notifications"><Bell size={18}/></Link>
+    <Link to="/dashboard?tab=profile" className="topbar-avatar vc-member-topbar-avatar" aria-label="Personal profile" title="Personal profile"><span>{initials}</span><UserRound size={13}/></Link>
+   </div>
   </header>
   <div className="vc-member-section-content">{children}</div>
  </div>;
