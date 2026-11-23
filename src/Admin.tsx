@@ -19,7 +19,7 @@ export default function Admin(){
  const[roleFilter,setRoleFilter]=useState('all'),[memberStatus,setMemberStatus]=useState('all'),[verificationFilter,setVerificationFilter]=useState('all'),[businessFilter,setBusinessFilter]=useState('all'),[reportFilter,setReportFilter]=useState('all'),[ticketFilter,setTicketFilter]=useState('all');
  const[drafts,setDrafts]=useState<Record<string,string>>({}),[announcement,setAnnouncement]=useState({id:'',title:'',body:'',published:true});
  const [memberPage,setMemberPage]=useState(1);
- const notify=(text:string)=>{setNotice(text);window.setTimeout(()=>setNotice(current=>current===text?'':current,5200));};
+ const notify=(text:string)=>{setNotice(text);window.setTimeout(()=>setNotice(current=>current===text?'':current),5200);};
 
  const refresh=useCallback(async(initial=false)=>{
   if(!supabase){setError('Supabase is not configured in this build.');return;}
