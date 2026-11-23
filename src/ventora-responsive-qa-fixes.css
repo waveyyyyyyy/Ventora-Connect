@@ -59,6 +59,6 @@ body.section-navigation-open .workspace-sidebar.workspace-sidebar-open { width: 
 /* The old fixed toast transform survived the switch to in-flow positioning. */
 .vc-member-section.messages-page .messages-error { transform: none !important; }
 
-/* Mobile auth: reserve a clear row for the absolute back control.
-   The old 26px top padding put WELCOME BACK under the 30px back button. */
-@media (max-width: 430px) { .auth-box { padding-top: 46px !important; } }
+/* Reserve a clear row for the absolute auth back control at every breakpoint.
+   The legacy padding varied from 26px to 42px, letting the label touch it. */
+.auth-box { padding-top: 52px !important; }
