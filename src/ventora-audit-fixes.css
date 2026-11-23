@@ -4288,3 +4288,34 @@ body>.workspace-menu-toggle{
 @media(max-width:380px){
   .gp-hero-copy h1{font-size:clamp(40px,11.8vw,46px)!important}
 }
+
+
+/* Oversized mobile hero typography: let the headline wrap naturally instead of shrinking to fit. */
+@media(max-width:720px){
+  .gp-hero-copy h1{
+    font-size:clamp(54px,15vw,70px)!important;
+    line-height:.98!important;
+    font-weight:900!important;
+    letter-spacing:-.072em!important;
+    margin:28px 0 24px!important;
+    max-width:100%!important;
+  }
+  .gp-hero-copy h1>.gp-hero-static,
+  .gp-hero-copy h1>.gp-typewrite{
+    display:block!important;
+    width:auto!important;
+    max-width:100%!important;
+    white-space:normal!important;
+    overflow-wrap:normal!important;
+    font-size:1em!important;
+    font-weight:900!important;
+    letter-spacing:inherit!important;
+    line-height:inherit!important;
+  }
+  .gp-hero-copy h1>.gp-typewrite{
+    min-height:1em!important;
+  }
+}
+@media(max-width:380px){
+  .gp-hero-copy h1{font-size:clamp(48px,14vw,56px)!important}
+}
