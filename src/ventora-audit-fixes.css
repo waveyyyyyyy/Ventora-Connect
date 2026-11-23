@@ -3442,3 +3442,87 @@ body.vc-section-navigation-open #root{
 .directory-editorial-panel>strong{color:#fff!important}
 .directory-editorial-panel>strong em{color:#d4f0e5!important}
 .directory-editorial-panel>small{color:#f0f7f5!important;font-size:8px!important}
+
+
+/* FINAL SHARED HEADER ALIGNMENT — one stable logo anchor across workspace sections. */
+.workspace-topbar,
+.vc-member-section>.vc-member-section-topbar,
+.admin-page>main>header{
+  display:flex!important;align-items:center!important;flex-wrap:nowrap!important;
+  min-width:0!important;width:100%!important;max-width:100%!important;
+  box-sizing:border-box!important;overflow:visible!important;
+}
+.workspace-topbar{
+  height:68px!important;min-height:68px!important;padding:0 20px!important;
+  gap:12px!important;justify-content:flex-start!important;
+}
+.workspace-topbar>.workspace-menu-toggle{
+  position:relative!important;inset:auto!important;transform:none!important;
+  display:grid!important;place-items:center!important;
+  width:40px!important;height:40px!important;flex:0 0 40px!important;
+  margin:0!important;z-index:2!important;
+}
+.workspace-topbar>.workspace-topbar-logo{
+  position:relative!important;left:auto!important;top:auto!important;
+  flex:0 0 auto!important;min-width:max-content!important;max-width:none!important;
+  margin:0!important;opacity:1!important;visibility:visible!important;
+}
+.workspace-topbar>.workspace-command{flex:1 1 160px!important;min-width:0!important;max-width:100%!important}
+.workspace-topbar>.topbar-actions{flex:0 0 auto!important;min-width:max-content!important;margin-left:auto!important}
+.vc-member-section>.vc-member-section-topbar{
+  position:relative!important;height:68px!important;min-height:68px!important;
+  padding:0 22px 0 72px!important;gap:12px!important;
+}
+.vc-member-section-topbar>.vc-member-section-logo{
+  position:relative!important;left:auto!important;top:auto!important;
+  flex:0 0 auto!important;min-width:max-content!important;max-width:none!important;
+  margin:0 auto 0 0!important;opacity:1!important;visibility:visible!important;
+}
+.vc-member-section-topbar>.vc-member-section-home{flex:0 0 auto!important;margin-left:auto!important}
+.vc-member-section .workspace-menu-toggle{
+  position:fixed!important;left:20px!important;top:14px!important;right:auto!important;
+  width:40px!important;height:40px!important;z-index:70!important;
+}
+.admin-page>main>header{height:68px!important;min-height:68px!important;padding:0 20px!important;gap:12px!important}
+.brand{opacity:1!important;visibility:visible!important;flex-shrink:0!important}
+.brand .brand-copy,.brand .brand-word,.brand .brand-sub{opacity:1!important;visibility:visible!important}
+@media(max-width:760px){
+ .workspace-topbar{height:62px!important;min-height:62px!important;padding:0 12px!important;gap:10px!important}
+ .workspace-topbar>.workspace-menu-toggle{width:38px!important;height:38px!important;flex-basis:38px!important}
+ .workspace-topbar>.workspace-topbar-logo{gap:7px!important}
+ .workspace-topbar-logo .brand-mark{width:32px!important;height:32px!important;flex-basis:32px!important}
+ .workspace-topbar-logo .brand-word{font-size:14px!important;letter-spacing:.035em!important}
+ .workspace-topbar-logo .brand-sub{font-size:5px!important;letter-spacing:.34em!important}
+ .vc-member-section>.vc-member-section-topbar{height:62px!important;min-height:62px!important;padding:0 12px 0 60px!important;gap:8px!important}
+ .vc-member-section .workspace-menu-toggle{left:12px!important;top:11px!important;width:38px!important;height:38px!important}
+ .vc-member-section-logo{gap:7px!important}
+ .vc-member-section-logo .brand-mark{width:32px!important;height:32px!important;flex-basis:32px!important}
+ .vc-member-section-logo .brand-word{font-size:14px!important;letter-spacing:.035em!important}
+ .vc-member-section-logo .brand-sub{font-size:5px!important;letter-spacing:.34em!important}
+ .vc-member-section-topbar>.vc-member-section-home{font-size:9px!important;padding:8px 9px!important}
+ .admin-page>main>header{height:62px!important;min-height:62px!important;padding:0 12px!important;gap:8px!important}
+}
+@media(max-width:430px){
+ .workspace-topbar{gap:8px!important;padding-inline:10px!important}
+ .workspace-topbar>.workspace-menu-toggle{width:36px!important;height:36px!important;flex-basis:36px!important}
+ .workspace-topbar>.workspace-topbar-logo{gap:6px!important}
+ .workspace-topbar-logo .brand-mark,.vc-member-section-logo .brand-mark{width:30px!important;height:30px!important;flex-basis:30px!important}
+ .workspace-topbar-logo .brand-word,.vc-member-section-logo .brand-word{font-size:13px!important;letter-spacing:.025em!important}
+ .workspace-topbar-logo .brand-sub,.vc-member-section-logo .brand-sub{font-size:5px!important;letter-spacing:.3em!important}
+ .workspace-topbar .topbar-actions{gap:5px!important}
+ .workspace-topbar .topbar-actions>button{width:34px!important;height:34px!important;flex:0 0 34px!important}
+ .workspace-topbar .topbar-avatar{width:32px!important;height:32px!important;flex:0 0 32px!important}
+ .vc-member-section>.vc-member-section-topbar{padding-left:56px!important;padding-right:9px!important;gap:6px!important}
+ .vc-member-section .workspace-menu-toggle{left:9px!important;width:36px!important;height:36px!important}
+ .vc-member-section-topbar>.vc-member-section-home{font-size:8px!important;padding:7px 8px!important}
+}
+@media(max-width:360px){
+ .workspace-topbar{padding-inline:8px!important;gap:6px!important}
+ .workspace-topbar-logo .brand-word,.vc-member-section-logo .brand-word{font-size:12px!important}
+ .workspace-topbar .topbar-actions>button{width:31px!important;height:31px!important;flex-basis:31px!important}
+ .workspace-topbar .topbar-avatar{width:30px!important;height:30px!important;flex-basis:30px!important}
+ .vc-member-section>.vc-member-section-topbar{padding-left:52px!important}
+ .vc-member-section-topbar>.vc-member-section-home{font-size:7px!important;padding:6px!important}
+}
+/* Password reset control feedback and disabled state. */
+.auth-extras .text-link:disabled{opacity:.58!important;cursor:not-allowed!important;pointer-events:none!important}
