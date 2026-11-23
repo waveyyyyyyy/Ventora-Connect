@@ -2300,3 +2300,17 @@ body:has(.directory-investor-hero) .directory-results{
     padding:11px 12px!important;
   }
 }
+
+
+/* Make the highlighted word in the Overview preview headline readable. */
+.workspace-tab-overview .vc-screen-body h3 em{
+  display:inline-block!important;
+  padding:0 .12em!important;
+  border-radius:5px!important;
+  background:rgba(248,252,250,.94)!important;
+  color:#164650!important;
+  font-style:italic!important;
+  font-weight:800!important;
+  text-shadow:none!important;
+  opacity:1!important;
+}
