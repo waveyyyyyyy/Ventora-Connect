@@ -20,24 +20,13 @@
 }
 
 @media (max-width: 760px) {
-  .gp-public-header {
-    gap: 6px !important;
-  }
-
-  .gp-public-actions {
-    gap: 6px !important;
-  }
+  .gp-public-header { gap: 6px !important; }
+  .gp-public-actions { gap: 6px !important; }
 }
 
 @media (max-width: 360px) {
-  .gp-public-actions .gp-login {
-    display: none !important;
-  }
-
-  .gp-public-actions .gp-primary svg {
-    display: none !important;
-  }
-
+  .gp-public-actions .gp-login { display: none !important; }
+  .gp-public-actions .gp-primary svg { display: none !important; }
   .gp-public-actions .gp-primary {
     width: auto !important;
     min-width: 0 !important;
@@ -53,14 +42,12 @@
     min-width: max-content !important;
     gap: 8px !important;
   }
-
   .header .login-link {
     flex: 0 0 44px !important;
     width: 44px !important;
     min-width: 44px !important;
     white-space: nowrap !important;
   }
-
   .header .nav-cta {
     flex: 0 0 96px !important;
     width: 96px !important;
@@ -71,16 +58,12 @@
 }
 
 @media (max-width: 360px) {
-  .header .topbar-actions {
-    gap: 7px !important;
-  }
-
+  .header .topbar-actions { gap: 7px !important; }
   .header .login-link {
     flex-basis: 43px !important;
     width: 43px !important;
     min-width: 43px !important;
   }
-
   .header .nav-cta {
     flex-basis: 92px !important;
     width: 92px !important;
@@ -96,7 +79,6 @@
   contain: none !important;
   contain-intrinsic-size: none !important;
 }
-
 .directory-card {
   content-visibility: visible !important;
   contain: none !important;
@@ -121,14 +103,10 @@
 }
 
 /* Separate the floating profile card from the poster headline. */
-.gp-float-card.investor-card {
-  bottom: 10px !important;
-}
+.gp-float-card.investor-card { bottom: 10px !important; }
 
 @media (max-width: 860px) {
-  .gp-art-center > span {
-    visibility: hidden !important;
-  }
+  .gp-art-center > span { visibility: hidden !important; }
 }
 
 /* Keep the workspace drawer compact on desktop and proportional on phones.
@@ -138,20 +116,52 @@ body.section-navigation-open .workspace-sidebar.workspace-sidebar-open {
   max-width: min(340px, 88vw) !important;
 }
 
-/* The empty-state card lives inside .messages-thread-list, so its flex sizing
-   must be applied at that actual parent. Otherwise its CTA grows underneath
-   the fixed-height PRIVATE NETWORK footer on short mobile screens. */
+/* Make the empty state flex within its actual parent, not under the footer. */
 .vc-member-section.messages-page .messages-thread-list:has(> .messages-empty) {
   display: flex !important;
   flex-direction: column !important;
   min-height: 0 !important;
 }
-
 .vc-member-section.messages-page .messages-thread-list > .messages-empty {
   flex: 1 1 0 !important;
   min-height: 0 !important;
   box-sizing: border-box !important;
-  padding: 16px 14px !important;
+  padding: 10px 14px !important;
+}
+
+/* Keep the empty-state illustration compact and the CTA arrow at icon size.
+   A broad SVG rule had enlarged the inline arrow to 38px, making the CTA
+   two lines tall and causing it to overlap the PRIVATE NETWORK footer. */
+.vc-member-section.messages-page .messages-empty-art {
+  height: 26px !important;
+  flex: 0 0 26px !important;
+  margin: 0 0 4px !important;
+}
+.vc-member-section.messages-page .messages-empty-art svg {
+  width: 26px !important;
+  height: 26px !important;
+  margin: 0 !important;
+}
+.vc-member-section.messages-page .messages-empty-art span {
+  display: none !important;
+}
+.vc-member-section.messages-page .messages-empty p {
+  font-size: 10px !important;
+  line-height: 1.45 !important;
+  margin: 4px 0 !important;
+}
+.vc-member-section.messages-page .messages-empty a {
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
+  margin-top: 6px !important;
+  padding: 7px 12px !important;
+  line-height: 1.2 !important;
+}
+.vc-member-section.messages-page .messages-empty a svg {
+  width: 14px !important;
+  height: 14px !important;
+  margin: 0 !important;
+  flex: 0 0 14px !important;
 }
 
 /* The old fixed toast transform survived the switch to in-flow positioning,
