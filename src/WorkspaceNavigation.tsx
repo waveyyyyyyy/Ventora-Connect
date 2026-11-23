@@ -18,6 +18,7 @@ export default function WorkspaceNavigation(props:Props={}){
  const[localOpen,setLocalOpen]=useState(false),[drawerMounted,setDrawerMounted]=useState(false),[drawerActive,setDrawerActive]=useState(false),closeTimer=useRef<number|undefined>(undefined),[member,setMember]=useState<any>(props.user||null),[memberProfile,setMemberProfile]=useState<Profile|null>(props.profile||null),[memberPlan,setMemberPlan]=useState<any>(null),[isAdmin,setIsAdmin]=useState(Boolean(props.adminAllowed)),[signOutError,setSignOutError]=useState('');
  const open=props.open??localOpen;
  const setOpen=(value:boolean)=>{window.clearTimeout(closeTimer.current);if(value)setDrawerMounted(true);props.onOpenChange?props.onOpenChange(value):setLocalOpen(value)};
+ useEffect(()=>{window.clearTimeout(closeTimer.current);if(open){setDrawerMounted(true);setDrawerActive(false);const frame=window.requestAnimationFrame(()=>setDrawerActive(true));return()=>window.cancelAnimationFrame(frame);}setDrawerActive(false);if(drawerMounted){closeTimer.current=window.setTimeout(()=>setDrawerMounted(false),330);}return()=>window.clearTimeout(closeTimer.current)},[open]);
  useEffect(()=>{
   if(!drawerMounted)return;
   const body=document.body,html=document.documentElement,root=document.getElementById('root');
