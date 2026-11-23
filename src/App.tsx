@@ -1,4 +1,4 @@
-import {lazy,Suspense,useEffect,useLayoutEffect,useRef,useState} from 'react';
+import {lazy,Suspense,useEffect,useLayoutEffect,useRef,useState,useContext} from 'react';
 import {createPortal} from 'react-dom';import {Link,Route,Routes,useNavigate,useParams,useLocation,Navigate} from 'react-router-dom';import {ArrowUpRight,Building2,ChartNoAxesCombined,ShieldCheck,Menu,X,LockKeyhole,Sparkles,Compass,Users,Bell,Bookmark,CalendarDays,FileText,MessageCircle} from 'lucide-react';import {supabase,restoreUserSession,checkMessagingProfile,signOutUser} from './lib/supabase';
 import { VentoraLoadingContext, type VentoraLoadingSetter } from './VentoraLoadingContext';
 import VentoraLoader from './VentoraLoader';
@@ -35,7 +35,7 @@ async function readViewerSession(){
 
 function Header({directoryUser}:{directoryUser?:any}={}){
 const[open,setOpen]=useState(false),[menuVisible,setMenuVisible]=useState(false),menuTimer=useRef<number|undefined>(undefined),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business'),[authChecked,setAuthChecked]=useState(false);
-const location=useLocation(),nav=useNavigate(),listingPage=location.pathname==='/investors'||location.pathname==='/businesses';
+const location=useLocation(),nav=useNavigate(),setGlobalLoading=useContext(VentoraLoadingContext),listingPage=location.pathname==='/investors'||location.pathname==='/businesses';
 useEffect(()=>{
  const client=supabase;if(!client)return;
  let active=true,revision=0,authEventSeen=false;
@@ -102,7 +102,7 @@ const toggleMenu=()=>{
  setMenuVisible(true);
  requestAnimationFrame(()=>requestAnimationFrame(()=>setOpen(true)));
 };
-const signOut=async()=>{close();try{await signOutUser();setHeaderUser(null);setAdminAllowed(false);setAccountType('business');setAuthChecked(true);nav('/')}catch(error){console.error('Ventora sign-out failed',error);}};
+const signOut=async()=>{close();setGlobalLoading(true,'convergence','SIGNING YOU OUT...','header-signout');try{await signOutUser();setHeaderUser(null);setAdminAllowed(false);setAccountType('business');setAuthChecked(true);nav('/',{replace:true});setGlobalLoading(false,'convergence',undefined,'header-signout')}catch(error){console.error('Ventora sign-out failed',error);setGlobalLoading(false,'convergence',undefined,'header-signout');}};
 const items=[{key:'overview',label:'Overview',to:'/dashboard?tab=overview',icon:<Compass/>},{key:'profile',label:'Personal profile',to:'/dashboard?tab=profile',icon:<Users/>},...(accountType==='investor'?[{key:'investor',label:'Investor preferences',to:'/dashboard?tab=investor',icon:<ChartNoAxesCombined/>}]:[{key:'business',label:'Manage businesses',to:'/dashboard?tab=business',icon:<Building2/>}]),{key:'verification',label:'Verification',to:'/dashboard?tab=verification',icon:<ShieldCheck/>},{key:'notifications',label:'Notifications',to:'/dashboard?tab=notifications',icon:<Bell/>},{key:'subscriptions',label:'Subscriptions',to:'/dashboard?tab=subscriptions',icon:<LockKeyhole/>},{key:'settings',label:'Settings',to:'/dashboard?tab=settings',icon:<LockKeyhole/>}];
 const go=(to:string)=>{close();nav(to)};
 return <><header className="header"><div className="nav-wrap">{listingPage?<WorkspaceNavigation user={directoryUser||headerUser||undefined}/>:<button className="menu-btn" onClick={toggleMenu} aria-label={open?"Close workspace navigation":"Open workspace navigation"} aria-expanded={open}>{open?<X size={22}/>:<Menu size={22}/>}</button>}<BrandLogo/><div className="nav-actions">{!listingPage&&(headerUser?<Link className="btn btn-dark nav-cta" to="/dashboard">Workspace <ArrowUpRight size={16}/></Link>:<><Link className="login-link" to="/login">Log in</Link><Link className="btn btn-dark nav-cta" to="/signup">Get started <ArrowUpRight size={16}/></Link></>)}</div></div></header>
