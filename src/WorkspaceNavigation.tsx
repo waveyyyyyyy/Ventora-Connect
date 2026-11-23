@@ -18,17 +18,20 @@ export default function WorkspaceNavigation(props:Props={}){
  const[localOpen,setLocalOpen]=useState(false),[drawerMounted,setDrawerMounted]=useState(false),[drawerActive,setDrawerActive]=useState(false),closeTimer=useRef<number|undefined>(undefined),[member,setMember]=useState<any>(props.user||null),[memberProfile,setMemberProfile]=useState<Profile|null>(props.profile||null),[memberPlan,setMemberPlan]=useState<any>(null),[isAdmin,setIsAdmin]=useState(Boolean(props.adminAllowed)),[signOutError,setSignOutError]=useState('');
  const open=props.open??localOpen;
  const setOpen=(value:boolean)=>{window.clearTimeout(closeTimer.current);if(value)setDrawerMounted(true);props.onOpenChange?props.onOpenChange(value):setLocalOpen(value)};
- useEffect(()=>{window.clearTimeout(closeTimer.current);if(open){setDrawerMounted(true);setDrawerActive(false);const frame=window.requestAnimationFrame(()=>setDrawerActive(true));return()=>window.cancelAnimationFrame(frame);}setDrawerActive(false);if(drawerMounted){closeTimer.current=window.setTimeout(()=>setDrawerMounted(false),560);}return()=>window.clearTimeout(closeTimer.current)},[open]);
  useEffect(()=>{
-  if(!open)return;
+  if(!drawerMounted)return;
   const body=document.body,html=document.documentElement,root=document.getElementById('root');
   const scrollY=window.scrollY,previousBodyPosition=body.style.position,previousBodyTop=body.style.top,previousBodyWidth=body.style.width,previousBodyOverflow=body.style.overflow,previousHtmlOverflow=html.style.overflow,previousRootInert=root?.inert??false;
   body.classList.add('vc-section-navigation-open');
   body.style.position='fixed';body.style.top=`-${scrollY}px`;body.style.width='100%';body.style.overflow='hidden';html.style.overflow='hidden';
   if(root)root.inert=true;
+  return()=>{body.classList.remove('vc-section-navigation-open');body.style.position=previousBodyPosition;body.style.top=previousBodyTop;body.style.width=previousBodyWidth;body.style.overflow=previousBodyOverflow;html.style.overflow=previousHtmlOverflow;if(root)root.inert=previousRootInert;window.scrollTo(0,scrollY)};
+ },[drawerMounted]);
+ useEffect(()=>{
+  if(!open)return;
   const onKeyDown=(event:KeyboardEvent)=>{if(event.key==='Escape'){event.preventDefault();setOpen(false)}};
   window.addEventListener('keydown',onKeyDown);
-  return()=>{window.removeEventListener('keydown',onKeyDown);body.classList.remove('vc-section-navigation-open');body.style.position=previousBodyPosition;body.style.top=previousBodyTop;body.style.width=previousBodyWidth;body.style.overflow=previousBodyOverflow;html.style.overflow=previousHtmlOverflow;if(root)root.inert=previousRootInert;window.scrollTo(0,scrollY)};
+  return()=>window.removeEventListener('keydown',onKeyDown);
  },[open]);
  useEffect(()=>{const client=supabase;if(!client)return;let active=true;async function load(){let current=props.user;if(current===undefined)current=await restoreUserSession();if(!active)return;if(!current){setMember(null);setMemberProfile(props.profile??null);setIsAdmin(Boolean(props.adminAllowed));return;}setMember(current);const[p,a,sub]=await Promise.all([props.profile!==undefined?Promise.resolve({data:props.profile,error:null}):client!.from('profiles').select('full_name,account_type').eq('id',current.id).maybeSingle(),props.adminAllowed!==undefined?Promise.resolve({data:props.adminAllowed,error:null}):client!.rpc('is_admin'),props.currentPlan!==undefined?Promise.resolve({data:props.currentPlan,error:null}):client!.from('subscriptions').select('plan_id,status').eq('user_id',current.id).maybeSingle()]);if(!active)return;setMemberProfile(p.data||{full_name:current.user_metadata?.full_name||current.email,account_type:'business'});setIsAdmin(Boolean(a.data&&!a.error));if(sub.data){if(props.plans?.length)setMemberPlan({...sub.data,name:props.plans.find((plan:any)=>plan.id===sub.data.plan_id)?.name});else{const plan=await client!.from('subscription_plans').select('name').eq('id',sub.data.plan_id).maybeSingle();if(active)setMemberPlan({...sub.data,name:plan.data?.name});}}else setMemberPlan(null);}void load();return()=>{active=false}},[props.user,props.profile,props.adminAllowed]);
  useEffect(()=>{document.body.classList.toggle('section-navigation-open',open);return()=>document.body.classList.remove('section-navigation-open')},[open]);
