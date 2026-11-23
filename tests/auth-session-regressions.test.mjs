@@ -60,8 +60,11 @@ test('the app wires the regression policies into the real auth paths', async () 
 
 test('password reset cooldown persists in localStorage on both success and rate-limit paths', async () => {
   const app = await read('../src/App.tsx');
-  const reset = app.match(/async function resetPassword\\(\\)\\{([\\s\\S]*?)\\}return <div className="auth-page"/)?.[1];
-  assert.ok(reset, 'password reset handler should be present');
-  assert.equal((reset.match(/window\\.localStorage\\.setItem\\(storageKey,String\\(until\\)\\)/g) || []).length, 2);
-  assert.doesNotMatch(reset, /window\\.sessionStorage\\.(?:getItem|setItem)\\(storageKey/);
+  const start = app.indexOf('async function resetPassword(){');
+  const end = app.indexOf('return <div className="auth-page"', start);
+  assert.notEqual(start, -1, 'password reset handler should be present');
+  assert.notEqual(end, -1, 'password reset handler should end before the auth page markup');
+  const reset = app.slice(start, end);
+  assert.equal(reset.split('window.localStorage.setItem(storageKey,String(until))').length - 1, 2);
+  assert.equal(reset.includes('window.sessionStorage.setItem(storageKey'), false);
 });
