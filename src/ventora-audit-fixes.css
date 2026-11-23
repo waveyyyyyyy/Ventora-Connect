@@ -3158,3 +3158,90 @@ body:not(.vc-navigation-open) #root{
     transition:opacity .15s linear,transform .15s linear,visibility 0s!important;
   }
 }
+
+
+/* Workspace section drawer: isolated modal layer, independent from legacy header menu rules. */
+body.vc-section-navigation-open{overflow:hidden!important;overscroll-behavior:none!important}
+body.vc-section-navigation-open #root{
+  pointer-events:none!important;
+  user-select:none!important;
+}
+.vc-section-menu-backdrop{
+  position:fixed!important;inset:0!important;
+  width:100vw!important;height:100vh!important;height:100dvh!important;
+  display:block!important;margin:0!important;padding:0!important;
+  border:0!important;border-radius:0!important;
+  z-index:2147483600!important;box-sizing:border-box!important;
+  background:rgba(15,34,52,.28)!important;
+  -webkit-backdrop-filter:blur(10px)!important;
+  backdrop-filter:blur(10px)!important;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .34s ease,visibility 0s linear .42s!important;
+  cursor:pointer!important;touch-action:manipulation!important;
+}
+.vc-section-menu-backdrop.is-open{
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+  transition:opacity .34s ease,visibility 0s!important;
+}
+.vc-section-menu-backdrop.is-closing{
+  opacity:0!important;visibility:visible!important;pointer-events:none!important;
+  transition:opacity .30s ease,visibility 0s linear .38s!important;
+}
+.workspace-sidebar.vc-section-drawer{
+  position:fixed!important;inset:0 auto 0 0!important;
+  z-index:2147483601!important;
+  width:min(340px,88vw)!important;max-width:calc(100vw - 24px)!important;
+  height:100vh!important;height:100dvh!important;max-height:100dvh!important;
+  box-sizing:border-box!important;overflow-x:hidden!important;overflow-y:auto!important;
+  overscroll-behavior:contain!important;touch-action:pan-y!important;
+  transform:translate3d(-105%,0,0)!important;opacity:0!important;
+  visibility:hidden;pointer-events:none;
+  transition:transform .40s cubic-bezier(.22,.8,.22,1),opacity .28s ease,visibility 0s linear .42s!important;
+  will-change:transform,opacity;
+}
+.workspace-sidebar.vc-section-drawer.is-open{
+  transform:translate3d(0,0,0)!important;opacity:1!important;
+  visibility:visible!important;pointer-events:auto!important;
+  transition:transform .40s cubic-bezier(.22,.8,.22,1),opacity .28s ease,visibility 0s!important;
+}
+.workspace-sidebar.vc-section-drawer.is-closing{
+  transform:translate3d(-105%,0,0)!important;opacity:0!important;
+  visibility:visible!important;pointer-events:none!important;
+  transition:transform .36s cubic-bezier(.4,0,.2,1),opacity .28s ease,visibility 0s linear .40s!important;
+}
+.workspace-sidebar.vc-section-drawer .workspace-sidebar-scroll{min-width:0;overflow-x:hidden}
+.workspace-sidebar.vc-section-drawer .vc-workspace-upgrade-link{
+  display:grid!important;grid-template-columns:38px minmax(0,1fr) 18px!important;
+  align-items:center!important;gap:11px!important;
+  width:calc(100% - 24px)!important;min-height:68px!important;
+  margin:12px 12px 16px!important;padding:12px 13px!important;
+  border:1px solid rgba(185,217,206,.25)!important;border-radius:14px!important;
+  background:linear-gradient(135deg,#245863 0%,#132A3A 100%)!important;
+  color:#fff!important;text-align:left!important;
+  box-shadow:0 9px 22px rgba(15,34,52,.20)!important;
+}
+.workspace-sidebar.vc-section-drawer .vc-workspace-upgrade-link .workspace-upgrade-mark{
+  display:grid;place-items:center;width:36px;height:36px;border-radius:11px;
+  background:rgba(255,255,255,.13);color:#d9eee5;
+}
+.workspace-sidebar.vc-section-drawer .vc-workspace-upgrade-link>span:nth-child(2){display:grid;gap:4px;min-width:0}
+.workspace-sidebar.vc-section-drawer .vc-workspace-upgrade-link b{
+  color:#fff!important;font-size:13px!important;font-weight:800!important;line-height:1.25!important
+}
+.workspace-sidebar.vc-section-drawer .vc-workspace-upgrade-link small{
+  color:rgba(239,248,245,.78)!important;font-size:10px!important;font-weight:550!important;
+  line-height:1.4!important;white-space:normal!important;overflow-wrap:anywhere!important
+}
+.workspace-sidebar.vc-section-drawer .vc-workspace-upgrade-link .workspace-upgrade-arrow{
+  color:#d9eee5!important;font-size:17px!important;justify-self:end
+}
+@media(max-width:430px){
+ .workspace-sidebar.vc-section-drawer{width:min(340px,88vw)!important;max-width:calc(100vw - 18px)!important}
+ .workspace-sidebar.vc-section-drawer .vc-workspace-upgrade-link{width:calc(100% - 20px)!important;margin:10px 10px 14px!important;padding:11px!important;gap:9px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .vc-section-menu-backdrop,.workspace-sidebar.vc-section-drawer,
+ .workspace-sidebar.vc-section-drawer.is-open,.workspace-sidebar.vc-section-drawer.is-closing{
+  transition:none!important;will-change:auto!important
+ }
+}
