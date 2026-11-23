@@ -102,3 +102,20 @@
   contain: none !important;
   contain-intrinsic-size: none !important;
 }
+
+/* Keep the Messages auth status inside its content flow, above the footer. */
+.vc-member-section.messages-page .messages-error {
+  position: relative !important;
+  inset: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+  flex: 0 0 auto !important;
+  align-self: center !important;
+  width: calc(100% - 20px) !important;
+  max-width: 560px !important;
+  box-sizing: border-box !important;
+  margin: 12px auto 10px !important;
+  z-index: 2 !important;
+}
