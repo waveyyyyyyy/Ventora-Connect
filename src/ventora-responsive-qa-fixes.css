@@ -1,171 +1,64 @@
 /* Responsive QA fixes — keep content in its own layout flow. */
 
 /* Decorative poster rings are visual layers, not flex children. */
-.gp-poster > div {
-  position: absolute !important;
-  z-index: 2 !important;
-  pointer-events: none !important;
-}
+.gp-poster > div { position: absolute !important; z-index: 2 !important; pointer-events: none !important; }
 
 /* Closed FAQ disclosures must not paint their answer paragraphs. */
-.gp-home-faq-item:not([open]) > p {
-  display: none !important;
-}
+.gp-home-faq-item:not([open]) > p { display: none !important; }
 
 /* The public landing header uses its menu drawer at tablet widths. */
-@media (max-width: 860px) and (min-width: 761px) {
-  .gp-public-header nav {
-    display: none !important;
-  }
-}
-
-@media (max-width: 760px) {
-  .gp-public-header { gap: 6px !important; }
-  .gp-public-actions { gap: 6px !important; }
-}
-
+@media (max-width: 860px) and (min-width: 761px) { .gp-public-header nav { display: none !important; } }
+@media (max-width: 760px) { .gp-public-header { gap: 6px !important; } .gp-public-actions { gap: 6px !important; } }
 @media (max-width: 360px) {
   .gp-public-actions .gp-login { display: none !important; }
   .gp-public-actions .gp-primary svg { display: none !important; }
-  .gp-public-actions .gp-primary {
-    width: auto !important;
-    min-width: 0 !important;
-    padding: 8px 10px !important;
-    font-size: 10px !important;
-  }
+  .gp-public-actions .gp-primary { width: auto !important; min-width: 0 !important; padding: 8px 10px !important; font-size: 10px !important; }
 }
 
 /* Do not shrink public directory actions below their labels. */
 @media (max-width: 760px) {
-  .header .topbar-actions {
-    flex: 0 0 auto !important;
-    min-width: max-content !important;
-    gap: 8px !important;
-  }
-  .header .login-link {
-    flex: 0 0 44px !important;
-    width: 44px !important;
-    min-width: 44px !important;
-    white-space: nowrap !important;
-  }
-  .header .nav-cta {
-    flex: 0 0 96px !important;
-    width: 96px !important;
-    min-width: 96px !important;
-    padding: 9px 8px !important;
-    white-space: nowrap !important;
-  }
+  .header .topbar-actions { flex: 0 0 auto !important; min-width: max-content !important; gap: 8px !important; }
+  .header .login-link { flex: 0 0 44px !important; width: 44px !important; min-width: 44px !important; white-space: nowrap !important; }
+  .header .nav-cta { flex: 0 0 96px !important; width: 96px !important; min-width: 96px !important; padding: 9px 8px !important; white-space: nowrap !important; }
 }
-
 @media (max-width: 360px) {
   .header .topbar-actions { gap: 7px !important; }
-  .header .login-link {
-    flex-basis: 43px !important;
-    width: 43px !important;
-    min-width: 43px !important;
-  }
-  .header .nav-cta {
-    flex-basis: 92px !important;
-    width: 92px !important;
-    min-width: 92px !important;
-    padding-inline: 6px !important;
-    font-size: 10px !important;
-  }
+  .header .login-link { flex-basis: 43px !important; width: 43px !important; min-width: 43px !important; }
+  .header .nav-cta { flex-basis: 92px !important; width: 92px !important; min-width: 92px !important; padding-inline: 6px !important; font-size: 10px !important; }
 }
 
 /* Let directory grids and cards size from their real content, not placeholders. */
-.directory-grid {
-  content-visibility: visible !important;
-  contain: none !important;
-  contain-intrinsic-size: none !important;
-}
-.directory-card {
-  content-visibility: visible !important;
-  contain: none !important;
-  contain-intrinsic-size: none !important;
-}
+.directory-grid, .directory-card { content-visibility: visible !important; contain: none !important; contain-intrinsic-size: none !important; }
 
 /* Keep the Messages auth status inside its content flow, above the footer. */
 .vc-member-section.messages-page .messages-error {
-  position: relative !important;
-  inset: auto !important;
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  top: auto !important;
-  flex: 0 0 auto !important;
-  align-self: center !important;
-  width: calc(100% - 20px) !important;
-  max-width: 560px !important;
-  box-sizing: border-box !important;
-  margin: 12px auto 10px !important;
-  z-index: 2 !important;
+  position: relative !important; inset: auto !important; left: auto !important; right: auto !important; bottom: auto !important; top: auto !important;
+  flex: 0 0 auto !important; align-self: center !important; width: calc(100% - 20px) !important; max-width: 560px !important;
+  box-sizing: border-box !important; margin: 12px auto 10px !important; z-index: 2 !important;
 }
 
 /* Separate the floating profile card from the poster headline. */
 .gp-float-card.investor-card { bottom: 10px !important; }
+@media (max-width: 860px) { .gp-art-center > span { visibility: hidden !important; } }
 
-@media (max-width: 860px) {
-  .gp-art-center > span { visibility: hidden !important; }
-}
-
-/* Keep the workspace drawer compact on desktop and proportional on phones.
-   A later legacy rule was forcing it to 70vw (1008px at 1440px). */
-body.section-navigation-open .workspace-sidebar.workspace-sidebar-open {
-  width: min(340px, 88vw) !important;
-  max-width: min(340px, 88vw) !important;
-}
+/* Keep the workspace drawer compact on desktop and proportional on phones. */
+body.section-navigation-open .workspace-sidebar.workspace-sidebar-open { width: min(340px, 88vw) !important; max-width: min(340px, 88vw) !important; }
 
 /* Make the empty state flex within its actual parent, not under the footer. */
-.vc-member-section.messages-page .messages-thread-list:has(> .messages-empty) {
-  display: flex !important;
-  flex-direction: column !important;
-  min-height: 0 !important;
-}
-.vc-member-section.messages-page .messages-thread-list > .messages-empty {
-  flex: 1 1 0 !important;
-  min-height: 0 !important;
-  box-sizing: border-box !important;
-  padding: 10px 14px !important;
-}
+.vc-member-section.messages-page .messages-thread-list:has(> .messages-empty) { display: flex !important; flex-direction: column !important; min-height: 0 !important; }
+.vc-member-section.messages-page .messages-thread-list > .messages-empty { flex: 1 1 0 !important; min-height: 0 !important; box-sizing: border-box !important; padding: 10px 14px !important; }
 
-/* Keep the empty-state illustration compact and the CTA arrow at icon size.
-   A broad SVG rule had enlarged the inline arrow to 38px, making the CTA
-   two lines tall and causing it to overlap the PRIVATE NETWORK footer. */
-.vc-member-section.messages-page .messages-empty-art {
-  height: 26px !important;
-  flex: 0 0 26px !important;
-  margin: 0 0 4px !important;
-}
-.vc-member-section.messages-page .messages-empty-art svg {
-  width: 26px !important;
-  height: 26px !important;
-  margin: 0 !important;
-}
-.vc-member-section.messages-page .messages-empty-art span {
-  display: none !important;
-}
-.vc-member-section.messages-page .messages-empty p {
-  font-size: 10px !important;
-  line-height: 1.45 !important;
-  margin: 4px 0 !important;
-}
-.vc-member-section.messages-page .messages-empty a {
-  white-space: nowrap !important;
-  flex-wrap: nowrap !important;
-  margin-top: 6px !important;
-  padding: 7px 12px !important;
-  line-height: 1.2 !important;
-}
-.vc-member-section.messages-page .messages-empty a svg {
-  width: 14px !important;
-  height: 14px !important;
-  margin: 0 !important;
-  flex: 0 0 14px !important;
-}
+/* Keep the empty-state illustration compact and the CTA arrow at icon size. */
+.vc-member-section.messages-page .messages-empty-art { height: 26px !important; flex: 0 0 26px !important; margin: 0 0 4px !important; }
+.vc-member-section.messages-page .messages-empty-art svg { width: 26px !important; height: 26px !important; margin: 0 !important; }
+.vc-member-section.messages-page .messages-empty-art span { display: none !important; }
+.vc-member-section.messages-page .messages-empty p { font-size: 10px !important; line-height: 1.45 !important; margin: 4px 0 !important; }
+.vc-member-section.messages-page .messages-empty a { white-space: nowrap !important; flex-wrap: nowrap !important; margin-top: 6px !important; padding: 7px 12px !important; line-height: 1.2 !important; }
+.vc-member-section.messages-page .messages-empty a svg { width: 14px !important; height: 14px !important; margin: 0 !important; flex: 0 0 14px !important; }
 
-/* The old fixed toast transform survived the switch to in-flow positioning,
-   shifting it 50% left on tablet/desktop widths. */
-.vc-member-section.messages-page .messages-error {
-  transform: none !important;
-}
+/* The old fixed toast transform survived the switch to in-flow positioning. */
+.vc-member-section.messages-page .messages-error { transform: none !important; }
+
+/* Mobile auth: reserve a clear row for the absolute back control.
+   The old 26px top padding put WELCOME BACK under the 30px back button. */
+@media (max-width: 430px) { .auth-box { padding-top: 46px !important; } }
