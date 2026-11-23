@@ -1,4 +1,4 @@
-import {lazy,Suspense,useEffect,useState} from 'react';import {Link,Route,Routes,useNavigate,useParams,useLocation} from 'react-router-dom';import {ArrowUpRight,Building2,ChartNoAxesCombined,ShieldCheck,Menu,X,LockKeyhole,Sparkles,Compass,Users,Bell,Bookmark,CalendarDays,FileText,MessageCircle} from 'lucide-react';import {supabase,restoreUserSession,checkMessagingProfile,signOutUser} from './lib/supabase';
+import {lazy,Suspense,useEffect,useState} from 'react';import {Link,Route,Routes,useNavigate,useParams,useLocation,Navigate} from 'react-router-dom';import {ArrowUpRight,Building2,ChartNoAxesCombined,ShieldCheck,Menu,X,LockKeyhole,Sparkles,Compass,Users,Bell,Bookmark,CalendarDays,FileText,MessageCircle} from 'lucide-react';import {supabase,restoreUserSession,checkMessagingProfile,signOutUser} from './lib/supabase';
 import { VentoraLoadingContext, type VentoraLoadingSetter } from './VentoraLoadingContext';
 import WorkspaceNavigation from './WorkspaceNavigation';
 import BrandLogo from './BrandLogo';
