@@ -1,4 +1,4 @@
-import {useEffect,useMemo,useState} from 'react';
+import {useEffect,useState} from 'react';
 import {Link,useNavigate} from 'react-router-dom';
 import {ArrowUpRight,Check,ShieldCheck,Sparkles,Building2,ChartNoAxesCombined} from 'lucide-react';
 import {supabase,restoreUserSession} from './lib/supabase';
