@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {Bell,Search,UserRound} from 'lucide-react';
 import WorkspaceNavigation from './WorkspaceNavigation';
 import BrandLogo from './BrandLogo';
+import VentoraFooter from './VentoraFooter';
 
 type Props={children:ReactNode;className?:string;actionTo?:string;actionLabel?:string;user?:any};
 export default function MemberSectionLayout({children,className='',user}:Props){
@@ -18,5 +19,6 @@ export default function MemberSectionLayout({children,className='',user}:Props){
    </div>
   </header>
   <div className="vc-member-section-content">{children}</div>
+  <VentoraFooter/>
  </div>;
 }
