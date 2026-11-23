@@ -4936,3 +4936,100 @@ body{color:var(--vc-ink);overscroll-behavior-y:auto}
 @media(prefers-reduced-motion:reduce){
  .workspace-menu-backdrop,.vc-section-menu-backdrop,.gp-public-menu-scrim{transition:none!important}
 }
+
+
+/* Ventora master responsive and brand-token layer — final cascade */
+:root{
+  --blue:#245863;
+  --navy:#132A3A;
+  --ink:#0F2234;
+  --muted:#647582;
+  --ice:#F4F7F9;
+  --vc-ink:#0F2234;
+  --vc-ink-2:#132A3A;
+  --vc-teal:#245863;
+  --vc-teal-2:#1E4D58;
+  --vc-emerald:#10B981;
+  --vc-paper:#F4F7F9;
+  --vc-line:rgba(19,42,58,.13);
+}
+html,body,#root{width:100%;max-width:100%;min-width:320px;overflow-x:clip}
+body{color:#0F2234;background:#F4F7F9;overscroll-behavior-y:contain}
+.brand .brand-e{color:#245863!important}
+.workspace,.workspace-main,.workspace-content,.vc-member-section,.vc-member-section>main,
+.messages-page,.interests-page,.matches-page,.saved-page,.announcements-page,.support-page,
+.vc-admin-shell,.vc-feedback,.membership-page,.auth-page{
+  min-width:0;max-width:100%;box-sizing:border-box;
+}
+.workspace-main,.workspace-content,.vc-member-section>main{width:100%;min-width:0}
+.workspace-content{margin-inline:auto!important}
+.workspace-content>*,
+.workspace-form-grid>*,
+.business-manager-grid>*,
+.vc-admin-layout>*,
+.vc-admin-stat-grid>*,
+.vc-admin-list>*,
+.vc-feedback-grid>*,
+.vc-feedback-row>*,
+.messages-studio>*,
+.messages-chat>*{min-width:0;max-width:100%}
+.workspace-content :where(h1,h2,h3,p,label,small,strong,span),
+.vc-admin-shell :where(h1,h2,h3,p,label,small,strong,span),
+.vc-feedback :where(h1,h2,h3,p,label,small,strong,span){
+  overflow-wrap:anywhere;
+}
+.workspace-content :where(input,select,textarea,button),
+.vc-admin-shell :where(input,select,textarea,button),
+.vc-feedback :where(input,select,textarea,button){min-width:0;max-width:100%}
+
+/* One continuous scenic canvas behind signed-in and operational routes. */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(180deg,rgba(244,247,249,.84),rgba(238,244,245,.88)),url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2400&q=88");
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+  transform:translateZ(0);
+}
+.workspace,.messages-page,.interests-page,.matches-page,.saved-page,.announcements-page,.support-page,
+.vc-admin-shell,.vc-feedback,.membership-page{
+  background:transparent!important;
+}
+.workspace:before,.workspace:after,.vc-admin-shell:before,.vc-admin-shell:after,
+.vc-feedback:before,.vc-feedback:after{background-image:none!important;opacity:0!important}
+.membership-page{background-color:transparent!important;background-image:none!important}
+.workspace-content,.vc-admin-panel,.vc-feedback-panel,.vc-admin-card{
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+
+/* Tablet: preserve readable columns without forcing desktop widths. */
+@media(min-width:431px) and (max-width:1023px){
+  .workspace-content{padding-inline:clamp(16px,3vw,28px)!important}
+  .workspace-form-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .vc-admin-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .vc-feedback-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+/* Compact phones: stack only the layouts that cannot breathe side-by-side. */
+@media(max-width:430px){
+  .workspace-content{padding-inline:14px!important}
+  .workspace-form-grid,.business-manager-grid,.vc-admin-stat-grid,.vc-admin-shortcuts,
+  .vc-feedback-row{grid-template-columns:minmax(0,1fr)!important}
+  .workspace-topbar{gap:8px!important;padding-inline:12px!important}
+  .workspace-command{min-width:0!important;max-width:42vw!important}
+  .workspace-topbar-logo .brand-word{font-size:14px!important;letter-spacing:.035em!important}
+  .workspace-topbar-logo .brand-sub{font-size:7px!important;letter-spacing:.35em!important}
+  .vc-admin-top{flex-wrap:wrap!important}
+  .vc-admin-actions{flex-wrap:wrap!important}
+}
+/* Laptop and desktop: use the available canvas instead of narrow fixed columns. */
+@media(min-width:1024px){
+  .workspace-content{width:min(100% - 48px,1320px)!important}
+  .vc-admin-layout{width:min(100% - 48px,1440px)!important;margin-inline:auto!important}
+  .vc-feedback-grid{grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr)!important}
+}
+@media(min-width:1440px){
+  .workspace-content{width:min(100% - 80px,1360px)!important}
+  .vc-admin-layout{width:min(100% - 80px,1480px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
