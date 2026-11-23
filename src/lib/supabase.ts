@@ -131,18 +131,72 @@ export function restoreUserSession(): Promise<User | null> {
  */
 export async function requireActiveSession(expectedUserId?: string): Promise<Session> {
   if (!supabase) throw new Error('Authentication is not configured.');
-  const { data, error } = await supabase.auth.getSession();
-  if (error) throw error;
-  const session = data.session;
+  const pause = (ms: number) => new Promise(resolve => window.setTimeout(resolve, ms));
+  let session: Session | null = null;
+  let lastError: unknown = null;
+
+  // Supabase can briefly expose an empty session while its persisted storage
+  // adapter or refresh lock is initializing. Give the SDK time to finish.
+  for (const wait of [0, 250, 650]) {
+    if (wait) await pause(wait);
+    try {
+      const result = await supabase.auth.getSession();
+      if (result.error) lastError = result.error;
+      if (result.data.session?.access_token && result.data.session.user?.id) {
+        session = result.data.session;
+        break;
+      }
+    } catch (error) {
+      lastError = error;
+    }
+  }
+
+  // If the SDK still has no active session but a refresh token was persisted,
+  // ask Supabase Auth to rotate it instead of treating this as a sign-out.
+  if (!session) {
+    const saved = readStoredSessionSnapshot() || cachedAuthSession;
+    if (saved?.refresh_token) {
+      try {
+        const refreshed = await supabase.auth.refreshSession({ refresh_token: saved.refresh_token });
+        if (refreshed.data.session?.access_token && refreshed.data.session.user?.id) {
+          session = refreshed.data.session;
+          cachedAuthSession = session;
+        } else if (refreshed.error) {
+          lastError = refreshed.error;
+        }
+      } catch (error) {
+        lastError = error;
+      }
+    }
+  }
+
   if (!session?.access_token || !session.user?.id) {
-    throw new Error('Your saved sign-in is reconnecting. Please wait a moment and try again. You have not been signed out.');
+    const detail = lastError instanceof Error ? lastError.message : '';
+    throw new Error('Your saved sign-in is temporarily reconnecting. Ventora will keep your workspace available. Please retry in a moment.' + (detail ? ' (' + detail + ')' : ''));
   }
   if (expectedUserId && session.user.id !== expectedUserId) {
     throw new Error('The active sign-in belongs to a different account. Please retry after the session finishes restoring.');
   }
-  const { data: verified, error: verifyError } = await supabase.auth.getUser(session.access_token);
-  if (verifyError || verified.user?.id !== session.user.id) {
-    throw new Error('Your sign-in is temporarily unavailable. Please wait a moment and try again.');
+
+  // A single transient getUser failure should not invalidate a usable session.
+  // Retry verification once; the SDK continues to own refresh-token rotation.
+  let verifiedUser: User | null = null;
+  for (const wait of [0, 350]) {
+    if (wait) await pause(wait);
+    try {
+      const verified = await supabase.auth.getUser(session.access_token);
+      if (!verified.error && verified.data.user?.id === session.user.id) {
+        verifiedUser = verified.data.user;
+        break;
+      }
+      lastError = verified.error;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  if (!verifiedUser) {
+    const detail = lastError instanceof Error ? lastError.message : '';
+    throw new Error('Your sign-in could not be verified just now. Your saved workspace is preserved; retry shortly.' + (detail ? ' (' + detail + ')' : ''));
   }
   cachedAuthSession = session;
   return session;
