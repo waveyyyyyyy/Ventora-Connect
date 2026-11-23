@@ -13,7 +13,7 @@ const dayLabel=(value:string)=>{const d=new Date(value),today=new Date(),yesterd
 
 export default function Messages(){
  const client=supabase;const[params]=useSearchParams();const location=useLocation();const requestedConversation=params.get('conversation')||String((location.state as any)?.conversationId||'');
- const[user,setUser]=useState<any>(null);const[threads,setThreads]=useState<Thread[]>([]);const[selected,setSelected]=useState('');const[items,setItems]=useState<any[]>([]);const[draft,setDraft]=useState('');const[query,setQuery]=useState('');const[filter,setFilter]=useState('all');const[loading,setLoading]=useState(true);const[sending,setSending]=useState(false);const[error,setError]=useState('');const[profileOpen,setProfileOpen]=useState(false);const[contextOpen,setContextOpen]=useState(false);const[gate,setGate]=useState<{missing:string[];percent:number}|null>(null);
+ const[user,setUser]=useState<any>(null);const[threads,setThreads]=useState<Thread[]>([]);const[selected,setSelected]=useState('');const[items,setItems]=useState<any[]>([]);const[draft,setDraft]=useState('');const[query,setQuery]=useState('');const[filter,setFilter]=useState('all');const[loading,setLoading]=useState(true);const[sending,setSending]=useState(false);const[error,setError]=useState('');const[profileOpen,setProfileOpen]=useState(false);const[contextOpen,setContextOpen]=useState(false);const[gate,setGate]=useState<{missing:string[];percent:number}|null>(null);const[memberPlanId,setMemberPlanId]=useState('');
  const streamRef=useRef<HTMLDivElement|null>(null);const composerRef=useRef<HTMLTextAreaElement|null>(null);
  async function runMessagesRequest<T extends {error:any}>(request:()=>PromiseLike<T>,expectedUserId?:string):Promise<T>{
   let result=await request();
@@ -64,7 +64,7 @@ export default function Messages(){
  const grouped=useMemo(()=>items.map((m,i)=>({...m,showDay:i===0||dayKey(m.created_at)!==dayKey(items[i-1].created_at)})),[items]);
  const roleLabel=(t:Thread)=>t.accountType==='investor'?'Investor':'Business';
  return <MemberSectionLayout className="messages-page" user={user}><main className={'messages-studio'+(current?' has-current':'')}>
-  <div className="messages-studio-atmosphere" aria-hidden="true"><span/><i/><b/></div>
+  <div className="messages-studio-atmosphere" aria-hidden="true"><span/><i/><b/></div>{(memberPlanId==='business_launch'||memberPlanId==='investor_explorer')&&<aside className="messages-membership-nudge"><div><span>VENTORA MEMBERSHIP</span><b>Make every introduction count.</b><small>Explore expanded networking, richer discovery and priority member access.</small></div><Link to="/pricing">Explore plans <ArrowUpRight size={15}/></Link></aside>}
   <aside className="messages-list">
    <div className="messages-list-title"><div><span className="section-kicker">YOUR NETWORK / PRIVATE ROOMS</span><h1>Messages</h1><p>Conversations that move things forward.</p></div><span className="messages-count">{threads.length}</span></div>
    <label className="messages-search"><Search size={16}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search people & businesses" aria-label="Search messages"/></label>
