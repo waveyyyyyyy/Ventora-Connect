@@ -71,7 +71,7 @@ useEffect(()=>{
  window.addEventListener('ventora:directory-viewer',onDirectoryViewer);
  return()=>{active=false;subscription.unsubscribe();window.removeEventListener('pageshow',onPageShow);window.removeEventListener('ventora:directory-viewer',onDirectoryViewer)};
 },[]);
-const close=()=>{setOpen(false);window.clearTimeout(menuTimer.current);menuTimer.current=window.setTimeout(()=>setMenuVisible(false),320);};
+const close=()=>{setOpen(false);window.clearTimeout(menuTimer.current);menuTimer.current=window.setTimeout(()=>setMenuVisible(false),430);};
 useEffect(()=>()=>window.clearTimeout(menuTimer.current),[]);
 useEffect(()=>{
  if(!open)return;
