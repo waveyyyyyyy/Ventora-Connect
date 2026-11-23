@@ -2274,3 +2274,29 @@ body:has(.directory-investor-hero) .directory-results{
     letter-spacing:.07em!important;
   }
 }
+
+
+/* Overview action-card descriptions: readable on scenic glass backgrounds. */
+.workspace-tab-overview .vc-action-tile>small{
+  display:block!important;
+  width:100%!important;
+  margin-top:10px!important;
+  padding:10px 11px!important;
+  border:1px solid rgba(20,66,76,.16)!important;
+  border-radius:9px!important;
+  background:rgba(248,252,250,.96)!important;
+  color:#173f49!important;
+  font-size:14px!important;
+  line-height:1.6!important;
+  font-weight:650!important;
+  letter-spacing:0!important;
+  text-shadow:none!important;
+  opacity:1!important;
+}
+@media(max-width:760px){
+  .workspace-tab-overview .vc-action-tile>small{
+    font-size:14px!important;
+    line-height:1.55!important;
+    padding:11px 12px!important;
+  }
+}
