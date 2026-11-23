@@ -3991,3 +3991,71 @@ body>.workspace-menu-toggle svg{width:21px!important;height:21px!important;max-w
 @media(prefers-reduced-motion:reduce){
  .vc-member-section.messages-page,.vc-member-section.messages-page *{scroll-behavior:auto!important}
 }
+
+
+/* Member-section topbars now mirror the Overview header architecture and geometry. */
+.vc-member-section:not(.messages-page)>.vc-member-section-topbar{
+ position:relative!important;inset:auto!important;
+ width:100%!important;max-width:1320px!important;height:82px!important;min-height:82px!important;
+ margin:0 auto!important;padding:0 48px!important;box-sizing:border-box!important;
+ display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;
+ align-items:center!important;justify-content:flex-start!important;gap:0!important;
+ background:transparent!important;border:0!important;border-radius:0!important;
+ box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+ overflow:visible!important;
+}
+.vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-logo{
+ position:relative!important;left:auto!important;right:auto!important;top:auto!important;
+ display:inline-flex!important;flex:0 1 auto!important;align-items:center!important;
+ justify-content:center!important;width:auto!important;min-width:0!important;max-width:100%!important;
+ margin:0 auto 0 56px!important;padding:0!important;transform:none!important;
+ opacity:1!important;visibility:visible!important;
+}
+.vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-logo .brand-word{font-size:25px!important;letter-spacing:.12em!important;color:#0F2234!important;opacity:1!important}
+.vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-logo .brand-sub{font-size:9px!important;letter-spacing:.65em!important;color:#245863!important;opacity:1!important}
+.vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-home{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ flex:0 0 auto!important;margin:0 0 0 auto!important;padding:13px 19px!important;
+ border:0!important;border-radius:999px!important;background:#0F2234!important;color:#fff!important;
+ font-size:12px!important;font-weight:700!important;letter-spacing:.02em!important;line-height:1.2!important;
+ text-decoration:none!important;white-space:nowrap!important;box-shadow:none!important;
+}
+.vc-member-section:not(.messages-page)>.workspace-menu-toggle,
+body>.workspace-menu-toggle{
+ position:fixed!important;left:max(18px,calc((100vw - 1224px)/2 + 48px))!important;
+ top:20px!important;right:auto!important;bottom:auto!important;transform:none!important;
+ display:grid!important;place-items:center!important;width:42px!important;height:42px!important;
+ min-width:42px!important;min-height:42px!important;z-index:2147483602!important;
+ border:1px solid #e3eaf5!important;border-radius:13px!important;
+ background:#fff!important;color:#1c355d!important;box-shadow:0 5px 16px rgba(25,52,93,.07)!important;
+}
+@media(max-width:900px){
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar{padding:0 25px!important}
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-logo{margin-left:56px!important}
+ .vc-member-section:not(.messages-page)>.workspace-menu-toggle,
+ body>.workspace-menu-toggle{left:25px!important}
+}
+@media(max-width:680px){
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar{
+  height:70px!important;min-height:70px!important;padding:0 18px!important;
+ }
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-logo{
+  margin-left:14px!important;flex:0 1 auto!important;
+ }
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-logo .brand-word{font-size:21px!important}
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-logo .brand-sub{font-size:8px!important}
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-home{display:none!important}
+ .vc-member-section:not(.messages-page)>.workspace-menu-toggle,
+ body>.workspace-menu-toggle{
+  left:18px!important;top:14px!important;width:42px!important;height:42px!important;
+  min-width:42px!important;min-height:42px!important;
+ }
+}
+@media(max-width:430px){
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar{padding:0 18px!important}
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-logo{margin-left:12px!important}
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-logo .brand-word{font-size:18px!important;letter-spacing:.09em!important}
+ .vc-member-section:not(.messages-page)>.vc-member-section-topbar>.vc-member-section-logo .brand-sub{font-size:7px!important;letter-spacing:.55em!important}
+ .vc-member-section:not(.messages-page)>.workspace-menu-toggle,
+ body>.workspace-menu-toggle{left:16px!important;top:12px!important}
+}
