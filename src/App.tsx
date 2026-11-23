@@ -1,4 +1,4 @@
-import {lazy,Suspense,useEffect,useState} from 'react';
+import {lazy,Suspense,useEffect,useRef,useState} from 'react';
 import {createPortal} from 'react-dom';import {Link,Route,Routes,useNavigate,useParams,useLocation,Navigate} from 'react-router-dom';import {ArrowUpRight,Building2,ChartNoAxesCombined,ShieldCheck,Menu,X,LockKeyhole,Sparkles,Compass,Users,Bell,Bookmark,CalendarDays,FileText,MessageCircle} from 'lucide-react';import {supabase,restoreUserSession,checkMessagingProfile,signOutUser} from './lib/supabase';
 import { VentoraLoadingContext, type VentoraLoadingSetter } from './VentoraLoadingContext';
 import WorkspaceNavigation from './WorkspaceNavigation';
@@ -32,7 +32,7 @@ async function readViewerSession(){
 }
 
 function Header({directoryUser}:{directoryUser?:any}={}){
-const[open,setOpen]=useState(false),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business'),[authChecked,setAuthChecked]=useState(false);
+const[open,setOpen]=useState(false),[menuVisible,setMenuVisible]=useState(false),menuTimer=useRef<number|undefined>(undefined),[adminAllowed,setAdminAllowed]=useState(false),[headerUser,setHeaderUser]=useState<any>(null),[accountType,setAccountType]=useState<'business'|'investor'>('business'),[authChecked,setAuthChecked]=useState(false);
 const location=useLocation(),nav=useNavigate(),listingPage=location.pathname==='/investors'||location.pathname==='/businesses';
 useEffect(()=>{
  const client=supabase;if(!client)return;
@@ -71,16 +71,19 @@ useEffect(()=>{
  window.addEventListener('ventora:directory-viewer',onDirectoryViewer);
  return()=>{active=false;subscription.unsubscribe();window.removeEventListener('pageshow',onPageShow);window.removeEventListener('ventora:directory-viewer',onDirectoryViewer)};
 },[]);
-const close=()=>setOpen(false);
+const close=()=>{setOpen(false);window.clearTimeout(menuTimer.current);menuTimer.current=window.setTimeout(()=>setMenuVisible(false),260);};
+useEffect(()=>()=>window.clearTimeout(menuTimer.current),[]);
 const toggleMenu=()=>{
- // Navigation is local UI: open immediately and never wait on Supabase/network calls.
- setOpen(value=>!value);
+ window.clearTimeout(menuTimer.current);
+ if(open){close();return;}
+ setMenuVisible(true);
+ requestAnimationFrame(()=>setOpen(true));
 };
 const signOut=async()=>{close();try{await signOutUser();setHeaderUser(null);setAdminAllowed(false);setAccountType('business');setAuthChecked(true);nav('/')}catch(error){console.error('Ventora sign-out failed',error);}};
 const items=[{key:'overview',label:'Overview',to:'/dashboard?tab=overview',icon:<Compass/>},{key:'profile',label:'Personal profile',to:'/dashboard?tab=profile',icon:<Users/>},...(accountType==='investor'?[{key:'investor',label:'Investor preferences',to:'/dashboard?tab=investor',icon:<ChartNoAxesCombined/>}]:[{key:'business',label:'Manage businesses',to:'/dashboard?tab=business',icon:<Building2/>}]),{key:'verification',label:'Verification',to:'/dashboard?tab=verification',icon:<ShieldCheck/>},{key:'notifications',label:'Notifications',to:'/dashboard?tab=notifications',icon:<Bell/>},{key:'subscriptions',label:'Subscriptions',to:'/dashboard?tab=subscriptions',icon:<LockKeyhole/>},{key:'settings',label:'Settings',to:'/dashboard?tab=settings',icon:<LockKeyhole/>}];
 const go=(to:string)=>{close();nav(to)};
 return <><header className="header"><div className="nav-wrap">{listingPage?<WorkspaceNavigation user={directoryUser||headerUser||undefined}/>:<button className="menu-btn" onClick={toggleMenu} aria-label="Open workspace navigation" aria-expanded={open}>{open?<X size={22}/>:<Menu size={22}/>}</button>}<BrandLogo/><div className="nav-actions">{!listingPage&&(headerUser?<Link className="btn btn-dark nav-cta" to="/dashboard">Workspace <ArrowUpRight size={16}/></Link>:<><Link className="login-link" to="/login">Log in</Link><Link className="btn btn-dark nav-cta" to="/signup">Get started <ArrowUpRight size={16}/></Link></>)}</div></div></header>
-{!listingPage&&open&&<><button className="workspace-menu-backdrop" aria-label="Close menu" onClick={close}/><aside className="workspace-sidebar ventora-directory-sidebar workspace-sidebar-open">
+{!listingPage&&menuVisible&&<><button className={"workspace-menu-backdrop "+(open?"is-open":"is-closing")} aria-label="Close menu" onClick={close}/><aside className={"workspace-sidebar ventora-directory-sidebar workspace-sidebar-open workspace-sidebar-motion "+(open?"is-open":"is-closing")} aria-hidden={!open}>
 <Link to="/" onClick={close} className="workspace-brand"><span>VΞNTORA</span><small>CONNECT</small></Link>
 {!authChecked?<div className="workspace-member"><div className="member-avatar"><Users/></div><div><strong>Welcome to Ventora</strong><small>Your private workspace</small></div></div>:headerUser?<><div className="workspace-member"><div className="member-avatar">{(headerUser.user_metadata?.full_name||headerUser.user_metadata?.name||headerUser.email||'V').slice(0,1).toUpperCase()}</div><div><strong>{headerUser.user_metadata?.full_name||headerUser.user_metadata?.name||headerUser.email||'Ventora member'}</strong><small>{accountType==='investor'?'Investor account':'Business account'}</small></div></div><div className="workspace-nav-label">WORKSPACE</div><nav>{items.map(item=><button key={item.key} onClick={()=>go(item.to)}>{item.icon}{item.label}</button>)}</nav><div className="workspace-nav-label">DISCOVER</div><nav><button className={location.pathname==='/investors'?'active':''} onClick={()=>go('/investors')}><ChartNoAxesCombined size={17}/>Investor Directory</button><button className={location.pathname==='/businesses'?'active':''} onClick={()=>go('/businesses')}><Building2 size={17}/>Business Directory</button></nav>{adminAllowed&&<><div className="workspace-nav-label">ADMINISTRATION</div><nav><button onClick={()=>go('/admin')}><ShieldCheck size={17}/>Admin Portal</button></nav></>}<div className="workspace-sidebar-bottom"><button onClick={signOut}><LockKeyhole size={16}/>Sign out</button></div></>:<><div className="workspace-member"><div className="member-avatar"><Users/></div><div><strong>Welcome to Ventora</strong><small>Sign in to access your workspace</small></div></div><div className="workspace-nav-label">MEMBER ACCESS</div><nav><button onClick={()=>go('/login')}><LockKeyhole size={17}/>Log in to your account</button><button onClick={()=>go('/signup')}><Users size={17}/>Create an account</button></nav><div className="workspace-nav-label">DISCOVER</div><nav><button onClick={()=>go('/investors')}><ChartNoAxesCombined size={17}/>Investor Directory</button><button onClick={()=>go('/businesses')}><Building2 size={17}/>Business Directory</button></nav></>}
 
