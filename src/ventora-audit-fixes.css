@@ -3881,3 +3881,113 @@ body>.workspace-menu-toggle svg{width:21px!important;height:21px!important;max-w
 @media(max-width:430px){
  .vc-member-section.messages-page>.vc-member-section-topbar{padding-left:58px!important;padding-right:8px!important}
 }
+
+
+/* MESSAGES FINAL MOBILE STABILITY + CONTRAST
+   Use the stable small viewport for the outer shell so browser chrome changes
+   cannot resize the page and pull the entire Messages canvas above the screen. */
+.vc-member-section.messages-page{
+ position:relative!important;
+ top:auto!important;bottom:auto!important;
+ display:flex!important;flex-direction:column!important;
+ width:100%!important;max-width:100%!important;min-width:0!important;
+ height:100svh!important;min-height:100svh!important;max-height:100svh!important;
+ margin:0!important;padding:0!important;
+ overflow:hidden!important;overscroll-behavior:none!important;
+ transform:none!important;
+}
+.vc-member-section.messages-page>.vc-member-section-topbar{
+ position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
+ z-index:5!important;flex:0 0 58px!important;
+ display:flex!important;align-items:center!important;
+ width:100%!important;height:58px!important;min-height:58px!important;max-height:58px!important;
+ box-sizing:border-box!important;margin:0!important;
+ padding:0 12px 0 62px!important;
+ overflow:hidden!important;transform:none!important;
+ background:rgba(248,251,249,.97)!important;
+ border:0!important;border-bottom:1px solid rgba(36,88,99,.18)!important;
+ box-shadow:0 5px 18px rgba(15,34,52,.08)!important;
+ -webkit-backdrop-filter:blur(16px)!important;backdrop-filter:blur(16px)!important;
+}
+.vc-member-section.messages-page>.vc-member-section-topbar>.vc-member-section-logo{
+ display:inline-flex!important;align-items:center!important;
+ flex:0 1 auto!important;min-width:0!important;max-width:calc(100% - 100px)!important;
+ margin:0!important;position:relative!important;left:auto!important;top:auto!important;
+ transform:none!important;opacity:1!important;visibility:visible!important;
+}
+.vc-member-section.messages-page>.vc-member-section-topbar .brand-word,
+.vc-member-section.messages-page>.vc-member-section-topbar .brand-sub{
+ color:#0F2234!important;opacity:1!important;visibility:visible!important;
+ text-shadow:none!important;
+}
+.vc-member-section.messages-page>.vc-member-section-topbar>.vc-member-section-home{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ margin-left:auto!important;flex:0 0 auto!important;
+ color:#245863!important;background:#F4F7F9!important;
+ border:1px solid rgba(36,88,99,.22)!important;
+ opacity:1!important;visibility:visible!important;
+}
+.vc-member-section.messages-page>.vc-member-section-content{
+ position:relative!important;z-index:2!important;
+ display:flex!important;flex:1 1 0!important;flex-direction:column!important;
+ width:100%!important;height:calc(100svh - 58px)!important;
+ min-width:0!important;min-height:0!important;max-height:calc(100svh - 58px)!important;
+ margin:0!important;padding:8px!important;box-sizing:border-box!important;
+ overflow:hidden!important;overscroll-behavior:none!important;transform:none!important;
+}
+.vc-member-section.messages-page .messages-studio{
+ flex:1 1 0!important;width:100%!important;height:100%!important;
+ min-width:0!important;min-height:0!important;max-height:100%!important;
+ overflow:hidden!important;transform:none!important;
+}
+.vc-member-section.messages-page .messages-list-title .section-kicker,
+.vc-member-section.messages-page .messages-list-title .section-kicker *,
+.vc-member-section.messages-page .messages-list-title>div>span{
+ color:#F0FAF5!important;opacity:1!important;visibility:visible!important;
+ text-shadow:0 1px 8px rgba(0,0,0,.5)!important;
+ font-weight:750!important;letter-spacing:.15em!important;
+}
+.vc-member-section.messages-page .messages-list-title h1{
+ color:#FFFFFF!important;opacity:1!important;visibility:visible!important;
+ text-shadow:0 2px 12px rgba(0,0,0,.28)!important;
+}
+.vc-member-section.messages-page .messages-list-title p{
+ color:rgba(248,253,250,.94)!important;opacity:1!important;
+}
+.vc-member-section.messages-page .messages-list{
+ background:rgba(8,34,42,.78)!important;
+ border-color:rgba(224,244,234,.34)!important;
+}
+@media(max-width:760px){
+ html:has(.vc-member-section.messages-page),
+ body:has(.vc-member-section.messages-page),
+ #root:has(.vc-member-section.messages-page){
+  height:100%!important;min-height:0!important;max-height:100%!important;
+  overflow:hidden!important;overscroll-behavior:none!important;
+ }
+ .vc-member-section.messages-page{height:100svh!important;min-height:100svh!important;max-height:100svh!important}
+ .vc-member-section.messages-page>.vc-member-section-topbar{
+  flex-basis:56px!important;height:56px!important;min-height:56px!important;max-height:56px!important;
+  padding:0 10px 0 58px!important;
+ }
+ .vc-member-section.messages-page>.vc-member-section-content{
+  height:calc(100svh - 56px)!important;max-height:calc(100svh - 56px)!important;
+  padding:7px!important;
+ }
+ .vc-member-section.messages-page .messages-studio{min-height:0!important;height:100%!important}
+ .vc-member-section.messages-page .workspace-menu-toggle{
+  position:fixed!important;left:10px!important;top:calc(env(safe-area-inset-top, 0px) + 9px)!important;
+  right:auto!important;bottom:auto!important;transform:none!important;
+  z-index:2147483602!important;
+ }
+}
+@media(max-width:430px){
+ .vc-member-section.messages-page>.vc-member-section-topbar{padding-left:56px!important;padding-right:8px!important}
+ .vc-member-section.messages-page>.vc-member-section-topbar>.vc-member-section-logo{max-width:calc(100% - 82px)!important}
+ .vc-member-section.messages-page>.vc-member-section-topbar .brand-word{font-size:12px!important;letter-spacing:.02em!important}
+ .vc-member-section.messages-page>.vc-member-section-topbar .brand-sub{font-size:4.5px!important}
+ .vc-member-section.messages-page>.vc-member-section-topbar>.vc-member-section-home{font-size:8px!important;padding:6px 8px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .vc-member-section.messages-page,.vc-member-section.messages-page *{scroll-behavior:auto!important}
+}
