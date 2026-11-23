@@ -76,13 +76,23 @@ useEffect(()=>()=>window.clearTimeout(menuTimer.current),[]);
 useEffect(()=>{
  if(!open)return;
  const body=document.body,html=document.documentElement;
+ const appRoot=document.getElementById('root') as HTMLElement|null;
  const previousBodyOverflow=body.style.overflow,previousHtmlOverflow=html.style.overflow;
  const previousBodyOverscroll=body.style.overscrollBehavior,previousHtmlOverscroll=html.style.overscrollBehavior;
+ const previousRootInert=appRoot?.inert??false;
  body.style.overflow='hidden';html.style.overflow='hidden';
  body.style.overscrollBehavior='none';html.style.overscrollBehavior='none';
+ body.classList.add('vc-navigation-open');
+ if(appRoot)appRoot.inert=true;
  const onKeyDown=(event:KeyboardEvent)=>{if(event.key==='Escape')close();};
  window.addEventListener('keydown',onKeyDown);
- return()=>{body.style.overflow=previousBodyOverflow;html.style.overflow=previousHtmlOverflow;body.style.overscrollBehavior=previousBodyOverscroll;html.style.overscrollBehavior=previousHtmlOverscroll;window.removeEventListener('keydown',onKeyDown);};
+ return()=>{
+  body.style.overflow=previousBodyOverflow;html.style.overflow=previousHtmlOverflow;
+  body.style.overscrollBehavior=previousBodyOverscroll;html.style.overscrollBehavior=previousHtmlOverscroll;
+  body.classList.remove('vc-navigation-open');
+  if(appRoot)appRoot.inert=previousRootInert;
+  window.removeEventListener('keydown',onKeyDown);
+ };
 },[open]);
 const toggleMenu=()=>{
  window.clearTimeout(menuTimer.current);
