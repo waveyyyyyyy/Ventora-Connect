@@ -1,0 +1,72 @@
+/* Responsive QA: keep the public header fully inside narrow phone viewports. */
+@media (max-width: 760px) {
+  .gp-public-header {
+    padding-inline: 10px !important;
+    gap: 6px !important;
+  }
+
+  .gp-public-header .gp-brand-lockup {
+    min-width: 0 !important;
+    gap: 6px !important;
+  }
+
+  .gp-public-header .gp-brand-lockup .brand-word {
+    font-size: 14px !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .gp-public-header .gp-brand-lockup .brand-mark {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .gp-public-header .gp-public-actions {
+    min-width: 0 !important;
+    gap: 6px !important;
+  }
+
+  .gp-public-header .gp-public-actions .gp-primary {
+    padding: 8px 8px !important;
+    font-size: 10px !important;
+    white-space: nowrap !important;
+  }
+
+  .gp-public-header .gp-login {
+    font-size: 10px !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .gp-public-header {
+    padding-inline: 10px !important;
+    gap: 5px !important;
+  }
+
+  .gp-public-header .gp-menu-toggle {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .gp-public-header .gp-brand-lockup .brand-word {
+    font-size: 13px !important;
+  }
+
+  .gp-public-header .gp-brand-lockup .brand-mark {
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  .gp-public-header .gp-public-actions {
+    gap: 0 !important;
+  }
+
+  .gp-public-header .gp-public-actions .gp-login {
+    display: none !important;
+  }
+
+  .gp-public-header .gp-public-actions .gp-primary {
+    padding: 8px 7px !important;
+    font-size: 10px !important;
+  }
+}
