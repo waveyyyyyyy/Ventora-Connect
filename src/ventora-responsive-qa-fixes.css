@@ -1,114 +1,36 @@
-/* Responsive QA: keep the public header fully inside narrow phone viewports. */
+/* Prevent legacy public directory navigation labels from shrinking into each other. */
 @media (max-width: 760px) {
-  .gp-public-header {
-    padding-inline: 10px !important;
-    gap: 6px !important;
+  .header .topbar-actions {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: max-content !important;
+    gap: 10px !important;
   }
 
-  .gp-public-header .gp-brand-lockup {
-    min-width: 0 !important;
-    gap: 6px !important;
-  }
-
-  .gp-public-header .gp-brand-lockup .brand-word {
-    font-size: 14px !important;
-    letter-spacing: 0.02em !important;
-  }
-
-  .gp-public-header .gp-brand-lockup .brand-mark {
-    width: 28px !important;
-    height: 28px !important;
-  }
-
-  .gp-public-header .gp-public-actions {
-    min-width: 0 !important;
-    gap: 6px !important;
-  }
-
-  .gp-public-header .gp-public-actions .gp-primary {
-    padding: 8px 8px !important;
-    font-size: 10px !important;
+  .header .login-link,
+  .header .nav-cta {
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: max-content !important;
     white-space: nowrap !important;
   }
 
-  .gp-public-header .gp-login {
-    font-size: 10px !important;
-    white-space: nowrap !important;
+  .header .nav-cta {
+    padding: 9px 12px !important;
   }
 }
 
 @media (max-width: 360px) {
-  .gp-public-header {
-    padding-inline: 10px !important;
-    gap: 5px !important;
+  .header .topbar-actions {
+    gap: 8px !important;
   }
 
-  .gp-public-header .gp-menu-toggle {
-    width: 36px !important;
-    height: 36px !important;
-  }
-
-  .gp-public-header .gp-brand-lockup .brand-word {
-    font-size: 13px !important;
-  }
-
-  .gp-public-header .gp-brand-lockup .brand-mark {
-    width: 26px !important;
-    height: 26px !important;
-  }
-
-  .gp-public-header .gp-public-actions {
-    gap: 0 !important;
-  }
-
-  .gp-public-header .gp-public-actions .gp-login {
-    display: none !important;
-  }
-
-  .gp-public-header .gp-public-actions .gp-primary {
-    padding: 8px 7px !important;
+  .header .nav-cta {
+    padding: 8px 10px !important;
     font-size: 10px !important;
   }
-}
-
-/* Keep the auth back control clear of the page kicker. */
-.auth-box .section-kicker {
-  margin-top: 22px !important;
-}
-
-/* Render message-session warnings in the content flow so they never cover the footer. */
-.messages-error {
-  position: relative !important;
-  top: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-  transform: none !important;
-  width: min(520px, calc(100% - 30px)) !important;
-  max-width: 100% !important;
-  margin: 12px auto 0 !important;
-  align-self: center !important;
-  z-index: 1 !important;
-}
-
-/* Closed homepage FAQ rows must not expose their answer paragraphs. */
-.gp-home-faq-item:not([open]) > p {
-  display: none !important;
-}
-
-/* Keep the hero poster's tagline clear of its multi-line title. */
-.gp-poster > span {
-  margin-top: 30px !important;
-}
-
-/* Switch the public header to its existing menu before nav links can collide. */
-@media (max-width: 940px) {
-  .gp-public-header nav {
-    display: none !important;
-  }
-}
-
-/* Keep the fixed workspace menu button clear of the desktop wordmark. */
-body > .workspace-menu-toggle {
-  left: 18px !important;
 }
