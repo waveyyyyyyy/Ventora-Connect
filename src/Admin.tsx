@@ -2,7 +2,7 @@ import {useCallback,useEffect,useMemo,useState} from 'react';
 import {Link} from 'react-router-dom';
 import BrandLogo from './BrandLogo';
 import {supabase,requireActiveSession} from './lib/supabase';
-import {ShieldCheck,Users,Building2,ChartNoAxesCombined,FileCheck,Flag,LifeBuoy,Search,RefreshCw,CheckCircle2,Ban,Send,Menu,X,ArrowLeft,Activity,LockKeyhole,Eye,EyeOff,Plus,Edit3,Trash2,ExternalLink,ChevronRight,Clock, Megaphone} from 'lucide-react';
+import {ShieldCheck,Users,Building2,ChartNoAxesCombined,FileCheck,Flag,LifeBuoy,Search,RefreshCw,CheckCircle2,Ban,Send,Menu,X,ArrowLeft,Activity,LockKeyhole,Eye,EyeOff,Plus,Edit3,Trash2,ExternalLink,ChevronRight,Megaphone} from 'lucide-react';
 
 type Tab='overview'|'members'|'businesses'|'plans'|'verification'|'reports'|'support'|'announcements';
 const tabs:{id:Tab;label:string;icon:any}[]=[
@@ -73,7 +73,6 @@ export default function Admin(){
  const businesses=useMemo(()=>data.businesses.filter((b:any)=>{const term=query.trim().toLowerCase(),owner=b.owner||{};return(!term||[b.company_name,b.industry,b.id,owner.full_name,owner.email,b.city,b.country].filter(Boolean).join(' ').toLowerCase().includes(term))&&(businessFilter==='all'||(businessFilter==='published'?b.is_published:businessFilter==='draft'?!b.is_published:businessFilter==='featured'?b.featured:businessFilter==='suspended'?owner.is_suspended:false));}),[data.businesses,query,businessFilter]);
  const filteredReports=data.reports.filter((r:any)=>reportFilter==='all'||r.status===reportFilter);
  const filteredTickets=data.tickets.filter((t:any)=>ticketFilter==='all'||t.status===ticketFilter);
- const pendingPlans=data.plans.filter((r:any)=>r.status==='pending');
 
  async function runAction(key:string,action:()=>any,success:string){setBusy(key);setNotice('');try{const result=await action();if(result?.error)throw result.error;notify(success);await refresh(false);}catch(e){notify('Action failed: '+messageOf(e));}finally{setBusy('');}}
  async function suspendMember(m:any){await runAction(m.id,()=>supabase!.from('profiles').update({is_suspended:!m.is_suspended}).eq('id',m.id),m.is_suspended?'Member reinstated.':'Member suspended.');}
