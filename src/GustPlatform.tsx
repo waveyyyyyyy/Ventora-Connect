@@ -64,10 +64,7 @@ function PublicPlanComparison({onNavigate}:{onNavigate:(path:string)=>void}){
    if(!active)return;
    if(!planResult.error)setPlans(planResult.data||[]);
    if(userResult?.id){
-    const[subscription,profile]=await Promise.all([
-     supabase.from('subscriptions').select('plan_id,status').eq('user_id',userResult.id).maybeSingle(),
-     supabase.from('profiles').select('account_type').eq('id',userResult.id).maybeSingle()
-    ]);
+    const subscription=await supabase.from('subscriptions').select('plan_id,status').eq('user_id',userResult.id).maybeSingle();
     if(!active)return;
     setCurrentPlan(subscription.data?.plan_id||null);
    }
