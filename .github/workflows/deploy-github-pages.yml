@@ -16,7 +16,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages
+  group: github-pages-ventora
   cancel-in-progress: true
 
 jobs:
