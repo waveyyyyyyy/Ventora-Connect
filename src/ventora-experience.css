@@ -804,3 +804,31 @@ body{overflow-x:clip}
 
 /* Persistent, viewport-level confirmation and error dialog */
 .vc-notice-backdrop{position:fixed;inset:0;z-index:100500;display:grid;place-items:center;padding:22px;background:rgba(7,17,35,.68);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}.vc-notice-dialog{width:min(460px,100%);padding:34px 30px 28px;border:1px solid #ffffffa8;border-radius:24px;background:linear-gradient(145deg,#fff 0%,#f3f7ff 100%);box-shadow:0 32px 100px #07132966;text-align:center;color:#14213b;animation:vc-notice-in .24s ease-out}.vc-notice-icon{width:54px;height:54px;margin:0 auto 18px;border-radius:18px;display:grid;place-items:center;background:#e5efff;color:#245bd3;font-size:26px;font-weight:800}.vc-notice-dialog .section-kicker{display:block;font-size:9px;letter-spacing:.18em}.vc-notice-dialog h2{font:650 29px/1.15 Manrope,sans-serif;letter-spacing:-.045em;margin:13px 0 10px}.vc-notice-dialog p{font-size:14px;line-height:1.75;color:#5f6f86;margin:0 auto 24px;white-space:pre-wrap}.vc-notice-dialog .btn{min-width:150px}@keyframes vc-notice-in{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}.workspace-member-plan{display:flex;align-items:center;gap:5px;margin-top:7px;color:#315feA;font-size:10px;font-weight:750;letter-spacing:.01em}.workspace-member-plan svg{flex:0 0 auto}@media(max-width:520px){.vc-notice-backdrop{padding:18px}.vc-notice-dialog{padding:29px 22px 23px;border-radius:20px}.vc-notice-dialog h2{font-size:26px}}
+
+
+/* Ventora editorial message experience — persistent, accessible and intentionally not a generic tick alert */
+.vc-notice-backdrop{position:fixed;inset:0;z-index:100500;display:grid;place-items:center;padding:22px;background:radial-gradient(ellipse at 50% 42%,rgba(37,74,67,.25),transparent 48%),rgba(7,17,25,.76);backdrop-filter:blur(17px) saturate(.82);-webkit-backdrop-filter:blur(17px) saturate(.82)}
+.vc-notice-dialog{position:relative;isolation:isolate;overflow:hidden;width:min(510px,100%);padding:34px 36px 30px;border:1px solid rgba(255,255,255,.68);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(239,244,238,.97) 58%,rgba(229,237,229,.98));box-shadow:0 38px 110px rgba(0,0,0,.36),inset 0 1px 0 rgba(255,255,255,.9);text-align:left;color:#172b29;animation:vc-notice-in .38s cubic-bezier(.2,.8,.2,1)}
+.vc-notice-dialog:before{content:"";position:absolute;z-index:-1;width:310px;height:310px;right:-150px;top:-175px;border-radius:50%;background:radial-gradient(circle,rgba(172,196,168,.48),rgba(172,196,168,0) 70%)}
+.vc-notice-dialog:after{content:"VC";position:absolute;z-index:-1;right:25px;bottom:18px;font:700 88px/.8 Georgia,serif;letter-spacing:-.12em;color:rgba(34,67,58,.045);pointer-events:none}
+.vc-notice-dialog-headline{position:relative;min-height:158px;padding-top:2px}
+.vc-notice-art{position:relative;width:76px;height:76px;margin:0 0 25px;border-radius:25px;background:linear-gradient(145deg,#203e37,#52766a 62%,#9aaf96);box-shadow:0 13px 28px rgba(36,69,58,.24),inset 0 1px 0 rgba(255,255,255,.42);transform:rotate(-5deg)}
+.vc-notice-art:before,.vc-notice-art:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.44);border-radius:50%;inset:10px}
+.vc-notice-art:after{inset:19px;border-color:rgba(255,255,255,.26)}
+.vc-notice-art span{position:absolute;width:19px;height:19px;left:28px;top:28px;border-radius:6px;background:linear-gradient(135deg,#fff4d9,#d6e5d2);transform:rotate(45deg);box-shadow:0 0 22px rgba(255,255,255,.32)}
+.vc-notice-art i{position:absolute;width:6px;height:6px;right:13px;top:13px;border-radius:50%;background:#e9d6a6;box-shadow:0 0 0 5px rgba(233,214,166,.13)}
+.vc-notice-art b{position:absolute;width:5px;height:5px;left:13px;bottom:14px;border-radius:50%;background:#e9d6a6}
+.vc-notice-error .vc-notice-art{background:linear-gradient(145deg,#4a3430,#95665b 62%,#c29a7c)}
+.vc-notice-error .vc-notice-art span{background:linear-gradient(135deg,#fff0dc,#f0c8a9)}
+.vc-notice-overline{display:block;margin-bottom:11px;color:#718078;font-size:9px;font-weight:800;letter-spacing:.2em}
+.vc-notice-dialog h2{max-width:390px;margin:0;color:#1a302c;font:600 clamp(28px,5vw,37px)/1.08 Manrope,Georgia,serif;letter-spacing:-.055em}
+.vc-notice-dialog p{position:relative;margin:20px 0 26px;padding:17px 18px;border-left:2px solid #8ca493;border-radius:0 12px 12px 0;background:rgba(255,255,255,.58);color:#596b63;font-size:14px;line-height:1.8;white-space:pre-wrap}
+.vc-notice-error p{border-left-color:#b17a68}
+.vc-notice-dismiss{position:relative;display:flex;align-items:center;justify-content:space-between;gap:26px;width:100%;min-height:54px;padding:0 19px;border:1px solid #203b35;border-radius:13px;background:#203b35;color:#fff;font:700 12px/1 Manrope,sans-serif;letter-spacing:.04em;cursor:pointer;transition:transform .2s ease,background .2s ease,box-shadow .2s ease;box-shadow:0 9px 20px rgba(32,59,53,.16)}
+.vc-notice-dismiss span{font-size:19px;font-weight:400;transition:transform .2s ease}
+.vc-notice-dismiss:hover{background:#31584d;transform:translateY(-2px);box-shadow:0 13px 24px rgba(32,59,53,.22)}
+.vc-notice-dismiss:hover span{transform:translate(3px,-2px)}
+.vc-notice-dismiss:focus-visible{outline:3px solid #a9c3a8;outline-offset:3px}
+@keyframes vc-notice-in{from{opacity:0;transform:translateY(18px) scale(.975);filter:blur(4px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@media(max-width:520px){.vc-notice-backdrop{padding:17px}.vc-notice-dialog{padding:27px 23px 22px;border-radius:24px}.vc-notice-dialog-headline{min-height:145px}.vc-notice-art{width:67px;height:67px;border-radius:22px;margin-bottom:22px}.vc-notice-art span{left:24px;top:24px}.vc-notice-dialog p{font-size:13px;padding:15px}.vc-notice-dialog:after{font-size:72px}}
+@media(prefers-reduced-motion:reduce){.vc-notice-dialog,.vc-notice-dismiss,.vc-notice-dismiss span{animation:none;transition:none}}
