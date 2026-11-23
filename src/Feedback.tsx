@@ -1,7 +1,9 @@
 import {useCallback,useEffect,useMemo,useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {supabase,restoreUserSession,requireActiveSession} from './lib/supabase';
-import {ArrowLeft,Send,RefreshCw,ShieldCheck,Inbox} from 'lucide-react';
+import {Send,RefreshCw,ShieldCheck,Inbox} from 'lucide-react';
+import WorkspaceNavigation from './WorkspaceNavigation';
+import BrandLogo from './BrandLogo';
 
 type FeedbackStatus='open'|'in_review'|'planned'|'resolved'|'closed';
 type FeedbackItem={id:string;user_id:string;category:string;title:string;description:string;priority:string;page_context:string|null;status:FeedbackStatus;created_at:string;updated_at:string;profiles?:{full_name?:string}|null};
@@ -86,7 +88,7 @@ export default function Feedback(){
   finally{setSending(false);}
  }
  const threadReplies=replies.filter(x=>x.feedback_id===selected);
- return <div className="vc-feedback"><style>{feedbackStyle}</style><header className="vc-feedback-top"><button className="vc-feedback-back" onClick={()=>nav('/dashboard?tab=overview')} aria-label="Back to workspace"><ArrowLeft size={18}/></button><div className="vc-feedback-brand">VENTORA <small>CONNECT / MEMBER FEEDBACK</small></div></header>
+ return <div className="vc-feedback"><style>{feedbackStyle}</style><WorkspaceNavigation user={user}/><header className="vc-feedback-top"><BrandLogo to="/dashboard?tab=overview" className="vc-feedback-logo"/><div className="vc-feedback-brand">MEMBER FEEDBACK <small>VENTORA CONNECT / LISTENING ROOM</small></div></header>
   <main className="vc-feedback-wrap"><section className="vc-feedback-hero"><div className="vc-feedback-kicker">VENTORA / LISTENING ROOM</div><h1>Better together,<br/><em>built through feedback.</em></h1><p>Share what is working, tell us what needs attention, and keep the conversation going directly with the Ventora team.</p></section>
    <div className="vc-feedback-grid"><section className="vc-feedback-panel"><h2>Share your feedback</h2><p className="vc-feedback-sub">Suggestions, product ideas, bugs and experience notes all have a place here.</p>
     {notice&&<div className="vc-feedback-notice" role="status">{notice}</div>}{error&&<div className="vc-feedback-notice vc-feedback-error" role="alert">{error}</div>}
