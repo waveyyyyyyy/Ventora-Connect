@@ -4559,3 +4559,77 @@ body>.workspace-menu-toggle{
 @media(max-width:360px){
   .vc-member-section>.vc-overview-identical-topbar{padding-left:54px!important;padding-right:8px!important}
 }
+
+
+/* Precise full-bleed correction: keep the section in normal layout flow and
+   break only its masthead out to the viewport edges. */
+.vc-member-section{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  box-sizing:border-box!important;
+}
+.vc-member-section>.vc-overview-identical-topbar{
+  position:relative!important;
+  left:calc(50% - 50vw)!important;
+  right:auto!important;
+  transform:none!important;
+  width:100vw!important;
+  min-width:100vw!important;
+  max-width:100vw!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  padding-left:72px!important;
+  padding-right:22px!important;
+}
+.vc-member-section>.vc-overview-identical-topbar .topbar-actions>a.topbar-avatar{
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+.vc-member-section>.vc-overview-identical-topbar .workspace-command{
+  flex:0 1 360px!important;
+  min-width:0!important;
+  margin-inline:auto!important;
+  justify-content:center!important;
+  text-align:center!important;
+  font-size:11px!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+@media(max-width:760px){
+  .vc-member-section>.vc-overview-identical-topbar{
+    width:100vw!important;min-width:100vw!important;max-width:100vw!important;
+    padding-left:58px!important;padding-right:12px!important;gap:9px!important;
+  }
+  .vc-member-section>.vc-overview-identical-topbar .topbar-actions>a.topbar-avatar{
+    border:0!important;outline:0!important;box-shadow:none!important;
+  }
+}
+@media(max-width:360px){
+  .vc-member-section>.vc-overview-identical-topbar{padding-left:54px!important;padding-right:8px!important}
+}
+
+/* Membership is an anchor now, so it inherits the exact same footer link rule. */
+.gp-footer>div>a.gp-membership-nav{
+  display:inline-flex!important;
+  align-items:center!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:#536777!important;
+  font:600 13px/1.4 inherit!important;
+  text-decoration:none!important;
+  text-transform:none!important;
+  box-shadow:none!important;
+}
+.gp-footer>div>a.gp-membership-nav:hover{
+  color:#1b607b!important;
+  text-decoration:none!important;
+  transform:translateY(-2px)!important;
+}
