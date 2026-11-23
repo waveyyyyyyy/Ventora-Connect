@@ -9,7 +9,7 @@ type Props={plans:any[];currentPlan:any;accountType:Lens;requests:any[];busy:boo
 
 const cap=(value:any,singular:string)=>value===-1?'Unlimited':value==null?'Not included':Number(value)===1?'1 '+singular:Number(value).toLocaleString('en-IN')+' '+singular+'s';
 const yes=(value:any)=>value===true;
-const isNotIncluded=(value:any)=>/^(not included|preview only|not listed|unavailable|—|✕)$/i.test(String(value).trim());
+const isNotIncluded=(value:any)=>{const text=String(value??'').trim();return /\b(not included|preview only|not listed|unavailable|not available)\b/i.test(text)||/^(—|–|✕|×|x|no)$/i.test(text);};
 const featureIndicator=(value:any)=>isNotIncluded(value)?<span className="vc-feature-not-included" aria-label="Not included">—</span>:<Check size={15} aria-label="Included"/>;
 const money=(value:any)=>'₹'+Number(value||0).toLocaleString('en-IN');
 
