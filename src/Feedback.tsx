@@ -4,6 +4,7 @@ import {supabase,restoreUserSession,requireActiveSession} from './lib/supabase';
 import {Send,RefreshCw,ShieldCheck,Inbox} from 'lucide-react';
 import WorkspaceNavigation from './WorkspaceNavigation';
 import BrandLogo from './BrandLogo';
+import VentoraFooter from './VentoraFooter';
 
 type FeedbackStatus='open'|'in_review'|'planned'|'resolved'|'closed';
 type FeedbackItem={id:string;user_id:string;category:string;title:string;description:string;priority:string;page_context:string|null;status:FeedbackStatus;created_at:string;updated_at:string;profiles?:{full_name?:string}|null};
@@ -108,6 +109,7 @@ export default function Feedback(){
     </div>}
    </section></div>
   </main>
+  <VentoraFooter/>
  </div>;
 }
 
