@@ -8,7 +8,7 @@ export default function MemberSectionLayout({children,className='',actionTo='/da
  return <div className={'vc-member-section '+className}>
   <WorkspaceNavigation user={user}/>
   <header className="vc-member-section-topbar">
-   <BrandLogo light to="/dashboard?tab=overview" className="vc-member-section-logo"/>
+   <BrandLogo to="/dashboard?tab=overview" className="vc-member-section-logo"/>
    <Link to={actionTo} className="vc-member-section-home">{actionLabel}</Link>
   </header>
   <div className="vc-member-section-content">{children}</div>
