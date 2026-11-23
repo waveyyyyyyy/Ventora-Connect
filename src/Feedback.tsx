@@ -1,7 +1,7 @@
 import {useCallback,useEffect,useMemo,useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {supabase,restoreUserSession,requireActiveSession} from './lib/supabase';
-import {ArrowLeft,ArrowUpRight,MessageSquareText,Send,Plus,RefreshCw,Search,ShieldCheck,Lightbulb,Bug,Palette,Wallet,Inbox,Clock3,CheckCircle2,CalendarClock,Filter} from 'lucide-react';
+import {ArrowLeft,Send,RefreshCw,ShieldCheck,Inbox} from 'lucide-react';
 
 type FeedbackStatus='open'|'in_review'|'planned'|'resolved'|'closed';
 type FeedbackItem={id:string;user_id:string;category:string;title:string;description:string;priority:string;page_context:string|null;status:FeedbackStatus;created_at:string;updated_at:string;profiles?:{full_name?:string}|null};
