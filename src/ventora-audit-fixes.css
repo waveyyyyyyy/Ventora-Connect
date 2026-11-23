@@ -3400,3 +3400,45 @@ body.vc-section-navigation-open #root{
     background-size:cover,cover!important;
   }
 }
+
+
+/* BUSINESS DIRECTORY — restore strong contrast on all three editorial poster panels. */
+.directory-editorial-panel{
+ position:relative!important;
+ isolation:isolate!important;
+ background:#102b38!important;
+ color:#fff!important;
+}
+.directory-editorial-panel:before{
+ z-index:0!important;
+ opacity:1!important;
+ background:
+  linear-gradient(180deg,rgba(5,18,28,.72) 0%,rgba(5,18,28,.58) 38%,rgba(5,18,28,.94) 100%),
+  url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=75") center/cover!important;
+}
+.directory-editorial-primary:before{
+ background:
+  linear-gradient(105deg,rgba(5,18,28,.78),rgba(5,18,28,.92)),
+  url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80") center/cover!important;
+}
+.directory-editorial-secondary:before{
+ background:
+  linear-gradient(180deg,rgba(5,18,28,.72),rgba(5,18,28,.94)),
+  url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=75") center/cover!important;
+}
+.directory-editorial-tertiary:before{
+ background:
+  linear-gradient(180deg,rgba(5,18,28,.72),rgba(5,18,28,.95)),
+  url("https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=900&q=75") center/cover!important;
+}
+.directory-editorial-panel>span,
+.directory-editorial-panel>strong,
+.directory-editorial-panel>small{
+ position:relative!important;
+ z-index:1!important;
+ text-shadow:0 2px 12px rgba(0,0,0,.72)!important;
+}
+.directory-editorial-panel>span{color:#e1f4ee!important;font-size:9px!important}
+.directory-editorial-panel>strong{color:#fff!important}
+.directory-editorial-panel>strong em{color:#d4f0e5!important}
+.directory-editorial-panel>small{color:#f0f7f5!important;font-size:8px!important}
