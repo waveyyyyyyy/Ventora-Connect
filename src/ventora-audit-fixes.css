@@ -3245,3 +3245,40 @@ body.vc-section-navigation-open #root{
   transition:none!important;will-change:auto!important
  }
 }
+
+
+/* Workspace drawer entrance: mount off-canvas first, then animate on the next frame. */
+.workspace-sidebar.vc-section-drawer{
+  transition:transform .54s cubic-bezier(.16,1,.3,1),opacity .38s cubic-bezier(.2,.75,.25,1),visibility 0s linear .56s!important;
+  transform:translate3d(calc(-100% - 12px),0,0)!important;
+  opacity:.01!important;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+.workspace-sidebar.vc-section-drawer.is-open{
+  transform:translate3d(0,0,0)!important;
+  opacity:1!important;
+  transition:transform .54s cubic-bezier(.16,1,.3,1),opacity .38s cubic-bezier(.2,.75,.25,1),visibility 0s!important;
+}
+.workspace-sidebar.vc-section-drawer.is-closing{
+  transform:translate3d(calc(-100% - 12px),0,0)!important;
+  opacity:.01!important;
+  transition:transform .42s cubic-bezier(.4,0,1,1),opacity .28s ease,visibility 0s linear .56s!important;
+}
+.vc-section-menu-backdrop{
+  transition:opacity .38s cubic-bezier(.2,.75,.25,1),visibility 0s linear .56s!important;
+}
+.vc-section-menu-backdrop.is-open{
+  transition:opacity .38s cubic-bezier(.2,.75,.25,1),visibility 0s!important;
+}
+.vc-section-menu-backdrop.is-closing{
+  transition:opacity .28s ease,visibility 0s linear .56s!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .workspace-sidebar.vc-section-drawer,
+  .workspace-sidebar.vc-section-drawer.is-open,
+  .workspace-sidebar.vc-section-drawer.is-closing,
+  .vc-section-menu-backdrop,
+  .vc-section-menu-backdrop.is-open,
+  .vc-section-menu-backdrop.is-closing{transition:none!important}
+}
