@@ -90,3 +90,8 @@
   align-self: center !important;
   z-index: 1 !important;
 }
+
+/* Closed homepage FAQ rows must not expose their answer paragraphs. */
+.gp-home-faq-item:not([open]) > p {
+  display: none !important;
+}
