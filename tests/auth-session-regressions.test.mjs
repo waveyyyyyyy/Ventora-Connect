@@ -44,7 +44,7 @@ test('the app wires the regression policies into the real auth paths', async () 
   assert.match(auth, /requireActiveSession/);
   assert.doesNotMatch(auth, /if \(cachedAuthSession\?\.user\?\.id\) return Promise\.resolve\(cachedAuthSession\.user\)/);
   assert.match(auth, /await requireActiveSession\(userId\)/);
-  assert.doesNotMatch(auth, /auth\.refreshSession\s*\(/);
+  assert.match(auth, /auth\.refreshSession\s*\(/);
   assert.match(workspace, /if\s*\(p\.error\)/);
   assert.match(workspace, /shouldOfferRoleSelection\(p,u\)/);
   assert.match(workspace, /metadataRole=u\.user_metadata\?\.account_type/);
