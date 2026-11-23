@@ -137,3 +137,25 @@ body.section-navigation-open .workspace-sidebar.workspace-sidebar-open {
   width: min(340px, 88vw) !important;
   max-width: min(340px, 88vw) !important;
 }
+
+/* The empty-state card lives inside .messages-thread-list, so its flex sizing
+   must be applied at that actual parent. Otherwise its CTA grows underneath
+   the fixed-height PRIVATE NETWORK footer on short mobile screens. */
+.vc-member-section.messages-page .messages-thread-list:has(> .messages-empty) {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+
+.vc-member-section.messages-page .messages-thread-list > .messages-empty {
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+  padding: 16px 14px !important;
+}
+
+/* The old fixed toast transform survived the switch to in-flow positioning,
+   shifting it 50% left on tablet/desktop widths. */
+.vc-member-section.messages-page .messages-error {
+  transform: none !important;
+}
