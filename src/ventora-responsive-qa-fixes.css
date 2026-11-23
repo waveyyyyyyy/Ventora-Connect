@@ -100,3 +100,15 @@
 .gp-poster > span {
   margin-top: 30px !important;
 }
+
+/* Switch the public header to its existing menu before nav links can collide. */
+@media (max-width: 940px) {
+  .gp-public-header nav {
+    display: none !important;
+  }
+}
+
+/* Keep the fixed workspace menu button clear of the desktop wordmark. */
+body > .workspace-menu-toggle {
+  left: 18px !important;
+}
