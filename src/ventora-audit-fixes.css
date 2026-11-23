@@ -4267,3 +4267,24 @@ body>.workspace-menu-toggle{
 @media(max-width:360px){
   .gp-hero-copy h1{font-size:clamp(30px,9.6vw,36px)!important}
 }
+
+
+/* Stronger mobile editorial headline scale — supersedes earlier smaller clamps. */
+@media(max-width:720px){
+  .gp-hero-copy h1{
+    font-size:clamp(44px,12.5vw,60px)!important;
+    line-height:1.0!important;
+    letter-spacing:-.065em!important;
+    font-weight:900!important;
+    margin:26px 0 20px!important;
+  }
+  .gp-hero-copy h1>.gp-hero-static,
+  .gp-hero-copy h1>.gp-typewrite{
+    font-size:1em!important;
+    font-weight:900!important;
+    letter-spacing:inherit!important;
+  }
+}
+@media(max-width:380px){
+  .gp-hero-copy h1{font-size:clamp(40px,11.8vw,46px)!important}
+}
