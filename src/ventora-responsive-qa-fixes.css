@@ -70,12 +70,13 @@ body:has(.vc-member-section) > .workspace-menu-toggle {
   left: 18px !important;
   top: 14px !important;
 }
-body:has(.vc-directory-overview-topbar) > .workspace-menu-toggle {
-  display: none !important;
-}
+body:has(.vc-directory-overview-topbar) > .workspace-menu-toggle { display: none !important; }
 @media (max-width: 900px) {
-  body:has(.vc-member-section) > .workspace-menu-toggle {
-    left: 10px !important;
-    top: 11px !important;
-  }
+  body:has(.vc-member-section) > .workspace-menu-toggle { left: 10px !important; top: 11px !important; }
+}
+
+/* At tablet widths the secondary hero CTA touched the left poster card.
+   Nudge only that control left while preserving the poster's animation. */
+@media (min-width: 761px) and (max-width: 900px) {
+  .gp-hero-actions .gp-text-btn { translate: -20px 0 !important; }
 }
