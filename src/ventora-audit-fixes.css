@@ -4106,3 +4106,68 @@ body>.workspace-menu-toggle{
 .vc-member-section>.vc-unified-member-topbar{padding-left:68px!important}
 @media(max-width:760px){.vc-member-section>.vc-unified-member-topbar{padding-left:60px!important}}
 @media(max-width:360px){.vc-member-section>.vc-unified-member-topbar{padding-left:54px!important}}
+
+
+/* Final masthead parity: edge-to-edge like the Overview workspace header. */
+.vc-member-section>.vc-overview-identical-topbar,
+.vc-directory-overview-topbar{
+ position:relative!important;left:50%!important;transform:translateX(-50%)!important;
+ width:100vw!important;max-width:100vw!important;margin:0!important;
+ height:74px!important;min-height:74px!important;padding:0 22px 0 72px!important;
+ border:0!important;border-bottom:1px solid rgba(15,34,52,.12)!important;border-radius:0!important;
+ background:#F8FAFC!important;box-shadow:0 5px 22px rgba(15,34,52,.055)!important;
+ display:flex!important;align-items:center!important;gap:20px!important;overflow:visible!important;
+}
+.vc-overview-identical-topbar>.workspace-topbar-logo,
+.vc-directory-overview-topbar>.workspace-topbar-logo{
+ flex:0 0 auto!important;min-width:max-content!important;max-width:none!important;gap:11px!important;
+ opacity:1!important;visibility:visible!important;margin:0!important;
+}
+.vc-overview-identical-topbar .brand-mark,
+.vc-directory-overview-topbar .brand-mark{width:43px!important;height:43px!important;min-width:43px!important;max-width:43px!important;flex:0 0 43px!important}
+.vc-overview-identical-topbar .brand-word,
+.vc-directory-overview-topbar .brand-word{font-size:19px!important;line-height:1!important;letter-spacing:.075em!important;color:#0F2234!important;white-space:nowrap!important}
+.vc-overview-identical-topbar .brand-sub,
+.vc-directory-overview-topbar .brand-sub{font-size:7px!important;letter-spacing:.52em!important;color:#245863!important;white-space:nowrap!important}
+.vc-overview-identical-topbar .workspace-command,
+.vc-directory-overview-topbar .workspace-command{
+ display:flex!important;align-items:center!important;gap:9px!important;flex:1 1 auto!important;min-width:80px!important;
+ max-width:440px!important;height:42px!important;margin:0 auto!important;padding:0 14px!important;
+ border:1px solid #e1e8ec!important;border-radius:13px!important;background:#fff!important;color:#647582!important;
+ font-size:12px!important;font-weight:650!important;
+}
+.vc-overview-identical-topbar .topbar-actions,
+.vc-directory-overview-topbar .topbar-actions{display:flex!important;align-items:center!important;gap:10px!important;flex:0 0 auto!important;margin-left:auto!important}
+.vc-overview-identical-topbar .topbar-actions>a,
+.vc-directory-overview-topbar .topbar-actions>a{width:42px!important;height:42px!important;min-width:42px!important;display:flex!important;align-items:center!important;justify-content:center!important;border:1px solid #e1e8ec!important;border-radius:13px!important;background:#fff!important;color:#245863!important;text-decoration:none!important}
+.vc-overview-identical-topbar .topbar-actions>a.topbar-avatar,
+.vc-directory-overview-topbar .topbar-actions>a.topbar-avatar{width:42px!important;height:42px!important;min-width:42px!important;border-radius:50%!important;background:#dcebed!important;color:#132A3A!important;font-size:14px!important;font-weight:850!important}
+.vc-overview-identical-topbar .topbar-avatar>svg,
+.vc-directory-overview-topbar .topbar-avatar>svg{display:none!important}
+.vc-directory-overview-header{width:100%!important;max-width:100%!important;margin:0!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+.vc-directory-overview-topbar{top:0!important;z-index:90!important}
+@media(max-width:760px){
+ .vc-member-section>.vc-overview-identical-topbar,.vc-directory-overview-topbar{
+  height:66px!important;min-height:66px!important;padding:0 12px 0 58px!important;gap:9px!important;
+ }
+ .vc-overview-identical-topbar .brand-mark,.vc-directory-overview-topbar .brand-mark{width:37px!important;height:37px!important;min-width:37px!important;max-width:37px!important;flex-basis:37px!important}
+ .vc-overview-identical-topbar .brand-word,.vc-directory-overview-topbar .brand-word{font-size:16px!important;letter-spacing:.05em!important}
+ .vc-overview-identical-topbar .brand-sub,.vc-directory-overview-topbar .brand-sub{font-size:6px!important;letter-spacing:.4em!important}
+ .vc-overview-identical-topbar .workspace-command,.vc-directory-overview-topbar .workspace-command{display:none!important}
+ .vc-overview-identical-topbar .topbar-actions,.vc-directory-overview-topbar .topbar-actions{gap:6px!important}
+ .vc-overview-identical-topbar .topbar-actions>a,.vc-directory-overview-topbar .topbar-actions>a{width:37px!important;height:37px!important;min-width:37px!important}
+ .vc-overview-identical-topbar .topbar-actions>a.topbar-avatar,.vc-directory-overview-topbar .topbar-actions>a.topbar-avatar{width:37px!important;height:37px!important;min-width:37px!important}
+}
+@media(max-width:360px){
+ .vc-member-section>.vc-overview-identical-topbar,.vc-directory-overview-topbar{padding-left:54px!important;padding-right:8px!important;gap:7px!important}
+ .vc-overview-identical-topbar .brand-mark,.vc-directory-overview-topbar .brand-mark{width:33px!important;height:33px!important;min-width:33px!important;max-width:33px!important;flex-basis:33px!important}
+ .vc-overview-identical-topbar .brand-word,.vc-directory-overview-topbar .brand-word{font-size:13px!important;letter-spacing:.025em!important}
+ .vc-overview-identical-topbar .brand-sub,.vc-directory-overview-topbar .brand-sub{font-size:5px!important;letter-spacing:.32em!important}
+ .vc-overview-identical-topbar .topbar-actions>a,.vc-directory-overview-topbar .topbar-actions>a{width:33px!important;height:33px!important;min-width:33px!important}
+}
+/* Keep the rotating hero phrase on the same headline line without overflow. */
+.gp-hero-copy h1{max-width:100%!important}
+.gp-hero-copy h1>.gp-typewrite{display:inline-block!important;white-space:nowrap!important;max-width:100%!important;vertical-align:baseline!important}
+.gp-hero-copy h1{font-size:clamp(30px,4.1vw,62px)!important;letter-spacing:-.045em!important}
+@media(max-width:760px){.gp-hero-copy h1{font-size:clamp(25px,7.2vw,39px)!important;line-height:1.08!important}.gp-hero-copy h1>.gp-typewrite{font-size:.92em!important}}
+@media(max-width:360px){.gp-hero-copy h1{font-size:clamp(22px,6.5vw,28px)!important;letter-spacing:-.05em!important}}
