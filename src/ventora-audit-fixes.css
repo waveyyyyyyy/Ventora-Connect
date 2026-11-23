@@ -5033,3 +5033,29 @@ body::before{
   html{scroll-behavior:auto!important}
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+
+/* Shared editorial footer across workspace and member-section routes. */
+body::before{z-index:0!important}
+#root{position:relative;z-index:1;background:transparent}
+.vc-editorial-footer{
+  width:100%;margin:clamp(36px,6vw,76px) auto 0;padding:28px clamp(16px,4vw,48px) 18px;
+  border-top:1px solid rgba(19,42,58,.14);
+  background:rgba(255,255,255,.66);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  color:#0F2234;box-sizing:border-box;
+}
+.vc-editorial-footer-main{width:min(100%,1320px);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:28px}
+.vc-editorial-footer-brand{display:grid;gap:9px;min-width:0}
+.vc-editorial-footer-brand .brand{align-items:flex-start}
+.vc-editorial-footer-brand p{margin:0;color:#536b76;font-size:12px;line-height:1.5}
+.vc-editorial-footer nav{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:clamp(12px,2.4vw,28px)}
+.vc-editorial-footer nav a{color:#34535e;font-size:12px;font-weight:700;text-decoration:none}
+.vc-editorial-footer nav a:hover{color:#245863}
+.vc-editorial-footer-bottom{width:min(100%,1320px);margin:24px auto 0;padding-top:14px;border-top:1px solid rgba(19,42,58,.1);display:flex;justify-content:space-between;gap:12px;color:#71818a;font-size:9px;font-weight:800;letter-spacing:.1em}
+@media(max-width:600px){
+ .vc-editorial-footer{padding:24px 16px 16px}
+ .vc-editorial-footer-main{align-items:flex-start;flex-direction:column;gap:18px}
+ .vc-editorial-footer nav{justify-content:flex-start;gap:12px 18px}
+ .vc-editorial-footer-bottom{flex-direction:column;gap:6px;font-size:8px}
+}
