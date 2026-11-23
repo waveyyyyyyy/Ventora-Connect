@@ -1,4 +1,4 @@
-import {lazy,Suspense,useEffect,useRef,useState} from 'react';
+import {lazy,Suspense,useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {createPortal} from 'react-dom';import {Link,Route,Routes,useNavigate,useParams,useLocation,Navigate} from 'react-router-dom';import {ArrowUpRight,Building2,ChartNoAxesCombined,ShieldCheck,Menu,X,LockKeyhole,Sparkles,Compass,Users,Bell,Bookmark,CalendarDays,FileText,MessageCircle} from 'lucide-react';import {supabase,restoreUserSession,checkMessagingProfile,signOutUser} from './lib/supabase';
 import { VentoraLoadingContext, type VentoraLoadingSetter } from './VentoraLoadingContext';
 import VentoraLoader from './VentoraLoader';
@@ -165,6 +165,7 @@ function OAuthReturn(){
  return null;
 }
 export default function App(){
+ useLayoutEffect(()=>{document.getElementById('ventora-boot-screen')?.remove();},[]);
  const[globalLoading,setGlobalLoading]=useState<{active:boolean;status:string}>({active:false,status:'CONNECTING VENTURES...'});
  const setLoader:VentoraLoadingSetter=(active,_variant,status)=>setGlobalLoading({active,status:status||'CONNECTING VENTURES...'});
  return <VentoraLoadingContext.Provider value={setLoader}><OAuthReturn/><AppRoutes setLoader={setLoader}/><VentoraLoader active={globalLoading.active} variant="convergence" motionVariant="box-bounce-paint" status={globalLoading.status}/></VentoraLoadingContext.Provider>;
