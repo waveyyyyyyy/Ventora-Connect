@@ -1,36 +1,50 @@
-/* Prevent legacy public directory navigation labels from shrinking into each other. */
+/* Keep decorative poster rings out of the poster's text flex flow. */
+.gp-poster > div {
+  position: absolute !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+/* Give the compact directory header enough room for complete action labels. */
 @media (max-width: 760px) {
   .header .topbar-actions {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
     flex: 0 0 auto !important;
-    width: auto !important;
     min-width: max-content !important;
-    gap: 10px !important;
+    gap: 8px !important;
   }
 
-  .header .login-link,
-  .header .nav-cta {
-    display: inline-flex !important;
-    flex: 0 0 auto !important;
-    width: auto !important;
-    min-width: max-content !important;
+  .header .login-link {
+    flex: 0 0 44px !important;
+    width: 44px !important;
+    min-width: 44px !important;
     white-space: nowrap !important;
   }
 
   .header .nav-cta {
-    padding: 9px 12px !important;
+    flex: 0 0 96px !important;
+    width: 96px !important;
+    min-width: 96px !important;
+    padding: 9px 8px !important;
+    white-space: nowrap !important;
   }
 }
 
 @media (max-width: 360px) {
   .header .topbar-actions {
-    gap: 8px !important;
+    gap: 7px !important;
+  }
+
+  .header .login-link {
+    flex-basis: 43px !important;
+    width: 43px !important;
+    min-width: 43px !important;
   }
 
   .header .nav-cta {
-    padding: 8px 10px !important;
+    flex-basis: 92px !important;
+    width: 92px !important;
+    min-width: 92px !important;
+    padding-inline: 6px !important;
     font-size: 10px !important;
   }
 }
