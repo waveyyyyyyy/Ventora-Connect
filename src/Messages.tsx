@@ -13,7 +13,7 @@ const dayLabel=(value:string)=>{const d=new Date(value),today=new Date(),yesterd
 
 export default function Messages(){
  const client=supabase;const[params]=useSearchParams();const location=useLocation();const requestedConversation=params.get('conversation')||String((location.state as any)?.conversationId||'');
- const[user,setUser]=useState<any>(null);const[threads,setThreads]=useState<Thread[]>([]);const[selected,setSelected]=useState('');const[items,setItems]=useState<any[]>([]);const[draft,setDraft]=useState('');const[query,setQuery]=useState('');const[filter,setFilter]=useState('all');const[loading,setLoading]=useState(true);const[sending,setSending]=useState(false);const[error,setError]=useState('');const[profileOpen,setProfileOpen]=useState(false);const[contextOpen,setContextOpen]=useState(false);const[gate,setGate]=useState<{missing:string[];percent:number}|null>(null);const[memberPlanId,setMemberPlanId]=useState('');
+ const[user,setUser]=useState<any>(null);const[threads,setThreads]=useState<Thread[]>([]);const[selected,setSelected]=useState('');const[items,setItems]=useState<any[]>([]);const[draft,setDraft]=useState('');const[query,setQuery]=useState('');const[filter,setFilter]=useState('all');const[loading,setLoading]=useState(true);const[sending,setSending]=useState(false);const[error,setError]=useState('');const[profileOpen,setProfileOpen]=useState(false);const[contextOpen,setContextOpen]=useState(false);const[gate,setGate]=useState<{missing:string[];percent:number}|null>(null);
  const streamRef=useRef<HTMLDivElement|null>(null);const composerRef=useRef<HTMLTextAreaElement|null>(null);
  async function runMessagesRequest<T extends {error:any}>(request:()=>PromiseLike<T>,expectedUserId?:string):Promise<T>{
   let result=await request();
