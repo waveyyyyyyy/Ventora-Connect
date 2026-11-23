@@ -66,17 +66,14 @@ body.section-navigation-open .workspace-sidebar.workspace-sidebar-open { width: 
 /* The workspace menu is portaled to <body>. Keep it inside the reserved
    masthead gutter on member pages, and out of the unreserved public directory
    header where it sat directly over the Ventora brand. */
-body:has(.vc-member-section) > .workspace-menu-toggle {
-  left: 18px !important;
-  top: 14px !important;
-}
+body:has(.vc-member-section) > .workspace-menu-toggle { left: 18px !important; top: 14px !important; }
 body:has(.vc-directory-overview-topbar) > .workspace-menu-toggle { display: none !important; }
 @media (max-width: 900px) {
   body:has(.vc-member-section) > .workspace-menu-toggle { left: 10px !important; top: 11px !important; }
 }
 
-/* At tablet widths the secondary hero CTA touched the left poster card.
-   Nudge only that control left while preserving the poster's animation. */
+/* At tablet widths the secondary CTA touched the left poster card.
+   Shift the artwork as a unit to preserve the original 25px button gap. */
 @media (min-width: 761px) and (max-width: 900px) {
-  .gp-hero-actions .gp-text-btn { translate: -20px 0 !important; }
+  .gp-hero-art { translate: 20px 0 !important; }
 }
