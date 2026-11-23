@@ -4101,3 +4101,8 @@ body>.workspace-menu-toggle{
  .vc-unified-member-topbar .topbar-actions{gap:4px!important}
  .vc-unified-member-topbar .topbar-actions>a{width:32px!important;height:32px!important;min-width:32px!important}
 }
+
+/* Reserve the same fixed hamburger lane used by the Overview masthead. */
+.vc-member-section>.vc-unified-member-topbar{padding-left:68px!important}
+@media(max-width:760px){.vc-member-section>.vc-unified-member-topbar{padding-left:60px!important}}
+@media(max-width:360px){.vc-member-section>.vc-unified-member-topbar{padding-left:54px!important}}
