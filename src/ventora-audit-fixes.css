@@ -4171,3 +4171,31 @@ body>.workspace-menu-toggle{
 .gp-hero-copy h1{font-size:clamp(30px,4.1vw,62px)!important;letter-spacing:-.045em!important}
 @media(max-width:760px){.gp-hero-copy h1{font-size:clamp(25px,7.2vw,39px)!important;line-height:1.08!important}.gp-hero-copy h1>.gp-typewrite{font-size:.92em!important}}
 @media(max-width:360px){.gp-hero-copy h1{font-size:clamp(22px,6.5vw,28px)!important;letter-spacing:-.05em!important}}
+
+
+
+/* Keep each half of the public hero headline on one clean line. */
+.gp-hero-copy h1{
+  display:block!important;
+  font-size:clamp(27px,4.5vw,62px)!important;
+  line-height:1.04!important;
+  letter-spacing:-.045em!important;
+}
+.gp-hero-copy h1>.gp-hero-static,
+.gp-hero-copy h1>.gp-typewrite{
+  display:block!important;
+  width:max-content!important;
+  max-width:100%!important;
+  white-space:nowrap!important;
+}
+.gp-hero-copy h1>.gp-typewrite{
+  min-height:1.04em!important;
+  overflow:visible!important;
+  margin:0!important;
+}
+@media(max-width:760px){
+  .gp-hero-copy h1{font-size:clamp(24px,7.2vw,39px)!important;line-height:1.06!important}
+}
+@media(max-width:360px){
+  .gp-hero-copy h1{font-size:clamp(22px,6.5vw,27px)!important;letter-spacing:-.05em!important}
+}
