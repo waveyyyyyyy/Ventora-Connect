@@ -4393,3 +4393,71 @@ body>.workspace-menu-toggle{
     margin-top:0!important;
   }
 }
+
+
+/* Member section header: keep the complete Overview-width masthead visible. */
+.vc-member-section{
+  display:flex!important;
+  flex-direction:column!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+.vc-member-section>.vc-overview-identical-topbar{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  align-self:stretch!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  flex:0 0 78px!important;
+  box-sizing:border-box!important;
+  padding-left:clamp(14px,4vw,55px)!important;
+  padding-right:clamp(14px,4vw,55px)!important;
+  overflow:visible!important;
+}
+.vc-member-section>.vc-overview-identical-topbar .workspace-topbar-logo,
+.vc-member-section>.vc-overview-identical-topbar .vc-member-command{
+  min-width:0!important;
+}
+.vc-member-section>.vc-overview-identical-topbar .topbar-actions{
+  display:flex!important;
+  flex:0 0 auto!important;
+  align-items:center!important;
+  margin-left:auto!important;
+  padding-right:0!important;
+  white-space:nowrap!important;
+}
+@media(max-width:760px){
+  .vc-member-section>.vc-overview-identical-topbar{
+    width:100%!important;
+    flex-basis:68px!important;
+    padding-left:14px!important;
+    padding-right:14px!important;
+    gap:10px!important;
+  }
+  .vc-member-section>.vc-overview-identical-topbar .topbar-actions{gap:12px!important}
+}
+
+/* Prevent the animated homepage typewriter from ever scaling up on first paint. */
+.gp-hero,.gp-hero-copy,.gp-hero-copy h1{
+  -webkit-text-size-adjust:100%!important;
+  text-size-adjust:100%!important;
+}
+.gp-hero-copy h1 .gp-typewrite,
+.gp-hero-copy h1 .gp-typewrite span{
+  font-size:inherit!important;
+  line-height:inherit!important;
+  font-weight:inherit!important;
+  letter-spacing:inherit!important;
+  transform:none!important;
+  scale:1!important;
+  vertical-align:baseline!important;
+}
+@media(max-width:720px){
+  .gp-hero-copy h1{font-size:clamp(44px,12.5vw,60px)!important}
+  .gp-hero-copy h1 .gp-typewrite,
+  .gp-hero-copy h1 .gp-typewrite span{font-size:1em!important}
+}
