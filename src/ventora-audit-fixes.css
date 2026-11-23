@@ -4636,3 +4636,175 @@ body>.workspace-menu-toggle{
   text-decoration:none!important;
   transform:translateY(-2px)!important;
 }
+
+
+/* DESKTOP WORKSPACE WIDTH REPAIR
+   The navigation is a fixed off-canvas drawer, not a grid column. The old
+   264px + content grid left the only in-flow child (workspace-main) in the
+   first 264px track, which caused every workspace page to collapse. */
+.workspace{
+  display:block!important;
+  grid-template-columns:none!important;
+  grid-template-rows:none!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  min-height:100vh!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+}
+.workspace>.workspace-main{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+}
+.workspace-sidebar{
+  position:fixed!important;
+  left:0!important;
+  top:0!important;
+  bottom:0!important;
+  z-index:1000!important;
+  width:min(280px,88vw)!important;
+  max-width:88vw!important;
+}
+.workspace-content{
+  display:block!important;
+  width:100%!important;
+  max-width:1440px!important;
+  min-width:0!important;
+  margin-inline:auto!important;
+  padding:clamp(22px,3vw,42px) clamp(20px,4vw,48px) calc(64px + env(safe-area-inset-bottom,0px))!important;
+  box-sizing:border-box!important;
+}
+.workspace-content[class*="workspace-tab-"]{
+  width:100%!important;
+  max-width:1440px!important;
+  min-width:0!important;
+  margin-inline:auto!important;
+  box-sizing:border-box!important;
+}
+.workspace-content[class*="workspace-tab-"]>*,
+.workspace-content .workspace-page-title,
+.workspace-content .workspace-form,
+.workspace-content .business-manager-grid,
+.workspace-content .workspace-panel,
+.workspace-content .workspace-list,
+.workspace-content .verification-panel,
+.workspace-content .subscription-grid,
+.workspace-content .subscription-note,
+.workspace-content .vc-membership-experience,
+.workspace-content .vc-overview-studio{
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+.workspace-content h1,
+.workspace-content h2,
+.workspace-content h3,
+.workspace-content p,
+.workspace-content label,
+.workspace-content small,
+.workspace-content span,
+.workspace-content strong,
+.workspace-content em,
+.workspace-content a,
+.workspace-content button,
+.workspace-content li,
+.vc-member-section-content h1,
+.vc-member-section-content h2,
+.vc-member-section-content h3,
+.vc-member-section-content p,
+.vc-member-section-content label,
+.vc-member-section-content small,
+.vc-member-section-content span,
+.vc-member-section-content strong,
+.vc-member-section-content a,
+.vc-member-section-content button{
+  word-break:normal!important;
+  overflow-wrap:break-word!important;
+  hyphens:manual!important;
+}
+.workspace-content input,
+.workspace-content textarea,
+.workspace-content select{
+  width:100%;
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+.workspace-content .workspace-form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  width:100%!important;
+  min-width:0!important;
+}
+.workspace-content .workspace-form-grid>*,
+.workspace-content .form-actions>*,
+.workspace-content .business-manager-grid>*,
+.workspace-content .settings-detail-grid>*{
+  min-width:0!important;
+}
+.workspace-content .form-actions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:14px;
+}
+.workspace-content .form-actions .btn{
+  width:auto;
+  min-width:150px;
+  max-width:100%;
+  white-space:normal;
+}
+.workspace-content .subscription-current>strong,
+.workspace-content .subscription-price{
+  color:#245863!important;
+}
+.workspace-content .subscription-current-tag{
+  background:rgba(16,185,129,.12)!important;
+  color:#1e4d58!important;
+}
+.workspace-content .subscription-card.is-current{
+  border-color:rgba(36,88,99,.55)!important;
+  box-shadow:0 14px 36px rgba(36,88,99,.11)!important;
+}
+.workspace-content .subscription-card li>span{
+  color:#10b981!important;
+}
+.workspace-content .workspace-page-title h1{
+  max-width:100%!important;
+  width:auto!important;
+  line-height:1.08!important;
+  letter-spacing:-.045em!important;
+}
+.workspace-content .workspace-page-title>p{
+  max-width:780px!important;
+  line-height:1.75!important;
+}
+.workspace-content .business-manager-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+.workspace-content .verification-panel{
+  width:100%!important;
+}
+@media(min-width:761px){
+  .workspace{display:block!important;grid-template-columns:none!important}
+  .workspace>.workspace-main{width:100%!important;max-width:100%!important}
+  .workspace-content{padding-inline:clamp(24px,4vw,56px)!important}
+}
+@media(max-width:900px){
+  .workspace-content .business-manager-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:760px){
+  .workspace-content{width:100%!important;max-width:100%!important;padding:19px 14px calc(34px + env(safe-area-inset-bottom,0px))!important}
+  .workspace-content .workspace-form-grid{grid-template-columns:minmax(0,1fr)!important}
+  .workspace-content .business-manager-grid{grid-template-columns:minmax(0,1fr)!important}
+  .workspace-content .form-actions{align-items:stretch;flex-direction:column}
+  .workspace-content .form-actions .btn{width:100%;min-width:0}
+}
