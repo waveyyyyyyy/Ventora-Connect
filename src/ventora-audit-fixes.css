@@ -3633,3 +3633,14 @@ body.vc-section-navigation-open #root{
  .vc-member-section-topbar>.vc-member-section-home{display:none!important}
  .vc-feedback-top{padding-left:54px!important}
 }
+
+
+/* Feedback uses the same fixed navigation trigger as every dedicated member section. */
+.vc-feedback>.workspace-menu-toggle{
+ position:fixed!important;left:18px!important;top:14px!important;right:auto!important;bottom:auto!important;
+ transform:none!important;width:40px!important;height:40px!important;min-width:40px!important;z-index:70!important;
+ display:grid!important;place-items:center!important;border:1px solid rgba(36,88,99,.18)!important;
+ border-radius:12px!important;background:rgba(255,255,255,.94)!important;color:#245863!important;
+}
+@media(max-width:760px){.vc-feedback>.workspace-menu-toggle{left:10px!important;top:11px!important;width:38px!important;height:38px!important;min-width:38px!important}}
+@media(max-width:430px){.vc-feedback>.workspace-menu-toggle{left:10px!important}}
