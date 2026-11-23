@@ -4525,3 +4525,37 @@ body>.workspace-menu-toggle{
   outline:2px solid #4c9298!important;
   outline-offset:4px!important;
 }
+
+
+/* Hard reset the member masthead to viewport width. The prior 100%-of-parent
+   override narrowed the bar and the member shell clipped its left edge. */
+.vc-member-section{
+  width:100vw!important;
+  max-width:100vw!important;
+  margin-left:calc(50% - 50vw)!important;
+  overflow-x:visible!important;
+}
+.vc-member-section>.vc-overview-identical-topbar{
+  position:sticky!important;
+  left:0!important;
+  transform:none!important;
+  width:100vw!important;
+  min-width:100vw!important;
+  max-width:100vw!important;
+  margin:0!important;
+  align-self:stretch!important;
+  box-sizing:border-box!important;
+  padding-left:72px!important;
+  padding-right:22px!important;
+  justify-content:space-between!important;
+  overflow:visible!important;
+}
+@media(max-width:760px){
+  .vc-member-section>.vc-overview-identical-topbar{
+    width:100vw!important;min-width:100vw!important;max-width:100vw!important;
+    padding-left:58px!important;padding-right:12px!important;gap:9px!important;
+  }
+}
+@media(max-width:360px){
+  .vc-member-section>.vc-overview-identical-topbar{padding-left:54px!important;padding-right:8px!important}
+}
