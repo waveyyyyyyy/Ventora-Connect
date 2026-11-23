@@ -3305,3 +3305,35 @@ body.vc-section-navigation-open #root{
   .workspace-sidebar.vc-section-drawer.is-closing,
   .vc-section-menu-backdrop.is-closing{transition:none!important}
 }
+
+
+/* Final workspace drawer exit: keep the modal mounted and locked until this finishes. */
+.workspace-sidebar.vc-section-drawer{
+  will-change:auto!important;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+.workspace-sidebar.vc-section-drawer.is-open{
+  transition:transform .54s cubic-bezier(.16,1,.3,1),opacity .38s cubic-bezier(.2,.75,.25,1),visibility 0s!important;
+}
+.workspace-sidebar.vc-section-drawer.is-closing{
+  transform:translate3d(calc(-100% - 12px),0,0)!important;
+  opacity:0!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+  transition:transform .28s cubic-bezier(.4,0,.2,1),opacity .24s cubic-bezier(.4,0,.2,1),visibility 0s linear .30s!important;
+}
+.vc-section-menu-backdrop.is-closing{
+  opacity:0!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+  transition:opacity .28s cubic-bezier(.4,0,.2,1),visibility 0s linear .30s!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .workspace-sidebar.vc-section-drawer,
+  .workspace-sidebar.vc-section-drawer.is-open,
+  .workspace-sidebar.vc-section-drawer.is-closing,
+  .vc-section-menu-backdrop,
+  .vc-section-menu-backdrop.is-open,
+  .vc-section-menu-backdrop.is-closing{transition:none!important}
+}
