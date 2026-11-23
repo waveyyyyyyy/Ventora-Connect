@@ -45,9 +45,192 @@ export default function GustPlatform(){
  },[]);
  useEffect(()=>{let active=true,authEventSeen=false;if(!supabase){setAuthChecked(true);return;}async function sync(nextSession:any){if(!active)return;setSession(nextSession);if(nextSession?.user){const{data,error}=await supabase!.rpc('is_admin');if(active)setAdminAllowed(Boolean(data&&!error));}else if(active)setAdminAllowed(false);if(active)setAuthChecked(true);}const {data:{subscription}}=supabase.auth.onAuthStateChange((_event,nextSession)=>{authEventSeen=true;window.setTimeout(()=>void sync(nextSession),0);});restoreUserSession().then(user=>{if(!authEventSeen)void sync(user?{user}:null);}).catch(()=>{if(active&&!authEventSeen)setAuthChecked(true);});return()=>{active=false;subscription.unsubscribe();};},[]);
  if(authChecked&&session&&!adminAllowed){const role=new URLSearchParams(window.location.search).get('oauth_role');return <Navigate to={'/dashboard?tab=overview'+(role?'&oauth_role='+encodeURIComponent(role):'')} replace/>;}
- return <><header className="gp-public-header"><button className="gp-menu-toggle" aria-label="Open navigation menu" aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}>{menuOpen?<X size={21}/>:<Menu size={21}/>}</button><div className="gp-brand"><img className="gp-brand-logo" src={BRAND_LOGO} alt="Ventora Connect"/> ventora</div><nav><a href="#platform">Platform</a><a href="#founders">For founders</a><a href="#investors">For investors</a><a href="#how">How it works</a><Link className="gp-membership-nav" to="/dashboard?tab=subscriptions">Membership</Link></nav><div className="gp-public-actions"><button className="gp-login" onClick={()=>navigate('/login')}>Log in</button><button className="gp-primary" onClick={()=>navigate('/signup')}>Create account <ArrowRight size={16}/></button></div></header>{menuOpen&&<><button className="gp-public-menu-scrim" aria-label="Close navigation menu" onClick={()=>setMenuOpen(false)}/><aside className="gp-public-menu"><div className="gp-public-menu-head"><div className="gp-brand"><img className="gp-brand-logo" src={BRAND_LOGO} alt="Ventora Connect"/> ventora</div><button aria-label="Close menu" onClick={()=>setMenuOpen(false)}><X size={19}/></button></div><span className="gp-eyebrow">VENTORA CONNECT</span><button onClick={()=>{setMenuOpen(false);navigate("/dashboard")}}><Home/>Overview</button><button onClick={()=>{setMenuOpen(false);navigate("/dashboard?tab=profile")}}><UserRound/>Personal profile</button><button onClick={()=>{setMenuOpen(false);navigate("/dashboard?tab=investor")}}><TrendingUp/>Investor preferences</button><button onClick={()=>{setMenuOpen(false);navigate("/investors")}}><Users/>Discover investors</button><button onClick={()=>{setMenuOpen(false);navigate("/messages")}}><MessageSquare/>Messages</button>{session?.user&&adminAllowed&&<button onClick={()=>{setMenuOpen(false);navigate("/admin")}}><ShieldCheck/>Admin portal</button>}<div className="gp-public-menu-bottom"><button onClick={()=>{setMenuOpen(false);navigate("/login")}}>Log in</button><button className="gp-primary" onClick={()=>{setMenuOpen(false);navigate("/signup")}}>Create account <ArrowRight size={15}/></button></div></aside></>}<section className="gp-hero"><div className="gp-hero-copy"><div className="gp-pill"><Sparkles size={14}/> A new perspective on private markets</div><h1><span className="gp-hero-static">Big ideas deserve</span><KineticHeadline/></h1><p>Where ambitious founders meet thoughtful investors. Build relationships, discover opportunity and move your next chapter forward.</p><div className="gp-hero-actions"><button className="gp-primary gp-large" onClick={()=>navigate('/signup')}>Get started <ArrowRight size={18}/></button><button className="gp-text-btn" onClick={()=>document.getElementById('how')?.scrollIntoView({behavior:'smooth'})}>Explore the platform <ChevronRight size={17}/></button></div><div className="gp-proof"><div className="gp-proof-avatars"><span>J</span><span>M</span><span>A</span><span>+</span></div><div><b>A network built on possibility</b><small>For founders and investors at every stage</small></div></div><HeroDeck/></div><div className="gp-hero-art"><PosterWall/><div className="gp-art-orbit orbit-one"/><div className="gp-art-orbit orbit-two"/><div className="gp-art-center"><img className="gp-art-logo-image" src={BRAND_LOGO} alt="Ventora Connect"/><span>VENTORA NETWORK</span></div><div className="gp-float-card founder-card"><div className="gp-mini-avatar lavender">N</div><div><b>Northstar Robotics</b><small>Raising a seed round</small></div><span className="gp-dot"/></div><div className="gp-float-card investor-card"><div className="gp-mini-avatar mint">A</div><div><b>Alex Morgan</b><small>Early-stage investor</small></div><span className="gp-match">94% match</span></div><div className="gp-art-caption">Ideas move further together.</div></div></section><section className="gp-trust"><span>ONE PLATFORM. TWO PERSPECTIVES.</span><b>For the people building tomorrow.</b><div><span>FOUNDERS</span><span>INVESTORS</span><span>ADVISORS</span><span>ECOSYSTEM PARTNERS</span></div></section><section className="gp-section" id="platform"><div className="gp-section-heading"><p className="gp-eyebrow">A connected ecosystem</p><h2>Everything moves forward<br/>when the right pieces connect.</h2><p>From your first introduction to your next milestone, bring the important parts of your journey together.</p></div><div className="gp-feature-grid"><Feature icon={<Compass/>} title="Discover with intention" text="Find relevant companies, investors and opportunities with thoughtful filters and context."/><Feature icon={<Handshake/>} title="Build real relationships" text="Move beyond cold introductions with clear profiles and direct communication."/><Feature icon={<TrendingUp/>} title="Move deals forward" text="Organise opportunities, track progress and keep every conversation moving."/><Feature icon={<ShieldCheck/>} title="Share with confidence" text="Keep important company information and documents organised in one place."/></div></section><section className="gp-audience" id="founders"><div className="gp-audience-copy"><p className="gp-eyebrow">For founders</p><h2>Make your next<br/>chapter possible.</h2><p>Tell your story, get discovered by aligned investors and manage your fundraising journey with clarity.</p><ul><li><Check/> Build a compelling company profile</li><li><Check/> Discover investors aligned with your vision</li><li><Check/> Manage conversations and applications</li><li><Check/> Share documents when the time is right</li></ul><button className="gp-primary" onClick={()=>{navigate('/signup')}}>Create account <ArrowRight size={16}/></button></div><div className="gp-preview-card founder-preview"><div className="gp-preview-top"><span>COMPANY SNAPSHOT</span><span className="gp-live">● PROFILE PREVIEW</span></div><div className="gp-company-head"><div className="gp-company-logo">N</div><div><b>Northstar Robotics</b><small>Industrial technology · Austin, TX</small></div></div><p>Building autonomous systems for safer, more efficient industrial operations.</p><div className="gp-metrics"><div><small>Funding stage</small><b>Seed</b></div><div><small>Target raise</small><b>$1.8M</b></div><div><small>Profile strength</small><b>86%</b></div></div><div className="gp-progress"><span/></div><div className="gp-preview-footer"><span><Users size={15}/> Investor interest</span><b>12 new views this week ↗</b></div></div></section><section className="gp-audience investor-audience" id="investors"><div className="gp-preview-card deal-preview"><div className="gp-preview-top"><span>YOUR DEAL FLOW</span><span>THIS WEEK</span></div><div className="gp-deal-summary"><div><small>Active opportunities</small><b>24</b></div><div><small>In due diligence</small><b>06</b></div><div><small>New this week</small><b>08 ↗</b></div></div>{pipeline.slice(0,3).map((p,i)=><div className="gp-deal-row" key={p.name}><div className={'gp-mini-avatar '+['lavender','peach','mint'][i]}>{p.name[0]}</div><div><b>{p.name}</b><small>{p.stage} · {p.amount}</small></div><ChevronRight size={16}/></div>)}</div><div className="gp-audience-copy"><p className="gp-eyebrow">For investors</p><h2>Find conviction<br/>in what comes next.</h2><p>Discover promising companies, evaluate opportunities and keep your deal flow organised from first look to diligence.</p><ul><li><Check/> Discover companies that fit your thesis</li><li><Check/> Organise opportunities in a deal pipeline</li><li><Check/> Collaborate and communicate with founders</li><li><Check/> Review shared materials in one workspace</li></ul><button className="gp-primary" onClick={()=>{navigate('/signup')}}>Create account <ArrowRight size={16}/></button></div></section><Showcase onJoin={()=>navigate('/signup')}/><section className="gp-how" id="how"><p className="gp-eyebrow">A clearer path forward</p><h2>From first look to next step.</h2><div className="gp-steps"><div><span>01</span><b>Create your profile</b><p>Share who you are, what you're building and what you're looking for.</p></div><div><span>02</span><b>Find your people</b><p>Discover aligned founders, investors and opportunities.</p></div><div><span>03</span><b>Start a conversation</b><p>Connect directly and share the context that matters.</p></div><div><span>04</span><b>Move forward</b><p>Keep your opportunities and next steps organised.</p></div></div></section><section className="gp-membership-spotlight"><div className="gp-membership-copy"><p className="gp-eyebrow">THE VENTORA INNER CIRCLE</p><h2>Make the next<br/><em>introduction count.</em></h2><p>Choose the access that matches your ambition — from thoughtful discovery to a more powerful private network.</p><button className="gp-primary gp-large" onClick={()=>navigate('/dashboard?tab=subscriptions')}>Explore membership <ArrowRight size={18}/></button></div><div className="gp-membership-poster"><span>VENTORA / MEMBERSHIP</span><b>ACCESS<br/>WITH<br/><i>INTENT.</i></b><small>PRO · FOUNDER PLUS · DEAL ROOM</small><div className="gp-membership-orbit"/></div><div className="gp-membership-preview"><span>MEMBER PREVIEW / 01</span><b>Priority discovery</b><small>Be seen by the people who matter.</small><i/><b>Deeper context</b><small>Bring more insight to every introduction.</small><i/><b>Private conversations</b><small>Move from interest to opportunity.</small></div></section><section className="gp-final-cta"><div><p className="gp-eyebrow">Your next chapter starts here</p><h2>Good things happen<br/>when ambition connects.</h2><p>Build with the people who see what you see.</p><button className="gp-primary gp-large" onClick={()=>navigate('/signup')}>Create your account <ArrowRight size={18}/></button></div></section><footer className="gp-footer"><div className="gp-brand"><img className="gp-brand-logo" src={BRAND_LOGO} alt="Ventora Connect"/> ventora</div><span>Where ambition meets opportunity.</span><div><a href="#platform">Platform</a><a href="#founders">Founders</a><a href="#investors">Investors</a><a href="/dashboard?tab=subscriptions" className="gp-membership-nav">Membership</a><a href="mailto:hello@ventora.com">Contact</a></div><small>© 2026 Ventora Connect. All rights reserved.</small></footer></>;
+ return <><header className="gp-public-header"><button className="gp-menu-toggle" aria-label="Open navigation menu" aria-expanded={menuOpen} onClick={()=>setMenuOpen(v=>!v)}>{menuOpen?<X size={21}/>:<Menu size={21}/>}</button><div className="gp-brand"><img className="gp-brand-logo" src={BRAND_LOGO} alt="Ventora Connect"/> ventora</div><nav><a href="#platform">Platform</a><a href="#founders">For founders</a><a href="#investors">For investors</a><a href="#how">How it works</a><Link className="gp-membership-nav" to="/dashboard?tab=subscriptions">Membership</Link></nav><div className="gp-public-actions"><button className="gp-login" onClick={()=>navigate('/login')}>Log in</button><button className="gp-primary" onClick={()=>navigate('/signup')}>Create account <ArrowRight size={16}/></button></div></header>{menuOpen&&<><button className="gp-public-menu-scrim" aria-label="Close navigation menu" onClick={()=>setMenuOpen(false)}/><aside className="gp-public-menu"><div className="gp-public-menu-head"><div className="gp-brand"><img className="gp-brand-logo" src={BRAND_LOGO} alt="Ventora Connect"/> ventora</div><button aria-label="Close menu" onClick={()=>setMenuOpen(false)}><X size={19}/></button></div><span className="gp-eyebrow">VENTORA CONNECT</span><button onClick={()=>{setMenuOpen(false);navigate("/dashboard")}}><Home/>Overview</button><button onClick={()=>{setMenuOpen(false);navigate("/dashboard?tab=profile")}}><UserRound/>Personal profile</button><button onClick={()=>{setMenuOpen(false);navigate("/dashboard?tab=investor")}}><TrendingUp/>Investor preferences</button><button onClick={()=>{setMenuOpen(false);navigate("/investors")}}><Users/>Discover investors</button><button onClick={()=>{setMenuOpen(false);navigate("/messages")}}><MessageSquare/>Messages</button>{session?.user&&adminAllowed&&<button onClick={()=>{setMenuOpen(false);navigate("/admin")}}><ShieldCheck/>Admin portal</button>}<div className="gp-public-menu-bottom"><button onClick={()=>{setMenuOpen(false);navigate("/login")}}>Log in</button><button className="gp-primary" onClick={()=>{setMenuOpen(false);navigate("/signup")}}>Create account <ArrowRight size={15}/></button></div></aside></>}<section className="gp-hero"><div className="gp-hero-copy"><div className="gp-pill"><Sparkles size={14}/> A new perspective on private markets</div><h1><span className="gp-hero-static">Big ideas deserve</span><KineticHeadline/></h1><p>Where ambitious founders meet thoughtful investors. Build relationships, discover opportunity and move your next chapter forward.</p><div className="gp-hero-actions"><button className="gp-primary gp-large" onClick={()=>navigate('/signup')}>Get started <ArrowRight size={18}/></button><button className="gp-text-btn" onClick={()=>document.getElementById('how')?.scrollIntoView({behavior:'smooth'})}>Explore the platform <ChevronRight size={17}/></button></div><div className="gp-proof"><div className="gp-proof-avatars"><span>J</span><span>M</span><span>A</span><span>+</span></div><div><b>A network built on possibility</b><small>For founders and investors at every stage</small></div></div><HeroDeck/></div><div className="gp-hero-art"><PosterWall/><div className="gp-art-orbit orbit-one"/><div className="gp-art-orbit orbit-two"/><div className="gp-art-center"><img className="gp-art-logo-image" src={BRAND_LOGO} alt="Ventora Connect"/><span>VENTORA NETWORK</span></div><div className="gp-float-card founder-card"><div className="gp-mini-avatar lavender">N</div><div><b>Northstar Robotics</b><small>Raising a seed round</small></div><span className="gp-dot"/></div><div className="gp-float-card investor-card"><div className="gp-mini-avatar mint">A</div><div><b>Alex Morgan</b><small>Early-stage investor</small></div><span className="gp-match">94% match</span></div><div className="gp-art-caption">Ideas move further together.</div></div></section><section className="gp-trust"><span>ONE PLATFORM. TWO PERSPECTIVES.</span><b>For the people building tomorrow.</b><div><span>FOUNDERS</span><span>INVESTORS</span><span>ADVISORS</span><span>ECOSYSTEM PARTNERS</span></div></section><section className="gp-section" id="platform"><div className="gp-section-heading"><p className="gp-eyebrow">A connected ecosystem</p><h2>Everything moves forward<br/>when the right pieces connect.</h2><p>From your first introduction to your next milestone, bring the important parts of your journey together.</p></div><div className="gp-feature-grid"><Feature icon={<Compass/>} title="Discover with intention" text="Find relevant companies, investors and opportunities with thoughtful filters and context."/><Feature icon={<Handshake/>} title="Build real relationships" text="Move beyond cold introductions with clear profiles and direct communication."/><Feature icon={<TrendingUp/>} title="Move deals forward" text="Organise opportunities, track progress and keep every conversation moving."/><Feature icon={<ShieldCheck/>} title="Share with confidence" text="Keep important company information and documents organised in one place."/></div></section><section className="gp-audience" id="founders"><div className="gp-audience-copy"><p className="gp-eyebrow">For founders</p><h2>Make your next<br/>chapter possible.</h2><p>Tell your story, get discovered by aligned investors and manage your fundraising journey with clarity.</p><ul><li><Check/> Build a compelling company profile</li><li><Check/> Discover investors aligned with your vision</li><li><Check/> Manage conversations and applications</li><li><Check/> Share documents when the time is right</li></ul><button className="gp-primary" onClick={()=>{navigate('/signup')}}>Create account <ArrowRight size={16}/></button></div><div className="gp-preview-card founder-preview"><div className="gp-preview-top"><span>COMPANY SNAPSHOT</span><span className="gp-live">● PROFILE PREVIEW</span></div><div className="gp-company-head"><div className="gp-company-logo">N</div><div><b>Northstar Robotics</b><small>Industrial technology · Austin, TX</small></div></div><p>Building autonomous systems for safer, more efficient industrial operations.</p><div className="gp-metrics"><div><small>Funding stage</small><b>Seed</b></div><div><small>Target raise</small><b>$1.8M</b></div><div><small>Profile strength</small><b>86%</b></div></div><div className="gp-progress"><span/></div><div className="gp-preview-footer"><span><Users size={15}/> Investor interest</span><b>12 new views this week ↗</b></div></div></section><section className="gp-audience investor-audience" id="investors"><div className="gp-preview-card deal-preview"><div className="gp-preview-top"><span>YOUR DEAL FLOW</span><span>THIS WEEK</span></div><div className="gp-deal-summary"><div><small>Active opportunities</small><b>24</b></div><div><small>In due diligence</small><b>06</b></div><div><small>New this week</small><b>08 ↗</b></div></div>{pipeline.slice(0,3).map((p,i)=><div className="gp-deal-row" key={p.name}><div className={'gp-mini-avatar '+['lavender','peach','mint'][i]}>{p.name[0]}</div><div><b>{p.name}</b><small>{p.stage} · {p.amount}</small></div><ChevronRight size={16}/></div>)}</div><div className="gp-audience-copy"><p className="gp-eyebrow">For investors</p><h2>Find conviction<br/>in what comes next.</h2><p>Discover promising companies, evaluate opportunities and keep your deal flow organised from first look to diligence.</p><ul><li><Check/> Discover companies that fit your thesis</li><li><Check/> Organise opportunities in a deal pipeline</li><li><Check/> Collaborate and communicate with founders</li><li><Check/> Review shared materials in one workspace</li></ul><button className="gp-primary" onClick={()=>{navigate('/signup')}}>Create account <ArrowRight size={16}/></button></div></section><Showcase onJoin={()=>navigate('/signup')}/><section className="gp-how" id="how"><p className="gp-eyebrow">A clearer path forward</p><h2>From first look to next step.</h2><div className="gp-steps"><div><span>01</span><b>Create your profile</b><p>Share who you are, what you're building and what you're looking for.</p></div><div><span>02</span><b>Find your people</b><p>Discover aligned founders, investors and opportunities.</p></div><div><span>03</span><b>Start a conversation</b><p>Connect directly and share the context that matters.</p></div><div><span>04</span><b>Move forward</b><p>Keep your opportunities and next steps organised.</p></div></div></section><PublicPlanComparison onNavigate={navigate}/><section className="gp-membership-spotlight"><div className="gp-membership-copy"><p className="gp-eyebrow">THE VENTORA INNER CIRCLE</p><h2>Make the next<br/><em>introduction count.</em></h2><p>Choose the access that matches your ambition — from thoughtful discovery to a more powerful private network.</p><button className="gp-primary gp-large" onClick={()=>navigate('/dashboard?tab=subscriptions')}>Explore membership <ArrowRight size={18}/></button></div><div className="gp-membership-poster"><span>VENTORA / MEMBERSHIP</span><b>ACCESS<br/>WITH<br/><i>INTENT.</i></b><small>PRO · FOUNDER PLUS · DEAL ROOM</small><div className="gp-membership-orbit"/></div><div className="gp-membership-preview"><span>MEMBER PREVIEW / 01</span><b>Priority discovery</b><small>Be seen by the people who matter.</small><i/><b>Deeper context</b><small>Bring more insight to every introduction.</small><i/><b>Private conversations</b><small>Move from interest to opportunity.</small></div></section><section className="gp-final-cta"><div><p className="gp-eyebrow">Your next chapter starts here</p><h2>Good things happen<br/>when ambition connects.</h2><p>Build with the people who see what you see.</p><button className="gp-primary gp-large" onClick={()=>navigate('/signup')}>Create your account <ArrowRight size={18}/></button></div></section><PublicQuestions/><footer className="gp-footer"><div className="gp-brand"><img className="gp-brand-logo" src={BRAND_LOGO} alt="Ventora Connect"/> ventora</div><span>Where ambition meets opportunity.</span><div><a href="#platform">Platform</a><a href="#founders">Founders</a><a href="#investors">Investors</a><a href="/dashboard?tab=subscriptions" className="gp-membership-nav">Membership</a><a href="mailto:hello@ventora.com">Contact</a></div><small>© 2026 Ventora Connect. All rights reserved.</small></footer></>;
 }
 
+
+function PublicPlanComparison({onNavigate}:{onNavigate:(path:string)=>void}){
+ const[plans,setPlans]=useState<any[]>([]);
+ const[currentPlan,setCurrentPlan]=useState<string|null>(null);
+ const[accountType,setAccountType]=useState<'business'|'investor'|null>(null);
+ const[loaded,setLoaded]=useState(false);
+ useEffect(()=>{
+  let active=true;
+  async function load(){
+   if(!supabase){if(active)setLoaded(true);return;}
+   const[planResult,userResult]=await Promise.all([
+    supabase.from('subscription_plans').select('id,name,description,price_inr,account_type,display_order,features,is_active').eq('is_active',true).order('display_order'),
+    restoreUserSession()
+   ]);
+   if(!active)return;
+   if(!planResult.error)setPlans(planResult.data||[]);
+   if(userResult?.id){
+    const[subscription,profile]=await Promise.all([
+     supabase.from('subscriptions').select('plan_id,status').eq('user_id',userResult.id).maybeSingle(),
+     supabase.from('profiles').select('account_type').eq('id',userResult.id).maybeSingle()
+    ]);
+    if(!active)return;
+    setCurrentPlan(subscription.data?.plan_id||null);
+    setAccountType(profile.data?.account_type==='investor'?'investor':'business');
+   }
+   setLoaded(true);
+  }
+  void load().catch(()=>{if(active)setLoaded(true)});
+  return()=>{active=false};
+ },[]);
+ const groups=[{key:'business',label:'For businesses',sub:'Build visibility, meet aligned investors and move opportunities forward.'},{key:'investor',label:'For investors',sub:'Discover companies, organise deal flow and build founder relationships.'}];
+ const features=(plan:any)=>{
+  const f=plan.features||{};
+  const values=plan.account_type==='business'?[
+   ['Company profiles',f.max_business_profiles===-1?'Unlimited':f.max_business_profiles??'Not listed'],
+   ['Monthly profile views',f.monthly_profile_views===-1?'Unlimited':f.monthly_profile_views??'Not listed'],
+   ['Discovery',f.advanced_discovery?'Advanced filters':'Standard filters'],
+   ['Introductions',f.monthly_connections===-1?'Unlimited':f.monthly_connections??'Not listed'],
+   ['Messaging',f.messaging?'Included':'Not included'],
+   ['Insights & support',f.analytics?'Analytics included':f.priority_support?'Priority support':'Standard support']
+  ]:[
+   ['Business profile views',f.monthly_business_views===-1?'Unlimited':f.monthly_business_views??'Not listed'],
+   ['Saved profiles',f.saved_profiles===-1?'Unlimited':f.saved_profiles??'Not listed'],
+   ['Discovery',f.advanced_filters?'Advanced filters':'Standard filters'],
+   ['Messaging',f.messaging?'Included':'Not included'],
+   ['Investment interest',f.express_interest?'Included':'Not included'],
+   ['Deal access',f.pitch_deck_access?'Private materials access':f.portfolio_access?'Portfolio access':'Standard access']
+  ];
+  return values;
+ };
+ if(!loaded||!plans.length)return null;
+ return <section className="gp-home-plans" id="plan-comparisons">
+  <div className="gp-home-plans-head"><p className="gp-eyebrow">VENTORA CONNECT / MEMBERSHIP GUIDE</p><h2>Plan comparisons.<br/><em>Choose your next level.</em></h2><p>Every active membership tier, with pricing and access drawn from Ventora’s published plan catalogue.</p></div>
+  {groups.map(group=>{
+   const groupPlans=plans.filter(p=>p.account_type===group.key);
+   if(!groupPlans.length)return null;
+   return <div className="gp-home-plan-group" key={group.key}>
+    <div className="gp-home-plan-group-head"><div><span>{group.key==='business'?'01 / BUSINESS MEMBERSHIPS':'02 / INVESTOR MEMBERSHIPS'}</span><h3>{group.label}</h3></div><p>{group.sub}</p></div>
+    <div className="gp-home-plan-grid">
+     {groupPlans.map((plan:any)=>{
+      const current=plan.id===currentPlan;
+      return <article className={'gp-home-plan-card'+(current?' is-current':'')} key={plan.id}>
+       <div className="gp-home-plan-card-top"><span>{current?'YOUR CURRENT PLAN':Number(plan.price_inr)===0?'START HERE':'MEMBERSHIP TIER'}</span>{current&&<b>ACTIVE</b>}</div>
+       <h4>{plan.name}</h4><p className="gp-home-plan-description">{plan.description}</p>
+       <div className="gp-home-plan-price"><strong>₹{Number(plan.price_inr||0).toLocaleString('en-IN')}</strong><span>/ month</span></div>
+       <ul>{features(plan).map(([label,value]:any)=><li key={label}><span>{label}</span><b>{String(value)}</b></li>)}</ul>
+       <button type="button" className={current?'is-current-button':''} onClick={()=>onNavigate(current?'/dashboard?tab=subscriptions':currentPlan?'/dashboard?tab=subscriptions':'/signup')}>{current?'Manage membership':currentPlan?'Explore upgrade':'Choose this plan'} <ArrowRight size={16}/></button>
+       <small>{Number(plan.price_inr)>0?'Paid access is activated after payment review.':'Free access is activated in your workspace.'}</small>
+      </article>
+     })}
+    </div>
+   </div>
+  })}
+  <div className="gp-home-plan-foot"><ShieldCheck size={18}/><p>Plan features reflect the active catalogue. Some capabilities depend on account type, profile completion and verification status.</p><button type="button" onClick={()=>onNavigate(currentPlan?'/dashboard?tab=subscriptions':'/signup')}>View membership options <ArrowRight size={15}/></button></div>
+ </section>;
+}
+
+function PublicQuestions(){
+ const items=[
+  {q:'How does discovery and matching work?',a:'Complete your business or investor profile with accurate details, preferences and interests. Ventora uses the information members choose to share to help surface relevant profiles and opportunities. Review each profile and start a conversation when there is a genuine fit; a match is an introduction signal, not an endorsement or funding guarantee.'},
+  {q:'How do I complete my profile?',a:'Create an account, open your workspace and visit Personal profile. Businesses can add company details, funding requirements and a pitch deck from Manage businesses. Investors can add preferred industries, stages, locations and investment strategy under Investor preferences. Keep information current so other members can assess fit.'},
+  {q:'How do I verify my account or business?',a:'Open Verification in your workspace and submit the requested information. The Ventora team reviews submitted details and updates the request status in your account. Verification is a review process and does not guarantee investment, funding or commercial outcomes.'},
+  {q:'What do membership plans include, and how do upgrades work?',a:'The plan comparison above lists the active tiers and their published monthly prices and features. Choose a plan from your workspace Membership page. Free access can be activated in the workspace; paid requests continue through the available payment and review flow. Paid access starts only after the payment has been reviewed and the plan approved.'},
+  {q:'How can I contact support or share feedback?',a:'Use Support in your workspace to contact the team, or open Feedback to share a suggestion or report an issue. You can also reach Ventora at hello@ventora.com.'},
+  {q:'Who can see my information, and how do I control my account?',a:'Only publish information you are comfortable sharing with the network. Private materials and account functions are governed by your access level and the platform’s privacy controls. Review the Privacy page for details, and use Settings in your workspace to manage available account preferences.'}
+ ];
+ return <section className="gp-home-faq" id="questions-and-answers">
+  <div className="gp-home-faq-intro"><p className="gp-eyebrow">A FEW THINGS WORTH KNOWING</p><h2>Questions &amp;<br/><em>answers.</em></h2><p>Clear guidance for making the most of your Ventora membership.</p><Link to="/support">Still have a question? Contact support <ArrowRight size={15}/></Link></div>
+  <div className="gp-home-faq-list">{items.map((item,index)=><details key={item.q} className="gp-home-faq-item"><summary><span>{String(index+1).padStart(2,'0')}</span><b>{item.q}</b><i aria-hidden="true"/></summary><p>{item.a}</p></details>)}</div>
+ </section>;
+}
+
+
+function PublicPlanComparison({onNavigate}:{onNavigate:(path:string)=>void}){
+ const[plans,setPlans]=useState<any[]>([]);
+ const[currentPlan,setCurrentPlan]=useState<string|null>(null);
+ const[accountType,setAccountType]=useState<'business'|'investor'|null>(null);
+ const[loaded,setLoaded]=useState(false);
+ useEffect(()=>{
+  let active=true;
+  async function load(){
+   if(!supabase){if(active)setLoaded(true);return;}
+   const[planResult,userResult]=await Promise.all([
+    supabase.from('subscription_plans').select('id,name,description,price_inr,account_type,display_order,features,is_active').eq('is_active',true).order('display_order'),
+    restoreUserSession()
+   ]);
+   if(!active)return;
+   if(!planResult.error)setPlans(planResult.data||[]);
+   if(userResult?.id){
+    const[subscription,profile]=await Promise.all([
+     supabase.from('subscriptions').select('plan_id,status').eq('user_id',userResult.id).maybeSingle(),
+     supabase.from('profiles').select('account_type').eq('id',userResult.id).maybeSingle()
+    ]);
+    if(!active)return;
+    setCurrentPlan(subscription.data?.plan_id||null);
+    setAccountType(profile.data?.account_type==='investor'?'investor':'business');
+   }
+   setLoaded(true);
+  }
+  void load().catch(()=>{if(active)setLoaded(true)});
+  return()=>{active=false};
+ },[]);
+ const groups=[{key:'business',label:'For businesses',sub:'Build visibility, meet aligned investors and move opportunities forward.'},{key:'investor',label:'For investors',sub:'Discover companies, organise deal flow and build founder relationships.'}];
+ const features=(plan:any)=>{
+  const f=plan.features||{};
+  const values=plan.account_type==='business'?[
+   ['Company profiles',f.max_business_profiles===-1?'Unlimited':f.max_business_profiles??'Not listed'],
+   ['Monthly profile views',f.monthly_profile_views===-1?'Unlimited':f.monthly_profile_views??'Not listed'],
+   ['Discovery',f.advanced_discovery?'Advanced filters':'Standard filters'],
+   ['Introductions',f.monthly_connections===-1?'Unlimited':f.monthly_connections??'Not listed'],
+   ['Messaging',f.messaging?'Included':'Not included'],
+   ['Insights & support',f.analytics?'Analytics included':f.priority_support?'Priority support':'Standard support']
+  ]:[
+   ['Business profile views',f.monthly_business_views===-1?'Unlimited':f.monthly_business_views??'Not listed'],
+   ['Saved profiles',f.saved_profiles===-1?'Unlimited':f.saved_profiles??'Not listed'],
+   ['Discovery',f.advanced_filters?'Advanced filters':'Standard filters'],
+   ['Messaging',f.messaging?'Included':'Not included'],
+   ['Investment interest',f.express_interest?'Included':'Not included'],
+   ['Deal access',f.pitch_deck_access?'Private materials access':f.portfolio_access?'Portfolio access':'Standard access']
+  ];
+  return values;
+ };
+ if(!loaded||!plans.length)return null;
+ return <section className="gp-home-plans" id="plan-comparisons">
+  <div className="gp-home-plans-head"><p className="gp-eyebrow">VENTORA CONNECT / MEMBERSHIP GUIDE</p><h2>Plan comparisons.<br/><em>Choose your next level.</em></h2><p>Every active membership tier, with pricing and access drawn from Ventora’s published plan catalogue.</p></div>
+  {groups.map(group=>{
+   const groupPlans=plans.filter(p=>p.account_type===group.key);
+   if(!groupPlans.length)return null;
+   return <div className="gp-home-plan-group" key={group.key}>
+    <div className="gp-home-plan-group-head"><div><span>{group.key==='business'?'01 / BUSINESS MEMBERSHIPS':'02 / INVESTOR MEMBERSHIPS'}</span><h3>{group.label}</h3></div><p>{group.sub}</p></div>
+    <div className="gp-home-plan-grid">
+     {groupPlans.map((plan:any)=>{
+      const current=plan.id===currentPlan;
+      return <article className={'gp-home-plan-card'+(current?' is-current':'')} key={plan.id}>
+       <div className="gp-home-plan-card-top"><span>{current?'YOUR CURRENT PLAN':Number(plan.price_inr)===0?'START HERE':'MEMBERSHIP TIER'}</span>{current&&<b>ACTIVE</b>}</div>
+       <h4>{plan.name}</h4><p className="gp-home-plan-description">{plan.description}</p>
+       <div className="gp-home-plan-price"><strong>₹{Number(plan.price_inr||0).toLocaleString('en-IN')}</strong><span>/ month</span></div>
+       <ul>{features(plan).map(([label,value]:any)=><li key={label}><span>{label}</span><b>{String(value)}</b></li>)}</ul>
+       <button type="button" className={current?'is-current-button':''} onClick={()=>onNavigate(current?'/dashboard?tab=subscriptions':currentPlan?'/dashboard?tab=subscriptions':'/signup')}>{current?'Manage membership':currentPlan?'Explore upgrade':'Choose this plan'} <ArrowRight size={16}/></button>
+       <small>{Number(plan.price_inr)>0?'Paid access is activated after payment review.':'Free access is activated in your workspace.'}</small>
+      </article>
+     })}
+    </div>
+   </div>
+  })}
+  <div className="gp-home-plan-foot"><ShieldCheck size={18}/><p>Plan features reflect the active catalogue. Some capabilities depend on account type, profile completion and verification status.</p><button type="button" onClick={()=>onNavigate(currentPlan?'/dashboard?tab=subscriptions':'/signup')}>View membership options <ArrowRight size={15}/></button></div>
+ </section>;
+}
+
+function PublicQuestions(){
+ const items=[
+  {q:'How does discovery and matching work?',a:'Complete your business or investor profile with accurate details, preferences and interests. Ventora uses the information members choose to share to help surface relevant profiles and opportunities. Review each profile and start a conversation when there is a genuine fit; a match is an introduction signal, not an endorsement or funding guarantee.'},
+  {q:'How do I complete my profile?',a:'Create an account, open your workspace and visit Personal profile. Businesses can add company details, funding requirements and a pitch deck from Manage businesses. Investors can add preferred industries, stages, locations and investment strategy under Investor preferences. Keep information current so other members can assess fit.'},
+  {q:'How do I verify my account or business?',a:'Open Verification in your workspace and submit the requested information. The Ventora team reviews submitted details and updates the request status in your account. Verification is a review process and does not guarantee investment, funding or commercial outcomes.'},
+  {q:'What do membership plans include, and how do upgrades work?',a:'The plan comparison above lists the active tiers and their published monthly prices and features. Choose a plan from your workspace Membership page. Free access can be activated in the workspace; paid requests continue through the available payment and review flow. Paid access starts only after the payment has been reviewed and the plan approved.'},
+  {q:'How can I contact support or share feedback?',a:'Use Support in your workspace to contact the team, or open Feedback to share a suggestion or report an issue. You can also reach Ventora at hello@ventora.com.'},
+  {q:'Who can see my information, and how do I control my account?',a:'Only publish information you are comfortable sharing with the network. Private materials and account functions are governed by your access level and the platform’s privacy controls. Review the Privacy page for details, and use Settings in your workspace to manage available account preferences.'}
+ ];
+ return <section className="gp-home-faq" id="questions-and-answers">
+  <div className="gp-home-faq-intro"><p className="gp-eyebrow">A FEW THINGS WORTH KNOWING</p><h2>Questions &amp;<br/><em>answers.</em></h2><p>Clear guidance for making the most of your Ventora membership.</p><Link to="/support">Still have a question? Contact support <ArrowRight size={15}/></Link></div>
+  <div className="gp-home-faq-list">{items.map((item,index)=><details key={item.q} className="gp-home-faq-item"><summary><span>{String(index+1).padStart(2,'0')}</span><b>{item.q}</b><i aria-hidden="true"/></summary><p>{item.a}</p></details>)}</div>
+ </section>;
+}
 
 
 function KineticHeadline(){
