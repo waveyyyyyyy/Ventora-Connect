@@ -450,3 +450,5 @@ html{scroll-behavior:smooth;scroll-padding-top:90px}
 @media(max-width:850px){.gp-membership-spotlight{grid-template-columns:1fr 1fr}.gp-membership-copy{grid-column:1/-1}.gp-membership-poster,.gp-membership-preview{min-height:250px}}
 @media(max-width:560px){.gp-membership-spotlight{grid-template-columns:1fr;gap:22px}.gp-membership-copy{grid-column:auto}.gp-membership-poster{min-height:260px;width:84%;margin:auto}.gp-membership-preview{width:100%}}
 @media(prefers-reduced-motion:reduce){.gp-membership-poster{transform:none!important}}
+
+.gp-membership-nav{border:0;background:none;padding:0;color:inherit;font:inherit;cursor:pointer}.gp-membership-nav:hover{text-decoration:underline}
