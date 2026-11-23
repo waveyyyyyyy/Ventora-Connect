@@ -95,3 +95,8 @@
 .gp-home-faq-item:not([open]) > p {
   display: none !important;
 }
+
+/* Keep the hero poster's tagline clear of its multi-line title. */
+.gp-poster > span {
+  margin-top: 30px !important;
+}
