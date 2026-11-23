@@ -4461,3 +4461,32 @@ body>.workspace-menu-toggle{
   .gp-hero-copy h1 .gp-typewrite,
   .gp-hero-copy h1 .gp-typewrite span{font-size:1em!important}
 }
+
+
+/* Public homepage navigation: render the Membership button exactly like its sibling links. */
+.gp-public-header nav>.gp-membership-nav{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#536777!important;
+  font-family:inherit!important;
+  font-size:13px!important;
+  font-weight:600!important;
+  line-height:inherit!important;
+  letter-spacing:inherit!important;
+  text-decoration:none!important;
+  text-transform:none!important;
+  box-shadow:none!important;
+  cursor:pointer!important;
+  transition:color .24s ease,transform .32s var(--gp-spring)!important;
+}
+.gp-public-header nav>.gp-membership-nav:hover{
+  color:#1b607b!important;
+  text-decoration:none!important;
+  transform:translateY(-2px)!important;
+}
