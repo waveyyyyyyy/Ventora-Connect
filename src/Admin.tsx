@@ -75,7 +75,7 @@ export default function Admin(){
  const filteredTickets=data.tickets.filter((t:any)=>ticketFilter==='all'||t.status===ticketFilter);
  const pendingPlans=data.plans.filter((r:any)=>r.status==='pending');
 
- async function runAction(key:string,action:()=>Promise<any>,success:string){setBusy(key);setNotice('');try{const result=await action();if(result?.error)throw result.error;notify(success);await refresh(false);}catch(e){notify('Action failed: '+messageOf(e));}finally{setBusy('');}}
+ async function runAction(key:string,action:()=>any,success:string){setBusy(key);setNotice('');try{const result=await action();if(result?.error)throw result.error;notify(success);await refresh(false);}catch(e){notify('Action failed: '+messageOf(e));}finally{setBusy('');}}
  async function suspendMember(m:any){await runAction(m.id,()=>supabase!.from('profiles').update({is_suspended:!m.is_suspended}).eq('id',m.id),m.is_suspended?'Member reinstated.':'Member suspended.');}
  async function setRole(m:any){const next=adminRole(m.id)==='admin'?'none':'admin';if(next==='none'&&!window.confirm('Remove administrator access from '+(m.full_name||m.email)+'?'))return;if(next==='admin'&&!window.confirm('Grant full administrator access to this account?'))return;await runAction('role-'+m.id,()=>supabase!.rpc('admin_set_role',{p_user_id:m.id,p_role:next}),next==='admin'?'Administrator access granted.':'Administrator access removed.');}
  async function businessAction(b:any,field:'is_published'|'featured'){const next=!b[field];await runAction(b.id,()=>supabase!.from('businesses').update({[field]:next}).eq('id',b.id),field==='is_published'?(next?'Business listing published.':'Business listing unpublished.'):(next?'Business featured.':'Business unfeatured.'));}
