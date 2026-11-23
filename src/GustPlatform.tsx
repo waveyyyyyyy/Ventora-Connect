@@ -52,7 +52,6 @@ export default function GustPlatform(){
 function PublicPlanComparison({onNavigate}:{onNavigate:(path:string)=>void}){
  const[plans,setPlans]=useState<any[]>([]);
  const[currentPlan,setCurrentPlan]=useState<string|null>(null);
- const[accountType,setAccountType]=useState<'business'|'investor'|null>(null);
  const[loaded,setLoaded]=useState(false);
  useEffect(()=>{
   let active=true;
@@ -71,99 +70,6 @@ function PublicPlanComparison({onNavigate}:{onNavigate:(path:string)=>void}){
     ]);
     if(!active)return;
     setCurrentPlan(subscription.data?.plan_id||null);
-    setAccountType(profile.data?.account_type==='investor'?'investor':'business');
-   }
-   setLoaded(true);
-  }
-  void load().catch(()=>{if(active)setLoaded(true)});
-  return()=>{active=false};
- },[]);
- const groups=[{key:'business',label:'For businesses',sub:'Build visibility, meet aligned investors and move opportunities forward.'},{key:'investor',label:'For investors',sub:'Discover companies, organise deal flow and build founder relationships.'}];
- const features=(plan:any)=>{
-  const f=plan.features||{};
-  const values=plan.account_type==='business'?[
-   ['Company profiles',f.max_business_profiles===-1?'Unlimited':f.max_business_profiles??'Not listed'],
-   ['Monthly profile views',f.monthly_profile_views===-1?'Unlimited':f.monthly_profile_views??'Not listed'],
-   ['Discovery',f.advanced_discovery?'Advanced filters':'Standard filters'],
-   ['Introductions',f.monthly_connections===-1?'Unlimited':f.monthly_connections??'Not listed'],
-   ['Messaging',f.messaging?'Included':'Not included'],
-   ['Insights & support',f.analytics?'Analytics included':f.priority_support?'Priority support':'Standard support']
-  ]:[
-   ['Business profile views',f.monthly_business_views===-1?'Unlimited':f.monthly_business_views??'Not listed'],
-   ['Saved profiles',f.saved_profiles===-1?'Unlimited':f.saved_profiles??'Not listed'],
-   ['Discovery',f.advanced_filters?'Advanced filters':'Standard filters'],
-   ['Messaging',f.messaging?'Included':'Not included'],
-   ['Investment interest',f.express_interest?'Included':'Not included'],
-   ['Deal access',f.pitch_deck_access?'Private materials access':f.portfolio_access?'Portfolio access':'Standard access']
-  ];
-  return values;
- };
- if(!loaded||!plans.length)return null;
- return <section className="gp-home-plans" id="plan-comparisons">
-  <div className="gp-home-plans-head"><p className="gp-eyebrow">VENTORA CONNECT / MEMBERSHIP GUIDE</p><h2>Plan comparisons.<br/><em>Choose your next level.</em></h2><p>Every active membership tier, with pricing and access drawn from Ventora’s published plan catalogue.</p></div>
-  {groups.map(group=>{
-   const groupPlans=plans.filter(p=>p.account_type===group.key);
-   if(!groupPlans.length)return null;
-   return <div className="gp-home-plan-group" key={group.key}>
-    <div className="gp-home-plan-group-head"><div><span>{group.key==='business'?'01 / BUSINESS MEMBERSHIPS':'02 / INVESTOR MEMBERSHIPS'}</span><h3>{group.label}</h3></div><p>{group.sub}</p></div>
-    <div className="gp-home-plan-grid">
-     {groupPlans.map((plan:any)=>{
-      const current=plan.id===currentPlan;
-      return <article className={'gp-home-plan-card'+(current?' is-current':'')} key={plan.id}>
-       <div className="gp-home-plan-card-top"><span>{current?'YOUR CURRENT PLAN':Number(plan.price_inr)===0?'START HERE':'MEMBERSHIP TIER'}</span>{current&&<b>ACTIVE</b>}</div>
-       <h4>{plan.name}</h4><p className="gp-home-plan-description">{plan.description}</p>
-       <div className="gp-home-plan-price"><strong>₹{Number(plan.price_inr||0).toLocaleString('en-IN')}</strong><span>/ month</span></div>
-       <ul>{features(plan).map(([label,value]:any)=><li key={label}><span>{label}</span><b>{String(value)}</b></li>)}</ul>
-       <button type="button" className={current?'is-current-button':''} onClick={()=>onNavigate(current?'/dashboard?tab=subscriptions':currentPlan?'/dashboard?tab=subscriptions':'/signup')}>{current?'Manage membership':currentPlan?'Explore upgrade':'Choose this plan'} <ArrowRight size={16}/></button>
-       <small>{Number(plan.price_inr)>0?'Paid access is activated after payment review.':'Free access is activated in your workspace.'}</small>
-      </article>
-     })}
-    </div>
-   </div>
-  })}
-  <div className="gp-home-plan-foot"><ShieldCheck size={18}/><p>Plan features reflect the active catalogue. Some capabilities depend on account type, profile completion and verification status.</p><button type="button" onClick={()=>onNavigate(currentPlan?'/dashboard?tab=subscriptions':'/signup')}>View membership options <ArrowRight size={15}/></button></div>
- </section>;
-}
-
-function PublicQuestions(){
- const items=[
-  {q:'How does discovery and matching work?',a:'Complete your business or investor profile with accurate details, preferences and interests. Ventora uses the information members choose to share to help surface relevant profiles and opportunities. Review each profile and start a conversation when there is a genuine fit; a match is an introduction signal, not an endorsement or funding guarantee.'},
-  {q:'How do I complete my profile?',a:'Create an account, open your workspace and visit Personal profile. Businesses can add company details, funding requirements and a pitch deck from Manage businesses. Investors can add preferred industries, stages, locations and investment strategy under Investor preferences. Keep information current so other members can assess fit.'},
-  {q:'How do I verify my account or business?',a:'Open Verification in your workspace and submit the requested information. The Ventora team reviews submitted details and updates the request status in your account. Verification is a review process and does not guarantee investment, funding or commercial outcomes.'},
-  {q:'What do membership plans include, and how do upgrades work?',a:'The plan comparison above lists the active tiers and their published monthly prices and features. Choose a plan from your workspace Membership page. Free access can be activated in the workspace; paid requests continue through the available payment and review flow. Paid access starts only after the payment has been reviewed and the plan approved.'},
-  {q:'How can I contact support or share feedback?',a:'Use Support in your workspace to contact the team, or open Feedback to share a suggestion or report an issue. You can also reach Ventora at hello@ventora.com.'},
-  {q:'Who can see my information, and how do I control my account?',a:'Only publish information you are comfortable sharing with the network. Private materials and account functions are governed by your access level and the platform’s privacy controls. Review the Privacy page for details, and use Settings in your workspace to manage available account preferences.'}
- ];
- return <section className="gp-home-faq" id="questions-and-answers">
-  <div className="gp-home-faq-intro"><p className="gp-eyebrow">A FEW THINGS WORTH KNOWING</p><h2>Questions &amp;<br/><em>answers.</em></h2><p>Clear guidance for making the most of your Ventora membership.</p><Link to="/support">Still have a question? Contact support <ArrowRight size={15}/></Link></div>
-  <div className="gp-home-faq-list">{items.map((item,index)=><details key={item.q} className="gp-home-faq-item"><summary><span>{String(index+1).padStart(2,'0')}</span><b>{item.q}</b><i aria-hidden="true"/></summary><p>{item.a}</p></details>)}</div>
- </section>;
-}
-
-
-function PublicPlanComparison({onNavigate}:{onNavigate:(path:string)=>void}){
- const[plans,setPlans]=useState<any[]>([]);
- const[currentPlan,setCurrentPlan]=useState<string|null>(null);
- const[accountType,setAccountType]=useState<'business'|'investor'|null>(null);
- const[loaded,setLoaded]=useState(false);
- useEffect(()=>{
-  let active=true;
-  async function load(){
-   if(!supabase){if(active)setLoaded(true);return;}
-   const[planResult,userResult]=await Promise.all([
-    supabase.from('subscription_plans').select('id,name,description,price_inr,account_type,display_order,features,is_active').eq('is_active',true).order('display_order'),
-    restoreUserSession()
-   ]);
-   if(!active)return;
-   if(!planResult.error)setPlans(planResult.data||[]);
-   if(userResult?.id){
-    const[subscription,profile]=await Promise.all([
-     supabase.from('subscriptions').select('plan_id,status').eq('user_id',userResult.id).maybeSingle(),
-     supabase.from('profiles').select('account_type').eq('id',userResult.id).maybeSingle()
-    ]);
-    if(!active)return;
-    setCurrentPlan(subscription.data?.plan_id||null);
-    setAccountType(profile.data?.account_type==='investor'?'investor':'business');
    }
    setLoaded(true);
   }
