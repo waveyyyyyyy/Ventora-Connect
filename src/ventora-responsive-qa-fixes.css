@@ -1,11 +1,52 @@
-/* Keep decorative poster rings out of the poster's text flex flow. */
+/* Responsive QA fixes — keep content in its own layout flow. */
+
+/* Decorative poster rings are visual layers, not flex children. */
 .gp-poster > div {
   position: absolute !important;
   z-index: 2 !important;
   pointer-events: none !important;
 }
 
-/* Give the compact directory header enough room for complete action labels. */
+/* Closed FAQ disclosures must not paint their answer paragraphs. */
+.gp-home-faq-item:not([open]) > p {
+  display: none !important;
+}
+
+/* The public landing header uses its menu drawer at tablet widths. */
+@media (max-width: 860px) and (min-width: 761px) {
+  .gp-public-header nav {
+    display: none !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .gp-public-header {
+    gap: 6px !important;
+  }
+
+  .gp-public-actions {
+    gap: 6px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .gp-public-actions .gp-login {
+    display: none !important;
+  }
+
+  .gp-public-actions .gp-primary svg {
+    display: none !important;
+  }
+
+  .gp-public-actions .gp-primary {
+    width: auto !important;
+    min-width: 0 !important;
+    padding: 8px 10px !important;
+    font-size: 10px !important;
+  }
+}
+
+/* Do not shrink public directory actions below their labels. */
 @media (max-width: 760px) {
   .header .topbar-actions {
     flex: 0 0 auto !important;
@@ -47,4 +88,17 @@
     padding-inline: 6px !important;
     font-size: 10px !important;
   }
+}
+
+/* Let directory grids and cards size from their real content, not placeholders. */
+.directory-grid {
+  content-visibility: visible !important;
+  contain: none !important;
+  contain-intrinsic-size: none !important;
+}
+
+.directory-card {
+  content-visibility: visible !important;
+  contain: none !important;
+  contain-intrinsic-size: none !important;
 }
