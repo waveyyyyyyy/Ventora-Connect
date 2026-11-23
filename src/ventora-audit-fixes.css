@@ -4347,3 +4347,29 @@ body>.workspace-menu-toggle{
 @media(max-width:380px){
   .gp-hero-copy h1{font-size:clamp(88px,28vw,106px)!important}
 }
+
+
+/* Rebalance the mobile hero: half the previous oversized 2x scale. */
+@media(max-width:720px){
+  .gp-hero-copy h1{
+    font-size:clamp(48px,15vw,60px)!important;
+    line-height:1.0!important;
+    letter-spacing:-.065em!important;
+    margin:28px 0 24px!important;
+  }
+  .gp-hero-copy h1>.gp-hero-static,
+  .gp-hero-copy h1>.gp-typewrite{
+    font-size:1em!important;
+    font-weight:900!important;
+    letter-spacing:inherit!important;
+    line-height:inherit!important;
+    display:block!important;
+    width:auto!important;
+    max-width:100%!important;
+    white-space:normal!important;
+  }
+  .gp-hero-copy h1>.gp-typewrite{min-height:1em!important}
+}
+@media(max-width:380px){
+  .gp-hero-copy h1{font-size:clamp(44px,14vw,53px)!important}
+}
