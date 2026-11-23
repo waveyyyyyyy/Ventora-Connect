@@ -119,3 +119,14 @@
   margin: 12px auto 10px !important;
   z-index: 2 !important;
 }
+
+/* Separate the floating profile card from the poster headline. */
+.gp-float-card.investor-card {
+  bottom: 10px !important;
+}
+
+@media (max-width: 860px) {
+  .gp-art-center > span {
+    visibility: hidden !important;
+  }
+}
