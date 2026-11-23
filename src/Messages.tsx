@@ -64,7 +64,7 @@ export default function Messages(){
  const grouped=useMemo(()=>items.map((m,i)=>({...m,showDay:i===0||dayKey(m.created_at)!==dayKey(items[i-1].created_at)})),[items]);
  const roleLabel=(t:Thread)=>t.accountType==='investor'?'Investor':'Business';
  return <MemberSectionLayout className="messages-page" user={user}><main className={'messages-studio'+(current?' has-current':'')}>
-  <div className="messages-studio-atmosphere" aria-hidden="true"><span/><i/><b/></div>{(memberPlanId==='business_launch'||memberPlanId==='investor_explorer')&&<aside className="messages-membership-nudge"><div><span>VENTORA MEMBERSHIP</span><b>Make every introduction count.</b><small>Explore expanded networking, richer discovery and priority member access.</small></div><Link to="/pricing">Explore plans <ArrowUpRight size={15}/></Link></aside>}
+  <div className="messages-studio-atmosphere" aria-hidden="true"><span/><i/><b/></div>
   <aside className="messages-list">
    <div className="messages-list-title"><div><span className="section-kicker">YOUR NETWORK / PRIVATE ROOMS</span><h1>Messages</h1><p>Conversations that move things forward.</p></div><span className="messages-count">{threads.length}</span></div>
    <label className="messages-search"><Search size={16}/><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search people & businesses" aria-label="Search messages"/></label>
