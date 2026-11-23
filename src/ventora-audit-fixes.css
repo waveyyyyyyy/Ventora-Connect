@@ -4059,3 +4059,45 @@ body>.workspace-menu-toggle{
  .vc-member-section:not(.messages-page)>.workspace-menu-toggle,
  body>.workspace-menu-toggle{left:16px!important;top:12px!important}
 }
+
+
+/* Unified member-section masthead: reuse the exact Overview header shell and controls. */
+.vc-member-section>.vc-unified-member-topbar{
+ display:flex!important;align-items:center!important;position:sticky!important;top:0!important;z-index:80!important;
+ width:100%!important;min-width:0!important;max-width:100%!important;height:72px!important;min-height:72px!important;
+ margin:0!important;padding:0 clamp(14px,2.2vw,28px)!important;gap:clamp(12px,2vw,24px)!important;
+ box-sizing:border-box!important;overflow:visible!important;border:1px solid rgba(15,34,52,.1)!important;
+ border-radius:0 0 16px 16px!important;background:rgba(255,255,255,.94)!important;
+ box-shadow:0 8px 28px rgba(15,34,52,.07)!important;backdrop-filter:blur(18px) saturate(130%)!important;
+ -webkit-backdrop-filter:blur(18px) saturate(130%)!important;
+}
+.vc-unified-member-topbar>.workspace-topbar-logo{display:flex!important;align-items:center!important;flex:0 0 auto!important;
+ min-width:max-content!important;max-width:none!important;margin:0!important;gap:9px!important;opacity:1!important}
+.vc-unified-member-topbar .brand-mark{width:38px!important;height:38px!important;min-width:38px!important;max-width:38px!important;flex:0 0 38px!important}
+.vc-unified-member-topbar .brand-copy{display:flex!important;flex-direction:column!important;min-width:0!important;opacity:1!important;visibility:visible!important}
+.vc-unified-member-topbar .brand-word{font-size:18px!important;line-height:1!important;letter-spacing:.075em!important;color:#0F2234!important;opacity:1!important;white-space:nowrap!important}
+.vc-unified-member-topbar .brand-sub{font-size:7px!important;line-height:1.2!important;letter-spacing:.52em!important;color:#245863!important;opacity:1!important;white-space:nowrap!important}
+.vc-unified-member-topbar .vc-member-topbar-spacer{flex:1 1 auto!important;min-width:0!important}
+.vc-unified-member-topbar .topbar-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:10px!important;flex:0 0 auto!important;margin-left:auto!important}
+.vc-unified-member-topbar .topbar-actions>a{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:40px!important;height:40px!important;min-width:40px!important;border:1px solid rgba(15,34,52,.12)!important;border-radius:12px!important;background:#fff!important;color:#245863!important;text-decoration:none!important;box-shadow:0 3px 12px rgba(15,34,52,.05)!important}
+.vc-unified-member-topbar .topbar-actions>a.topbar-avatar{position:relative!important;border-radius:50%!important;background:#eaf1f2!important;color:#132A3A!important;font-size:12px!important;font-weight:800!important}
+.vc-unified-member-topbar .vc-member-topbar-avatar span{display:block!important}
+.vc-unified-member-topbar .vc-member-topbar-avatar>svg{display:none!important}
+.vc-unified-member-topbar .workspace-menu-toggle{position:relative!important;inset:auto!important;flex:0 0 42px!important;width:42px!important;height:42px!important;margin:0!important;transform:none!important}
+@media(max-width:760px){
+ .vc-member-section>.vc-unified-member-topbar{height:64px!important;min-height:64px!important;padding:0 12px!important;gap:10px!important;border-radius:0 0 12px 12px!important}
+ .vc-unified-member-topbar .brand-mark{width:32px!important;height:32px!important;min-width:32px!important;max-width:32px!important;flex-basis:32px!important}
+ .vc-unified-member-topbar .brand-word{font-size:14px!important;letter-spacing:.04em!important}
+ .vc-unified-member-topbar .brand-sub{font-size:5px!important;letter-spacing:.36em!important}
+ .vc-unified-member-topbar .topbar-actions{gap:6px!important}
+ .vc-unified-member-topbar .topbar-actions>a{width:35px!important;height:35px!important;min-width:35px!important;border-radius:10px!important}
+ .vc-unified-member-topbar .workspace-menu-toggle{flex-basis:38px!important;width:38px!important;height:38px!important}
+}
+@media(max-width:360px){
+ .vc-member-section>.vc-unified-member-topbar{padding-inline:8px!important;gap:7px!important}
+ .vc-unified-member-topbar .brand-mark{width:29px!important;height:29px!important;min-width:29px!important;max-width:29px!important;flex-basis:29px!important}
+ .vc-unified-member-topbar .brand-word{font-size:12px!important;letter-spacing:.025em!important}
+ .vc-unified-member-topbar .brand-sub{font-size:4.5px!important}
+ .vc-unified-member-topbar .topbar-actions{gap:4px!important}
+ .vc-unified-member-topbar .topbar-actions>a{width:32px!important;height:32px!important;min-width:32px!important}
+}
