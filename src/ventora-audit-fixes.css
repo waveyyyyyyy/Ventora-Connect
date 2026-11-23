@@ -3337,3 +3337,66 @@ body.vc-section-navigation-open #root{
   .vc-section-menu-backdrop.is-open,
   .vc-section-menu-backdrop.is-closing{transition:none!important}
 }
+
+/* Business / investor directory footer: make the footer a clean, opaque scene.
+   The root's stacked page wallpapers must stop showing through this boundary. */
+#root:has(.directory-business-hero) .footer,
+#root:has(.directory-investor-hero) .footer{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  background-color:#102d35!important;
+  background-image:
+    linear-gradient(112deg,rgba(7,24,34,.88),rgba(12,39,47,.82) 55%,rgba(13,48,54,.78)),
+    url("https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=2200&q=85")!important;
+  background-position:center,center 48%!important;
+  background-size:cover,cover!important;
+  background-repeat:no-repeat,no-repeat!important;
+  border-top:1px solid rgba(226,245,240,.24)!important;
+  box-shadow:0 -18px 48px rgba(9,29,36,.12)!important;
+}
+#root:has(.directory-business-hero) .footer:before,
+#root:has(.directory-investor-hero) .footer:before{
+  content:none!important;
+  display:none!important;
+}
+#root:has(.directory-business-hero) .footer:after,
+#root:has(.directory-investor-hero) .footer:after{
+  opacity:.12!important;
+  background-image:
+    linear-gradient(rgba(222,244,239,.14) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(222,244,239,.14) 1px,transparent 1px)!important;
+}
+#root:has(.directory-business-hero) .footer .brand,
+#root:has(.directory-investor-hero) .footer .brand{color:#fff!important}
+#root:has(.directory-business-hero) .footer-main>div:first-child p,
+#root:has(.directory-investor-hero) .footer-main>div:first-child p{
+  color:#e2f0ee!important;
+  opacity:1!important;
+  text-shadow:0 1px 8px rgba(0,0,0,.28)!important;
+}
+#root:has(.directory-business-hero) .footer-links b,
+#root:has(.directory-investor-hero) .footer-links b{
+  color:#bfe8dc!important;
+  text-shadow:0 1px 8px rgba(0,0,0,.35)!important;
+}
+#root:has(.directory-business-hero) .footer-links a,
+#root:has(.directory-investor-hero) .footer-links a{
+  color:#f4f8f7!important;
+  text-shadow:0 1px 8px rgba(0,0,0,.42)!important;
+}
+#root:has(.directory-business-hero) .footer-links a:hover,
+#root:has(.directory-investor-hero) .footer-links a:hover{color:#a9f0d9!important}
+#root:has(.directory-business-hero) .footer-bottom,
+#root:has(.directory-investor-hero) .footer-bottom{
+  color:#d5e7e3!important;
+  border-top-color:rgba(235,248,244,.32)!important;
+  text-shadow:0 1px 8px rgba(0,0,0,.42)!important;
+}
+@media(max-width:680px){
+  #root:has(.directory-business-hero) .footer,
+  #root:has(.directory-investor-hero) .footer{
+    background-position:center,center!important;
+    background-size:cover,cover!important;
+  }
+}
