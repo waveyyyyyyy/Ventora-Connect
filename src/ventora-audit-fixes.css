@@ -2103,3 +2103,72 @@ body:has(.directory-investor-hero) .directory-results{
    center 400svh,center 500svh,center 600svh,center 700svh!important;
  }
 }
+
+/* Targeted readability repair for the three scenic member-page introductions.
+   Keep the existing typefaces and sizing; give only the copy a calm, solid-enough surface. */
+.vc-member-section.interests-page main>h1,
+.vc-member-section.matches-page main>h1,
+.vc-member-section.announcements-page main>h1{
+  color:#f7fbf8!important;
+  text-shadow:none!important;
+}
+.vc-member-section.interests-page main>h1 em,
+.vc-member-section.matches-page main>h1 em,
+.vc-member-section.announcements-page main>h1 em{
+  color:#b9e3d3!important;
+}
+.vc-member-section.interests-page main>p,
+.vc-member-section.matches-page main>p,
+.vc-member-section.announcements-page main>p{
+  display:block;
+  width:fit-content;
+  max-width:min(720px,100%);
+  margin:14px 0 24px!important;
+  padding:13px 17px!important;
+  border:1px solid rgba(226,243,235,.24);
+  border-left:3px solid #8bcab1;
+  border-radius:4px 12px 12px 4px;
+  background:rgba(8,31,40,.86)!important;
+  color:#f4faf6!important;
+  font-size:14px!important;
+  line-height:1.75!important;
+  font-weight:500;
+  text-shadow:none!important;
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+}
+.vc-member-section.interests-page .interest-disclaimer{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  max-width:760px;
+  margin-top:22px!important;
+  padding:14px 17px!important;
+  border:1px solid rgba(255,255,255,.62)!important;
+  border-left:3px solid #245863!important;
+  border-radius:4px 12px 12px 4px!important;
+  background:rgba(248,251,249,.96)!important;
+  color:#183b45!important;
+  font-size:13px!important;
+  line-height:1.65!important;
+  font-weight:600!important;
+  text-shadow:none!important;
+}
+.vc-member-section.interests-page .interest-disclaimer svg{
+  flex:0 0 auto;
+  color:#245863!important;
+  margin-top:2px;
+}
+@media(max-width:600px){
+  .vc-member-section.interests-page main>p,
+  .vc-member-section.matches-page main>p,
+  .vc-member-section.announcements-page main>p{
+    width:100%;
+    padding:12px 14px!important;
+    font-size:13px!important;
+  }
+  .vc-member-section.interests-page .interest-disclaimer{
+    padding:12px 14px!important;
+    font-size:12px!important;
+  }
+}
