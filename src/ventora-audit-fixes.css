@@ -3282,3 +3282,26 @@ body.vc-section-navigation-open #root{
   .vc-section-menu-backdrop.is-open,
   .vc-section-menu-backdrop.is-closing{transition:none!important}
 }
+
+
+/* Match the exit motion to the entrance: steady, eased slide instead of a sudden snap. */
+.workspace-sidebar.vc-section-drawer.is-closing{
+  transform:translate3d(calc(-100% - 12px),0,0)!important;
+  opacity:0!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+  transition:
+    transform .50s cubic-bezier(.4,0,.2,1),
+    opacity .40s cubic-bezier(.4,0,.2,1),
+    visibility 0s linear .54s!important;
+}
+.vc-section-menu-backdrop.is-closing{
+  opacity:0!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+  transition:opacity .42s cubic-bezier(.4,0,.2,1),visibility 0s linear .54s!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .workspace-sidebar.vc-section-drawer.is-closing,
+  .vc-section-menu-backdrop.is-closing{transition:none!important}
+}
