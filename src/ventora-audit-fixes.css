@@ -4623,7 +4623,10 @@ body>.workspace-menu-toggle{
   border:0!important;
   background:transparent!important;
   color:#536777!important;
-  font:600 13px/1.4 inherit!important;
+  font-family:inherit!important;
+  font-size:13px!important;
+  font-weight:600!important;
+  line-height:1.4!important;
   text-decoration:none!important;
   text-transform:none!important;
   box-shadow:none!important;
