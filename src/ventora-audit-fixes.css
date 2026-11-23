@@ -4230,3 +4230,40 @@ body>.workspace-menu-toggle{
     letter-spacing:-.055em!important;
   }
 }
+
+
+/* Final mobile hero correction: use a genuinely larger type scale on phones. */
+@media(max-width:720px){
+  .gp-hero{
+    margin:12px 10px 0!important;
+    padding:38px 16px 30px!important;
+  }
+  .gp-hero-copy{
+    max-width:none!important;
+    width:100%!important;
+  }
+  .gp-hero-copy h1{
+    font-size:clamp(32px,10vw,50px)!important;
+    line-height:1.02!important;
+    font-weight:850!important;
+    letter-spacing:-.055em!important;
+    margin:24px 0 18px!important;
+    text-wrap:initial!important;
+  }
+  .gp-hero-copy h1>.gp-hero-static,
+  .gp-hero-copy h1>.gp-typewrite{
+    display:block!important;
+    width:max-content!important;
+    max-width:100%!important;
+    font-size:1em!important;
+    font-weight:850!important;
+    letter-spacing:inherit!important;
+    white-space:nowrap!important;
+  }
+  .gp-hero-copy h1>.gp-typewrite{
+    min-height:1.08em!important;
+  }
+}
+@media(max-width:360px){
+  .gp-hero-copy h1{font-size:clamp(30px,9.6vw,36px)!important}
+}
