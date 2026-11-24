@@ -215,3 +215,75 @@
  #root .vc-member-section .vc-overview-studio *:before,
  #root .vc-member-section .vc-overview-studio *:after {animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
+
+
+/* HIGH-CONTRAST OVERVIEW ACTIVITY RAIL — replace the low-contrast grey strip.
+   Keep the entire rail dark with white labels, values and helper copy. */
+#root .vc-member-section section.vc-overview-pulse,
+#root .vc-member-section .vc-overview-studio section.vc-overview-pulse {
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:0!important;
+  width:100%!important; min-width:0!important; max-width:100%!important;
+  padding:0!important; margin:0!important;
+  overflow:hidden!important;
+  background:#172b3a!important;
+  border:1px solid #294253!important;
+  border-radius:18px!important;
+  box-shadow:0 12px 30px rgba(15,34,52,.12)!important;
+}
+#root .vc-member-section section.vc-overview-pulse > button.vc-pulse-item,
+#root .vc-member-section .vc-overview-studio section.vc-overview-pulse > button.vc-pulse-item {
+  display:flex!important; flex-direction:column!important;
+  align-items:flex-start!important; justify-content:center!important;
+  gap:7px!important; min-width:0!important; min-height:116px!important;
+  width:100%!important; margin:0!important; padding:20px 24px!important;
+  border:0!important; border-right:1px solid #476071!important;
+  border-radius:0!important; background:#172b3a!important;
+  color:#fff!important; -webkit-text-fill-color:#fff!important;
+  text-align:left!important; text-shadow:none!important;
+  opacity:1!important; visibility:visible!important;
+}
+#root .vc-member-section section.vc-overview-pulse > button.vc-pulse-item:last-child {
+  border-right:0!important;
+}
+#root .vc-member-section section.vc-overview-pulse > button.vc-pulse-item :is(span,strong,b,small,i,svg) {
+  color:#fff!important; -webkit-text-fill-color:#fff!important;
+  opacity:1!important; visibility:visible!important;
+  text-shadow:none!important;
+}
+#root .vc-member-section section.vc-overview-pulse > button.vc-pulse-item .vc-pulse-label {
+  display:flex!important; align-items:center!important; gap:7px!important;
+  color:#dce7ee!important; -webkit-text-fill-color:#dce7ee!important;
+  font-size:10px!important; font-weight:850!important;
+  letter-spacing:.09em!important; line-height:1.5!important;
+}
+#root .vc-member-section section.vc-overview-pulse > button.vc-pulse-item strong {
+  display:block!important; color:#fff!important; -webkit-text-fill-color:#fff!important;
+  font-size:clamp(21px,2vw,27px)!important; font-weight:850!important;
+  line-height:1.2!important;
+}
+#root .vc-member-section section.vc-overview-pulse > button.vc-pulse-item small {
+  display:block!important; color:#e1e8ed!important; -webkit-text-fill-color:#e1e8ed!important;
+  font-size:12px!important; font-weight:550!important; line-height:1.5!important;
+}
+#root .vc-member-section section.vc-overview-pulse > button.vc-pulse-item:hover,
+#root .vc-member-section section.vc-overview-pulse > button.vc-pulse-item:focus-visible {
+  background:#203b4e!important;
+}
+#root .vc-member-section section.vc-overview-pulse > button.vc-pulse-item:focus-visible {
+  outline:3px solid #b7d8e8!important; outline-offset:-4px!important;
+}
+@media(max-width:640px) {
+ #root .vc-member-section section.vc-overview-pulse,
+ #root .vc-member-section .vc-overview-studio section.vc-overview-pulse {
+   grid-template-columns:minmax(0,1fr)!important;
+ }
+ #root .vc-member-section section.vc-overview-pulse > button.vc-pulse-item {
+   min-height:82px!important; padding:15px 18px!important;
+   border-right:0!important; border-bottom:1px solid #476071!important;
+ }
+ #root .vc-member-section section.vc-overview-pulse > button.vc-pulse-item:last-child {
+   border-bottom:0!important;
+ }
+}
