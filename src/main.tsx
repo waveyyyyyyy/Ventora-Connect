@@ -39,6 +39,7 @@ import './ventora-editorial-cascade-final.css';
 import './ventora-global-finish.css';
 import './ventora-portal-finish.css';
 import './ventora-experience-overhaul.css';
+import './ventora-universal-craft-pass.css';
 
 // GitHub Pages serves this app below a repository path. Normalize plain internal
 // anchors too, not just React Router links, so footer/menu CTAs never escape the app.

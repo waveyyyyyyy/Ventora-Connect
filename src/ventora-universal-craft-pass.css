@@ -1,0 +1,185 @@
+/* Ventora universal craft pass — consistent contrast, refined interaction and responsive brand placement. */
+:root {
+  --ve-ink: #292a2e;
+  --ve-paper: #f4f4f2;
+  --ve-muted: #62625d;
+  --ve-accent: #777486;
+  --ve-accent-soft: #eeedf1;
+  --ve-line: rgba(41,42,46,.16);
+}
+
+/* Remove the remaining legacy teal actions and green selected filters. */
+#root .btn.btn-dark,
+#root .btn-dark,
+#root .directory-message-button,
+#root .messages-page button.active {
+  color: #fff !important;
+  background: #292a2e !important;
+  border-color: #292a2e !important;
+  background-image: none !important;
+}
+#root .btn.btn-dark:hover,
+#root .btn-dark:hover,
+#root .directory-message-button:hover,
+#root .messages-page button.active:hover {
+  color: #fff !important;
+  background: #17181b !important;
+  border-color: #17181b !important;
+}
+#root .messages-page button:not(.active) {
+  color: #55535f !important;
+  background: #eeedf1 !important;
+  border-color: #dedde3 !important;
+}
+#root .messages-page button:not(.active):hover {
+  color: #292a2e !important;
+  background: #e5e3eb !important;
+}
+
+/* Brand lockups should size to their artwork, never stretch across a footer row. */
+#root .gp-footer .brand,
+#root footer .brand,
+#root .vc-editorial-footer-brand .brand {
+  display: inline-flex !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  flex: 0 1 auto !important;
+  align-self: flex-start !important;
+}
+#root .gp-footer .brand .brand-mark,
+#root footer .brand .brand-mark,
+#root .vc-editorial-footer-brand .brand .brand-mark {
+  flex: 0 0 38px !important;
+}
+
+/* A single interaction language across public, member and admin surfaces. */
+#root button,
+#root a,
+#root [role="button"],
+#root input,
+#root select,
+#root textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+#root button,
+#root a,
+#root [role="button"] {
+  transition:
+    color .2s ease,
+    background-color .2s ease,
+    border-color .2s ease,
+    box-shadow .24s ease,
+    transform .24s cubic-bezier(.2,.7,.2,1) !important;
+}
+#root button:focus-visible,
+#root a:focus-visible,
+#root [role="button"]:focus-visible,
+#root input:focus-visible,
+#root select:focus-visible,
+#root textarea:focus-visible {
+  outline: 3px solid rgba(119,116,134,.62) !important;
+  outline-offset: 3px !important;
+}
+#root .gp-feature,
+#root .gp-preview-card,
+#root .gp-home-plan-card,
+#root .directory-card,
+#root .faq-item,
+#root .vc-admin-card,
+#root .vc-admin-panel,
+#root .workspace .card,
+#root .workspace .panel {
+  transition:
+    border-color .24s ease,
+    box-shadow .28s ease,
+    transform .28s cubic-bezier(.2,.7,.2,1) !important;
+}
+#root .gp-feature:hover,
+#root .gp-preview-card:hover,
+#root .gp-home-plan-card:hover,
+#root .directory-card:hover,
+#root .vc-admin-card:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 18px 38px rgba(28,28,30,.09) !important;
+  border-color: rgba(119,116,134,.42) !important;
+}
+#root .gp-primary,
+#root .directory-create-link,
+#root .vc-hero-primary,
+#root .auth-submit {
+  min-height: 44px;
+  letter-spacing: .01em;
+}
+#root .gp-primary:active,
+#root .directory-create-link:active,
+#root .vc-hero-primary:active,
+#root .auth-submit:active {
+  transform: translateY(1px) scale(.99) !important;
+}
+
+/* Give headings and editorial panels consistent rhythm without hiding content. */
+#root h1,
+#root h2,
+#root h3 {
+  text-wrap: pretty;
+}
+#root p,
+#root li,
+#root label {
+  text-wrap: pretty;
+}
+#root .gp-section,
+#root .gp-audience,
+#root .gp-how,
+#root .gp-home-plans,
+#root .gp-home-faq,
+#root .workspace-main,
+#root .workspace-content,
+#root .vc-member-section,
+#root .messages-page,
+#root .support-page,
+#root .admin-page {
+  min-width: 0;
+}
+#root img,
+#root svg {
+  max-width: 100%;
+}
+#root .brand img,
+#root .brand-mark,
+#root .gp-art-logo-image {
+  object-fit: contain;
+  object-position: center;
+}
+@media (max-width: 760px) {
+  #root .gp-footer .brand,
+  #root footer .brand,
+  #root .vc-editorial-footer-brand .brand {
+    max-width: calc(100vw - 32px) !important;
+  }
+  #root .gp-feature:hover,
+  #root .gp-preview-card:hover,
+  #root .gp-home-plan-card:hover,
+  #root .directory-card:hover,
+  #root .vc-admin-card:hover {
+    transform: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #root button,
+  #root a,
+  #root [role="button"],
+  #root .gp-feature,
+  #root .gp-preview-card,
+  #root .gp-home-plan-card,
+  #root .directory-card,
+  #root .faq-item,
+  #root .vc-admin-card,
+  #root .vc-admin-panel,
+  #root .workspace .card,
+  #root .workspace .panel {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
