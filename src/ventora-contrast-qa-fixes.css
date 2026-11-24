@@ -1,0 +1,44 @@
+/* Site-wide readability corrections — scoped to confirmed weak-contrast surfaces. */
+#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero) {
+  background: linear-gradient(135deg, #132a3a 0%, #1e4d58 100%) !important;
+  color: #fff !important;
+}
+#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero) h1,
+#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero) h1 em {
+  color: #fff !important;
+}
+#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero) p,
+#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero) .section-kicker {
+  color: #e0eeee !important;
+}
+#root .directory-business-hero,
+#root .directory-hero.directory-investor-hero {
+  background-color: rgba(8, 27, 35, .56) !important;
+  color: #fff !important;
+}
+#root .directory-business-hero h1,
+#root .directory-business-hero h1 em,
+#root .directory-hero.directory-investor-hero h1,
+#root .directory-hero.directory-investor-hero h1 em {
+  color: #fff !important;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, .42) !important;
+}
+#root .directory-business-hero p,
+#root .directory-business-hero .section-kicker,
+#root .directory-hero.directory-investor-hero p,
+#root .directory-hero.directory-investor-hero .section-kicker {
+  color: #edf5f4 !important;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .35) !important;
+}
+#root .faq-list article p { color: #52616f !important; }
+#root .gp-proof small,
+#root .gp-trust > span,
+#root .gp-trust div span,
+#root .gp-feature p,
+#root .gp-preview-card > p,
+#root .gp-company-head small,
+#root .gp-metrics small,
+#root .gp-deal-summary small,
+#root .gp-deal-row small,
+#root .gp-float-card small { color: #526574 !important; }
+#root .auth-box a { color: #245863 !important; }
