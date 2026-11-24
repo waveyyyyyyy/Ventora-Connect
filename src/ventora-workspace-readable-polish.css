@@ -1,4 +1,4 @@
-/* Ventora Connect — workspace drawer readability floor. */
+/* Ventora Connect — workspace drawer and overview microcopy readability. */
 #root .workspace-sidebar .workspace-brand .brand-sub,
 #root .workspace-sidebar .workspace-member small,
 #root .workspace-sidebar .workspace-member-plan,
@@ -23,6 +23,11 @@
   min-height: 20px;
   display: inline-grid;
   place-items: center;
+}
+#root .vc-overview-pulse .vc-pulse-label,
+#root .vc-overview-pulse .vc-pulse-item small {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
 }
 @media (max-width: 360px) {
   #root .workspace-sidebar .workspace-member {
