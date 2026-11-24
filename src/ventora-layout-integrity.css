@@ -1,0 +1,114 @@
+/* Ventora layout integrity: consistent card inset, legible index badges, and safe responsive grids. */
+#root .gp-how {
+  padding-inline: clamp(20px, 3.2vw, 52px) !important;
+}
+#root .gp-steps {
+  width: 100% !important;
+  max-width: 1440px !important;
+  margin: clamp(34px, 4vw, 58px) auto 0 !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: clamp(14px, 2.1vw, 32px) !important;
+  align-items: stretch !important;
+}
+#root .gp-steps > div {
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+  min-height: 238px !important;
+  padding: 24px 22px 26px !important;
+  border: 1px solid rgba(40, 42, 54, .14) !important;
+  border-radius: 22px !important;
+  background: rgba(255, 255, 255, .96) !important;
+  box-shadow: 0 14px 34px rgba(27, 30, 45, .07), inset 0 1px 0 rgba(255,255,255,.9) !important;
+  overflow: hidden !important;
+  overflow-wrap: anywhere !important;
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease !important;
+}
+#root .gp-steps > div:hover {
+  transform: translateY(-5px) !important;
+  border-color: rgba(91, 82, 207, .32) !important;
+  box-shadow: 0 20px 42px rgba(27, 30, 45, .11) !important;
+}
+#root .gp-steps > div > span {
+  display: grid !important;
+  place-items: center !important;
+  box-sizing: border-box !important;
+  width: 44px !important;
+  height: 44px !important;
+  margin: 0 0 20px !important;
+  border-radius: 14px !important;
+  background: linear-gradient(145deg, #7168e8, #5147bf) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font: 800 13px/1 Manrope, sans-serif !important;
+  letter-spacing: .04em !important;
+  box-shadow: 0 8px 18px rgba(81, 71, 191, .24) !important;
+}
+#root .gp-steps > div > b {
+  display: block !important;
+  margin: 0 0 10px !important;
+  color: #252630 !important;
+  -webkit-text-fill-color: #252630 !important;
+  font: 750 clamp(14px, 1.05vw, 17px)/1.35 Manrope, sans-serif !important;
+  letter-spacing: -.025em !important;
+  overflow-wrap: anywhere !important;
+}
+#root .gp-steps > div > p {
+  margin: 0 !important;
+  color: #555761 !important;
+  -webkit-text-fill-color: #555761 !important;
+  font: 400 13px/1.75 Manrope, sans-serif !important;
+  overflow-wrap: anywhere !important;
+}
+#root .vc-member-section,
+#root .vc-member-section * {
+  box-sizing: border-box;
+}
+#root .vc-member-section-content {
+  min-width: 0;
+  width: 100%;
+}
+#root .vc-member-section-content :is(article, .card, [class*="-card"], [class*="_card"], [class*="-tile"], [class*="_tile"]) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+#root .vc-member-section-content :is(article, .card, [class*="-card"], [class*="_card"], [class*="-tile"], [class*="_tile"]):not(.workspace-sidebar):not(.workspace-nav):not(.vc-overview-membership) {
+  padding: clamp(16px, 2vw, 24px);
+}
+#root .vc-member-section-content :is(h1, h2, h3, h4, p, span, small, strong, b, label, li) {
+  overflow-wrap: anywhere;
+}
+#root .vc-member-section-content :is(input, select, textarea, button) {
+  max-width: 100%;
+}
+#root .vc-member-section-content :is(input, select, textarea) {
+  min-width: 0;
+}
+@media (max-width: 900px) {
+  #root .gp-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+  }
+  #root .gp-steps > div {
+    min-height: 210px !important;
+    padding: 20px 18px 22px !important;
+  }
+}
+@media (max-width: 480px) {
+  #root .gp-how {
+    padding: 62px 18px !important;
+  }
+  #root .gp-steps {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+    margin-top: 30px !important;
+  }
+  #root .gp-steps > div {
+    min-height: 0 !important;
+    padding: 20px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #root .gp-steps > div {
+    transition: none !important;
+  }
+}
