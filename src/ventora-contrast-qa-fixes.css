@@ -42,3 +42,21 @@
 #root .gp-deal-row small,
 #root .gp-float-card small { color: #526574 !important; }
 #root .auth-box a { color: #245863 !important; }
+
+/* Legal screens: the header is dark, while the article is a light reading
+   surface. Keep each region on its correct contrast pair. */
+#root .legal-header .brand,
+#root .legal-header .brand-word { color: #fff !important; }
+#root .legal-header .brand-e { color: #b7d3d2 !important; }
+#root .legal-header .brand-sub { color: #dbe8e8 !important; }
+#root .legal-page {
+  background: #f4f7f9 !important;
+  color: #0f2234 !important;
+}
+#root .legal-page > .section-kicker,
+#root .legal-page > section > span { color: #245863 !important; }
+#root .legal-page > h1,
+#root .legal-page > section h2 { color: #0f2234 !important; }
+#root .legal-page .legal-intro,
+#root .legal-page > section p { color: #4b5d6b !important; }
+#root .legal-draft-note { color: #526574 !important; }
