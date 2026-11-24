@@ -1,7 +1,7 @@
 /* Ventora Connect — full-surface quality and creativity pass. */
-#root, #root * { box-sizing: border-box; }
-#root { width: 100%; min-width: 0; overflow-x: clip; }
-#root img, #root video, #root canvas, #root svg { max-width: 100%; }
+#root, #root * { box-sizing:border-box; }
+#root { width:100%; min-width:0; overflow-x:clip; }
+#root img,#root video,#root canvas,#root svg { max-width:100%; }
 #root :where(.workspace,.workspace-main,.workspace-content,.vc-member-section,.vc-member-section-content,.vc-admin-shell,.vc-admin-layout,.vc-admin-panel,.messages-page,.messages-studio,.messages-list,.messages-chat,.directory-results,.directory-grid,.gp-hero,.gp-showcase,.gp-section,.gp-home-plans,.gp-home-faq) { min-width:0; max-width:100%; }
 #root :where(.workspace-content,.vc-member-section-content,.vc-admin-panel,.messages-list,.messages-chat,.directory-card,.gp-feature,.gp-preview-card,.gp-home-plan-card,.gp-home-faq-item) { overflow-wrap:anywhere; }
 #root :where(h1,h2,h3,h4) { text-wrap:balance; overflow-wrap:anywhere; }
@@ -10,16 +10,10 @@
 #root :where(input,textarea,select) { min-width:0; }
 #root :where(button,a,input,textarea,select,[role="button"]) { -webkit-tap-highlight-color:transparent; }
 #root :where(button,a,input,textarea,select,[role="button"]):focus-visible { outline:3px solid #7197ff !important; outline-offset:3px !important; box-shadow:0 0 0 5px rgba(113,151,255,.16) !important; }
-
-/* Public homepage interaction and hierarchy. */
 #root .gp-hero { isolation:isolate; }
 #root .gp-hero-copy,#root .gp-hero-art,#root .gp-showcase-copy,#root .gp-showcase-stage { min-width:0; }
 #root :where(.gp-feature,.gp-preview-card,.gp-home-plan-card,.gp-home-faq-item,.directory-card) { transition:transform .24s cubic-bezier(.2,.7,.2,1),box-shadow .24s cubic-bezier(.2,.7,.2,1),border-color .24s ease; }
-@media (hover:hover) and (prefers-reduced-motion:no-preference) {
-#root :where(.gp-feature,.gp-preview-card,.gp-home-plan-card,.directory-card):hover { transform:translateY(-4px); box-shadow:0 22px 54px rgba(20,39,78,.13); }
-}
-
-/* Member overview and common panels. */
+@media (hover:hover) and (prefers-reduced-motion:no-preference) { #root :where(.gp-feature,.gp-preview-card,.gp-home-plan-card,.directory-card):hover { transform:translateY(-4px); box-shadow:0 22px 54px rgba(20,39,78,.13); } }
 #root .vc-overview-welcome { position:relative; isolation:isolate; overflow:hidden; }
 #root .vc-overview-welcome::after { content:""; position:absolute; inset:auto -8% -70% 42%; height:85%; border-radius:50%; background:radial-gradient(ellipse,rgba(119,157,255,.16),transparent 68%); pointer-events:none; z-index:-1; }
 #root :where(.vc-pulse-item,.vc-overview-spotlight,.vc-overview-membership,.vc-admin-card,.vc-admin-stat,.messages-list,.messages-chat) { min-width:0; border-color:rgba(116,139,177,.2); }
@@ -27,16 +21,10 @@
 #root .vc-pulse-item::after { content:""; position:absolute; width:112px; height:112px; right:-48px; top:-55px; border-radius:50%; background:radial-gradient(circle,rgba(105,143,255,.13),transparent 70%); pointer-events:none; }
 #root .vc-overview-spotlight,#root .vc-overview-membership { box-shadow:0 18px 48px rgba(28,49,91,.07); }
 #root .vc-admin-card,#root .vc-admin-stat,#root .directory-card { box-shadow:0 12px 34px rgba(22,43,78,.055); }
-@media (hover:hover) and (prefers-reduced-motion:no-preference) {
-#root :where(.vc-pulse-item,.vc-admin-card,.vc-admin-stat):hover { transform:translateY(-3px); box-shadow:0 20px 42px rgba(28,49,91,.11); border-color:rgba(91,127,205,.35); }
-}
-
-/* Dynamic text and form controls cannot force their parent wider. */
+@media (hover:hover) and (prefers-reduced-motion:no-preference) { #root :where(.vc-pulse-item,.vc-admin-card,.vc-admin-stat):hover { transform:translateY(-3px); box-shadow:0 20px 42px rgba(28,49,91,.11); border-color:rgba(91,127,205,.35); } }
 #root :where(.vc-admin-field,.vc-admin-actions,.vc-admin-actions-row,.messages-compose,.messages-chat-head,.messages-filter-row,.directory-card-heading,.directory-card-actions,.workspace-topbar,.topbar-actions) { min-width:0; flex-wrap:wrap; }
 #root :where(.vc-admin-field input,.vc-admin-field textarea,.vc-admin-field select,.messages-compose textarea,.messages-search input,.directory-search input) { width:100%; min-width:0; }
 #root :where(.message-bubble,.thread-copy,.thread-last,.directory-card-body,.vc-admin-detail-content) { overflow-wrap:anywhere; word-break:normal; }
-
-/* Responsive layout guardrails. */
 @media (max-width:760px) {
 #root .gp-hero { min-width:0; }
 #root .gp-hero h1 { font-size:clamp(2.35rem,10vw,4.2rem); line-height:1.02; overflow-wrap:normal; }
@@ -51,11 +39,7 @@
 #root :where(.vc-admin-actions,.vc-admin-actions-row) { align-items:stretch; }
 #root :where(.vc-admin-actions,.vc-admin-actions-row) > * { min-width:0; max-width:100%; }
 }
-@media (prefers-reduced-motion:reduce) {
-#root *,#root *::before,#root *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
-}
-
-/* Targeted fixes confirmed by live 390px DOM inspection. */
+@media (prefers-reduced-motion:reduce) { #root *,#root *::before,#root *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; } }
 @media (max-width:720px) {
 #root .gp-public-actions .gp-login { display:none !important; }
 #root .gp-public-header { gap:10px; }
@@ -64,16 +48,15 @@
 #root .gp-art-orbit,#root .gp-showcase-orbit,#root .gp-membership-orbit { pointer-events:none; }
 #root .gp-hero-art { overflow:hidden; }
 }
-
-/* Raise small public homepage microcopy to a consistent readable floor. */
 #root .gp-deck-preview :where(small,span) { font-size:12px !important; line-height:1.45 !important; }
-#root .gp-preview-footer :where(span,b) { font-size:12px !important; line-height:1.45 !important; }
+#root .gp-preview-footer,#root .gp-preview-footer :where(span,b) { font-size:12px !important; line-height:1.45 !important; }
 #root .gp-preview-card :where(small,.gp-live) { font-size:12px !important; line-height:1.45 !important; }
-#root .gp-membership-preview :where(small,span) { font-size:12px !important; line-height:1.5 !important; }
+#root .gp-membership-preview :where(small,span),#root .gp-membership-poster small { font-size:12px !important; line-height:1.5 !important; }
 #root .gp-home-plan-card :where(small,.gp-home-plan-card-top>span,.gp-home-plan-card-top>b,.gp-home-plan-description,.gp-home-plan-price>span,li>span,li>b) { font-size:12px !important; line-height:1.5 !important; }
 #root .gp-home-plan-group-head>span { font-size:12px !important; line-height:1.5 !important; }
 #root .gp-home-faq-item>p { font-size:12px !important; line-height:1.65 !important; }
 #root .gp-home-faq-item summary>span { font-size:12px !important; }
 #root .gp-feature p { font-size:12px !important; line-height:1.6 !important; }
+#root .gp-showcase :where(small,.gp-live,.gp-preview-footer,.gp-preview-footer span,.gp-preview-footer b) { font-size:12px !important; line-height:1.5 !important; }
 #root .gp-footer :where(span,small,a) { font-size:12px !important; line-height:1.55 !important; }
 #root .gp-trust>span,#root .gp-trust div>span { font-size:12px !important; line-height:1.5 !important; }
