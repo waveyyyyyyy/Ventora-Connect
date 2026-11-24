@@ -1,0 +1,12 @@
+/* Wordmark sub-labels are still too small at 10px on narrow screens. */
+#root .brand-sub,
+#root .gp-brand .brand-sub,
+#root .footer .brand-sub,
+#root .vc-member-section > .vc-overview-identical-topbar .brand-sub,
+#root .vc-member-section > .vc-directory-overview-topbar .brand-sub {
+  color: #245863 !important;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+  letter-spacing: .12em !important;
+}
+#root .footer .brand-sub { color: #e2eeee !important; }

@@ -15,6 +15,7 @@ import './ventora-readable-type.css';
 import './ventora-overview-readable.css';
 import './ventora-overview-topbar-readable.css';
 import './ventora-home-microcopy-readable.css';
+import './ventora-wordmark-readable.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
