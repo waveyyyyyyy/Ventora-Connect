@@ -27,6 +27,7 @@ import './ventora-home-readable-overrides.css';
 import './ventora-signed-in-readable-polish.css';
 import './ventora-mobile-edge-polish.css';
 import './ventora-public-readable-polish.css';
+import './ventora-workspace-readable-polish.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
