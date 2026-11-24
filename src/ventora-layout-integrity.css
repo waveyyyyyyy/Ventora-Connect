@@ -153,3 +153,12 @@
 #root .support-page .support-architecture > i {
   max-width: calc(100% - 16px) !important;
 }
+
+/* Older responsive header rules impose a 390px minimum; release that constraint inside member pages. */
+#root .vc-member-section .workspace-topbar {
+  min-width: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-inline: 0 !important;
+  box-sizing: border-box !important;
+}
