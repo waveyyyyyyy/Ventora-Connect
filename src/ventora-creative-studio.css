@@ -1,0 +1,530 @@
+/* Ventora Connect — Creative Studio
+   A coherent editorial / private-network visual language across public, member,
+   directory, membership, support and admin surfaces. Additive styling only. */
+
+:root {
+  --vc-studio-ink: #111b36;
+  --vc-studio-muted: #62708f;
+  --vc-studio-blue: #627cff;
+  --vc-studio-cyan: #67d7e8;
+  --vc-studio-lilac: #a995ff;
+  --vc-studio-line: rgba(112, 132, 197, .2);
+  --vc-studio-shadow: 0 24px 70px rgba(28, 43, 91, .12);
+  --vc-studio-ease: cubic-bezier(.2,.75,.25,1);
+}
+
+/* Public navigation: a more deliberate, floating glass rail. */
+#root .gp-public-header {
+  position: relative;
+  z-index: 20;
+  max-width: 1320px;
+  min-height: 78px;
+  margin: 12px auto 0;
+  padding: 0 clamp(18px, 3vw, 38px);
+  border: 1px solid rgba(112,132,197,.15);
+  border-radius: 20px;
+  background: rgba(255,255,255,.84);
+  box-shadow: 0 12px 36px rgba(29,48,99,.07), inset 0 1px rgba(255,255,255,.95);
+  backdrop-filter: blur(22px) saturate(1.3);
+}
+#root .gp-public-header nav a {
+  position: relative;
+  padding: 10px 0;
+  color: #53617e;
+  transition: color .22s ease;
+}
+#root .gp-public-header nav a:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg,var(--vc-studio-blue),var(--vc-studio-cyan));
+  transition: right .25s var(--vc-studio-ease);
+}
+#root .gp-public-header nav a:hover { color: var(--vc-studio-ink); }
+#root .gp-public-header nav a:hover:after { right: 0; }
+#root .gp-public-header .gp-primary {
+  min-height: 46px;
+  padding-inline: 20px;
+  border-radius: 13px;
+  background: linear-gradient(115deg,#263d78,#536be0 58%,#4aaec2);
+  box-shadow: 0 9px 22px rgba(75,101,205,.22), inset 0 1px rgba(255,255,255,.24);
+  transition: transform .25s var(--vc-studio-ease), box-shadow .25s ease, filter .25s ease;
+}
+#root .gp-public-header .gp-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(75,101,205,.28);
+  filter: saturate(1.12);
+}
+
+/* Hero: editorial depth, controlled light and a stronger product-stage feel. */
+#root .gp-hero {
+  position: relative;
+  isolation: isolate;
+  max-width: 1320px;
+  min-height: 600px;
+  margin-top: 22px;
+  padding: clamp(36px,5vw,72px);
+  border: 1px solid rgba(126,148,211,.2);
+  border-radius: 30px;
+  background:
+    radial-gradient(ellipse at 78% 18%,rgba(130,151,255,.22),transparent 35%),
+    radial-gradient(ellipse at 94% 88%,rgba(103,215,232,.22),transparent 32%),
+    linear-gradient(130deg,#f7f9ff 0%,#eef2ff 52%,#edf9fb 100%);
+  box-shadow: 0 28px 80px rgba(36,53,108,.09), inset 0 1px rgba(255,255,255,.95);
+}
+#root .gp-hero:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  opacity: .32;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(88,108,177,.28) .7px,transparent .7px);
+  background-size: 18px 18px;
+  mask-image: linear-gradient(100deg,transparent 15%,#000 100%);
+}
+#root .gp-hero-copy { position: relative; z-index: 2; }
+#root .gp-hero h1 {
+  max-width: 680px;
+  color: #142044;
+  font-size: clamp(46px,5.5vw,76px);
+  line-height: 1.015;
+  letter-spacing: -.072em;
+  text-wrap: balance;
+}
+#root .gp-hero h1 em {
+  background: linear-gradient(100deg,#5b6fe0 8%,#7e78dc 48%,#36a9bd 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+#root .gp-hero-copy>p { color: #596985; font-size: clamp(16px,1.2vw,18px); line-height: 1.8; }
+#root .gp-pill {
+  border: 1px solid rgba(101,126,204,.18);
+  background: rgba(255,255,255,.72);
+  box-shadow: 0 5px 16px rgba(59,80,150,.06);
+}
+#root .gp-hero-art { perspective: 1000px; }
+#root .gp-art-center {
+  width: 176px;
+  height: 176px;
+  border: 1px solid rgba(112,132,197,.2);
+  background: linear-gradient(145deg,#fff,#f1f5ff);
+  box-shadow: 0 24px 65px rgba(52,71,140,.18), inset 0 1px #fff;
+  animation: vc-studio-float 7s ease-in-out infinite;
+}
+#root .gp-art-logo {
+  background: linear-gradient(145deg,#263d78,#5d70df 62%,#4bb7c4);
+  box-shadow: 0 12px 28px rgba(66,91,190,.28);
+}
+#root .gp-art-orbit { border-color: rgba(99,120,194,.27); }
+#root .gp-float-card {
+  border: 1px solid rgba(116,136,196,.19);
+  border-radius: 17px;
+  box-shadow: 0 20px 48px rgba(35,54,110,.13), inset 0 1px rgba(255,255,255,.9);
+  backdrop-filter: blur(14px);
+  animation: vc-studio-float 8s ease-in-out infinite;
+}
+#root .gp-float-card.investor-card { animation-delay: -3.5s; }
+
+/* Public sections: rhythm, clear boundaries and refined interactive cards. */
+#root .gp-section { position: relative; }
+#root .gp-section-heading h2,
+#root .gp-audience h2,
+#root .gp-how h2,
+#root .gp-final-cta h2 {
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+#root .gp-feature {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(117,137,196,.17);
+  border-radius: 20px;
+  background: linear-gradient(150deg,rgba(255,255,255,.98),rgba(246,248,255,.94));
+  box-shadow: 0 12px 34px rgba(31,49,105,.055);
+  transition: transform .32s var(--vc-studio-ease), box-shadow .32s ease, border-color .32s ease;
+}
+#root .gp-feature:before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg,#687ef0,#9b8cf2,#67d7e8);
+  transform: scaleX(.15);
+  transform-origin: left;
+  transition: transform .35s var(--vc-studio-ease);
+}
+#root .gp-feature:hover {
+  transform: translateY(-7px);
+  border-color: rgba(105,126,220,.32);
+  box-shadow: 0 24px 52px rgba(31,49,105,.11);
+}
+#root .gp-feature:hover:before { transform: scaleX(1); }
+#root .gp-preview-card {
+  border: 1px solid rgba(126,146,203,.18);
+  border-radius: 22px;
+  box-shadow: 0 20px 56px rgba(31,49,105,.09);
+}
+#root .gp-steps>div {
+  border: 1px solid rgba(119,139,199,.17);
+  border-radius: 18px;
+  background: linear-gradient(145deg,#fff,#f6f8ff);
+  box-shadow: 0 12px 32px rgba(31,49,105,.05);
+}
+#root .gp-steps>div>span {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  color: #fff;
+  background: linear-gradient(145deg,#536bd5,#8d83eb);
+  box-shadow: 0 8px 18px rgba(84,104,210,.22);
+}
+#root .gp-final-cta {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(164,180,255,.2);
+  background:
+    radial-gradient(circle at 88% 10%,rgba(104,215,232,.24),transparent 30%),
+    radial-gradient(circle at 12% 100%,rgba(158,142,255,.2),transparent 34%),
+    linear-gradient(120deg,#111b3b,#263b76 62%,#315c7b);
+  box-shadow: 0 28px 70px rgba(20,34,80,.2);
+}
+#root .gp-final-cta:after {
+  content: "VC";
+  position: absolute;
+  right: 4%;
+  bottom: -.32em;
+  color: rgba(255,255,255,.045);
+  font: 800 clamp(150px,25vw,340px)/1 Manrope,sans-serif;
+  letter-spacing: -.1em;
+  pointer-events: none;
+}
+#root .gp-final-cta>* { position: relative; z-index: 1; }
+
+/* Directories: turn the search surface into a focused discovery console. */
+#root .directory-editorial-panel {
+  border: 1px solid rgba(118,138,199,.19);
+  border-radius: 24px;
+  box-shadow: 0 20px 55px rgba(31,49,105,.075);
+}
+#root .directory-editorial-primary {
+  background:
+    radial-gradient(circle at 90% 10%,rgba(126,145,255,.24),transparent 34%),
+    linear-gradient(130deg,#121d3e,#273e78 70%,#285d77);
+}
+#root .directory-editorial-secondary,
+#root .directory-editorial-tertiary {
+  background: linear-gradient(145deg,#fff,#f3f6ff);
+}
+#root .directory-search {
+  border: 1px solid rgba(111,132,198,.22);
+  border-radius: 17px;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 12px 30px rgba(36,54,110,.07), inset 0 1px #fff;
+}
+#root .directory-search:focus-within {
+  border-color: rgba(92,116,226,.62);
+  box-shadow: 0 0 0 4px rgba(104,126,235,.12), 0 14px 34px rgba(36,54,110,.09);
+}
+#root .directory-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(116,136,198,.2);
+  border-radius: 22px;
+  background: linear-gradient(150deg,#fff 0%,#fbfcff 70%,#f2f7ff 100%);
+  box-shadow: 0 14px 38px rgba(32,50,108,.07);
+  transition: transform .3s var(--vc-studio-ease),box-shadow .3s ease,border-color .3s ease;
+}
+#root .directory-card:after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: linear-gradient(90deg,#667cf0,#a08bf2,#67d7e8);
+  opacity: .75;
+}
+#root .directory-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(103,126,221,.4);
+  box-shadow: 0 25px 58px rgba(32,50,108,.13);
+}
+#root .directory-card-cover { filter: saturate(1.08); }
+#root .directory-card-actions button,
+#root .directory-message-button {
+  border-radius: 12px;
+  transition: transform .2s ease,box-shadow .2s ease;
+}
+#root .directory-card-actions button:hover,
+#root .directory-message-button:hover { transform: translateY(-2px); }
+
+/* Membership: make plan selection feel like a considered product studio. */
+#root .vc-membership-intro {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(150,167,231,.22);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 80% 8%,rgba(126,146,255,.28),transparent 34%),
+    radial-gradient(circle at 100% 100%,rgba(103,215,232,.22),transparent 36%),
+    linear-gradient(125deg,#111b3b,#23396e 64%,#2d627b);
+  box-shadow: 0 28px 72px rgba(23,39,91,.2);
+}
+#root .vc-membership-intro:after {
+  content: "VENTORA / PRIVATE NETWORK";
+  position: absolute;
+  right: 2%;
+  bottom: -.18em;
+  color: rgba(255,255,255,.045);
+  font: 800 clamp(34px,7vw,100px)/1 Manrope,sans-serif;
+  letter-spacing: -.07em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+#root .vc-membership-intro-copy,
+#root .vc-membership-intro-art { position: relative; z-index: 1; }
+#root .vc-membership-poster {
+  border: 1px solid rgba(255,255,255,.23);
+  border-radius: 18px;
+  box-shadow: 0 25px 58px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.2);
+  transform: rotate(2deg);
+  transition: transform .4s var(--vc-studio-ease);
+}
+#root .vc-membership-intro-art:hover .vc-membership-poster { transform: rotate(0deg) translateY(-4px); }
+#root .vc-membership-current {
+  border: 1px solid rgba(111,132,198,.18);
+  border-radius: 18px;
+  background: linear-gradient(110deg,#fff,#f4f7ff);
+  box-shadow: 0 12px 32px rgba(32,50,108,.06);
+}
+#root .vc-membership-plan-grid>* {
+  border: 1px solid rgba(115,135,199,.2);
+  border-radius: 22px;
+  box-shadow: 0 16px 40px rgba(32,50,108,.07);
+  transition: transform .28s var(--vc-studio-ease),box-shadow .28s ease;
+}
+#root .vc-membership-plan-grid>*:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 54px rgba(32,50,108,.12);
+}
+#root .vc-membership-preview-card {
+  overflow: hidden;
+  border: 1px solid rgba(119,139,199,.2);
+  border-radius: 22px;
+  box-shadow: 0 18px 48px rgba(31,49,105,.08);
+}
+#root .vc-membership-preview-visual {
+  background:
+    radial-gradient(circle at 80% 18%,rgba(113,217,237,.25),transparent 36%),
+    linear-gradient(145deg,#17234a,#354e8d);
+}
+
+/* Workspace overview and inner screens: more depth without hiding information. */
+#root .workspace-content { position: relative; }
+#root .vc-overview-studio {
+  position: relative;
+  isolation: isolate;
+}
+#root .vc-overview-welcome,
+#root .workspace-welcome {
+  border-radius: 28px !important;
+  box-shadow: 0 26px 68px rgba(25,42,94,.2),inset 0 1px rgba(255,255,255,.15);
+}
+#root .vc-overview-welcome:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(circle at 82% 18%,rgba(114,216,236,.18),transparent 27%),linear-gradient(115deg,transparent 40%,rgba(255,255,255,.035));
+}
+#root .vc-overview-spotlight,
+#root .vc-overview-account,
+#root .vc-overview-next,
+#root .vc-overview-pulse,
+#root .vc-profile-progress-band,
+#root .workspace-panel,
+#root .workspace-form,
+#root .workspace-empty,
+#root .workspace-notice {
+  border: 1px solid rgba(115,135,199,.2);
+  border-radius: 19px;
+  box-shadow: 0 14px 38px rgba(32,50,108,.065);
+  transition: transform .25s var(--vc-studio-ease),box-shadow .25s ease,border-color .25s ease;
+}
+#root .vc-overview-spotlight:hover,
+#root .vc-overview-account:hover,
+#root .vc-overview-next:hover,
+#root .vc-overview-pulse:hover,
+#root .workspace-panel:hover {
+  transform: translateY(-3px);
+  border-color: rgba(105,126,220,.32);
+  box-shadow: 0 22px 46px rgba(32,50,108,.1);
+}
+#root .workspace-page-title {
+  position: relative;
+  padding-bottom: 18px;
+}
+#root .workspace-page-title:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: min(180px,38%);
+  height: 3px;
+  border-radius: 4px;
+  background: linear-gradient(90deg,#627cff,#a995ff,#67d7e8);
+}
+#root .workspace-content .btn-dark,
+#root .workspace-content button.btn-dark {
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 12px;
+  background: linear-gradient(115deg,#1c2d5b,#465fc2 65%,#348fa7);
+  box-shadow: 0 8px 20px rgba(52,76,165,.16);
+  transition: transform .22s ease,box-shadow .22s ease,filter .22s ease;
+}
+#root .workspace-content .btn-dark:hover,
+#root .workspace-content button.btn-dark:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 13px 27px rgba(52,76,165,.23);
+  filter: saturate(1.1);
+}
+#root .workspace-content input:focus,
+#root .workspace-content textarea:focus,
+#root .workspace-content select:focus {
+  outline: none;
+  border-color: rgba(95,120,226,.68) !important;
+  box-shadow: 0 0 0 4px rgba(104,126,235,.12) !important;
+}
+
+/* Messaging, support and admin: consistent premium surfaces. */
+#root .messages-header,
+#root .support-hero,
+#root .admin-intro {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(156,173,235,.2);
+  box-shadow: 0 22px 58px rgba(25,42,94,.14);
+}
+#root .messages-list,
+#root .messages-chat,
+#root .messages-no-selection,
+#root .support-grid,
+#root .support-side,
+#root .support-history,
+#root .admin-content,
+#root .admin-stat-grid>article,
+#root .admin-callout,
+#root .admin-table,
+#root .admin-member-card,
+#root .admin-business-card {
+  border-radius: 18px;
+  border: 1px solid rgba(115,135,199,.19);
+  box-shadow: 0 13px 34px rgba(32,50,108,.06);
+}
+#root .thread-copy,
+#root .interest-list>article,
+#root .saved-grid>article,
+#root .matches-grid>article,
+#root .announcement-list>article {
+  border-radius: 15px;
+  transition: transform .22s ease,box-shadow .22s ease;
+}
+#root .thread-copy:hover,
+#root .interest-list>article:hover,
+#root .saved-grid>article:hover,
+#root .matches-grid>article:hover,
+#root .announcement-list>article:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(32,50,108,.08);
+}
+#root .admin-table th {
+  background: linear-gradient(100deg,#edf1ff,#f5f8ff);
+}
+
+/* Admin panel: distinct command-centre identity, but retain familiar controls. */
+#root .admin-page {
+  background:
+    radial-gradient(ellipse at 88% 0%,rgba(125,145,255,.14),transparent 34%),
+    radial-gradient(ellipse at 4% 80%,rgba(103,215,232,.1),transparent 35%),
+    #f4f6ff;
+}
+#root .admin-stat-grid>article {
+  background: linear-gradient(145deg,#fff,#f4f7ff);
+}
+#root .admin-brand { letter-spacing: -.045em; }
+
+/* Motion remains subtle and respects device preferences. */
+@keyframes vc-studio-float {
+  0%,100% { transform: translate3d(0,0,0); }
+  50% { transform: translate3d(0,-9px,0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #root .gp-art-center,
+  #root .gp-float-card { animation: none !important; }
+  #root *,
+  #root *:before,
+  #root *:after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Responsive composition: keep the premium feel without squeezing content. */
+@media (max-width: 900px) {
+  #root .gp-public-header {
+    margin: 8px 12px 0;
+    min-height: 70px;
+    border-radius: 16px;
+  }
+  #root .gp-hero {
+    margin: 14px 12px 0;
+    border-radius: 23px;
+    padding: clamp(26px,5vw,44px);
+  }
+  #root .gp-hero-art { min-height: 330px; }
+  #root .vc-membership-intro { border-radius: 22px; }
+}
+@media (max-width: 600px) {
+  #root .gp-public-header {
+    margin: 6px 8px 0;
+    min-height: 64px;
+    padding-inline: 12px;
+  }
+  #root .gp-hero {
+    margin: 10px 8px 0;
+    min-height: auto;
+    padding: 28px 20px 20px;
+    border-radius: 20px;
+  }
+  #root .gp-hero h1 {
+    font-size: clamp(39px,11vw,52px);
+    line-height: 1.04;
+    letter-spacing: -.065em;
+  }
+  #root .gp-hero-art { min-height: 290px; transform: scale(.94); }
+  #root .gp-art-orbit.orbit-one { width: min(82vw,360px); height: 230px; }
+  #root .gp-art-orbit.orbit-two { width: min(66vw,300px); height: 320px; }
+  #root .gp-float-card { padding: 10px; max-width: 48%; }
+  #root .founder-card { left: 0; top: 20px; }
+  #root .investor-card { right: 0; bottom: 24px; }
+  #root .gp-feature,
+  #root .gp-preview-card,
+  #root .directory-card,
+  #root .vc-membership-preview-card { border-radius: 17px; }
+  #root .gp-final-cta { border-radius: 20px; }
+  #root .gp-final-cta:after { font-size: 150px; }
+  #root .vc-membership-intro { border-radius: 19px; }
+  #root .vc-membership-intro:after { white-space: normal; max-width: 90%; }
+  #root .vc-membership-plan-grid>* { border-radius: 18px; }
+}

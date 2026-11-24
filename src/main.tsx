@@ -29,6 +29,7 @@ import './ventora-mobile-edge-polish.css';
 import './ventora-public-readable-polish.css';
 import './ventora-workspace-readable-polish.css';
 import './ventora-final-readable-pass.css';
+import './ventora-creative-studio.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
