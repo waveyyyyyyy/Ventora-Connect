@@ -15,8 +15,8 @@
 #root .workspace-main .vc-overview-studio .vc-overview-hero-index,
 #root .workspace-main .vc-overview-studio .vc-pulse-label,
 #root .workspace-main .vc-overview-studio .vc-pulse-item small,
-#root .workspace-main .vc-editorial-footer-bottom,
-#root .vc-admin-layout a.vc-admin-btn {
+#root .vc-editorial-footer-bottom,
+#root .vc-admin-drawer a.vc-admin-btn {
   font-size: 12px !important;
   line-height: 1.45 !important;
 }
