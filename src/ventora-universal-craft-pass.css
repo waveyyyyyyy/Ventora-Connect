@@ -3,9 +3,61 @@
   --ve-ink: #292a2e;
   --ve-paper: #f4f4f2;
   --ve-muted: #62625d;
-  --ve-accent: #777486;
+  --ve-accent: #686575;
   --ve-accent-soft: #eeedf1;
   --ve-line: rgba(41,42,46,.16);
+}
+
+/* Remove the final legacy photo-wallpaper layer from the app shell. */
+html body #root {
+  background: #f4f4f2 !important;
+  background-image: none !important;
+}
+
+/* Neutral editorial contrast corrections on the homepage. */
+#root .gp-hero .gp-text-btn {
+  color: rgba(255,255,255,.94) !important;
+  border-color: rgba(255,255,255,.38) !important;
+}
+#root .gp-hero .gp-text-btn:hover {
+  color: #fff !important;
+  background: rgba(255,255,255,.1) !important;
+}
+#root .gp-hero .gp-proof small {
+  color: rgba(255,255,255,.86) !important;
+}
+#root .gp-membership-spotlight .gp-membership-copy .gp-eyebrow {
+  color: #686575 !important;
+}
+#root .gp-showcase-window .gp-showcase-copy p {
+  color: #55545d !important;
+}
+#root .gp-showcase-window .gp-showcase-copy small,
+#root .gp-showcase-window .gp-showcase-copy .gp-eyebrow {
+  color: #686575 !important;
+}
+
+/* Directory intro and metadata now sit on the clean paper surface. */
+#root .directory-intro-row p {
+  color: #55545d !important;
+}
+#root .directory-intro-row .section-kicker {
+  color: #686575 !important;
+}
+
+/* Replace the last teal authentication panel with the Ventora charcoal/lavender system. */
+#root .auth-aside {
+  background: radial-gradient(ellipse at 82% 14%, rgba(160,156,181,.22), transparent 38%),
+              linear-gradient(135deg, #292a2e 0%, #393841 58%, #24252a 100%) !important;
+  background-image: radial-gradient(ellipse at 82% 14%, rgba(160,156,181,.22), transparent 38%),
+                    linear-gradient(135deg, #292a2e 0%, #393841 58%, #24252a 100%) !important;
+}
+#root .auth-aside .brand .brand-word,
+#root .auth-aside .brand .brand-sub {
+  color: #fff !important;
+}
+#root .auth-aside .brand .brand-e {
+  color: #c7c3d2 !important;
 }
 
 /* Remove the remaining legacy teal actions and green selected filters. */
