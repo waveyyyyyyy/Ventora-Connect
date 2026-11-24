@@ -1,0 +1,20 @@
+/* High-specificity overrides for legacy !important microcopy rules. */
+#root .gp-deck-preview > small,
+#root .gp-deck-preview > div > small,
+#root .gp-deck-preview > div > span,
+#root .gp-deck-preview > .gp-deck-live,
+#root .gp-preview-footer > span,
+#root .gp-preview-footer > b,
+#root .gp-showcase small,
+#root .gp-showcase span:not(.gp-mini-avatar),
+#root .gp-ticker-track > span,
+#root .gp-membership-poster > span,
+#root .gp-membership-poster > small,
+#root .gp-membership-preview > span,
+#root .gp-membership-preview > small,
+#root .gp-home-plan-group-head > span,
+#root .gp-home-plan-foot > p,
+#root .gp-footer > small {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
