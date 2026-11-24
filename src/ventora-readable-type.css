@@ -1,0 +1,269 @@
+/* Ventora readable-type system: remove micro-copy and strengthen contrast
+   without changing the established layouts or brand palette. */
+
+/* Public homepage — readable supporting copy, labels and controls. */
+#root .gp-public-header nav a,
+#root .gp-public-header .gp-login,
+#root .gp-public-header .gp-primary,
+#root .gp-hero .gp-primary,
+#root .gp-hero .gp-text-btn {
+  font-size: 14px !important;
+}
+#root .gp-brand { font-size: 23px !important; }
+#root .gp-brand .brand-sub { font-size: 10px !important; line-height: 1.2 !important; }
+#root .gp-eyebrow,
+#root .gp-pill { font-size: 12px !important; letter-spacing: .09em !important; }
+#root .gp-hero-copy > p {
+  color: #365365 !important;
+  font-size: 16px !important;
+  line-height: 1.75 !important;
+  opacity: 1 !important;
+}
+#root .gp-proof b { font-size: 13px !important; }
+#root .gp-proof small { color: #526574 !important; font-size: 12px !important; }
+#root .gp-proof-avatars span { font-size: 12px !important; }
+#root .gp-trust > span,
+#root .gp-trust div span { color: #526574 !important; font-size: 12px !important; }
+#root .gp-trust > b { font-size: 20px !important; }
+#root .gp-section-heading > p:last-child,
+#root .gp-audience-copy > p:not(.gp-eyebrow) {
+  color: #526574 !important;
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+}
+#root .gp-feature h3,
+#root .gp-steps b { font-size: 16px !important; }
+#root .gp-feature p,
+#root .gp-preview-card > p,
+#root .gp-panel p,
+#root .gp-opportunity p,
+#root .gp-steps p {
+  color: #526574 !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+#root .gp-audience-copy li { color: #405d6c !important; font-size: 14px !important; }
+#root .gp-preview-top,
+#root .gp-live,
+#root .gp-company-head small,
+#root .gp-metrics small,
+#root .gp-deal-summary small,
+#root .gp-deal-row small,
+#root .gp-float-card small,
+#root .gp-match {
+  color: #526574 !important;
+  font-size: 11px !important;
+}
+#root .gp-deal-summary b { font-size: 27px !important; }
+#root .gp-deal-row b { font-size: 13px !important; }
+#root .gp-float-card b { font-size: 13px !important; }
+#root .gp-art-center > span,
+#root .gp-art-caption { color: #526574 !important; font-size: 11px !important; }
+#root .gp-final-cta p:not(.gp-eyebrow) {
+  color: #e1ebee !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+}
+#root .gp-final-cta .gp-eyebrow { color: #c4dce1 !important; }
+#root .gp-footer a { color: #e1ebee !important; font-size: 13px !important; }
+#root .gp-footer > span { color: #d0dfe3 !important; font-size: 12px !important; }
+#root .gp-footer small { color: #d0dfe3 !important; font-size: 11px !important; line-height: 1.6 !important; }
+#root .gp-deck-live { font-size: 10px !important; }
+#root .gp-shell .gp-brand-mark { font-size: 22px !important; }
+
+/* Public informational pages and directories. */
+#root .brand-sub { font-size: 10px !important; line-height: 1.2 !important; }
+#root .directory-hero > span,
+#root .directory-hero > small,
+#root .directory-hero small,
+#root .directory-hero .section-kicker {
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+}
+#root .directory-hero p { font-size: 15px !important; line-height: 1.7 !important; }
+#root .directory-create-link,
+#root .login-link,
+#root .nav-cta { font-size: 13px !important; }
+#root .legal-header .brand-sub { font-size: 10px !important; }
+#root .legal-page p,
+#root .legal-page li { font-size: 15px !important; line-height: 1.75 !important; }
+#root .faq-list article p { font-size: 15px !important; line-height: 1.75 !important; }
+#root .faq-list article h2,
+#root .faq-list article h3 { color: #18384e !important; }
+
+/* Authentication: form labels, helper copy and legal links. */
+#root .gp-auth-card > p,
+#root .auth-box > p { color: #405d6c !important; font-size: 14px !important; line-height: 1.65 !important; }
+#root .gp-auth-card label,
+#root .auth-box label { color: #294e60 !important; font-size: 13px !important; }
+#root .gp-auth-card input,
+#root .auth-box input { font-size: 15px !important; }
+#root .gp-auth-card button,
+#root .auth-box button { font-size: 13px !important; }
+#root .gp-auth-card a,
+#root .auth-box a { font-size: 12px !important; }
+#root .gp-auth-card > small,
+#root .auth-box small { color: #526574 !important; font-size: 11px !important; }
+
+/* Every signed-in member screen shares this typography layer. It covers
+   Overview, messages, interests, matches, saved profiles, announcements,
+   support, settings, account forms, and the admin shell. */
+#root .vc-member-section,
+#root .workspace,
+#root .messages-page,
+#root .interests-page,
+#root .matches-page,
+#root .saved-page,
+#root .announcements-page,
+#root .support-page,
+#root .admin-page {
+  color: #18384e !important;
+}
+#root .vc-member-section p,
+#root .workspace p,
+#root .messages-page p,
+#root .interests-page p,
+#root .matches-page p,
+#root .saved-page p,
+#root .announcements-page p,
+#root .support-page p,
+#root .admin-page p {
+  color: #405d6c;
+  font-size: 14px;
+  line-height: 1.7;
+}
+#root .vc-member-section .section-kicker,
+#root .workspace .section-kicker,
+#root .messages-page .section-kicker,
+#root .interests-page .section-kicker,
+#root .matches-page .section-kicker,
+#root .saved-page .section-kicker,
+#root .announcements-page .section-kicker,
+#root .support-page .section-kicker,
+#root .admin-page .section-kicker {
+  color: #245f70 !important;
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+  letter-spacing: .12em !important;
+}
+#root .workspace-sidebar nav button,
+#root .workspace-sidebar.section-drawer nav button {
+  color: #e3edf1 !important;
+  font-size: 13px !important;
+}
+#root .workspace-nav-label,
+#root .ventora-directory-sidebar .workspace-nav-label {
+  color: #c1d8df !important;
+  font-size: 11px !important;
+  letter-spacing: .15em !important;
+}
+#root .workspace-member strong { color: #fff !important; font-size: 14px !important; }
+#root .workspace-member small { color: #d0e1e7 !important; font-size: 11px !important; }
+#root .workspace-role-badge { color: #e0ebff !important; font-size: 11px !important; }
+#root .workspace-topbar-brand span { color: #294e60 !important; font-size: 11px !important; }
+#root .workspace-topbar-brand small { color: #526b79 !important; font-size: 11px !important; }
+#root .workspace-topbar > div:first-of-type span,
+#root .workspace-page-title .section-kicker { color: #245f70 !important; font-size: 11px !important; }
+#root .workspace-page-title h1,
+#root .pipeline-heading h1,
+#root .vc-member-section-content h1 { color: #12384b !important; }
+#root .workspace-page-title p,
+#root .pipeline-heading p { color: #405d6c !important; font-size: 15px !important; }
+#root .workspace-panel p,
+#root .workspace-card p,
+#root .workspace-form p,
+#root .support-side p,
+#root .workspace-notice { color: #405d6c !important; }
+#root .workspace-form label,
+#root .vc-member-section label { color: #254e60 !important; font-size: 13px !important; }
+#root .workspace-form input,
+#root .workspace-form textarea,
+#root .workspace-form select,
+#root .vc-member-section input,
+#root .vc-member-section textarea,
+#root .vc-member-section select { color: #173f52 !important; font-size: 15px !important; }
+#root .workspace-form input::placeholder,
+#root .workspace-form textarea::placeholder,
+#root .vc-member-section input::placeholder,
+#root .vc-member-section textarea::placeholder { color: #617985 !important; opacity: 1 !important; }
+#root .workspace-command input { color: #26365f !important; font-size: 13px !important; }
+#root .workspace-command input::placeholder { color: #61718c !important; opacity: 1 !important; }
+#root .workspace-command kbd { color: #52617d !important; font-size: 11px !important; }
+#root .workspace-completion-meter span { color: #52617d !important; font-size: 11px !important; }
+#root .workspace-tag-field > small,
+#root .workspace-tag-control .workspace-tag { color: #4355a0 !important; font-size: 12px !important; }
+#root .vc-member-section-topbar-note { color: #526b79 !important; font-size: 10px !important; }
+#root .vc-member-section-brand { color: #173f59 !important; font-size: 16px !important; }
+#root .vc-member-section-brand small { color: #245f70 !important; font-size: 10px !important; }
+#root .vc-member-section-home { color: #1c536d !important; font-size: 13px !important; }
+#root .messages-page > header span,
+#root .interests-page > header span,
+#root .matches-page > header span,
+#root .saved-page > header span,
+#root .announcements-page > header span { color: #526b79 !important; font-size: 11px !important; }
+#root .messages-page h1,
+#root .interests-page h1,
+#root .matches-page h1,
+#root .saved-page h1,
+#root .announcements-page h1,
+#root .support-page h1 { color: #12384b !important; }
+#root .messages-page h1 em,
+#root .interests-page h1 em,
+#root .matches-page h1 em,
+#root .saved-page h1 em,
+#root .announcements-page h1 em,
+#root .support-page h1 em { color: #245f70 !important; }
+#root .workspace-stat-grid > article strong { color: #12384b !important; font-size: 24px !important; }
+#root .workspace-stat-grid > article small,
+#root .workspace-list small,
+#root .saved-grid small,
+#root .matches-grid small,
+#root .announcement-list small { color: #526b79 !important; font-size: 12px !important; }
+#root .workspace-list article,
+#root .saved-grid article,
+#root .matches-grid article,
+#root .announcement-list article { color: #294e60 !important; }
+#root .vc-editorial-footer-bottom,
+#root .vc-editorial-footer-bottom small { color: #526574 !important; font-size: 11px !important; }
+#root .messages-list-title .section-kicker { color: #245f70 !important; font-size: 11px !important; }
+#root .messages-empty p,
+#root .messages-list-foot,
+#root .messages-list-foot span,
+#root .messages-list-foot small { color: #405d6c !important; font-size: 13px !important; }
+
+/* Do not allow dimmed text or disabled-looking copy to become unreadable. */
+#root .vc-member-section small,
+#root .workspace small,
+#root .messages-page small,
+#root .interests-page small,
+#root .matches-page small,
+#root .saved-page small,
+#root .announcements-page small,
+#root .support-page small,
+#root .admin-page small {
+  color: #526b79;
+  font-size: 12px;
+}
+#root .vc-member-section button,
+#root .workspace button,
+#root .messages-page button,
+#root .interests-page button,
+#root .matches-page button,
+#root .saved-page button,
+#root .announcements-page button,
+#root .support-page button,
+#root .admin-page button { font-size: 13px; }
+#root .vc-member-section button:disabled,
+#root .workspace button:disabled { opacity: .72 !important; color: #526574 !important; }
+@media (max-width: 600px) {
+  #root .gp-hero-copy > p,
+  #root .gp-section-heading > p:last-child,
+  #root .gp-audience-copy > p:not(.gp-eyebrow),
+  #root .directory-hero p { font-size: 15px !important; }
+  #root .gp-section h2,
+  #root .gp-audience h2,
+  #root .gp-how h2,
+  #root .gp-final-cta h2 { font-size: clamp(30px, 8vw, 38px) !important; line-height: 1.16 !important; }
+  #root .gp-footer a { font-size: 13px !important; }
+  #root .workspace-nav-label { font-size: 11px !important; }
+}

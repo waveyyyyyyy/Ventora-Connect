@@ -11,6 +11,7 @@ import './ventora-performance.css';
 import './ventora-audit-fixes.css';
 import './ventora-responsive-qa-fixes.css';
 import './ventora-contrast-qa-fixes.css';
+import './ventora-readable-type.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
