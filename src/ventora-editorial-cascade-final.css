@@ -1,0 +1,107 @@
+/* High-specificity final cascade: neutralize older page-specific !important rules. */
+#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero),
+#root:has(.directory-business-hero) .directory-hero.directory-business-hero,
+#root:has(.directory-investor-hero) .directory-hero.directory-investor-hero {
+  background:#292a2e !important;
+  background-image:linear-gradient(135deg,#303136 0%,#292a2e 58%,#202125 100%) !important;
+  color:#fff !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero)::before,
+#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero)::after,
+#root:has(.directory-business-hero) .directory-hero.directory-business-hero::before,
+#root:has(.directory-business-hero) .directory-hero.directory-business-hero::after,
+#root:has(.directory-investor-hero) .directory-hero.directory-investor-hero::before,
+#root:has(.directory-investor-hero) .directory-hero.directory-investor-hero::after {
+  background:none !important;
+  background-image:none !important;
+  opacity:0 !important;
+}
+#root:has(.directory-business-hero) .footer,
+#root:has(.directory-investor-hero) .footer,
+#root .directory-page .footer {
+  background:#020203 !important;
+  background-image:none !important;
+  color:#fff !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+#root:has(.directory-business-hero) .directory-live-dot,
+#root:has(.directory-investor-hero) .directory-live-dot {
+  background:#898795 !important;
+  color:#898795 !important;
+  box-shadow:none !important;
+}
+#root:has(.directory-business-hero) .directory-create-link,
+#root:has(.directory-investor-hero) .directory-create-link {
+  background:#292a2e !important;
+  background-image:none !important;
+  color:#fff !important;
+  border-color:#292a2e !important;
+  box-shadow:none !important;
+}
+
+/* The real member studio uses vc-overview components, not generic workspace panels. */
+#root .workspace { background:#f4f4f2 !important; background-image:none !important; }
+#root .workspace-main { background:#f4f4f2 !important; background-image:none !important; }
+#root .workspace-topbar { background:rgba(244,244,242,.96) !important; }
+#root .topbar-avatar {
+  color:#fff !important;
+  background:#777486 !important;
+  background-image:none !important;
+  border:1px solid rgba(40,40,37,.12) !important;
+}
+#root .vc-overview-studio,#root .vc-overview-welcome,
+#root .vc-overview-spotlight,#root .vc-overview-next,
+#root .vc-overview-account,#root .vc-overview-membership {
+  color:#282825 !important;
+  background:#fff !important;
+  background-image:none !important;
+  border:1px solid rgba(40,40,37,.14) !important;
+  border-radius:3px !important;
+  box-shadow:none !important;
+}
+#root .vc-overview-welcome-art {
+  background:#eeedf1 !important;
+  background-image:none !important;
+  border:1px solid rgba(40,40,37,.12) !important;
+  box-shadow:none !important;
+}
+#root .vc-welcome-monogram {
+  color:#fff !important;
+  background:#292a2e !important;
+  background-image:none !important;
+  box-shadow:none !important;
+}
+#root .vc-spotlight-screen {
+  color:#fff !important;
+  background:#292a2e !important;
+  background-image:none !important;
+  border:1px solid rgba(40,40,37,.14) !important;
+  box-shadow:none !important;
+}
+#root .vc-overview-eyebrow,#root .vc-overview-hero-index,
+#root .vc-overview-pulse {
+  color:#777486 !important;
+  background:#eeedf1 !important;
+  border-color:#dedde3 !important;
+}
+#root .vc-overview-welcome h1,#root .vc-overview-welcome h2,
+#root .vc-overview-studio h2,#root .vc-overview-spotlight h2,
+#root .vc-overview-next h2,#root .vc-overview-account h2,
+#root .vc-overview-membership h2 { color:#282825 !important; }
+#root .vc-overview-welcome p,#root .vc-overview-studio p,
+#root .vc-overview-spotlight p,#root .vc-overview-next p {
+  color:#696963 !important;
+}
+#root .vc-overview-studio .vc-overview-welcome-art *,
+#root .vc-overview-studio .vc-overview-spotlight * { border-color:rgba(40,40,37,.14); }
+
+/* Admin and directory pages use a single monochrome accent, not the old teal status palette. */
+#root .vc-admin-kicker,#root .vc-admin-tag,
+#root .directory-live-dot { color:#777486 !important; }
+#root .vc-admin-callout,#root .vc-admin-ticker,
+#root .vc-admin-tag { background:#eeedf1 !important; }
+#root .vc-admin-drawer .vc-admin-btn.active { background:rgba(255,255,255,.14) !important; }
+#root .vc-admin-tabs .vc-admin-btn.active { background:#292a2e !important; }
