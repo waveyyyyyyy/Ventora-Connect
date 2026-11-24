@@ -1,0 +1,10 @@
+/* Messages page final text-size corrections. */
+#root .messages-page .messages-count,
+#root .messages-page .messages-explore-link,
+#root .messages-page .messages-error {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+#root .messages-page .messages-count { color: #245863 !important; }
+#root .messages-page .messages-explore-link { color: #245863 !important; }
+#root .messages-page .messages-error { color: #8c3434 !important; }
