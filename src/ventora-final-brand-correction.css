@@ -1,0 +1,32 @@
+/* Final high-specificity logo and status-label contrast lock. */
+#root header .brand:not(.brand-light) .brand-copy .brand-e,
+#root header .brand:not(.brand-light) .brand-copy .brand-sub,
+#root .workspace-topbar .brand:not(.brand-light) .brand-copy .brand-e,
+#root .workspace-topbar .brand:not(.brand-light) .brand-copy .brand-sub,
+#root .vc-member-section-topbar .brand:not(.brand-light) .brand-copy .brand-e,
+#root .vc-member-section-topbar .brand:not(.brand-light) .brand-copy .brand-sub,
+#root .vc-feedback-top .brand:not(.brand-light) .brand-copy .brand-e,
+#root .vc-feedback-top .brand:not(.brand-light) .brand-copy .brand-sub,
+#root .vc-editorial-footer .brand:not(.brand-light) .brand-copy .brand-e,
+#root .vc-editorial-footer .brand:not(.brand-light) .brand-copy .brand-sub {
+  color: #686575 !important;
+}
+#root .gp-footer .brand:not(.brand-light) .brand-copy .brand-word {
+  color: #fff !important;
+}
+#root .gp-footer .brand:not(.brand-light) .brand-copy .brand-e,
+#root .gp-footer .brand:not(.brand-light) .brand-copy .brand-sub {
+  color: #c7c3d2 !important;
+}
+#root .gp-deck-preview .gp-deck-live {
+  color: #fff !important;
+  background: #686575 !important;
+  border-color: #686575 !important;
+}
+#root:has(.legal-page) header .brand:not(.brand-light) .brand-copy .brand-word {
+  color: #fff !important;
+}
+#root:has(.legal-page) header .brand:not(.brand-light) .brand-copy .brand-e,
+#root:has(.legal-page) header .brand:not(.brand-light) .brand-copy .brand-sub {
+  color: #c7c3d2 !important;
+}
