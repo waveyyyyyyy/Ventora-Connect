@@ -1,0 +1,15 @@
+/* Make the new editorial hero treatment win over legacy hero background resets. */
+#root .gp-hero {
+  background-color: #f4f7ff !important;
+  background-image:
+    radial-gradient(ellipse at 78% 18%, rgba(130,151,255,.22), transparent 35%),
+    radial-gradient(ellipse at 94% 88%, rgba(103,215,232,.22), transparent 32%),
+    linear-gradient(130deg,#f7f9ff 0%,#eef2ff 52%,#edf9fb 100%) !important;
+}
+@media (max-width: 600px) {
+  #root .gp-hero {
+    background-image:
+      radial-gradient(ellipse at 80% 14%, rgba(130,151,255,.2), transparent 38%),
+      linear-gradient(145deg,#f7f9ff 0%,#eef2ff 62%,#edf9fb 100%) !important;
+  }
+}
