@@ -41,3 +41,25 @@
 }
 
 /* Final caption specificity override included in this published pass. */
+
+/* Match the overview's mobile navigation affordance on directory pages. */
+@media (max-width: 760px) {
+  body:has(.vc-directory-overview-topbar) > .workspace-menu-toggle {
+    display: grid !important;
+    position: fixed !important;
+    top: 12px !important;
+    left: 12px !important;
+    z-index: 100102 !important;
+  }
+  .vc-directory-overview-topbar .workspace-topbar-logo {
+    margin-left: 54px !important;
+  }
+}
+@media (min-width: 761px) {
+  body:has(.vc-directory-overview-topbar) > .workspace-menu-toggle {
+    display: none !important;
+  }
+  .vc-directory-overview-topbar .workspace-topbar-logo {
+    margin-left: 0 !important;
+  }
+}
