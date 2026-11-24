@@ -1,0 +1,43 @@
+/* Cascade lock: legacy #root-scoped selectors must not overpower the new theme. */
+#root .gp-hero {
+  background:
+    radial-gradient(ellipse at 78% 12%, rgba(135,143,151,.2), transparent 36%),
+    radial-gradient(ellipse at 15% 85%, rgba(84,126,121,.16), transparent 42%),
+    linear-gradient(145deg,#303136 0%,#25262a 58%,#1e2023 100%) !important;
+  color: #fbfbf9 !important;
+}
+#root .gp-hero h1, #root .gp-hero h1 em {
+  color: #fbfbf9 !important;
+  background: none !important;
+  -webkit-text-fill-color: #fbfbf9 !important;
+}
+#root .gp-hero p { color: rgba(251,251,249,.78) !important; }
+#root .directory-hero {
+  background:
+    radial-gradient(ellipse at 72% 18%,rgba(125,143,145,.24),transparent 34%),
+    radial-gradient(ellipse at 10% 100%,rgba(84,126,121,.2),transparent 40%),
+    linear-gradient(145deg,#303136,#202125) !important;
+  color: #fbfbf9 !important;
+}
+#root .directory-hero h1,#root .directory-hero h2,#root .directory-hero h3 { color:#fbfbf9 !important; }
+#root .directory-hero p { color:rgba(251,251,249,.78) !important; }
+#root .gp-showcase,#root .gp-final-cta,#root .gp-footer {
+  background: radial-gradient(ellipse at 78% 0%,rgba(105,120,125,.19),transparent 38%),linear-gradient(145deg,#292a2e,#17181b) !important;
+  color:#fbfbf9 !important;
+}
+#root .gp-showcase h1,#root .gp-showcase h2,#root .gp-showcase h3,
+#root .gp-final-cta h1,#root .gp-final-cta h2,#root .gp-final-cta h3 { color:#fbfbf9 !important; }
+#root .gp-footer a { color:rgba(251,251,249,.82) !important; }
+#root .workspace-panel,#root .workspace-form,#root .workspace-list,#root .workspace-empty,
+#root .vc-overview-welcome,#root .vc-overview-studio,#root .vc-overview-next,
+#root .vc-overview-account,#root .vc-overview-membership,#root .vc-overview-completion,
+#root .vc-overview-spotlight {
+  background:#fbfbf9 !important;
+  color:#282825 !important;
+  border:1px solid rgba(40,40,37,.13) !important;
+  border-radius:22px !important;
+  box-shadow:0 12px 38px rgba(25,25,23,.055) !important;
+}
+@media(max-width:600px) {
+  #root .gp-hero,#root .directory-hero,#root .gp-showcase,#root .gp-final-cta,#root .gp-footer { border-radius:18px !important; }
+}
