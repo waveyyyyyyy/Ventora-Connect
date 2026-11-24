@@ -43,6 +43,7 @@ import './ventora-universal-craft-pass.css';
 import './ventora-contrast-correction-pass.css';
 import './ventora-final-brand-correction.css';
 import './ventora-auth-footer-layout.css';
+import './ventora-legacy-teal-cleanup.css';
 
 // GitHub Pages serves this app below a repository path. Normalize plain internal
 // anchors too, not just React Router links, so footer/menu CTAs never escape the app.

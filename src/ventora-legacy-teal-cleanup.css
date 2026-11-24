@@ -1,0 +1,48 @@
+/* Neutralize remaining legacy teal accents in public, auth and workspace navigation. */
+#root .directory-results .login-link,
+#root .directory-results .directory-card-category,
+#root .directory-results .text-link,
+#root .directory-results .directory-save-toggle,
+#root .directory-results .directory-save-toggle span {
+  color: #686575 !important;
+}
+#root .directory-results .directory-save-toggle {
+  border-color: rgba(104,101,117,.35) !important;
+}
+#root .faq-list article > span {
+  color: #686575 !important;
+}
+#root .legal-links a {
+  color: #686575 !important;
+}
+#root .auth-main .auth-back-button,
+#root .auth-main .auth-switch a,
+#root .auth-main .auth-legal a,
+#root .auth-main .back-home {
+  color: #686575 !important;
+}
+#root .auth-main label,
+#root .auth-main .auth-age-confirm {
+  color: #55545d !important;
+}
+#root .payment-coming-soon h1,
+#root .payment-coming-soon h2 {
+  color: #292a2e !important;
+}
+#root .payment-coming-soon p {
+  color: #55545d !important;
+}
+
+/* Overview and directory workspace topbars still had a legacy teal wordmark. */
+#root .vc-overview-identical-topbar .brand:not(.brand-light) .brand-copy .brand-e,
+#root .vc-overview-identical-topbar .brand:not(.brand-light) .brand-copy .brand-sub,
+#root .vc-directory-overview-topbar .brand:not(.brand-light) .brand-copy .brand-e,
+#root .vc-directory-overview-topbar .brand:not(.brand-light) .brand-copy .brand-sub,
+#root .vc-member-section .vc-overview-identical-topbar .brand:not(.brand-light) .brand-copy .brand-e,
+#root .vc-member-section .vc-overview-identical-topbar .brand:not(.brand-light) .brand-copy .brand-sub,
+#root .vc-member-section .vc-directory-overview-topbar .brand:not(.brand-light) .brand-copy .brand-e,
+#root .vc-member-section .vc-directory-overview-topbar .brand:not(.brand-light) .brand-copy .brand-sub,
+#root .vc-admin-top .brand:not(.brand-light) .brand-copy .brand-e,
+#root .vc-admin-top .brand:not(.brand-light) .brand-copy .brand-sub {
+  color: #686575 !important;
+}
