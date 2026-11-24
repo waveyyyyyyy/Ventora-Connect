@@ -1,0 +1,50 @@
+/* Public homepage: preview metadata and numbered FAQ rows. */
+#root .gp-deck-preview small,
+#root .gp-deck-preview span,
+#root .gp-home-faq-item span {
+  color: #526574 !important;
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+}
+#root .gp-deck-preview .gp-deck-live { color: #087f5b !important; }
+#root .gp-home-faq-item span { font-weight: 700 !important; }
+
+/* Directory cards are shared by the public Business and Investor directories
+   and the signed-in directory workspace. Remove 7–10px metadata labels. */
+#root .directory-card small,
+#root .directory-card span {
+  color: #405b68 !important;
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+}
+#root .directory-card .directory-card-category {
+  color: #245863 !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+}
+#root .directory-card .directory-card-trust {
+  color: #405b68 !important;
+  font-size: 11px !important;
+  font-weight: 750 !important;
+}
+#root .directory-card p { color: #405b68 !important; font-size: 13px !important; line-height: 1.6 !important; }
+#root .directory-card h3 { color: #17384b !important; font-size: 18px !important; line-height: 1.25 !important; }
+#root .directory-card button,
+#root .directory-card .directory-save-toggle,
+#root .directory-card .directory-message-button {
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+#root .directory-card .directory-card-stats small,
+#root .directory-card .directory-card-metric small,
+#root .directory-card .directory-card-meta small {
+  color: #526574 !important;
+  font-size: 11px !important;
+}
+
+/* Legal brand subtitle uses a more specific legacy selector. */
+#root .legal-header .brand-sub {
+  color: #e3eeee !important;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+}
