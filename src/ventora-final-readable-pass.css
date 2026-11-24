@@ -1,0 +1,62 @@
+/* Ventora Connect — final readability pass based on live customer QA.
+   Keep decorative microcopy legible without changing component hierarchy. */
+
+#root .gp-deck-heading,
+#root .gp-deck-heading > i,
+#root .gp-ticker-track,
+#root .gp-ticker-track * {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
+#root .gp-home-plan-card > button,
+#root .gp-home-plan-foot a,
+#root .gp-home-faq-intro a {
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+
+#root .vc-overview-hero-index,
+#root .vc-pulse-label,
+#root .vc-pulse-item small,
+#root .vc-editorial-footer-bottom,
+#root .vc-admin-btn {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
+#root .support-kicker,
+#root .support-poster-top,
+#root .support-poster-bottom,
+#root .support-footer-note {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  max-width: 100%;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+
+#root .support-poster-top,
+#root .support-poster-bottom {
+  height: auto !important;
+  min-height: 0 !important;
+  padding-block: 8px !important;
+}
+
+#root .support-footer-note {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+@media (max-width: 420px) {
+  #root .gp-ticker-track,
+  #root .gp-ticker-track * {
+    letter-spacing: .04em !important;
+  }
+
+  #root .support-poster-top,
+  #root .support-poster-bottom,
+  #root .support-footer-note {
+    text-align: center;
+  }
+}
