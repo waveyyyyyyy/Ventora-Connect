@@ -112,3 +112,25 @@
     transition: none !important;
   }
 }
+
+
+/* Cross-surface layout guard: keep content inset and prevent long labels from escaping cards. */
+#root .workspace, #root .workspace-main, #root .workspace-content, #root .vc-member-section, #root .vc-member-section-content { min-width:0 !important; max-width:100%; box-sizing:border-box; }
+#root .workspace-content *, #root .vc-member-section-content * { box-sizing:border-box; }
+#root .workspace-content :is(article,.workspace-panel,.workspace-form,[class*="-card"],[class*="_card"],[class*="-tile"],[class*="_tile"]),
+#root .vc-member-section-content :is(article,.card,[class*="-card"],[class*="_card"],[class*="-tile"],[class*="_tile"]) { min-width:0; overflow-wrap:anywhere; }
+#root .workspace-content :is(h1,h2,h3,h4,p,span,small,label,li,strong,b,dt,dd),
+#root .vc-member-section-content :is(h1,h2,h3,h4,p,span,small,label,li,strong,b,dt,dd) { max-width:100%; overflow-wrap:anywhere; }
+#root .workspace-content :is(input,select,textarea,button), #root .vc-member-section-content :is(input,select,textarea,button) { max-width:100%; }
+#root .workspace-content :is(input,select,textarea), #root .vc-member-section-content :is(input,select,textarea) { min-width:0; }
+#root .gp-how .gp-steps > div > span { background:linear-gradient(145deg,#6258d7 0%,#39318f 100%) !important; color:#fff !important; -webkit-text-fill-color:#fff !important; font-weight:900 !important; text-shadow:0 1px 2px rgba(20,18,55,.62) !important; border:1px solid rgba(255,255,255,.48) !important; opacity:1 !important; filter:none !important; }
+#root .gp-how .gp-steps > div { padding-inline:clamp(20px,2.1vw,28px) !important; }
+@media(max-width:480px){#root .gp-how .gp-steps > div{padding:20px !important;}}
+#root .vc-contact-page,#root .vc-solutions-page{width:100%;min-width:0;}
+#root .vc-contact-grid,#root .vc-solutions-grid{width:min(1180px,calc(100% - 48px));margin:0 auto;padding:0 0 clamp(64px,8vw,112px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;}
+#root .vc-solutions-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+#root :is(.vc-contact-card,.vc-solutions-card){min-width:0;padding:clamp(22px,3vw,36px);border:1px solid rgba(39,40,50,.13);border-radius:22px;background:rgba(255,255,255,.96);color:#252630;box-shadow:0 16px 42px rgba(24,27,40,.07);}
+#root :is(.vc-contact-card,.vc-solutions-card)>span{display:block;margin-bottom:22px;color:#5147bf;font:800 10px/1.4 Manrope,sans-serif;letter-spacing:.12em;}
+#root :is(.vc-contact-card,.vc-solutions-card) h2{margin:0 0 12px;color:#252630;font:700 clamp(20px,2.3vw,28px)/1.2 Manrope,sans-serif;}
+#root :is(.vc-contact-card,.vc-solutions-card) p{min-height:84px;margin:0 0 24px;color:#555761;font:400 14px/1.75 Manrope,sans-serif;}
+@media(max-width:760px){#root .vc-contact-grid,#root .vc-solutions-grid{width:calc(100% - 36px);grid-template-columns:minmax(0,1fr);gap:14px;}#root :is(.vc-contact-card,.vc-solutions-card){padding:22px;}#root :is(.vc-contact-card,.vc-solutions-card) p{min-height:0;}}
