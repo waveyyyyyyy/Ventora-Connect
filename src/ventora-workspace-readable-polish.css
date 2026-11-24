@@ -1,24 +1,25 @@
-/* Ventora Connect — workspace drawer and overview microcopy readability. */
-#root .workspace-sidebar .workspace-brand .brand-sub,
-#root .workspace-sidebar .workspace-member small,
-#root .workspace-sidebar .workspace-member-plan,
-#root .workspace-sidebar .workspace-role-badge,
-#root .workspace-sidebar .workspace-upgrade-link small,
-#root .workspace-sidebar .workspace-upgrade-arrow,
-#root .workspace-sidebar .workspace-nav-label,
-#root .workspace-sidebar .workspace-nav-group nav button i,
-#root .workspace-sidebar .workspace-signout-error {
+/* Ventora Connect — workspace drawer and overview microcopy readability.
+   The drawer is portaled to document.body, so these selectors must not be rooted under #root. */
+.workspace-sidebar .workspace-brand .brand-sub,
+.workspace-sidebar .workspace-member small,
+.workspace-sidebar .workspace-member-plan,
+.workspace-sidebar .workspace-role-badge,
+.workspace-sidebar .workspace-upgrade-link small,
+.workspace-sidebar .workspace-upgrade-arrow,
+.workspace-sidebar .workspace-nav-label,
+.workspace-sidebar .workspace-nav-group nav button i,
+.workspace-sidebar .workspace-signout-error {
   font-size: 12px !important;
   line-height: 1.4 !important;
 }
-#root .workspace-sidebar .workspace-nav-label {
+.workspace-sidebar .workspace-nav-label {
   letter-spacing: .08em !important;
 }
-#root .workspace-sidebar .workspace-role-badge {
+.workspace-sidebar .workspace-role-badge {
   padding: 4px 8px !important;
   min-height: 22px;
 }
-#root .workspace-sidebar .workspace-nav-group nav button i {
+.workspace-sidebar .workspace-nav-group nav button i {
   min-width: 20px;
   min-height: 20px;
   display: inline-grid;
@@ -30,10 +31,10 @@
   line-height: 1.45 !important;
 }
 @media (max-width: 360px) {
-  #root .workspace-sidebar .workspace-member {
+  .workspace-sidebar .workspace-member {
     gap: 10px;
   }
-  #root .workspace-sidebar .workspace-upgrade-link {
+  .workspace-sidebar .workspace-upgrade-link {
     min-width: 0;
   }
 }
