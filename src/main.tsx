@@ -38,6 +38,23 @@ import './ventora-editorial-reset.css';
 import './ventora-editorial-cascade-final.css';
 import './ventora-global-finish.css';
 import './ventora-portal-finish.css';
+import './ventora-experience-overhaul.css';
+
+// GitHub Pages serves this app below a repository path. Normalize plain internal
+// anchors too, not just React Router links, so footer/menu CTAs never escape the app.
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+if (basePath) {
+  const repairInternalAnchors = () => {
+    document.querySelectorAll<HTMLAnchorElement>('a[href^="/"]').forEach((anchor) => {
+      const href = anchor.getAttribute('href') || '';
+      if (!href || href.startsWith('//') || href === basePath || href.startsWith(basePath + '/')) return;
+      anchor.setAttribute('href', basePath + href);
+    });
+  };
+  repairInternalAnchors();
+  const anchorObserver = new MutationObserver(repairInternalAnchors);
+  anchorObserver.observe(document.documentElement, { childList: true, subtree: true, attributes: true, attributeFilter: ['href'] });
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

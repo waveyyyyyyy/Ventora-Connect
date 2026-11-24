@@ -1,0 +1,77 @@
+/* Ventora experience overhaul: consistent contrast, motion and image-free editorial surfaces. */
+:root{--ve-ink:#292a2e;--ve-paper:#f4f4f2;--ve-muted:#62625d;--ve-accent:#777486;--ve-line:rgba(41,42,46,.16)}
+html,body,#root{background-color:var(--ve-paper)!important;background-image:none!important}
+#root .gp-trust,#root .gp-section,#root .gp-how,#root .gp-footer,
+#root .support-form-v2,#root .support-answer-stage,#root .pipeline-heading,
+#root .vc-feedback-hero,#root .directory-cover-art,#root .directory-editorial-panel,
+#root .messages-list{background-image:none!important}
+#root .gp-trust{background-color:#eeedf1!important;border-block:1px solid var(--ve-line)!important}
+#root .gp-section{background-color:#f4f4f2!important}
+#root .gp-how{background-color:#eeedf1!important}
+#root .gp-footer{background-color:#292a2e!important}
+#root .gp-final-cta{background-image:radial-gradient(ellipse at 80% 18%,rgba(160,156,181,.22),transparent 38%),linear-gradient(125deg,#292a2e,#202125)!important}
+#root .vc-feedback-hero{background:radial-gradient(ellipse at 82% 14%,rgba(160,156,181,.2),transparent 38%),linear-gradient(125deg,#292a2e,#383840)!important}
+#root .pipeline-heading{background:linear-gradient(125deg,#292a2e,#44434c)!important}
+#root .directory-cover-art{background:linear-gradient(135deg,#777486,#b9b6c5 55%,#e6e4eb)!important}
+#root .directory-editorial-panel{background:linear-gradient(135deg,#292a2e,#45444d)!important}
+#root .support-form-v2,#root .support-answer-stage{background:linear-gradient(145deg,#eeedf1,#f8f7f5)!important}
+#root .messages-list{background-color:#eeedf1!important}
+#root .gp-section-heading h2,#root .gp-audience-copy h2,#root .gp-how h2,
+#root .gp-home-plans-head h2,#root .gp-home-faq-intro h2{background:none!important;background-image:none!important;background-clip:border-box!important;-webkit-background-clip:border-box!important;animation:none!important;color:#292a2e!important}
+#root .gp-section-heading h2 em,#root .gp-audience-copy h2 em,#root .gp-how h2 em,
+#root .gp-home-plans-head h2 em,#root .gp-home-faq-intro h2 em{color:#777486!important}
+#root .gp-final-cta h2{background:none!important;background-image:none!important;color:#fff!important;animation:none!important}
+#root .gp-home-plan-price strong{color:#292a2e!important}
+#root .gp-home-plan-card>button{background:#292a2e!important;color:#fff!important}
+#root .gp-home-plan-foot button,#root .gp-home-faq-intro>a{color:#55535f!important}
+#root .gp-home-faq-item summary>i:before,#root .gp-home-faq-item summary>i:after{background:#777486!important}
+#root .gp-deck-live,#root .gp-live,#root .gp-match,#root .support-live-dot{background-color:#777486!important;color:#fff!important;box-shadow:none!important}
+#root .gp-dot{background:#777486!important;box-shadow:0 0 0 4px rgba(119,116,134,.15)!important}
+#root .gp-progress span{background:linear-gradient(90deg,#777486,#b9b6c5)!important}
+#root .gp-mini-avatar.mint,#root .gp-company-logo.mint{background:#e5e3ec!important;color:#55535f!important}
+#root .support-kicker-rule{background:#777486!important}
+#root .support-answer-index{color:#777486!important}
+#root .vc-feedback-sub,#root .vc-feedback-hero p{color:#f0eff4!important}
+#root .directory-hero .section-kicker,#root .directory-hero .gp-eyebrow{color:#d8d6e0!important}
+#root .directory-card p,#root .directory-card small{color:#55545d!important}
+#root .gp-section-heading>p:not(.gp-eyebrow),#root .gp-audience-copy>p:not(.gp-eyebrow),
+#root .gp-how>p:not(.gp-eyebrow),#root .gp-home-plans-head>p:not(.gp-eyebrow),
+#root .gp-home-faq-intro>p:not(.gp-eyebrow){color:#62625d!important}
+#root .gp-trust,#root .gp-trust b,#root .gp-trust span{color:#292a2e!important}
+#root .gp-footer,#root .gp-footer a,#root .gp-footer span,#root .gp-footer small{color:#f4f4f2!important}
+#root .gp-footer a:hover{color:#c9c6d5!important}
+#root .vc-member-section,#root .vc-member-section-content,#root .workspace-main,
+#root .workspace-content,#root .admin-page,#root .directory-results{background-image:none!important}
+#root .vc-member-section:before,#root .vc-member-section:after,
+#root .workspace-main:before,#root .workspace-main:after,
+#root .workspace-content:before,#root .workspace-content:after,
+#root .admin-page:before,#root .admin-page:after,
+#root .messages-page:before,#root .messages-page:after,
+#root .support-page:before,#root .support-page:after{background-image:none!important}
+#root button,#root a,#root [role=button],#root summary{transition:color .2s ease,background-color .2s ease,border-color .2s ease,box-shadow .22s ease,transform .22s ease}
+#root button:not(:disabled):hover,#root [role=button]:not([aria-disabled=true]):hover{transform:translateY(-2px)}
+#root button:not(:disabled):active,#root [role=button]:not([aria-disabled=true]):active{transform:translateY(0) scale(.985)}
+#root a:focus-visible,#root button:focus-visible,#root [role=button]:focus-visible,#root input:focus-visible,#root textarea:focus-visible,#root select:focus-visible,#root summary:focus-visible{outline:3px solid rgba(119,116,134,.55)!important;outline-offset:3px!important}
+#root .gp-feature,#root .gp-preview-card,#root .gp-home-plan-card,#root .directory-card,
+#root .vc-admin-card,#root .vc-admin-panel,#root .vc-overview-next button,
+#root .vc-overview-studio,#root .vc-overview-account,#root .vc-overview-membership,
+#root .support-form-v2,#root .support-answer-stage{transition:transform .28s ease,box-shadow .28s ease,border-color .28s ease}
+#root .gp-feature:hover,#root .gp-preview-card:hover,#root .gp-home-plan-card:hover,
+#root .directory-card:hover,#root .vc-admin-card:hover,#root .vc-overview-next button:hover{transform:translateY(-4px);box-shadow:0 18px 42px rgba(25,25,28,.1)}
+#root .gp-primary,#root .membership-primary,#root .membership-header-cta{position:relative;overflow:hidden}
+#root .gp-primary:after,#root .membership-primary:after,#root .membership-header-cta:after{content:"";position:absolute;inset:0;transform:translateX(-120%);background:linear-gradient(110deg,transparent,rgba(255,255,255,.2),transparent);transition:transform .55s ease;pointer-events:none}
+#root .gp-primary:hover:after,#root .membership-primary:hover:after,#root .membership-header-cta:hover:after{transform:translateX(120%)}
+@keyframes ve-page-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ve-soft-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media(prefers-reduced-motion:no-preference){
+ #root main>section:not(.gp-hero){animation:ve-page-enter .52s cubic-bezier(.2,.7,.2,1) both}
+ #root .gp-art-orbit,#root .gp-membership-orbit{animation:ve-soft-float 8s ease-in-out infinite}
+}
+@media(prefers-reduced-motion:reduce){
+ #root *,#root *:before,#root *:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+@media(max-width:760px){
+ #root .gp-trust>div{flex-wrap:wrap;gap:10px 16px}
+ #root .gp-section,#root .gp-how{padding-inline:clamp(18px,5vw,28px)!important}
+ #root .gp-feature:hover,#root .gp-preview-card:hover,#root .gp-home-plan-card:hover,#root .directory-card:hover{transform:none}
+}
