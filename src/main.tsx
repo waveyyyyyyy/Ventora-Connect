@@ -37,6 +37,7 @@ import './ventora-ellipsus-final-lock.css';
 import './ventora-editorial-reset.css';
 import './ventora-editorial-cascade-final.css';
 import './ventora-global-finish.css';
+import './ventora-portal-finish.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

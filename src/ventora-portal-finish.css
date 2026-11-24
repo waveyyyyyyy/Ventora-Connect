@@ -1,0 +1,48 @@
+/* Portal-level finish: workspace controls and drawer are mounted under body, outside #root. */
+body .workspace-menu-toggle{
+ position:fixed!important;left:16px!important;right:auto!important;top:13px!important;z-index:100120!important;
+ width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;
+ display:grid!important;place-items:center!important;padding:0!important;color:#282825!important;
+ background:#fff!important;border:1px solid rgba(40,40,37,.2)!important;border-radius:3px!important;
+ box-shadow:0 5px 16px rgba(20,20,18,.08)!important;
+}
+body .workspace-menu-toggle svg{color:#282825!important;stroke:#282825!important}
+body .workspace-sidebar,body .workspace-nav{
+ color:#fff!important;background:#292a2e!important;background-image:none!important;
+ border-color:rgba(255,255,255,.14)!important;box-shadow:0 24px 70px rgba(0,0,0,.22)!important;
+}
+body .workspace-sidebar .workspace-nav-label{color:#aaa8b1!important}
+body .workspace-sidebar nav button,body .workspace-nav button{
+ color:rgba(255,255,255,.84)!important;background:transparent!important;border:1px solid transparent!important;
+}
+body .workspace-sidebar nav button:hover,body .workspace-nav button:hover{color:#fff!important;background:rgba(255,255,255,.09)!important}
+body .workspace-sidebar nav button.active,body .workspace-nav button.active{
+ color:#fff!important;background:rgba(255,255,255,.16)!important;border-color:rgba(255,255,255,.17)!important;
+}
+body .workspace-sidebar .workspace-member,body .workspace-sidebar .workspace-upgrade-link{
+ color:#fff!important;background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.16)!important;
+}
+body .workspace-sidebar .workspace-member small,body .workspace-sidebar .workspace-member span,
+body .workspace-sidebar .workspace-upgrade-link small{color:#d2d0d8!important}
+body .workspace-sidebar .workspace-signout-button{color:#fff!important;background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.2)!important}
+body .workspace-sidebar .brand-copy,body .workspace-sidebar .brand-word,
+body .workspace-sidebar .brand-sub,body .workspace-sidebar .brand-e{color:#fff!important}
+body .vc-section-drawer,body .vc-section-drawer *{border-color:rgba(255,255,255,.14)}
+body .vc-section-drawer{background:#292a2e!important;background-image:none!important;color:#fff!important}
+body .vc-section-drawer .vc-drawer-brand .brand-copy,
+body .vc-section-drawer .vc-drawer-brand .brand-word,
+body .vc-section-drawer .vc-drawer-brand .brand-sub{color:#fff!important}
+body .section-drawer-close{color:#fff!important;background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.18)!important}
+body .vc-section-menu-backdrop{background:rgba(10,10,12,.42)!important}
+#root .brand-copy{color:#282825!important}
+#root .brand-copy *{color:inherit}
+#root .brand:not(.brand-light) .brand-copy,
+#root .workspace-topbar .brand-copy{color:#282825!important}
+#root .brand:not(.brand-light) .brand-copy .brand-e,
+#root .brand:not(.brand-light) .brand-copy .brand-sub{color:#777486!important}
+#root .vc-overview-spotlight h2 em,#root .vc-overview-spotlight h3 em,
+#root .vc-overview-spotlight .vc-overview-eyebrow{color:#777486!important}
+#root .vc-account-open,#root .vc-account-open *{color:#55535f!important}
+#root .vc-account-open{background:#eeedf1!important;border:1px solid #dedde3!important}
+#root .vc-admin-menu{color:#282825!important;background:#fff!important;border-color:rgba(40,40,37,.2)!important}
+@media(max-width:760px){body .workspace-menu-toggle{left:12px!important;top:10px!important}}
