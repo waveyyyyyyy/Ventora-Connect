@@ -175,3 +175,119 @@
   letter-spacing:.08em;
   text-rendering:optimizeLegibility;
 }
+
+
+/* FINAL OVERRIDE: fix nested text inheriting the wrong colour inside controls.
+   Earlier card-wide typography rules also matched descendants inside buttons,
+   so a white button label could be repainted dark (or vice versa). */
+#root .vc-member-section :is(article,.card,[class*="-card"],[class*="_card"],[class*="-tile"],[class*="_tile"],[class*="-panel"],[class*="-item"]) :is(button,a[role="button"]) *,
+#root .vc-member-section :is(button,a[role="button"]) * {
+  color:inherit!important;
+  -webkit-text-fill-color:currentColor!important;
+  opacity:1!important;
+  visibility:visible!important;
+  text-shadow:none!important;
+}
+#root .vc-member-section :is(button,a[role="button"]) {
+  opacity:1!important;
+  visibility:visible!important;
+  text-shadow:none!important;
+}
+#root .vc-member-section .vc-overview-pulse {
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  background:#e9eaed!important;
+  border:1px solid #d5d7dc!important;
+  border-radius:18px!important;
+  overflow:hidden!important;
+}
+#root .vc-member-section .vc-overview-pulse .vc-pulse-item {
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:6px!important;
+  min-width:0!important;
+  min-height:104px!important;
+  padding:18px 22px!important;
+  margin:0!important;
+  color:#24252a!important;
+  -webkit-text-fill-color:#24252a!important;
+  background:#f7f7f8!important;
+  border:0!important;
+  border-right:1px solid #d5d7dc!important;
+  border-radius:0!important;
+  text-align:left!important;
+  opacity:1!important;
+}
+#root .vc-member-section .vc-overview-pulse .vc-pulse-item:last-child {border-right:0!important}
+#root .vc-member-section .vc-overview-pulse .vc-pulse-item :is(span,strong,b,small,i,svg) {
+  color:inherit!important;
+  -webkit-text-fill-color:currentColor!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+#root .vc-member-section .vc-overview-pulse .vc-pulse-item .vc-pulse-label {
+  color:#454650!important;
+  -webkit-text-fill-color:#454650!important;
+  font-size:10px!important;
+  font-weight:800!important;
+  letter-spacing:.075em!important;
+  line-height:1.45!important;
+}
+#root .vc-member-section .vc-overview-pulse .vc-pulse-item strong {
+  color:#202127!important;
+  -webkit-text-fill-color:#202127!important;
+  font-size:21px!important;
+  font-weight:800!important;
+  line-height:1.2!important;
+}
+#root .vc-member-section .vc-overview-pulse .vc-pulse-item small {
+  color:#555761!important;
+  -webkit-text-fill-color:#555761!important;
+  font-size:12px!important;
+  line-height:1.45!important;
+}
+#root .vc-member-section .vc-overview-pulse .vc-pulse-item:hover {background:#fff!important}
+#root .vc-member-section .vc-overview-hero-index,
+#root .vc-member-section .vc-overview-hero-index :is(span,i) {
+  color:#454650!important;
+  -webkit-text-fill-color:#454650!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+#root .vc-member-section .vc-overview-welcome .vc-overview-eyebrow,
+#root .vc-member-section .vc-overview-welcome .vc-overview-eyebrow * {
+  color:#454650!important;
+  -webkit-text-fill-color:#454650!important;
+  opacity:1!important;
+}
+#root .vc-member-section .vc-overview-next .vc-next-list button {
+  color:#24252a!important;
+  -webkit-text-fill-color:#24252a!important;
+  background:#fff!important;
+  border:1px solid #d5d7dc!important;
+}
+#root .vc-member-section .vc-overview-next .vc-next-list button * {
+  color:inherit!important;
+  -webkit-text-fill-color:currentColor!important;
+  opacity:1!important;
+}
+#root .vc-member-section .vc-hero-actions .vc-hero-primary,
+#root .vc-member-section .vc-overview-membership button,
+#root .vc-member-section .vc-spotlight-screen-content :is(button,.vc-spotlight-cta) {
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  background:#292a2e!important;
+}
+#root .vc-member-section .vc-hero-actions .vc-hero-primary *,
+#root .vc-member-section .vc-overview-membership button *,
+#root .vc-member-section .vc-spotlight-screen-content :is(button,.vc-spotlight-cta) * {
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+@media(max-width:640px){
+ #root .vc-member-section .vc-overview-pulse {grid-template-columns:1fr!important}
+ #root .vc-member-section .vc-overview-pulse .vc-pulse-item {min-height:78px!important;padding:14px 18px!important;border-right:0!important;border-bottom:1px solid #d5d7dc!important}
+ #root .vc-member-section .vc-overview-pulse .vc-pulse-item:last-child {border-bottom:0!important}
+}
