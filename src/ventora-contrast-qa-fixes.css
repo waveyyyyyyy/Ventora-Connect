@@ -42,6 +42,8 @@
 #root .gp-deal-row small,
 #root .gp-float-card small { color: #526574 !important; }
 #root .auth-box a { color: #245863 !important; }
+#root .auth-box .section-kicker { color: #245863 !important; }
+#root .footer .brand-e { color: #b7d3d2 !important; }
 
 /* Legal screens: the header is dark, while the article is a light reading
    surface. Keep each region on its correct contrast pair. */
