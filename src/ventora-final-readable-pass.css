@@ -56,3 +56,12 @@
     text-align: center;
   }
 }
+
+/* Dynamic business and investor profile detail pages: keep metric labels readable. */
+#root .pitch-detail-hero .pitch-detail-quickfacts small,
+#root .pitch-bento.pitch-metrics .pitch-metric-grid small,
+#root .pitch-detail-heading .pitch-detail-tags span,
+#root .pitch-bento.pitch-thesis .pitch-tag-cloud span {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
