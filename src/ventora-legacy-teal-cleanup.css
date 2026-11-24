@@ -51,6 +51,20 @@
   background: #686575 !important;
   background-color: #686575 !important;
 }
+#root .gp-membership-preview i {
+  background: #dedde3 !important;
+  background-color: #dedde3 !important;
+}
+
+/* Neutral progress indicators instead of legacy green. */
+#root .directory-funding-line {
+  background: #eeedf1 !important;
+  background-color: #eeedf1 !important;
+}
+#root .directory-funding-line > i {
+  background: #686575 !important;
+  background-color: #686575 !important;
+}
 
 /* Overview and directory workspace topbars still had a legacy teal wordmark. */
 #root .vc-overview-identical-topbar .brand:not(.brand-light) .brand-copy .brand-e,
