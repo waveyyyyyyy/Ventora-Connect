@@ -1,0 +1,141 @@
+/* Final readability and alignment corrections from the live contrast audit. */
+:root { --ve-accent: #686575; }
+
+/* Brand marks and microcopy: readable on both light headers and dark footers. */
+#root .gp-public-header .brand-e,
+#root .gp-public-header .brand-sub,
+#root .workspace-topbar .brand-e,
+#root .workspace-topbar .brand-sub,
+#root .vc-member-section-topbar .brand-e,
+#root .vc-member-section-topbar .brand-sub,
+#root .vc-feedback-top .brand-e,
+#root .vc-feedback-top .brand-sub,
+#root .vc-editorial-footer .brand-e,
+#root .vc-editorial-footer .brand-sub {
+  color: #686575 !important;
+}
+#root .gp-footer .brand-word { color: #fff !important; }
+#root .gp-footer .brand-e,
+#root .gp-footer .brand-sub { color: #c7c3d2 !important; }
+#root .vc-editorial-footer-brand p {
+  color: #55545d !important;
+}
+#root:has(.legal-page) .brand-word { color: #fff !important; }
+#root:has(.legal-page) .brand-e,
+#root:has(.legal-page) .brand-sub { color: #c7c3d2 !important; }
+
+/* Homepage feature preview and membership cards. */
+#root .gp-deck-live {
+  color: #fff !important;
+  background: #686575 !important;
+  border-color: #686575 !important;
+}
+#root .gp-showcase-window .gp-showcase-copy,
+#root .gp-showcase-window .gp-showcase-copy h3,
+#root .gp-showcase-window .gp-showcase-copy p,
+#root .gp-showcase-window .gp-showcase-copy small,
+#root .gp-showcase-window .gp-showcase-copy span,
+#root .gp-showcase-window .gp-showcase-copy strong {
+  color: #292a2e !important;
+}
+#root .gp-home-plans .gp-home-plan-group .gp-eyebrow,
+#root .gp-home-plan-card p,
+#root .gp-home-plan-card small,
+#root .gp-home-plan-card .gp-plan-meta,
+#root .gp-home-plan-card .gp-plan-note,
+#root .gp-home-plan-card .gp-plan-description {
+  color: #55545d !important;
+}
+
+/* Directory hero CTA text must remain white inside the dark button. */
+#root .directory-create-link,
+#root .directory-create-link *,
+#root .directory-create-link:hover,
+#root .directory-create-link:hover * {
+  color: #fff !important;
+}
+#root .directory-create-link {
+  background: #292a2e !important;
+  border-color: #292a2e !important;
+}
+
+/* Legal and membership section labels use a high-contrast neutral accent. */
+#root .legal-page > .section-kicker,
+#root .legal-page > section > span,
+#root .payment-coming-soon .section-kicker,
+#root .auth-box .section-kicker {
+  color: #686575 !important;
+}
+
+/* Replace the remaining teal support hero with the same charcoal/lavender system. */
+#root .support-hero-v2 {
+  background: radial-gradient(ellipse at 84% 16%, rgba(160,156,181,.18), transparent 38%),
+              linear-gradient(125deg, #292a2e 0%, #393841 58%, #24252a 100%) !important;
+  background-image: radial-gradient(ellipse at 84% 16%, rgba(160,156,181,.18), transparent 38%),
+                    linear-gradient(125deg, #292a2e 0%, #393841 58%, #24252a 100%) !important;
+  color: #fff !important;
+}
+#root .support-hero-v2 .support-hero-copy h1,
+#root .support-hero-v2 .support-hero-copy h1 em {
+  color: #fff !important;
+}
+#root .support-hero-v2 .support-hero-copy > p {
+  color: #e5e2eb !important;
+}
+#root .support-hero-v2 .support-hero-copy .support-kicker {
+  color: #c7c3d2 !important;
+}
+#root .support-hero-v2 .support-kicker-rule {
+  background: #686575 !important;
+}
+#root .support-page .support-footer-note,
+#root .support-page .support-answer-index {
+  color: #55545d !important;
+}
+
+/* Feedback copy in the white form panel must be dark, not inherited white. */
+#root .vc-feedback-hero {
+  background: radial-gradient(ellipse at 84% 16%, rgba(160,156,181,.18), transparent 38%),
+              linear-gradient(125deg, #292a2e 0%, #393841 58%, #24252a 100%) !important;
+  background-image: radial-gradient(ellipse at 84% 16%, rgba(160,156,181,.18), transparent 38%),
+                    linear-gradient(125deg, #292a2e 0%, #393841 58%, #24252a 100%) !important;
+}
+#root .vc-feedback-hero .vc-feedback-kicker { color: #c7c3d2 !important; }
+#root .vc-feedback-panel .vc-feedback-sub {
+  color: #55545d !important;
+}
+
+/* Correct mobile member-header sizing so the logo/header never hangs off-screen. */
+@media (max-width: 760px) {
+  #root .vc-member-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    left: 0 !important;
+    transform: none !important;
+  }
+  #root .vc-member-section:not(.messages-page) > .vc-member-section-topbar {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 14px 0 66px !important;
+    left: 0 !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+  }
+  #root .vc-member-section:not(.messages-page) > .vc-member-section-topbar > .vc-member-section-logo {
+    margin: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+  }
+  #root .vc-member-section.messages-page > .vc-member-section-topbar {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+  }
+}
