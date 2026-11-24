@@ -138,16 +138,15 @@ function PublicQuestions(){
 
 
 function KineticHeadline(){
- const [typed,setTyped]=useState('');
+ const phrases=['the right people.','the right capital.','a bigger stage.','a bold next step.'];
+ const [phraseIndex,setPhraseIndex]=useState(0);
  useEffect(()=>{
-  const phrases=['the right people.','the right capital.','a bigger stage.','a bold next step.'];
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){setTyped(phrases[0]);return;}
-  const glyphs='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789◆◇';
-  let phraseIndex=0,letter=0,deleting=false,timeout=0,cancelled=false;
-  const tick=()=>{if(cancelled)return;const phrase=phrases[phraseIndex];if(!deleting){letter=Math.min(letter+1,phrase.length);const prefix=phrase.slice(0,Math.max(0,letter-1));const scramble=letter<phrase.length?glyphs[(letter*7+phraseIndex*11)%glyphs.length]:'';setTyped(prefix+(letter<phrase.length?scramble:'' )+(letter===phrase.length?phrase.slice(-1):''));if(letter===phrase.length){setTyped(phrase);deleting=true;timeout=window.setTimeout(tick,1650);return;}}else{letter=Math.max(0,letter-1);setTyped(phrase.slice(0,letter));if(letter===0){deleting=false;phraseIndex=(phraseIndex+1)%phrases.length;timeout=window.setTimeout(tick,260);return;}}timeout=window.setTimeout(tick,deleting?48:92);};
-  timeout=window.setTimeout(tick,380);return()=>{cancelled=true;window.clearTimeout(timeout);};
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const interval=window.setInterval(()=>setPhraseIndex(index=>(index+1)%phrases.length),3400);
+  return()=>window.clearInterval(interval);
  },[]);
- return <em className="gp-typewrite" aria-label={typed||"the right people."}><span aria-hidden="true">{typed}</span><i className="gp-type-cursor" aria-hidden="true"/></em>;
+ const phrase=phrases[phraseIndex];
+ return <em className="gp-typewrite" aria-label={phrase}><span>{phrase}</span><i className="gp-type-cursor" aria-hidden="true"/></em>;
 }
 function HeroDeck(){
  const [active,setActive]=useState<'deal'|'thesis'|'network'>('deal');
