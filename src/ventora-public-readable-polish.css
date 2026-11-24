@@ -1,0 +1,54 @@
+/* Ventora Connect — final public-page readability pass. */
+#root .gp-deck-preview > div > b,
+#root .gp-showcase-windowbar :is(b,i),
+#root .gp-showcase-activity :is(b,i),
+#root .gp-mini-avatar,
+#root .gp-home-plan-group-head > span {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
+#root .footer-bottom :is(span,a,small),
+#root .legal-footer :is(span,a,small),
+#root .legal-header a,
+#root .legal-header .brand-sub,
+#root .legal-draft-note,
+#root .auth-page .eyebrow,
+#root .auth-page .back-home {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+#root .gp-public-header .gp-brand-lockup .brand-sub,
+#root .vc-directory-overview-topbar .brand-sub,
+#root .vc-directory-overview-topbar .topbar-avatar span {
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+
+#root .directory-editorial-panel :is(span,small),
+#root .directory-result-head span,
+#root .directory-results .section-kicker,
+#root .directory-card-category,
+#root .directory-card-pills span,
+#root .directory-card-heading small {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
+#root .vc-loader-connect,
+#root .vc-loader-connect span {
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+}
+
+/* Keep legal notices and editorial labels legible on narrow screens. */
+@media (max-width: 420px) {
+  #root .legal-draft-note {
+    max-width: 100% !important;
+    overflow-wrap: anywhere;
+  }
+  #root .directory-editorial-panel :is(span,small) {
+    letter-spacing: .06em !important;
+  }
+}
