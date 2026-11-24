@@ -107,3 +107,8 @@
 #root .messages-page .messages-list-foot small {
   line-height: 1.5 !important;
 }
+
+/* Avatar initials remain legible beside the workspace wordmark. */
+#root .vc-member-section .topbar-actions .topbar-avatar.vc-member-topbar-avatar > span {
+  font-size: 12px !important;
+}
