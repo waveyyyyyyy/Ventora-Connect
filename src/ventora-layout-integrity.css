@@ -134,3 +134,22 @@
 #root :is(.vc-contact-card,.vc-solutions-card) h2{margin:0 0 12px;color:#252630;font:700 clamp(20px,2.3vw,28px)/1.2 Manrope,sans-serif;}
 #root :is(.vc-contact-card,.vc-solutions-card) p{min-height:84px;margin:0 0 24px;color:#555761;font:400 14px/1.75 Manrope,sans-serif;}
 @media(max-width:760px){#root .vc-contact-grid,#root .vc-solutions-grid{width:calc(100% - 36px);grid-template-columns:minmax(0,1fr);gap:14px;}#root :is(.vc-contact-card,.vc-solutions-card){padding:22px;}#root :is(.vc-contact-card,.vc-solutions-card) p{min-height:0;}}
+
+
+/* Keep the standalone member header and support artwork inside narrow viewports. */
+#root .vc-member-section .workspace-topbar {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-inline: 0 !important;
+  box-sizing: border-box !important;
+}
+#root .support-page .support-architecture {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+#root .support-page .support-architecture > i {
+  max-width: calc(100% - 16px) !important;
+}
