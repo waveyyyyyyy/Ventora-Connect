@@ -1,0 +1,26 @@
+/* Small-screen auth legal links: explicit layout prevents Terms/Privacy collisions. */
+#root .auth-legal {
+  display: flex !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px 20px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+#root .auth-legal a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-height: 24px !important;
+  margin: 0 !important;
+  padding: 2px 0 !important;
+  line-height: 1.4 !important;
+  white-space: nowrap !important;
+  position: static !important;
+}
