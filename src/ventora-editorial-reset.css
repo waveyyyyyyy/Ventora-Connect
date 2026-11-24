@@ -1,0 +1,478 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+/*
+  VENTORA — editorial visual system reset
+  Inspired by Ellipsus's editorial rhythm and restrained palette.
+  This deliberately replaces legacy blue/green palettes and wallpaper imagery.
+*/
+:root {
+  --ve-ink: #282825;
+  --ve-charcoal: #292a2e;
+  --ve-black: #020203;
+  --ve-paper: #f4f4f2;
+  --ve-soft: #f8f8f7;
+  --ve-white: #ffffff;
+  --ve-muted: #777771;
+  --ve-line: rgba(40,40,37,.14);
+  --ve-accent: #777486;
+  --ve-accent-soft: #eeedf1;
+  --ve-shadow: 0 18px 48px rgba(26,26,24,.07);
+  --v-ink: var(--ve-ink);
+  --v-line: var(--ve-line);
+  color-scheme: light;
+}
+html { background:var(--ve-paper) !important; }
+body {
+  color:var(--ve-ink) !important;
+  background:var(--ve-paper) !important;
+  font-family:Manrope,"DM Sans",sans-serif !important;
+  -webkit-font-smoothing:antialiased;
+}
+::selection { background:#d9d7df !important; color:var(--ve-ink) !important; }
+
+/* Display typography: editorial serif, with the original body font retained. */
+#root h1,#root h2,#root h3,
+#root .gp-hero h1,#root .directory-hero h1,
+#root .gp-section-heading h2,#root .gp-audience h2,
+#root .gp-how h2,#root .gp-final-cta h2,
+#root .gp-home-plans-head h2,#root .gp-home-faq-intro h2,
+#root .vc-admin-heading {
+  font-family:"Instrument Serif",Georgia,serif !important;
+  font-weight:400 !important;
+  letter-spacing:-.025em !important;
+  line-height:1.04 !important;
+}
+#root p,#root li,#root label,#root input,#root textarea,#root select,
+#root button,#root small,#root .gp-eyebrow {
+  font-family:Manrope,"DM Sans",sans-serif;
+}
+#root .gp-eyebrow,#root .directory-hero .gp-eyebrow,
+#root .vc-admin-kicker {
+  color:#a6a3b1 !important;
+  letter-spacing:.16em !important;
+}
+
+/* Global page canvas — remove the old tinted wallpaper atmosphere. */
+#root .gp-shell,#root .gp-main,#root .workspace-main,
+#root main:not(.gp-showcase),#root .directory-page,
+#root .workspace,#root .workspace-content {
+  background:var(--ve-paper) !important;
+  background-image:none !important;
+}
+#root .gp-hero,#root .directory-hero,
+#root .directory-hero.directory-business-hero,
+#root .directory-hero.directory-investor-hero {
+  position:relative !important;
+  isolation:isolate;
+  color:#fff !important;
+  background:var(--ve-charcoal) !important;
+  background-image:linear-gradient(135deg,#303136 0%,#292a2e 58%,#202125 100%) !important;
+  border:0 !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
+}
+#root .gp-hero:before,#root .gp-hero:after,
+#root .directory-hero:before,#root .directory-hero:after {
+  background-image:none !important;
+  opacity:1;
+}
+#root .gp-hero:before,#root .directory-hero:before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 78% 12%,rgba(255,255,255,.075),transparent 35%),
+    radial-gradient(ellipse at 12% 90%,rgba(160,155,174,.09),transparent 38%) !important;
+}
+#root .gp-hero h1,#root .gp-hero h1 em,
+#root .directory-hero h1,#root .directory-hero h2,
+#root .directory-hero h3 { color:#fff !important; -webkit-text-fill-color:#fff !important; }
+#root .gp-hero-copy>p,#root .gp-hero p,
+#root .directory-hero p { color:rgba(255,255,255,.76) !important; }
+#root .gp-hero .gp-pill {
+  color:#f4f4f2 !important;
+  background:rgba(255,255,255,.09) !important;
+  border:1px solid rgba(255,255,255,.15) !important;
+  box-shadow:none !important;
+}
+#root .gp-hero-art {
+  background:transparent !important;
+  background-image:none !important;
+  box-shadow:none !important;
+}
+#root .gp-hero-art:before { background:none !important; }
+#root .gp-poster {
+  background:#3a3b40 !important;
+  background-image:none !important;
+  color:#fff !important;
+  border:1px solid rgba(255,255,255,.2) !important;
+  box-shadow:0 24px 55px rgba(0,0,0,.24) !important;
+}
+#root .gp-poster:before { display:none !important; }
+#root .gp-poster-one { background:#414148 !important; }
+#root .gp-poster-two { background:#34353b !important; }
+#root .gp-poster small,#root .gp-poster b,#root .gp-poster span,
+#root .gp-poster i { color:#f4f4f2 !important; }
+
+/* The Ellipsus-like section rhythm: charcoal, white, black, warm paper. */
+#root .gp-trust,#root .gp-section,#root .gp-audience,
+#root .gp-how,#root .gp-home-plans,#root .gp-home-faq,
+#root .directory-editorial-strip,#root .directory-results,
+#root .faq-list,#root .faq-cta {
+  color:var(--ve-ink) !important;
+  background:var(--ve-paper) !important;
+  background-image:none !important;
+  border-color:var(--ve-line) !important;
+}
+#root .gp-section,#root .gp-home-plans,#root .directory-results {
+  background:#fff !important;
+}
+#root .gp-showcase,#root .gp-final-cta,
+#root .gp-footer,#root .footer,
+#root .directory-footer {
+  color:#fff !important;
+  background:var(--ve-black) !important;
+  background-image:none !important;
+  border-color:rgba(255,255,255,.12) !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+}
+#root .gp-showcase:before,#root .gp-final-cta:before,
+#root .gp-footer:before { background:none !important; opacity:0 !important; }
+#root .gp-showcase h1,#root .gp-showcase h2,#root .gp-showcase h3,
+#root .gp-final-cta h1,#root .gp-final-cta h2,#root .gp-final-cta h3,
+#root .gp-footer h1,#root .gp-footer h2,#root .gp-footer h3,
+#root .footer h1,#root .footer h2,#root .footer h3 { color:#fff !important; }
+#root .gp-showcase p,#root .gp-final-cta p,
+#root .gp-footer p,#root .footer p { color:rgba(255,255,255,.72) !important; }
+#root .gp-how { border-top:1px solid var(--ve-line) !important; border-bottom:1px solid var(--ve-line) !important; }
+#root .gp-membership-spotlight {
+  color:var(--ve-ink) !important;
+  background:#f8f8f7 !important;
+  background-image:none !important;
+  border-block:1px solid var(--ve-line) !important;
+}
+#root .gp-membership-copy h2,#root .gp-membership-copy h2 em,
+#root .gp-home-plans-head h2,#root .gp-home-plans-head h2 em,
+#root .gp-home-faq-intro h2,#root .gp-home-faq-intro h2 em {
+  color:var(--ve-ink) !important;
+  background:none !important;
+  -webkit-text-fill-color:var(--ve-ink) !important;
+}
+#root .gp-membership-copy>p:not(.gp-eyebrow),
+#root .gp-section-heading>p:last-child,
+#root .gp-audience-copy>p:not(.gp-eyebrow),
+#root .gp-how p,#root .gp-home-plans-head>p:last-child,
+#root .gp-home-faq-intro>p:not(.gp-eyebrow) { color:#696963 !important; }
+
+/* Remove the old Unsplash/photo wallpaper backgrounds completely. */
+#root .gp-hero,#root .gp-hero-art,#root .gp-poster,
+#root .gp-audience,#root .gp-audience#founders,
+#root .gp-audience#investors,#root .gp-final-cta,
+#root .gp-membership-spotlight,
+#root .directory-hero,#root .directory-editorial-panel,
+#root .faq-cta {
+  background-image:none !important;
+}
+#root .gp-audience:before,#root .gp-audience:after,
+#root .gp-membership-spotlight:before,
+#root .gp-membership-poster:before { background-image:none !important; }
+#root .gp-membership-poster {
+  color:#fff !important;
+  background:#292a2e !important;
+  background-image:none !important;
+  border-radius:3px !important;
+  box-shadow:none !important;
+}
+#root .gp-membership-poster * { color:#fff !important; }
+
+/* Cards: flat editorial surfaces, fine borders, restrained depth. */
+#root .gp-feature,#root .gp-preview-card,#root .gp-home-plan-card,
+#root .gp-home-plan-foot,#root .gp-auth-card,
+#root .gp-stat,#root .gp-panel,#root .gp-opportunity,
+#root .gp-deal-card,#root .gp-empty,
+#root .directory-editorial-panel,#root .directory-card,
+#root .business-card,#root .investor-card,
+#root .faq-item,#root .faq-list article {
+  color:var(--ve-ink) !important;
+  background:#fff !important;
+  background-image:none !important;
+  border:1px solid var(--ve-line) !important;
+  border-radius:3px !important;
+  box-shadow:none !important;
+}
+#root .gp-feature:hover,#root .gp-preview-card:hover,
+#root .gp-home-plan-card:hover,#root .gp-stat:hover,
+#root .gp-panel:hover,#root .gp-opportunity:hover {
+  transform:translateY(-3px) !important;
+  box-shadow:0 14px 32px rgba(30,30,28,.07) !important;
+  border-color:rgba(40,40,37,.3) !important;
+}
+#root .gp-feature h3,#root .gp-preview-card h3,
+#root .gp-panel h3,#root .gp-panel-head h3,
+#root .gp-opportunity h3,#root .gp-home-plan-card h4,
+#root .gp-deal-card b { color:var(--ve-ink) !important; }
+#root .gp-feature p,#root .gp-preview-card p,
+#root .gp-panel p,#root .gp-opportunity p,
+#root .gp-home-plan-description,
+#root .gp-home-plan-card li span { color:#6e6e68 !important; }
+#root .gp-feature>div,#root .gp-empty>div {
+  color:var(--ve-ink) !important;
+  background:var(--ve-accent-soft) !important;
+  border:1px solid var(--ve-line) !important;
+}
+#root .gp-preview-card,#root .gp-feature { padding:clamp(22px,3vw,30px) !important; }
+
+/* Replace the old teal/green palette with monochrome and muted graphite. */
+#root .gp-primary,#root .gp-home-plan-card>button,
+#root .gp-final-cta .gp-primary,#root .directory-hero .gp-primary,
+#root .vc-admin-btn.primary {
+  color:#fff !important;
+  background:#292a2e !important;
+  background-image:none !important;
+  border:1px solid #292a2e !important;
+  border-radius:2px !important;
+  box-shadow:none !important;
+}
+#root .gp-primary:hover,#root .gp-home-plan-card>button:hover,
+#root .vc-admin-btn.primary:hover {
+  color:#fff !important;
+  background:#111 !important;
+  border-color:#111 !important;
+}
+#root .gp-outline,#root .gp-login,#root .gp-text-btn,
+#root .gp-home-plan-foot button,#root .gp-home-faq-intro>a,
+#root .gp-panel-head button,#root .gp-op-footer button,
+#root .directory-hero a:not(.gp-primary) {
+  color:var(--ve-ink) !important;
+}
+#root .gp-live,#root .gp-dot,#root .gp-match,
+#root .gp-steps span,#root .gp-audience-copy li svg,
+#root .gp-op-footer span,#root .gp-progress span,
+#root .gp-company-logo,#root .gp-mini-avatar,
+#root .gp-home-plan-foot>svg,#root .directory-live-dot,
+#root .vc-admin-kicker {
+  color:var(--ve-accent) !important;
+}
+#root .gp-dot,#root .directory-live-dot { background:#898795 !important; }
+#root .gp-progress span { background:#777486 !important; }
+#root .gp-stage,#root .gp-op-tags span,
+#root .gp-home-plan-card-top>b,
+#root .gp-home-plan-card>button.is-current-button,
+#root .gp-flash {
+  color:#55535f !important;
+  background:#eeedf1 !important;
+  border-color:#dedde3 !important;
+}
+#root .gp-mini-avatar.mint,#root .gp-company-logo.mint,
+#root .gp-mini-avatar.lavender,#root .gp-company-logo.lavender,
+#root .gp-mini-avatar.peach,#root .gp-company-logo.peach,
+#root .gp-mini-avatar.blue,#root .gp-company-logo.blue {
+  color:#55535f !important;
+  background:#eeedf1 !important;
+}
+#root .gp-home-faq-item summary>i:before,
+#root .gp-home-faq-item summary>i:after { background:#55535f !important; }
+
+/* Navigation: simple black wordmark, understated underline, no teal states. */
+#root .gp-public-header,#root .workspace-topbar {
+  background:rgba(244,244,242,.96) !important;
+  background-image:none !important;
+  border-color:var(--ve-line) !important;
+  box-shadow:none !important;
+  backdrop-filter:blur(12px);
+}
+#root .gp-brand,#root .gp-brand * { color:var(--ve-ink) !important; }
+#root .gp-brand-mark { color:#fff !important; background:var(--ve-charcoal) !important; }
+#root .gp-public-header nav a,#root .gp-footer a,
+#root .gp-public-header .gp-login { color:var(--ve-ink) !important; }
+#root .gp-public-header nav a:after,#root .gp-footer a:after { background:var(--ve-ink) !important; }
+#root .gp-menu-toggle,#root .workspace-menu-toggle {
+  color:var(--ve-ink) !important;
+  background:#fff !important;
+  border:1px solid var(--ve-line) !important;
+  box-shadow:none !important;
+}
+#root .gp-public-menu {
+  color:var(--ve-ink) !important;
+  background:var(--ve-paper) !important;
+  box-shadow:18px 0 55px rgba(0,0,0,.12) !important;
+}
+#root .gp-public-menu>button { color:var(--ve-ink) !important; }
+#root .gp-public-menu>button:hover { color:var(--ve-ink) !important; background:#e9e8e5 !important; }
+
+/* Authentication surfaces. */
+#root .gp-auth {
+  background:var(--ve-paper) !important;
+  background-image:none !important;
+}
+#root .gp-auth-card {
+  background:#fff !important;
+  border:1px solid var(--ve-line) !important;
+  border-radius:3px !important;
+  box-shadow:none !important;
+}
+#root .gp-auth-card h1 { color:var(--ve-ink) !important; }
+#root .gp-auth-card label { color:#55554f !important; }
+#root .gp-role-choice button.selected {
+  color:var(--ve-ink) !important;
+  background:#eeedf1 !important;
+  border-color:#777486 !important;
+  box-shadow:none !important;
+}
+
+/* Directory and information page surfaces. */
+#root .directory-editorial-panel {
+  background:#292a2e !important;
+  color:#fff !important;
+}
+#root .directory-editorial-panel * { color:inherit; }
+#root .directory-results { background:#fff !important; }
+#root .directory-card,#root .directory-result-card {
+  background:#fff !important;
+  border:1px solid var(--ve-line) !important;
+  border-radius:3px !important;
+  box-shadow:none !important;
+}
+#root .directory-search input,#root .directory-search select,
+#root .workspace input,#root .workspace select,#root .workspace textarea,
+#root .gp-search,#root .gp-search-row select,
+#root .gp-auth-card input,#root .vc-admin-layout input,
+#root .vc-admin-layout select,#root .vc-admin-layout textarea {
+  color:var(--ve-ink) !important;
+  background:#fff !important;
+  border:1px solid rgba(40,40,37,.2) !important;
+  border-radius:2px !important;
+  box-shadow:none !important;
+}
+#root input:focus,#root textarea:focus,#root select:focus,
+#root .gp-search:focus-within {
+  border-color:#777486 !important;
+  box-shadow:0 0 0 3px rgba(119,116,134,.13) !important;
+  outline:none !important;
+}
+#root .faq-cta { background:#f4f4f2 !important; color:var(--ve-ink) !important; }
+
+/* Member workspace — paper canvas and white panels. */
+#root .workspace-main { background:var(--ve-paper) !important; }
+#root .workspace-sidebar,#root .workspace-nav {
+  background:#292a2e !important;
+  background-image:none !important;
+  color:#fff !important;
+  border-color:rgba(255,255,255,.12) !important;
+  box-shadow:none !important;
+}
+#root .workspace-sidebar * ,#root .workspace-nav * { border-color:rgba(255,255,255,.12); }
+#root .workspace-sidebar a,#root .workspace-sidebar button,
+#root .workspace-nav a,#root .workspace-nav button { color:rgba(255,255,255,.78) !important; }
+#root .workspace-sidebar .active,#root .workspace-nav .active {
+  color:#fff !important;
+  background:rgba(255,255,255,.12) !important;
+}
+#root .workspace-panel,#root .workspace-form,#root .workspace-list,
+#root .workspace-empty,#root .settings-panel,#root .verification-panel,
+#root .business-form-section,#root .vc-overview-welcome,
+#root .vc-overview-studio,#root .vc-overview-next,
+#root .vc-overview-account,#root .vc-overview-membership,
+#root .vc-overview-completion,#root .vc-overview-spotlight {
+  color:var(--ve-ink) !important;
+  background:#fff !important;
+  background-image:none !important;
+  border:1px solid var(--ve-line) !important;
+  border-radius:3px !important;
+  box-shadow:none !important;
+}
+#root .workspace-topbar { color:var(--ve-ink) !important; }
+#root .workspace-main h1,#root .workspace-main h2,
+#root .workspace-main h3 { color:var(--ve-ink) !important; }
+
+/* Admin: charcoal navigation, editorial paper work area, neutral controls. */
+#root .vc-admin-drawer {
+  color:#fff !important;
+  background:#292a2e !important;
+  background-image:none !important;
+  border-color:rgba(255,255,255,.12) !important;
+  box-shadow:none !important;
+}
+#root .vc-admin-drawer .vc-admin-brand,
+#root .vc-admin-drawer .vc-admin-brand * { color:#fff !important; }
+#root .vc-admin-drawer .vc-admin-btn {
+  color:rgba(255,255,255,.78) !important;
+  background:transparent !important;
+  border:1px solid transparent !important;
+  border-radius:2px !important;
+}
+#root .vc-admin-drawer .vc-admin-btn.active {
+  color:#fff !important;
+  background:rgba(255,255,255,.13) !important;
+  border-color:rgba(255,255,255,.12) !important;
+}
+#root .vc-admin-top {
+  color:var(--ve-ink) !important;
+  background:var(--ve-paper) !important;
+  border-color:var(--ve-line) !important;
+  box-shadow:none !important;
+}
+#root .vc-admin-layout { background:var(--ve-paper) !important; }
+#root .vc-admin-tabs .vc-admin-btn {
+  color:var(--ve-ink) !important;
+  background:#fff !important;
+  border:1px solid var(--ve-line) !important;
+  border-radius:2px !important;
+}
+#root .vc-admin-tabs .vc-admin-btn.active {
+  color:#fff !important;
+  background:#292a2e !important;
+  border-color:#292a2e !important;
+}
+#root .vc-admin-stat,#root .vc-admin-panel,#root .vc-admin-card,
+#root .vc-admin-table-wrap,#root .vc-admin-list {
+  color:var(--ve-ink) !important;
+  background:#fff !important;
+  background-image:none !important;
+  border:1px solid var(--ve-line) !important;
+  border-radius:3px !important;
+  box-shadow:none !important;
+}
+#root .vc-admin-heading { color:var(--ve-ink) !important; }
+#root .vc-admin-lede { color:#696963 !important; }
+#root .vc-admin-kicker { color:#777486 !important; }
+#root .vc-admin-tag,#root .vc-admin-callout,#root .vc-admin-ticker {
+  color:#55535f !important;
+  background:#eeedf1 !important;
+  border:1px solid #dedde3 !important;
+  border-radius:2px !important;
+}
+#root .vc-admin-btn.primary { background:#292a2e !important; color:#fff !important; }
+
+/* Keep interactions smooth, but remove the old glowing/green animation language. */
+#root .gp-feature:before,#root .gp-opportunity:before,
+#root .gp-preview-card:before,#root .gp-panel:before,#root .gp-stat:before {
+  display:none !important;
+}
+#root .gp-primary,#root .gp-outline,#root .gp-icon-btn,
+#root .gp-role-choice button,#root .vc-admin-btn,
+#root .directory-card,#root .workspace-panel {
+  transition:transform .24s ease,background-color .24s ease,
+    color .24s ease,border-color .24s ease,box-shadow .24s ease !important;
+}
+#root .gp-scroll-reveal { transition-duration:.65s !important; }
+#root .gp-scroll-progress { background:#777486 !important; box-shadow:none !important; }
+@media(prefers-reduced-motion:reduce) {
+  #root *,#root *:before,#root *:after {
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+    transition-duration:.01ms !important;
+  }
+}
+@media(max-width:700px) {
+  #root .gp-hero,#root .directory-hero { border-radius:0 !important; padding-inline:22px !important; }
+  #root .gp-showcase,#root .gp-final-cta,#root .gp-footer,
+  #root .footer { border-radius:0 !important; }
+  #root .gp-feature,#root .gp-preview-card,#root .gp-home-plan-card,
+  #root .directory-card,#root .workspace-panel,#root .workspace-form,
+  #root .vc-admin-panel,#root .vc-admin-card { border-radius:3px !important; }
+}
