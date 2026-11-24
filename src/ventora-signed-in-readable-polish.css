@@ -1,0 +1,84 @@
+/* Ventora Connect — final signed-in readability and touch-navigation pass.
+   Keeps the established visual system while removing undersized microcopy. */
+#root .vc-member-section :is(small,span,label,button,input,textarea,select,time,summary,strong,b,li),
+#root .workspace :is(small,span,label,button,input,textarea,select,time,summary,strong,b,li),
+#root .messages-page :is(small,span,label,p,button,input,textarea,select,time,summary,strong,b,li),
+#root .support-page :is(small,span,label,p,button,input,textarea,select,time,summary,strong,b,li),
+#root .vc-feedback :is(small,span,label,p,button,input,textarea,select,time,summary,strong,b,li),
+#root .vc-admin-shell :is(small,span,label,p,button,input,textarea,select,time,summary,strong,b,li),
+#root .vc-membership-experience :is(small,span,label,p,button,input,textarea,select,time,summary,strong,b,li) {
+  font-size: max(12px, 1em) !important;
+}
+
+/* Text-only editorial labels rendered as divs rather than semantic text tags. */
+#root .support-page .support-hero-index,
+#root .vc-feedback .vc-feedback-kicker,
+#root .vc-feedback .vc-feedback-meta,
+#root .vc-admin-shell .vc-admin-kicker,
+#root .vc-admin-shell .vc-admin-ticker,
+#root .vc-admin-shell .vc-admin-tag,
+#root .vc-admin-shell .vc-admin-stat .stat-top,
+#root .vc-admin-shell .vc-admin-meta,
+#root .vc-admin-shell .vc-admin-field,
+#root .vc-admin-shell .vc-admin-detail-content,
+#root .vc-admin-shell .vc-notice-overline,
+#root .vc-membership-experience .vc-membership-eyebrow,
+#root .vc-membership-experience .vc-membership-plan-top,
+#root .vc-membership-experience .vc-membership-table-row,
+#root .vc-membership-experience .vc-membership-swipe-hint {
+  font-size: max(12px, 1em) !important;
+  line-height: 1.45 !important;
+}
+
+#root .vc-admin-shell .vc-admin-brand .brand-sub {
+  font-size: 12px !important;
+  line-height: 1.25 !important;
+  letter-spacing: .12em !important;
+}
+
+#root .vc-admin-shell .vc-admin-kicker,
+#root .vc-admin-shell .vc-admin-ticker,
+#root .vc-membership-experience .vc-membership-eyebrow {
+  letter-spacing: .1em !important;
+}
+
+#root .vc-admin-shell .vc-admin-tabs {
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(36,88,99,.42) transparent !important;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+#root .vc-admin-shell .vc-admin-tabs button {
+  scroll-snap-align: start;
+}
+#root .vc-admin-shell .vc-admin-tabs::-webkit-scrollbar {
+  display: block !important;
+  height: 5px !important;
+}
+#root .vc-admin-shell .vc-admin-tabs::-webkit-scrollbar-thumb {
+  background: rgba(36,88,99,.42) !important;
+  border-radius: 99px !important;
+}
+#root .vc-admin-shell .vc-admin-tabs::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+@media (max-width: 420px) {
+  #root .vc-admin-shell .vc-admin-tabs {
+    padding-bottom: 12px !important;
+    gap: 6px !important;
+  }
+  #root .vc-admin-shell .vc-admin-tabs button {
+    min-height: 42px !important;
+    padding: 10px 13px !important;
+  }
+}
+
+/* Keep small supporting copy comfortably readable without changing headline scale. */
+#root .support-page :is(.support-hero-index,.support-architecture span,.support-poster-top span,.support-poster-bottom span),
+#root .vc-feedback :is(.vc-feedback-kicker,.vc-feedback-sub),
+#root .messages-page .thread-meta,
+#root .messages-page .messages-list-foot,
+#root .messages-page .messages-list-foot small {
+  line-height: 1.5 !important;
+}
