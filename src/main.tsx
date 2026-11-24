@@ -33,6 +33,7 @@ import './ventora-creative-studio.css';
 import './ventora-creative-hero-fix.css';
 import './ventora-ellipsus-inspired.css';
 import './ventora-ellipsus-cascade-fix.css';
+import './ventora-ellipsus-final-lock.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
