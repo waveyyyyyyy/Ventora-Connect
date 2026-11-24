@@ -1,0 +1,23 @@
+/* Remaining homepage demo-card captions and public footer microcopy. */
+#root .gp-deck-heading > span,
+#root .gp-deck-preview > small,
+#root .gp-deck-preview > span,
+#root .gp-deck-tabs button,
+#root .gp-preview-footer b,
+#root .gp-poster small,
+#root .gp-poster span {
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+}
+#root .gp-deck-heading > span,
+#root .gp-deck-preview > small,
+#root .gp-deck-preview > span { color: #526574 !important; }
+#root .gp-deck-tabs button { font-size: 12px !important; }
+#root .gp-poster small,
+#root .gp-poster span { color: #fff !important; text-shadow: 0 1px 8px rgba(0,0,0,.55) !important; }
+#root .gp-preview-footer b { color: #405b68 !important; }
+#root .footer a { font-size: 13px !important; }
+#root .footer small,
+#root .footer > span,
+#root .footer p { color: #dce8e9 !important; font-size: 11px !important; line-height: 1.55 !important; }
+#root .footer .brand-sub { color: #dce8e9 !important; font-size: 10px !important; }
