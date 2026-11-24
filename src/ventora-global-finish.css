@@ -131,3 +131,15 @@
 #root .vc-member-section :is(.vc-pulse-item,.vc-activity-rail,.vc-activity-line,.vc-member-ticker,.vc-member-marquee,[class*="horizontal-line"],[class*="ticker-line"],[class*="pulse-line"]) { color:#292a2e !important; -webkit-text-fill-color:#292a2e !important; opacity:1 !important; background-color:#f1f2f4 !important; }
 #root .vc-member-section :is(.vc-pulse-item,.vc-activity-rail,.vc-activity-line,.vc-member-ticker,.vc-member-marquee,[class*="horizontal-line"],[class*="ticker-line"],[class*="pulse-line"]) :is(span,small,strong,b,em,p,label,a) { color:#292a2e !important; -webkit-text-fill-color:#292a2e !important; opacity:1 !important; text-shadow:none !important; }
 #root .vc-member-section .vc-overview-membership h3 em { color:#fff !important; -webkit-text-fill-color:#fff !important; opacity:1 !important; }
+
+/* Highest-specificity correction for the signed-in spotlight, which sits outside the member-section wrapper. */
+#root .vc-spotlight-screen .vc-spotlight-screen-content h3,
+#root .vc-spotlight-screen .vc-spotlight-screen-content h3 em { color:#fff !important; -webkit-text-fill-color:#fff !important; opacity:1 !important; }
+#root .vc-spotlight-screen .vc-spotlight-screen-content p,
+#root .vc-spotlight-screen .vc-spotlight-screen-content > span,
+#root .vc-spotlight-screen .vc-spotlight-screen-top,
+#root .vc-spotlight-screen .vc-spotlight-screen-foot { color:#f1f2f5 !important; -webkit-text-fill-color:#f1f2f5 !important; opacity:1 !important; }
+#root .vc-spotlight-screen .vc-spotlight-screen-content :is(button,.vc-spotlight-cta) { color:#fff !important; -webkit-text-fill-color:#fff !important; background:#5147bf !important; }
+#root .vc-overview-membership h3 em { color:#fff !important; -webkit-text-fill-color:#fff !important; opacity:1 !important; }
+#root .vc-overview-spotlight :is(.vc-stage-tabs,.vc-stage-pagination,.vc-stage-index) { color:#292a2e !important; -webkit-text-fill-color:#292a2e !important; opacity:1 !important; }
+#root .vc-overview-spotlight :is(.vc-stage-tabs,.vc-stage-pagination,.vc-stage-index) :is(span,small,b,button) { color:inherit !important; -webkit-text-fill-color:currentColor !important; opacity:1 !important; }
