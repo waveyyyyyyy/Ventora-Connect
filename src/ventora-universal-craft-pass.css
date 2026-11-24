@@ -8,10 +8,42 @@
   --ve-line: rgba(41,42,46,.16);
 }
 
-/* Remove the final legacy photo-wallpaper layer from the app shell. */
-html body #root {
+/* Remove every legacy full-page photo wallpaper, including route-specific root layers. */
+html body #root,
+#root:has(.directory-business-hero),
+#root:has(.directory-investor-hero),
+#root:has(.workspace),
+#root:has(.vc-member-section),
+#root:has(.vc-admin-shell),
+#root:has(.membership-page),
+#root:has(.legal-page) {
   background: #f4f4f2 !important;
+  background-color: #f4f4f2 !important;
   background-image: none !important;
+}
+#root::before,
+#root::after,
+#root:has(.directory-business-hero)::before,
+#root:has(.directory-business-hero)::after,
+#root:has(.directory-investor-hero)::before,
+#root:has(.directory-investor-hero)::after,
+#root:has(.workspace)::before,
+#root:has(.workspace)::after,
+#root:has(.vc-member-section)::before,
+#root:has(.vc-member-section)::after,
+#root:has(.vc-admin-shell)::before,
+#root:has(.vc-admin-shell)::after,
+#root:has(.membership-page)::before,
+#root:has(.membership-page)::after,
+#root:has(.legal-page)::before,
+#root:has(.legal-page)::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  background-image: none !important;
+  animation: none !important;
+  transform: none !important;
+  will-change: auto !important;
 }
 
 /* Neutral editorial contrast corrections on the homepage. */
@@ -43,6 +75,11 @@ html body #root {
 }
 #root .directory-intro-row .section-kicker {
   color: #686575 !important;
+}
+#root:has(.directory-business-hero) .footer,
+#root:has(.directory-investor-hero) .footer {
+  background: linear-gradient(120deg,#292a2e,#3b3a43) !important;
+  background-image: linear-gradient(120deg,#292a2e,#3b3a43) !important;
 }
 
 /* Replace the last teal authentication panel with the Ventora charcoal/lavender system. */
