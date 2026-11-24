@@ -1,0 +1,59 @@
+/* Finish the remaining public-page microcopy found by the live DOM sweep. */
+#root .gp-deck-preview > small,
+#root .gp-deck-preview > span,
+#root .gp-deck-preview .gp-deck-live,
+#root .gp-preview-footer span,
+#root .gp-preview-footer b,
+#root .gp-showcase small,
+#root .gp-showcase span,
+#root .gp-showcase-data small,
+#root .gp-showcase-stats small,
+#root .gp-showcase-activity small,
+#root .gp-showcase-chart span,
+#root .gp-ticker-track span,
+#root .gp-membership-poster span,
+#root .gp-membership-poster small,
+#root .gp-membership-preview span,
+#root .gp-membership-preview small,
+#root .gp-home-faq-item > span {
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+}
+#root .gp-deck-preview > small,
+#root .gp-deck-preview > span,
+#root .gp-preview-footer span,
+#root .gp-showcase small,
+#root .gp-showcase-data small,
+#root .gp-showcase-stats small,
+#root .gp-showcase-activity small,
+#root .gp-showcase-chart span,
+#root .gp-membership-preview span,
+#root .gp-membership-preview small { color: #526574 !important; }
+#root .gp-ticker-track span { color: #f0f6f4 !important; }
+#root .gp-ticker-track.reverse span { color: #e4f0e9 !important; }
+#root .gp-membership-poster span,
+#root .gp-membership-poster small { color: #fff !important; text-shadow: 0 1px 8px rgba(0,0,0,.5) !important; }
+#root .gp-home-faq-item > span { color: #526574 !important; }
+#root .gp-deck-heading > span { font-size: 11px !important; }
+
+/* Directory editorial banners and their footer should not use microtype. */
+#root .directory-editorial-panel span,
+#root .directory-editorial-panel small,
+#root .directory-intro-row .section-kicker { font-size: 11px !important; line-height: 1.5 !important; }
+#root .directory-editorial-panel span { color: #e9f2ef !important; }
+#root .directory-editorial-panel small { color: #f0f6f4 !important; }
+#root .footer-bottom,
+#root .footer-bottom span { color: #e0ece9 !important; font-size: 11px !important; line-height: 1.5 !important; }
+
+/* Legal section numbering, link rows and legal footer. */
+#root .legal-page > section > span,
+#root .legal-page .legal-links a { color: #245863 !important; font-size: 12px !important; line-height: 1.5 !important; }
+#root .legal-footer,
+#root .legal-footer span { color: #dce8e9 !important; font-size: 11px !important; }
+
+/* Signed-in header logo and topbar metadata are used across all workspace
+   sections, including the directory workspace header. */
+#root .workspace-topbar-logo .brand-copy { color: #294e60 !important; font-size: 13px !important; line-height: 1.2 !important; }
+#root .workspace-topbar-logo .brand-sub { color: #245863 !important; font-size: 11px !important; line-height: 1.2 !important; }
+#root .vc-member-section-topbar-note { color: #526b79 !important; font-size: 11px !important; }
+#root .vc-member-section-brand small { color: #245f70 !important; font-size: 11px !important; }
