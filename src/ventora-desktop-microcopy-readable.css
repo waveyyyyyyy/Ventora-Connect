@@ -1,0 +1,7 @@
+/* Last desktop-only microcopy discovered in the 1440px pass. */
+#root .workspace-command > span,
+#root .workspace-command > small { color: #526574 !important; font-size: 12px !important; line-height: 1.4 !important; }
+#root .directory-result-head,
+#root .directory-result-head span,
+#root .directory-result-head small { color: #405b68 !important; font-size: 11px !important; line-height: 1.5 !important; }
+#root .auth-aside-foot { color: #dce9eb !important; font-size: 11px !important; line-height: 1.5 !important; }
