@@ -3,7 +3,8 @@
 #root .gp-showcase-windowbar :is(b,i),
 #root .gp-showcase-activity :is(b,i),
 #root .gp-mini-avatar,
-#root .gp-home-plan-group-head > span {
+#root .gp-home-plan-group-head > span,
+#root .gp-home-plan-group-head > div > span {
   font-size: 12px !important;
   line-height: 1.45 !important;
 }
@@ -39,7 +40,14 @@
 #root .directory-results .section-kicker,
 #root .directory-card-category,
 #root .directory-card-pills span,
-#root .directory-card-heading small {
+#root .directory-card-heading small,
+#root .directory-cover-art > span,
+#root .directory-card-labels .directory-card-trust,
+#root .directory-card-heading .directory-avatar,
+#root .directory-card-stats small,
+#root .directory-card-stats b,
+#root .directory-meta > span,
+#root .directory-card-actions .directory-save-toggle span {
   font-size: 12px !important;
   line-height: 1.45 !important;
 }
