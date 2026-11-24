@@ -60,3 +60,27 @@
 #root .legal-page .legal-intro,
 #root .legal-page > section p { color: #4b5d6b !important; }
 #root .legal-draft-note { color: #526574 !important; }
+
+/* Messages uses a dark editorial list panel; its kicker, empty state and
+   footer must stay light on that dark surface. */
+#root .vc-member-section.messages-page .messages-list-title .section-kicker {
+  color: #245863 !important;
+  background: rgba(239, 249, 244, .96) !important;
+}
+#root .vc-member-section.messages-page .messages-empty p {
+  color: #e5efea !important;
+}
+#root .vc-member-section.messages-page .messages-list-foot,
+#root .vc-member-section.messages-page .messages-list-foot span,
+#root .vc-member-section.messages-page .messages-list-foot small {
+  color: #d5e7df !important;
+}
+#root .vc-member-section.messages-page .workspace-topbar .brand-copy {
+  color: #526574 !important;
+}
+#root .vc-member-section.messages-page .vc-editorial-footer-bottom {
+  color: #526574 !important;
+}
+
+/* Access-gate descriptions should remain readable on the white gate card. */
+#root .workspace-gate-card p { color: #52616f !important; }
