@@ -1,0 +1,110 @@
+/* Authenticated Overview: override legacy 5–9px micro-label rules on desktop
+   and mobile. These labels are real information, not decorative footnotes. */
+#root .vc-overview-studio .vc-overview-eyebrow,
+#root .vc-overview-studio .vc-overview-hero .section-kicker,
+#root .vc-overview-studio .vc-overview-hero .section-kicker span,
+#root .vc-overview-studio .vc-overview-hero-index,
+#root .vc-overview-studio .vc-welcome-caption,
+#root .vc-overview-studio .vc-overview-ticker,
+#root .vc-overview-studio .vc-stage-heading > div > span,
+#root .vc-overview-studio .vc-stage-index,
+#root .vc-overview-studio .vc-pulse-label,
+#root .vc-overview-studio .vc-pulse-item small,
+#root .vc-overview-studio .vc-completion-heading > div > span,
+#root .vc-overview-studio .vc-completion-footer small,
+#root .vc-overview-studio .vc-completion-checklist button,
+#root .vc-overview-studio .vc-spotlight-heading > div > span,
+#root .vc-overview-studio .vc-spotlight-screen-top,
+#root .vc-overview-studio .vc-spotlight-screen-foot,
+#root .vc-overview-studio .vc-spotlight-screen-content > span,
+#root .vc-overview-studio .vc-stage-pagination,
+#root .vc-overview-studio .vc-next-heading > span,
+#root .vc-overview-studio .vc-next-heading > p,
+#root .vc-overview-studio .vc-next-list button small,
+#root .vc-overview-studio .vc-overview-membership > div > span,
+#root .vc-overview-studio .vc-overview-membership p,
+#root .vc-overview-studio .vc-overview-upgrade > div > span,
+#root .vc-overview-studio .vc-overview-upgrade p {
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+  letter-spacing: normal !important;
+}
+#root .vc-overview-studio .vc-overview-hero .section-kicker,
+#root .vc-overview-studio .vc-overview-eyebrow,
+#root .vc-overview-studio .vc-stage-heading > div > span,
+#root .vc-overview-studio .vc-stage-index,
+#root .vc-overview-studio .vc-spotlight-heading > div > span,
+#root .vc-overview-studio .vc-spotlight-screen-top,
+#root .vc-overview-studio .vc-spotlight-screen-foot,
+#root .vc-overview-studio .vc-spotlight-screen-content > span,
+#root .vc-overview-studio .vc-next-heading > span,
+#root .vc-overview-studio .vc-overview-membership > div > span {
+  font-weight: 800 !important;
+}
+#root .vc-overview-studio .vc-overview-hero .section-kicker,
+#root .vc-overview-studio .vc-overview-eyebrow,
+#root .vc-overview-studio .vc-welcome-caption,
+#root .vc-overview-studio .vc-overview-hero-index {
+  color: #e4f0ee !important;
+}
+#root .vc-overview-studio .vc-overview-ticker,
+#root .vc-overview-studio .vc-stage-heading > div > span,
+#root .vc-overview-studio .vc-stage-index,
+#root .vc-overview-studio .vc-pulse-label,
+#root .vc-overview-studio .vc-pulse-item small,
+#root .vc-overview-studio .vc-completion-heading > div > span,
+#root .vc-overview-studio .vc-completion-footer small,
+#root .vc-overview-studio .vc-completion-checklist button,
+#root .vc-overview-studio .vc-stage-pagination,
+#root .vc-overview-studio .vc-next-heading > p,
+#root .vc-overview-studio .vc-next-list button small,
+#root .vc-overview-studio .vc-overview-upgrade p {
+  color: #405b68 !important;
+}
+#root .vc-overview-studio .vc-spotlight-screen-top,
+#root .vc-overview-studio .vc-spotlight-screen-foot,
+#root .vc-overview-studio .vc-spotlight-screen-content > span {
+  color: #e0ece9 !important;
+}
+#root .vc-overview-studio .vc-overview-membership p,
+#root .vc-overview-studio .vc-overview-membership > div > span {
+  color: #e1eeeb !important;
+}
+#root .vc-overview-studio .vc-pulse-label { font-weight: 800 !important; }
+#root .vc-overview-studio .vc-pulse-item small { font-weight: 600 !important; }
+#root .vc-overview-studio .vc-pulse-item strong { line-height: 1.2 !important; }
+#root .vc-overview-studio .vc-stage-tabs button,
+#root .vc-overview-studio .vc-overview-welcome .vc-hero-actions button,
+#root .vc-overview-studio .vc-overview-membership > button,
+#root .vc-overview-studio .vc-overview-upgrade > button,
+#root .vc-overview-studio .vc-spotlight-links button,
+#root .vc-overview-studio .vc-spotlight-cta {
+  font-size: 13px !important;
+}
+#root .vc-overview-studio .vc-overview-identical-topbar .brand-word,
+#root .vc-overview-studio .vc-directory-overview-topbar .brand-word { font-size: 16px !important; }
+#root .vc-overview-studio .vc-overview-identical-topbar .brand-sub,
+#root .vc-overview-studio .vc-directory-overview-topbar .brand-sub {
+  color: #245863 !important;
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  letter-spacing: .2em !important;
+}
+#root .vc-overview-studio .vc-overview-identical-topbar .workspace-command,
+#root .vc-overview-studio .vc-directory-overview-topbar .workspace-command { font-size: 13px !important; }
+@media (max-width: 600px) {
+  #root .vc-overview-studio .vc-overview-ticker {
+    flex-wrap: wrap !important;
+    white-space: normal !important;
+    gap: 8px 12px !important;
+  }
+  #root .vc-overview-studio .vc-overview-hero-index {
+    font-size: 10px !important;
+    flex-wrap: wrap !important;
+  }
+  #root .vc-overview-studio .vc-pulse-label { font-size: 11px !important; }
+  #root .vc-overview-studio .vc-pulse-item small { font-size: 11px !important; }
+  #root .vc-overview-studio .vc-stage-tabs button { font-size: 12px !important; }
+  #root .vc-overview-studio .vc-overview-identical-topbar .brand-sub,
+  #root .vc-overview-studio .vc-directory-overview-topbar .brand-sub { font-size: 9px !important; }
+}
