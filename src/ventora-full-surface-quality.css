@@ -1,251 +1,107 @@
-/* Ventora Connect — full-surface quality and creativity pass.
-   Shared safeguards first; decorative treatments stay on existing components. */
-
-#root,
-#root * {
-  box-sizing: border-box;
-}
-
-#root {
-  width: 100%;
-  min-width: 0;
-  overflow-x: clip;
-}
-
-#root img,
-#root video,
-#root canvas,
-#root svg {
-  max-width: 100%;
-}
+/* Ventora Connect — full-surface quality and creativity pass. */
+#root, #root * { box-sizing: border-box; }
+#root { width: 100%; min-width: 0; overflow-x: clip; }
+#root img, #root video, #root canvas, #root svg { max-width: 100%; }
 
 #root :where(.workspace, .workspace-main, .workspace-content,
-  .vc-member-section, .vc-member-section-content, .vc-admin-shell,
-  .vc-admin-layout, .vc-admin-panel, .messages-page, .messages-studio,
-  .messages-list, .messages-chat, .directory-results, .directory-grid,
-  .gp-hero, .gp-showcase, .gp-section, .gp-home-plans, .gp-home-faq) {
-  min-width: 0;
-  max-width: 100%;
+.vc-member-section, .vc-member-section-content, .vc-admin-shell,
+.vc-admin-layout, .vc-admin-panel, .messages-page, .messages-studio,
+.messages-list, .messages-chat, .directory-results, .directory-grid,
+.gp-hero, .gp-showcase, .gp-section, .gp-home-plans, .gp-home-faq) {
+  min-width: 0; max-width: 100%;
+}
+#root :where(.workspace-content, .vc-member-section-content, .vc-admin-panel,
+.messages-list, .messages-chat, .directory-card, .gp-feature,
+.gp-preview-card, .gp-home-plan-card, .gp-home-faq-item) { overflow-wrap: anywhere; }
+#root :where(h1,h2,h3,h4) { text-wrap: balance; overflow-wrap: anywhere; }
+#root :where(p,li,label,small) { text-wrap: pretty; }
+#root :where(input,textarea,select,button) { max-width: 100%; }
+#root :where(input,textarea,select) { min-width: 0; }
+#root :where(button,a,input,textarea,select,[role="button"]) { -webkit-tap-highlight-color: transparent; }
+#root :where(button,a,input,textarea,select,[role="button"]):focus-visible {
+  outline: 3px solid #7197ff !important; outline-offset: 3px !important;
+  box-shadow: 0 0 0 5px rgba(113,151,255,.16) !important;
 }
 
-#root :where(.workspace-content, .vc-member-section-content,
-  .vc-admin-panel, .messages-list, .messages-chat, .directory-card,
-  .gp-feature, .gp-preview-card, .gp-home-plan-card, .gp-home-faq-item) {
-  overflow-wrap: anywhere;
+/* Public homepage: clear hierarchy and tactile but restrained interactions. */
+#root .gp-hero { isolation: isolate; }
+#root .gp-hero-copy, #root .gp-hero-art, #root .gp-showcase-copy,
+#root .gp-showcase-stage { min-width: 0; }
+#root :where(.gp-feature,.gp-preview-card,.gp-home-plan-card,
+.gp-home-faq-item,.directory-card) {
+  transition: transform .24s cubic-bezier(.2,.7,.2,1),
+  box-shadow .24s cubic-bezier(.2,.7,.2,1),border-color .24s ease;
 }
-
-#root :where(h1, h2, h3, h4) {
-  text-wrap: balance;
-  overflow-wrap: anywhere;
-}
-
-#root :where(p, li, label, small) {
-  text-wrap: pretty;
-}
-
-#root :where(input, textarea, select, button) {
-  max-width: 100%;
-  font: inherit;
-}
-
-#root :where(input, textarea, select) {
-  min-width: 0;
-}
-
-#root :where(button, a, input, textarea, select, [role="button"]) {
-  -webkit-tap-highlight-color: transparent;
-}
-
-#root :where(button, a, input, textarea, select, [role="button"]):focus-visible {
-  outline: 3px solid #7197ff !important;
-  outline-offset: 3px !important;
-  box-shadow: 0 0 0 5px rgba(113, 151, 255, .16) !important;
-}
-
-/* Public homepage: clearer hierarchy and tactile, restrained interaction. */
-#root .gp-hero {
-  isolation: isolate;
-}
-
-#root .gp-hero-copy,
-#root .gp-hero-art,
-#root .gp-showcase-copy,
-#root .gp-showcase-stage {
-  min-width: 0;
-}
-
-#root :where(.gp-feature, .gp-preview-card, .gp-home-plan-card,
-  .gp-home-faq-item, .directory-card) {
-  transition:
-    transform .24s cubic-bezier(.2,.7,.2,1),
-    box-shadow .24s cubic-bezier(.2,.7,.2,1),
-    border-color .24s ease,
-    background-color .24s ease;
-}
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  #root :where(.gp-feature, .gp-preview-card, .gp-home-plan-card,
-    .directory-card):hover {
-    transform: translateY(-4px);
-    box-shadow: 0 22px 54px rgba(20, 39, 78, .13);
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  #root :where(.gp-feature,.gp-preview-card,.gp-home-plan-card,.directory-card):hover {
+    transform: translateY(-4px); box-shadow: 0 22px 54px rgba(20,39,78,.13);
   }
 }
 
-/* Signed-in workspace: preserve the existing information architecture,
-   while giving the overview and common panels more depth and clearer edges. */
-#root .vc-overview-welcome {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-
+/* Member overview and common panels gain depth without changing their structure. */
+#root .vc-overview-welcome { position: relative; isolation: isolate; overflow: hidden; }
 #root .vc-overview-welcome::after {
-  content: "";
-  position: absolute;
-  inset: auto -8% -70% 42%;
-  height: 85%;
-  border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(119, 157, 255, .16), transparent 68%);
-  pointer-events: none;
-  z-index: -1;
+  content:""; position:absolute; inset:auto -8% -70% 42%; height:85%;
+  border-radius:50%; background:radial-gradient(ellipse,rgba(119,157,255,.16),transparent 68%);
+  pointer-events:none; z-index:-1;
 }
-
-#root .vc-pulse-item,
-#root .vc-overview-spotlight,
-#root .vc-overview-membership,
-#root .vc-admin-card,
-#root .vc-admin-stat,
-#root .messages-list,
-#root .messages-chat {
-  min-width: 0;
-  border-color: rgba(116, 139, 177, .2);
+#root :where(.vc-pulse-item,.vc-overview-spotlight,.vc-overview-membership,
+.vc-admin-card,.vc-admin-stat,.messages-list,.messages-chat) {
+  min-width:0; border-color:rgba(116,139,177,.2);
 }
-
 #root .vc-pulse-item {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  position:relative; isolation:isolate; overflow:hidden;
+  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;
 }
-
 #root .vc-pulse-item::after {
-  content: "";
-  position: absolute;
-  width: 112px;
-  height: 112px;
-  right: -48px;
-  top: -55px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(105, 143, 255, .13), transparent 70%);
-  pointer-events: none;
+  content:""; position:absolute; width:112px; height:112px; right:-48px; top:-55px;
+  border-radius:50%; background:radial-gradient(circle,rgba(105,143,255,.13),transparent 70%);
+  pointer-events:none;
 }
-
-#root .vc-overview-spotlight,
-#root .vc-overview-membership {
-  box-shadow: 0 18px 48px rgba(28, 49, 91, .07);
+#root .vc-overview-spotlight,#root .vc-overview-membership {
+  box-shadow:0 18px 48px rgba(28,49,91,.07);
 }
-
-#root .vc-admin-card,
-#root .vc-admin-stat,
-#root .directory-card {
-  box-shadow: 0 12px 34px rgba(22, 43, 78, .055);
+#root .vc-admin-card,#root .vc-admin-stat,#root .directory-card {
+  box-shadow:0 12px 34px rgba(22,43,78,.055);
 }
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  #root .vc-pulse-item:hover,
-  #root .vc-admin-card:hover,
-  #root .vc-admin-stat:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 20px 42px rgba(28, 49, 91, .11);
-    border-color: rgba(91, 127, 205, .35);
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  #root :where(.vc-pulse-item,.vc-admin-card,.vc-admin-stat):hover {
+    transform:translateY(-3px); box-shadow:0 20px 42px rgba(28,49,91,.11);
+    border-color:rgba(91,127,205,.35);
   }
 }
 
-/* Form controls and long member-generated content must never force a column wider. */
-#root :where(.vc-admin-field, .vc-admin-actions, .vc-admin-actions-row,
-  .messages-compose, .messages-chat-head, .messages-filter-row,
-  .directory-card-heading, .directory-card-actions, .workspace-topbar,
-  .topbar-actions) {
-  min-width: 0;
-  flex-wrap: wrap;
+/* Dynamic text and form controls cannot force their parent wider. */
+#root :where(.vc-admin-field,.vc-admin-actions,.vc-admin-actions-row,
+.messages-compose,.messages-chat-head,.messages-filter-row,
+.directory-card-heading,.directory-card-actions,.workspace-topbar,.topbar-actions) {
+  min-width:0; flex-wrap:wrap;
 }
-
-#root :where(.vc-admin-field input, .vc-admin-field textarea,
-  .vc-admin-field select, .messages-compose textarea,
-  .messages-search input, .directory-search input) {
-  width: 100%;
-  min-width: 0;
+#root :where(.vc-admin-field input,.vc-admin-field textarea,.vc-admin-field select,
+.messages-compose textarea,.messages-search input,.directory-search input) {
+  width:100%; min-width:0;
 }
+#root :where(.message-bubble,.thread-copy,.thread-last,
+.directory-card-body,.vc-admin-detail-content) { overflow-wrap:anywhere; word-break:normal; }
 
-#root :where(.message-bubble, .thread-copy, .thread-last,
-  .directory-card-body, .vc-admin-detail-content) {
-  overflow-wrap: anywhere;
-  word-break: normal;
+/* Responsive guardrails. */
+@media (max-width:760px) {
+  #root .gp-hero { min-width:0; }
+  #root .gp-hero h1 { font-size:clamp(2.35rem,10vw,4.2rem); line-height:1.02; overflow-wrap:normal; }
+  #root :where(.gp-section,.gp-showcase,.gp-home-plans,.gp-home-faq) { min-width:0; width:100%; }
+  #root .workspace-topbar { gap:10px; }
+  #root .workspace-command { min-width:0; max-width:100%; }
+  #root .vc-member-section-content { min-width:0; max-width:100%; }
+  #root .directory-grid { grid-template-columns:minmax(0,1fr); }
 }
-
-/* Small screens: retain usable controls and prevent accidental side-scrolling. */
-@media (max-width: 760px) {
-  #root .gp-hero {
-    min-width: 0;
-  }
-
-  #root .gp-hero h1 {
-    font-size: clamp(2.35rem, 10vw, 4.2rem);
-    line-height: 1.02;
-    overflow-wrap: normal;
-  }
-
-  #root .gp-section,
-  #root .gp-showcase,
-  #root .gp-home-plans,
-  #root .gp-home-faq {
-    min-width: 0;
-    width: 100%;
-  }
-
-  #root .workspace-topbar {
-    gap: 10px;
-  }
-
-  #root .workspace-command {
-    min-width: 0;
-    max-width: 100%;
-  }
-
-  #root .vc-member-section-content {
-    min-width: 0;
-    max-width: 100%;
-  }
-
-  #root .directory-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+@media (max-width:420px) {
+  #root .gp-hero h1 { font-size:clamp(2.15rem,10.2vw,3rem); }
+  #root :where(.vc-admin-actions,.vc-admin-actions-row) { align-items:stretch; }
+  #root :where(.vc-admin-actions,.vc-admin-actions-row) > * { min-width:0; max-width:100%; }
 }
-
-@media (max-width: 420px) {
-  #root .gp-hero h1 {
-    font-size: clamp(2.15rem, 10.2vw, 3rem);
-  }
-
-  #root .vc-admin-actions,
-  #root .vc-admin-actions-row {
-    align-items: stretch;
-  }
-
-  #root .vc-admin-actions > *,
-  #root .vc-admin-actions-row > * {
-    min-width: 0;
-    max-width: 100%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #root *,
-  #root *::before,
-  #root *::after {
-    scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
+@media (prefers-reduced-motion:reduce) {
+  #root *,#root *::before,#root *::after {
+    scroll-behavior:auto !important; animation-duration:.01ms !important;
+    animation-iteration-count:1 !important; transition-duration:.01ms !important;
   }
 }
