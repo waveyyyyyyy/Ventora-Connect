@@ -1,0 +1,2 @@
+/* FAQ item index numbers are visible content; keep them readable too. */
+#root .faq-list article span { color: #245863 !important; font-size: 11px !important; line-height: 1.4 !important; }
