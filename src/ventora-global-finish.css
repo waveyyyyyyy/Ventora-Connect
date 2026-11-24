@@ -1,0 +1,86 @@
+/* Global finish: eliminate legacy wallpaper layers and unify every brand lockup. */
+:root{--ve-ink:#282825;--ve-charcoal:#292a2e;--ve-paper:#f4f4f2;--ve-muted:#62625d;--ve-line:rgba(40,40,37,.16);--ve-accent:#777486;--ve-accent-soft:#eeedf1}
+#root .brand{display:inline-flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;min-width:0!important;line-height:1!important;text-decoration:none!important}
+#root .brand .brand-mark{display:block!important;flex:0 0 38px!important;width:38px!important;height:38px!important;min-width:38px!important;max-width:38px!important;object-fit:contain!important;object-position:center!important;margin:0!important;padding:0!important}
+#root .brand .brand-copy{display:flex!important;flex:0 1 auto!important;min-width:0!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:3px!important;margin:0!important;padding:0!important;line-height:1!important}
+#root .brand .brand-word,#root .brand .brand-sub{display:block!important;margin:0!important;padding:0!important;line-height:1!important;white-space:nowrap!important}
+#root .brand .brand-e,#root .brand .brand-sub{color:#777486!important}
+#root .brand:not(.brand-light) .brand-word{color:#282825!important}
+#root .brand.brand-light .brand-word,#root .brand.brand-light .brand-sub,#root .workspace-sidebar .brand .brand-word,#root .workspace-sidebar .brand .brand-sub{color:#fff!important}
+#root .workspace-topbar{display:flex!important;align-items:center!important;min-height:68px!important}
+#root .workspace-topbar .workspace-topbar-logo{position:relative!important;left:auto!important;right:auto!important;margin:0!important;flex:0 0 auto!important}
+#root .workspace-menu-toggle{position:fixed!important;left:16px!important;right:auto!important;top:13px!important;z-index:100120!important;width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;padding:0!important;display:grid!important;place-items:center!important;color:#282825!important;background:#fff!important;border:1px solid var(--ve-line)!important;border-radius:3px!important;box-shadow:0 5px 16px rgba(20,20,18,.08)!important}
+#root .workspace-menu-toggle svg,#root .vc-admin-menu svg{color:inherit!important;stroke:currentColor!important}
+#root .section-menu-trigger,#root .vc-section-menu-trigger,#root .vc-member-section>.workspace-menu-toggle{color:#282825!important;background:#fff!important;border:1px solid var(--ve-line)!important;border-radius:3px!important;box-shadow:0 5px 16px rgba(20,20,18,.08)!important}
+#root .workspace-topbar .brand-word{color:#282825!important}
+#root .workspace-topbar .brand-e,#root .workspace-topbar .brand-sub{color:#777486!important}
+
+/* Kill old Unsplash/photo wallpaper pseudo-elements, including fixed page overlays. */
+#root .workspace:before,#root .workspace:after,#root .vc-member-section:before,#root .vc-member-section:after,#root .admin-page:before,#root .admin-page:after,#root .directory-results:before,#root .directory-results:after,#root .workspace-main:before,#root .workspace-main:after,#root .workspace-content:before,#root .workspace-content:after,#root .messages-page:before,#root .messages-page:after,#root .interests-page:before,#root .interests-page:after,#root .matches-page:before,#root .matches-page:after,#root .saved-page:before,#root .saved-page:after,#root .announcements-page:before,#root .announcements-page:after,#root .support-page:before,#root .support-page:after{content:none!important;display:none!important;background-image:none!important;animation:none!important}
+#root .gp-hero:before,#root .gp-hero:after,#root .gp-audience:before,#root .gp-audience:after,#root .gp-final-cta:before,#root .gp-final-cta:after,#root .gp-showcase:before,#root .gp-showcase:after,#root .directory-hero:before,#root .directory-hero:after{background-image:none!important}
+#root .workspace,#root .workspace-main,#root .workspace-content,#root .vc-member-section,#root .admin-page,#root .messages-page,#root .interests-page,#root .matches-page,#root .saved-page,#root .announcements-page,#root .support-page{background-color:#f4f4f2!important;background-image:none!important}
+
+/* Neutralize leftover teal and green in authenticated workspace text, cards, tabs and controls. */
+#root .workspace .brand-e,#root .workspace .brand-sub,#root .workspace .section-kicker,#root .workspace .workspace-page-title .section-kicker,#root .vc-member-section .section-kicker,#root .vc-member-section .brand-e,#root .vc-member-section .brand-sub{color:#777486!important}
+#root .vc-pulse-item{color:#55535f!important;background:transparent!important}
+#root .vc-pulse-item strong,#root .vc-pulse-item b{color:#282825!important}
+#root .vc-overview-pulse{background:#eeedf1!important;border:1px solid #dedde3!important}
+#root .vc-overview-spotlight .active,#root .vc-overview-spotlight button[aria-selected=true]{color:#fff!important;background:#292a2e!important;border-color:#292a2e!important}
+#root .vc-overview-spotlight .active *,#root .vc-overview-spotlight button[aria-selected=true] *{color:#fff!important}
+#root .vc-overview-spotlight button:not(.active):not([aria-selected=true]){color:#55535f!important;background:#f4f4f2!important;border-color:#dedde3!important}
+#root .vc-overview-spotlight button:not(.active):not([aria-selected=true]) *{color:#55535f!important}
+#root .vc-overview-welcome h1,#root .vc-overview-welcome h2,#root .vc-overview-welcome h3,#root .vc-overview-studio h2,#root .vc-overview-next h2,#root .vc-overview-account h2,#root .vc-overview-membership h2{color:#282825!important}
+#root .vc-overview-welcome p,#root .vc-overview-studio p,#root .vc-overview-next p,#root .vc-overview-account p,#root .vc-overview-membership p{color:#62625d!important}
+#root .vc-hero-primary{color:#fff!important;background:#292a2e!important;border:1px solid #292a2e!important}
+#root .vc-hero-primary:hover{background:#111!important}
+#root .vc-hero-secondary{color:#fff!important;background:#55545d!important;border:1px solid #777486!important}
+#root .vc-overview-next button{color:#282825!important;background:#fff!important;border:1px solid var(--ve-line)!important}
+#root .vc-overview-next button strong,#root .vc-overview-next button b{color:#282825!important}
+#root .vc-overview-next button p,#root .vc-overview-next button small{color:#62625d!important}
+#root .vc-overview-membership{background:#292a2e!important;color:#fff!important}
+#root .vc-overview-membership h2,#root .vc-overview-membership p{color:#fff!important}
+#root .vc-overview-membership button{color:#fff!important;background:#55545d!important;border:1px solid rgba(255,255,255,.25)!important}
+
+/* Unified logged-in navigation drawer. */
+#root .workspace-sidebar,#root .workspace-nav{color:#fff!important;background:#292a2e!important;background-image:none!important;border-color:rgba(255,255,255,.14)!important}
+#root .workspace-sidebar .workspace-nav-label{color:#aaa8b1!important}
+#root .workspace-sidebar nav button,#root .workspace-nav button{color:rgba(255,255,255,.82)!important;background:transparent!important;border:1px solid transparent!important}
+#root .workspace-sidebar nav button:hover,#root .workspace-nav button:hover{color:#fff!important;background:rgba(255,255,255,.09)!important}
+#root .workspace-sidebar nav button.active,#root .workspace-nav button.active{color:#fff!important;background:rgba(255,255,255,.16)!important;border-color:rgba(255,255,255,.17)!important}
+#root .workspace-sidebar .workspace-member,#root .workspace-sidebar .workspace-upgrade-link{color:#fff!important;background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.16)!important}
+#root .workspace-sidebar .workspace-member small,#root .workspace-sidebar .workspace-member span,#root .workspace-sidebar .workspace-upgrade-link small{color:#d2d0d8!important}
+#root .workspace-sidebar .workspace-signout-button{color:#fff!important;background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.2)!important}
+
+/* Text readability and neutral interactive states across every signed-in section. */
+#root .messages-page h1,#root .interests-page h1,#root .matches-page h1,#root .saved-page h1,#root .announcements-page h1,#root .support-page h1,#root .workspace-page-title h1,#root .pipeline-heading h1{color:#282825!important}
+#root .messages-page h1 em,#root .interests-page h1 em,#root .matches-page h1 em,#root .saved-page h1 em,#root .announcements-page h1 em,#root .support-page h1 em,#root .workspace-page-title h1 em{color:#777486!important}
+#root .messages-page p,#root .interests-page p,#root .matches-page p,#root .saved-page p,#root .announcements-page p,#root .support-page p,#root .workspace-page-title p{color:#62625d!important}
+#root .workspace button.btn-dark,#root .workspace-content .btn-dark,#root .messages-page button[type=submit],#root .support-page button[type=submit]{color:#fff!important;background:#292a2e!important;border-color:#292a2e!important}
+#root .workspace input,#root .workspace select,#root .workspace textarea,#root .messages-page input,#root .messages-page textarea,#root .support-page input,#root .support-page textarea,#root .support-page select{color:#282825!important;background:#fff!important;border:1px solid rgba(40,40,37,.24)!important}
+#root .workspace input::placeholder,#root .workspace textarea::placeholder,#root .messages-page input::placeholder,#root .messages-page textarea::placeholder{color:#777771!important;opacity:1!important}
+#root .workspace input:focus,#root .workspace textarea:focus,#root .workspace select:focus,#root .messages-page input:focus,#root .messages-page textarea:focus{border-color:#777486!important;box-shadow:0 0 0 3px rgba(119,116,134,.16)!important;outline:none!important}
+#root .vc-admin-menu,#root .vc-admin-menu svg{color:#282825!important;stroke:currentColor!important}
+#root .vc-admin-top .brand-e,#root .vc-admin-top .brand-sub{color:#777486!important}
+#root .vc-admin-kicker,#root .vc-admin-tag,#root .vc-admin-callout,#root .vc-admin-ticker{color:#55535f!important}
+#root .vc-admin-tabs .active,#root .vc-admin-btn.active{background:#292a2e!important;color:#fff!important;border-color:#292a2e!important}
+#root .vc-admin-stat strong,#root .vc-admin-panel h2,#root .vc-admin-panel h3,#root .vc-admin-card h3{color:#282825!important}
+#root .vc-admin-panel p,#root .vc-admin-card p,#root .vc-admin-lede{color:#62625d!important}
+
+/* More deliberate editorial depth on public pages, without bringing back photo wallpapers. */
+#root .gp-hero,#root .directory-hero{background-color:#292a2e!important;background-image:linear-gradient(125deg,#34353a 0%,#292a2e 58%,#202125 100%)!important}
+#root .gp-hero:before,#root .directory-hero:before{display:block!important;content:""!important;opacity:1!important;background:radial-gradient(ellipse at 78% 18%,rgba(255,255,255,.09),transparent 34%),linear-gradient(115deg,transparent 0 62%,rgba(255,255,255,.035) 62% 62.2%,transparent 62.2%)!important}
+#root .gp-hero h1,#root .directory-hero h1{color:#fff!important}
+#root .gp-hero p,#root .directory-hero p{color:rgba(255,255,255,.84)!important}
+#root .gp-section-heading p,#root .gp-audience-copy p,#root .gp-how p,#root .gp-home-plans-head p,#root .gp-home-faq-intro p{color:#62625d!important}
+#root .gp-feature,#root .gp-preview-card,#root .gp-home-plan-card,#root .directory-card,#root .faq-item{border:1px solid rgba(40,40,37,.16)!important;box-shadow:0 12px 30px rgba(25,25,23,.045)!important}
+#root .gp-feature:hover,#root .gp-preview-card:hover,#root .gp-home-plan-card:hover,#root .directory-card:hover{transform:translateY(-4px)!important;box-shadow:0 22px 44px rgba(25,25,23,.09)!important;border-color:rgba(40,40,37,.3)!important}
+#root .gp-feature h3,#root .gp-preview-card h3,#root .gp-home-plan-card h4,#root .directory-card h3{color:#282825!important}
+#root .gp-feature p,#root .gp-preview-card p,#root .gp-home-plan-card p,#root .directory-card p{color:#62625d!important}
+#root .gp-primary,#root .directory-create-link{color:#fff!important;background:#292a2e!important;background-image:none!important;border:1px solid #292a2e!important;box-shadow:none!important;border-radius:3px!important}
+#root .gp-primary:hover,#root .directory-create-link:hover{background:#111!important;color:#fff!important}
+#root .gp-eyebrow,#root .directory-hero .gp-eyebrow{color:#aaa8b1!important}
+#root .gp-live,#root .gp-dot,#root .directory-live-dot{background:#898795!important;color:#777486!important;box-shadow:none!important}
+#root .gp-public-header .brand,#root .workspace-topbar .brand,#root .vc-editorial-footer-brand .brand,#root footer .brand{align-items:center!important;justify-content:flex-start!important}
+#root .gp-public-header .brand,#root .vc-editorial-footer-brand .brand{margin-left:0!important;margin-right:0!important}
+@media(max-width:760px){#root .workspace-menu-toggle{left:12px!important;top:10px!important}#root .workspace-topbar{padding-left:68px!important}#root .workspace-topbar .workspace-topbar-logo{max-width:calc(100vw - 150px)!important}#root .workspace-topbar .brand .brand-copy{max-width:calc(100vw - 210px)!important}#root .workspace-topbar .brand-word{font-size:13px!important}#root .workspace-topbar .brand-sub{font-size:8px!important}#root .gp-public-header .brand{margin:0!important}}
+@media(prefers-reduced-motion:reduce){#root .gp-feature,#root .gp-preview-card,#root .gp-home-plan-card,#root .directory-card{transition:none!important}}
