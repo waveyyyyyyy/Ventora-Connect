@@ -143,3 +143,35 @@
 #root .vc-overview-membership h3 em { color:#fff !important; -webkit-text-fill-color:#fff !important; opacity:1 !important; }
 #root .vc-overview-spotlight :is(.vc-stage-tabs,.vc-stage-pagination,.vc-stage-index) { color:#292a2e !important; -webkit-text-fill-color:#292a2e !important; opacity:1 !important; }
 #root .vc-overview-spotlight :is(.vc-stage-tabs,.vc-stage-pagination,.vc-stage-index) :is(span,small,b,button) { color:inherit !important; -webkit-text-fill-color:currentColor !important; opacity:1 !important; }
+
+
+/* MICROCOPY LEGIBILITY PASS — labels, kickers, eyebrow text and tiny metadata.
+   These elements were using pale brand colours/low opacity on pale surfaces. */
+#root .vc-member-section :is(.section-kicker,.eyebrow,.vc-eyebrow,.vc-kicker,[class*="kicker"],[class*="eyebrow"],[class*="overline"],[class*="micro"],[class*="meta"],[class*="caption"],[class*="label"],[class*="tag"],[class*="studio"],[class*="network"]){
+  color:#454650!important;
+  -webkit-text-fill-color:#454650!important;
+  opacity:1!important;
+  visibility:visible!important;
+  text-shadow:none!important;
+}
+#root .vc-member-section :is(.section-kicker,.eyebrow,.vc-eyebrow,.vc-kicker,[class*="kicker"],[class*="eyebrow"],[class*="overline"],[class*="micro"],[class*="meta"],[class*="caption"],[class*="label"],[class*="tag"],[class*="studio"],[class*="network"]) :is(span,strong,b,em,small){
+  color:inherit!important;
+  -webkit-text-fill-color:currentColor!important;
+  opacity:1!important;
+}
+#root .vc-member-section :is(p,span,small,label,dt,dd,li){opacity:1!important}
+#root .vc-member-section :is(p,span,small,label,dt,dd,li):not(.vc-overview-membership *):not(.workspace-sidebar *):not(.workspace-nav *):not(.vc-spotlight-screen *){
+  text-shadow:none!important;
+}
+#root .vc-member-section :is(.vc-overview-welcome,.vc-overview-studio,.vc-overview-next,.vc-overview-account,.vc-overview-pulse) :is(.section-kicker,.eyebrow,small,label,[class*="meta"],[class*="caption"],[class*="tag"],[class*="overline"]){
+  color:#454650!important;
+  -webkit-text-fill-color:#454650!important;
+  opacity:1!important;
+}
+#root .vc-member-section :is(.vc-overview-welcome,.vc-overview-studio,.vc-overview-next,.vc-overview-account,.vc-overview-pulse) :is(p,small,label,span){
+  opacity:1!important;
+}
+#root :is(.vc-member-section,.workspace,.admin-page) :is(.section-kicker,.eyebrow,[class*="kicker"],[class*="eyebrow"],[class*="overline"],[class*="micro-label"]){
+  letter-spacing:.08em;
+  text-rendering:optimizeLegibility;
+}
