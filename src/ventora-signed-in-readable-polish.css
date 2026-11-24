@@ -10,6 +10,25 @@
   font-size: max(12px, 1em) !important;
 }
 
+/* Shared workspace identity labels had stronger legacy rules. */
+#root .workspace .workspace-topbar-logo .brand-sub,
+#root .workspace .workspace-topbar-logo .brand-copy .brand-sub,
+#root .workspace .workspace-topbar-brand span,
+#root .workspace .workspace-topbar-brand small,
+#root .workspace .workspace-member small,
+#root .workspace .workspace-nav-label,
+#root .workspace .workspace-role-badge,
+#root .workspace .workspace-command kbd,
+#root .workspace .workspace-completion-meter span,
+#root .workspace .workspace-page-title .section-kicker,
+#root .workspace .section-kicker,
+#root .vc-member-section .vc-member-section-brand small,
+#root .vc-member-section .vc-member-section-topbar-note,
+#root .vc-member-section .section-kicker {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
 /* Text-only editorial labels rendered as divs rather than semantic text tags. */
 #root .support-page .support-hero-index,
 #root .vc-feedback .vc-feedback-kicker,
