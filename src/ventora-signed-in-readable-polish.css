@@ -12,7 +12,9 @@
 
 /* Shared workspace identity labels had stronger legacy rules. */
 #root .workspace .workspace-topbar-logo .brand-sub,
-#root .workspace .workspace-topbar-logo .brand-copy .brand-sub,
+#root .workspace .workspace-topbar-logo .brand-e,
+#root .workspace .workspace-command span,
+#root .workspace .topbar-avatar span,
 #root .workspace .workspace-topbar-brand span,
 #root .workspace .workspace-topbar-brand small,
 #root .workspace .workspace-member small,
@@ -22,6 +24,10 @@
 #root .workspace .workspace-completion-meter span,
 #root .workspace .workspace-page-title .section-kicker,
 #root .workspace .section-kicker,
+#root .vc-member-section .workspace-topbar-logo .brand-sub,
+#root .vc-member-section .workspace-topbar-logo .brand-e,
+#root .vc-member-section .vc-member-command span,
+#root .vc-member-section .topbar-avatar span,
 #root .vc-member-section .vc-member-section-brand small,
 #root .vc-member-section .vc-member-section-topbar-note,
 #root .vc-member-section .section-kicker {
