@@ -6,7 +6,7 @@
 #root .gp-ticker-rails .gp-ticker-track,
 #root .gp-ticker-rails .gp-ticker-track *,
 #root .gp-home-plans .gp-home-plan-grid .gp-home-plan-card > button,
-#root .gp-home-plans .gp-home-plan-foot a,
+#root .gp-home-plans .gp-home-plan-foot button,
 #root .gp-home-faq .gp-home-faq-intro a {
   font-size: 12px !important;
   line-height: 1.45 !important;
