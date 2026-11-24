@@ -22,6 +22,7 @@ import './ventora-faq-index-readable.css';
 import './ventora-desktop-microcopy-readable.css';
 import './ventora-messages-readable.css';
 import './ventora-universal-readable-pass.css';
+import './ventora-full-surface-quality.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
