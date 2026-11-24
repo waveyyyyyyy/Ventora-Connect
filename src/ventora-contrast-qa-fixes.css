@@ -4,32 +4,19 @@
   color: #fff !important;
 }
 #root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero) h1,
-#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero) h1 em {
-  color: #fff !important;
-}
+#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero) h1 em { color: #fff !important; }
 #root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero) p,
-#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero) .section-kicker {
-  color: #e0eeee !important;
-}
+#root .directory-hero:not(.directory-business-hero):not(.directory-investor-hero) .section-kicker { color: #e0eeee !important; }
 #root .directory-business-hero,
-#root .directory-hero.directory-investor-hero {
-  background-color: rgba(8, 27, 35, .56) !important;
-  color: #fff !important;
-}
+#root .directory-hero.directory-investor-hero { background-color: rgba(8, 27, 35, .56) !important; color: #fff !important; }
 #root .directory-business-hero h1,
 #root .directory-business-hero h1 em,
 #root .directory-hero.directory-investor-hero h1,
-#root .directory-hero.directory-investor-hero h1 em {
-  color: #fff !important;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, .42) !important;
-}
+#root .directory-hero.directory-investor-hero h1 { color: #fff !important; text-shadow: 0 2px 16px rgba(0, 0, 0, .42) !important; }
 #root .directory-business-hero p,
 #root .directory-business-hero .section-kicker,
 #root .directory-hero.directory-investor-hero p,
-#root .directory-hero.directory-investor-hero .section-kicker {
-  color: #edf5f4 !important;
-  text-shadow: 0 1px 10px rgba(0, 0, 0, .35) !important;
-}
+#root .directory-hero.directory-investor-hero .section-kicker { color: #edf5f4 !important; text-shadow: 0 1px 10px rgba(0, 0, 0, .35) !important; }
 #root .faq-list article p { color: #52616f !important; }
 #root .gp-proof small,
 #root .gp-trust > span,
@@ -40,21 +27,26 @@
 #root .gp-metrics small,
 #root .gp-deal-summary small,
 #root .gp-deal-row small,
-#root .gp-float-card small { color: #526574 !important; }
+#root .gp-float-card small,
+#root .gp-footer small { color: #526574 !important; }
+#root .gp-section-heading h2,
+#root .gp-audience-copy h2,
+#root .gp-how h2 {
+  background-image: linear-gradient(100deg, #0f2234 0%, #0f2234 50%, #245863 75%, #0f2234 100%) !important;
+}
+#root .gp-final-cta h2 {
+  background-image: linear-gradient(100deg, #fff 0%, #fff 50%, #b7d3d2 75%, #fff 100%) !important;
+}
 #root .auth-box a { color: #245863 !important; }
 #root .auth-box .section-kicker { color: #245863 !important; }
 #root .footer .brand-e { color: #b7d3d2 !important; }
 
-/* Legal screens: the header is dark, while the article is a light reading
-   surface. Keep each region on its correct contrast pair. */
+/* Legal screens: dark header branding and a clear light article surface. */
 #root .legal-header .brand,
 #root .legal-header .brand-word { color: #fff !important; }
 #root .legal-header .brand-e { color: #b7d3d2 !important; }
 #root .legal-header .brand-sub { color: #dbe8e8 !important; }
-#root .legal-page {
-  background: #f4f7f9 !important;
-  color: #0f2234 !important;
-}
+#root .legal-page { background: #f4f7f9 !important; color: #0f2234 !important; }
 #root .legal-page > .section-kicker,
 #root .legal-page > section > span { color: #245863 !important; }
 #root .legal-page > h1,
@@ -63,26 +55,18 @@
 #root .legal-page > section p { color: #4b5d6b !important; }
 #root .legal-draft-note { color: #526574 !important; }
 
-/* Messages uses a dark editorial list panel; its kicker, empty state and
-   footer must stay light on that dark surface. */
+/* Messages uses a dark editorial list panel; its kicker, empty state and footer
+   stay light on that surface. */
 #root .vc-member-section.messages-page .messages-list-title .section-kicker {
   color: #245863 !important;
   background: rgba(239, 249, 244, .96) !important;
 }
-#root .vc-member-section.messages-page .messages-empty p {
-  color: #e5efea !important;
-}
+#root .vc-member-section.messages-page .messages-empty p { color: #e5efea !important; }
 #root .vc-member-section.messages-page .messages-list-foot,
 #root .vc-member-section.messages-page .messages-list-foot span,
-#root .vc-member-section.messages-page .messages-list-foot small {
-  color: #d5e7df !important;
-}
-#root .vc-member-section.messages-page .workspace-topbar .brand-copy {
-  color: #526574 !important;
-}
-#root .vc-member-section.messages-page .vc-editorial-footer-bottom {
-  color: #526574 !important;
-}
+#root .vc-member-section.messages-page .messages-list-foot small { color: #d5e7df !important; }
+#root .vc-member-section.messages-page .workspace-topbar .brand-copy,
+#root .vc-member-section.messages-page .vc-editorial-footer-bottom { color: #526574 !important; }
 
 /* Access-gate descriptions should remain readable on the white gate card. */
 #root .workspace-gate-card p { color: #52616f !important; }
