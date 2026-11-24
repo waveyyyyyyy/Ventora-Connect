@@ -1,0 +1,24 @@
+/* Overview topbar is a sibling of the Overview content, so keep its
+   wordmark subtitle readable independently of the content wrapper. */
+#root .vc-member-section > .vc-overview-identical-topbar .brand-word,
+#root .vc-member-section > .vc-directory-overview-topbar .brand-word {
+  color: #102f43 !important;
+  font-size: 16px !important;
+}
+#root .vc-member-section > .vc-overview-identical-topbar .brand-sub,
+#root .vc-member-section > .vc-directory-overview-topbar .brand-sub {
+  color: #245863 !important;
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+  letter-spacing: .2em !important;
+}
+#root .vc-member-section > .vc-overview-identical-topbar .workspace-command,
+#root .vc-member-section > .vc-directory-overview-topbar .workspace-command {
+  color: #526574 !important;
+  font-size: 13px !important;
+}
+#root .vc-member-section > .vc-overview-identical-topbar .workspace-command input,
+#root .vc-member-section > .vc-directory-overview-topbar .workspace-command input {
+  color: #263b50 !important;
+  font-size: 13px !important;
+}
