@@ -75,3 +75,24 @@ html,body,#root{background-color:var(--ve-paper)!important;background-image:none
  #root .gp-section,#root .gp-how{padding-inline:clamp(18px,5vw,28px)!important}
  #root .gp-feature:hover,#root .gp-preview-card:hover,#root .gp-home-plan-card:hover,#root .directory-card:hover{transform:none}
 }
+
+
+/* Final exceptions found during live route QA. */
+#root .vc-membership-poster{background-image:none!important;background:radial-gradient(ellipse at 76% 18%,rgba(185,182,197,.2),transparent 42%),linear-gradient(145deg,#292a2e,#44434c)!important}
+#root .vc-membership-poster:before,#root .vc-membership-poster:after{background-image:none!important}
+#root .vc-membership-poster,#root .vc-membership-poster *{color:#f4f4f2!important}
+#root .vc-membership-eyebrow,#root .vc-membership-intro-meta span,
+#root .vc-membership-art-panel span,#root .vc-membership-current span,
+#root .vc-membership-benefit-heading span,#root .vc-membership-preview-copy span,
+#root .vc-membership-section-heading span,#root .vc-membership-plan-top span,
+#root .vc-membership-price span,#root .vc-membership-plan li,
+#root .vc-membership-plan li b,#root .vc-membership-trust-line span{color:#62625d!important}
+#root .vc-membership-controls button{color:#55535f!important}
+#root .vc-membership-controls button.active,#root .vc-membership-plan button{background:#292a2e!important;color:#fff!important;border-color:#292a2e!important}
+#root .support-kicker-rule{color:#777486!important;background:#777486!important}
+#root .support-answer-intro span{color:#777486!important}
+#root .vc-feedback-brand small{color:#b9b6c5!important}
+#root .vc-editorial-footer-brand p{color:#d2d0d8!important}
+#root .footer .footer-links b{color:#b9b6c5!important}
+#root .vc-admin-stat small,#root .vc-admin-pill.quiet,#root .vc-admin-feed small{color:#777486!important}
+#root .vc-admin-pill.quiet{background:#eeedf1!important;border-color:#dedde3!important}
