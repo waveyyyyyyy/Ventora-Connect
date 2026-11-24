@@ -43,8 +43,13 @@
 #root .gp-home-plans .gp-home-plan-price > span,
 #root .gp-home-plans .gp-home-plan-card small,
 #root .gp-home-plans .gp-home-plan-card .gp-home-plan-description,
-#root .gp-home-plans .gp-home-plan-card ul li > span {
+#root .gp-home-plans .gp-home-plan-card ul li > span,
+#root .gp-home-plan-foot p {
   color: #55545d !important;
+}
+#root .gp-deck-heading b {
+  background: #686575 !important;
+  background-color: #686575 !important;
 }
 
 /* Overview and directory workspace topbars still had a legacy teal wordmark. */
