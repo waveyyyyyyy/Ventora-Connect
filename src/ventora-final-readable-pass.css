@@ -1,26 +1,22 @@
 /* Ventora Connect — final readability pass based on live customer QA.
-   Keep decorative microcopy legible without changing component hierarchy. */
+   Specificity is intentionally higher than the legacy microcopy rules. */
 
-#root .gp-deck-heading,
-#root .gp-deck-heading > i,
-#root .gp-ticker-track,
-#root .gp-ticker-track * {
+#root .gp-hero .gp-hero-deck .gp-deck-heading,
+#root .gp-hero .gp-hero-deck .gp-deck-heading > *,
+#root .gp-ticker-rails .gp-ticker-track,
+#root .gp-ticker-rails .gp-ticker-track *,
+#root .gp-home-plans .gp-home-plan-grid .gp-home-plan-card > button,
+#root .gp-home-plans .gp-home-plan-foot a,
+#root .gp-home-faq .gp-home-faq-intro a {
   font-size: 12px !important;
   line-height: 1.45 !important;
 }
 
-#root .gp-home-plan-card > button,
-#root .gp-home-plan-foot a,
-#root .gp-home-faq-intro a {
-  font-size: 12px !important;
-  line-height: 1.4 !important;
-}
-
-#root .vc-overview-hero-index,
-#root .vc-pulse-label,
-#root .vc-pulse-item small,
-#root .vc-editorial-footer-bottom,
-#root .vc-admin-btn {
+#root .workspace-main .vc-overview-studio .vc-overview-hero-index,
+#root .workspace-main .vc-overview-studio .vc-pulse-label,
+#root .workspace-main .vc-overview-studio .vc-pulse-item small,
+#root .workspace-main .vc-editorial-footer-bottom,
+#root .vc-admin-layout a.vc-admin-btn {
   font-size: 12px !important;
   line-height: 1.45 !important;
 }
@@ -49,8 +45,8 @@
 }
 
 @media (max-width: 420px) {
-  #root .gp-ticker-track,
-  #root .gp-ticker-track * {
+  #root .gp-ticker-rails .gp-ticker-track,
+  #root .gp-ticker-rails .gp-ticker-track * {
     letter-spacing: .04em !important;
   }
 
