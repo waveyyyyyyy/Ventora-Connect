@@ -8,12 +8,10 @@
   font-size: 12px !important;
   line-height: 1.45 !important;
 }
-
 #root .gp-showcase-stage .gp-showcase-activity .gp-mini-avatar,
 #root .gp-showcase .gp-showcase-activity .gp-mini-avatar {
   font-size: 12px !important;
 }
-
 #root .footer-bottom :is(span,a,small),
 #root .legal-footer :is(span,a,small),
 #root .legal-header a,
@@ -24,7 +22,6 @@
   font-size: 12px !important;
   line-height: 1.5 !important;
 }
-
 #root .gp-public-header .gp-brand-lockup .brand-sub,
 #root .vc-directory-overview-topbar .brand-sub,
 #root .vc-directory-overview-topbar .topbar-avatar span {
@@ -34,7 +31,6 @@
 #root .vc-directory-overview-topbar .topbar-actions .topbar-avatar > span {
   font-size: 12px !important;
 }
-
 #root .directory-editorial-panel :is(span,small),
 #root .directory-result-head span,
 #root .directory-results .section-kicker,
@@ -51,13 +47,20 @@
   font-size: 12px !important;
   line-height: 1.45 !important;
 }
-
+/* Beat legacy high-specificity 8–11px rules in the directory card styles. */
+#root .directory-card .directory-card-body :is(small,span,b) {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+#root .directory-card .directory-cover-art span {
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
 #root .vc-loader-connect,
 #root .vc-loader-connect span {
   font-size: 12px !important;
   line-height: 1.3 !important;
 }
-
 @media (max-width: 420px) {
   #root .legal-draft-note {
     max-width: 100% !important;
