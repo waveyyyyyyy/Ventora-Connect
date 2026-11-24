@@ -1,5 +1,4 @@
-/* Neutralize remaining legacy teal accents in public, auth and workspace navigation. */
-#root .directory-results .login-link,
+/* Neutralize remaining legacy teal accents and finish homepage pricing contrast. */
 #root .directory-results .directory-card-category,
 #root .directory-results .text-link,
 #root .directory-results .directory-save-toggle,
@@ -9,10 +8,14 @@
 #root .directory-results .directory-save-toggle {
   border-color: rgba(104,101,117,.35) !important;
 }
+#root .vc-directory-overview-topbar .topbar-actions .login-link,
+#root .vc-directory-overview-header .topbar-actions .login-link {
+  color: #686575 !important;
+}
 #root .faq-list article > span {
   color: #686575 !important;
 }
-#root .legal-links a {
+#root .legal-page .legal-links a {
   color: #686575 !important;
 }
 #root .auth-main .auth-back-button,
@@ -30,6 +33,17 @@
   color: #292a2e !important;
 }
 #root .payment-coming-soon p {
+  color: #55545d !important;
+}
+
+/* Homepage pricing labels and notes: keep every small caption legible. */
+#root .gp-home-plans .gp-home-plan-group-head > div > span,
+#root .gp-home-plans .gp-home-plan-group-head > p,
+#root .gp-home-plans .gp-home-plan-card-top > span,
+#root .gp-home-plans .gp-home-plan-price > span,
+#root .gp-home-plans .gp-home-plan-card small,
+#root .gp-home-plans .gp-home-plan-card .gp-home-plan-description,
+#root .gp-home-plans .gp-home-plan-card ul li > span {
   color: #55545d !important;
 }
 
